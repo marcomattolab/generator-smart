@@ -317,7 +317,7 @@ public class DataBase {
 			//Configuration (statics)
 			new TemplateApplicationProperties(this).generateTemplate();
 			new TemplateAsyncConfiguration(this).generateTemplate();
-		    new TemplateCacheConfiguration(this).generateTemplate(); 				//FIXED Added Cache
+		    new TemplateCacheConfiguration(this).generateTemplate(); 	
 			new TemplateCloudDatabaseConfiguration(this).generateTemplate();
 			new TemplateCostants(this).generateTemplate();
 			new TemplateDatabaseConfiguration(this).generateTemplate();
@@ -328,7 +328,7 @@ public class DataBase {
 			new TemplateLocaleConfiguration(this).generateTemplate();
 			new TemplateLoggingAspectConfiguration(this).generateTemplate();
 			new TemplateLoggingConfiguration(this).generateTemplate();
-			new TemplateMetricsConfiguration(this).generateTemplate(); 			//FIXED Add Cache
+			new TemplateMetricsConfiguration(this).generateTemplate(); 	
 			new TemplateSecurityConfiguration(this).generateTemplate();
 			new TemplateWebConfigurer(this).generateTemplate();
 			
@@ -340,7 +340,7 @@ public class DataBase {
 			new TemplateEntityAuditEventConfig(this).generateTemplate();
 			
 			//Domain (statics)
-			new TemplateEntityAuditEvent(this).generateTemplate(); 				//Audit Domain
+			new TemplateEntityAuditEvent(this).generateTemplate(); 	
 			new TemplateAbstractAuditingEntity(this).generateTemplate();
 			new TemplatePersistentAudit(this).generateTemplate();
 			new TemplatePersistentToken(this).generateTemplate();
@@ -348,7 +348,7 @@ public class DataBase {
 			new TemplateUser(this).generateTemplate();
 			
 			//Repository (statics)
-			new TemplateEntityAuditEventRepository(this).generateTemplate();		//Audit Repository
+			new TemplateEntityAuditEventRepository(this).generateTemplate();		
 			new TemplateAuthorityRepository(this).generateTemplate();
 			new TemplateCustomAuditEventRepository(this).generateTemplate();
 			new TemplatePersistenceAuditEventRepository(this).generateTemplate();
@@ -383,11 +383,11 @@ public class DataBase {
 			//DTO (statics)
 			new TemplateUserDTO(this).generateTemplate();
 			new TemplatePasswordChangeDTO(this).generateTemplate();
-			new TemplateAbstractAuditingDTO(this).generateTemplate();  			//Audit DTO
+			new TemplateAbstractAuditingDTO(this).generateTemplate();  		
 			
 			
 			//WEB.REST (statics)
-			new TemplateEntityAuditResource(this).generateTemplate(); 			//Audit Resource
+			new TemplateEntityAuditResource(this).generateTemplate(); 	
 			new TemplateAccountResource(this).generateTemplate();
 			new TemplateAuditResource(this).generateTemplate();
 			new TemplateUserResource(this).generateTemplate();
@@ -499,7 +499,7 @@ public class DataBase {
 				new TemplateQueryService(tabella).generateTemplate();
 				new TemplateMapperService(tabella).generateTemplate();
 				new TemplateServiceDTO(tabella).generateTemplate();
-				new TemplateServiceCriteria(this, tabella).generateTemplate(); 				//TODO Add enumeration management
+				new TemplateServiceCriteria(this, tabella).generateTemplate(); 			//TODO Add enumeration management
 				new TemplateResource(tabella).generateTemplate();
 				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS DEV  !!
 //				new TemplateIntTest(tabella).generateTemplate(); 				 			//TODO COMPLETE THIS TEST !!
@@ -625,8 +625,7 @@ public class DataBase {
 	public static void main(String[] args) throws IOException {
 		DataBase db = DataBase.getInstance();
 		ConfigCreateProject ccp = ConfigCreateProject.getIstance();
-		String PATH_FILE_RELATIONS = ccp.getPathFileRelation();
-		prompt(db, new FileInputStream(PATH_FILE_RELATIONS));
+		prompt(db, new FileInputStream(ccp.getPathFileRelation()));
 		db.generateFile();
 	}
 	
