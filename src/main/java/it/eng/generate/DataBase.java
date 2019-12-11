@@ -624,9 +624,8 @@ public class DataBase {
 	 */
 	public static void main(String[] args) throws IOException {
 		DataBase db = DataBase.getInstance();
-		//TODO MOVE INTO CONFIGS
-		//String PATH_FILE_RELATIONS = "/Users/marco/eclipse-workspace/smart-jh/relation.txt"; 
-		String PATH_FILE_RELATIONS = "C:\\Users\\Martorana\\git\\smart-jh\\relation.txt"; 
+		ConfigCreateProject ccp = ConfigCreateProject.getIstance();
+		String PATH_FILE_RELATIONS = ccp.getPathFileRelation();
 		prompt(db, new FileInputStream(PATH_FILE_RELATIONS));
 		db.generateFile();
 	}

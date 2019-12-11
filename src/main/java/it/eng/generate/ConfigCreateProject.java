@@ -12,6 +12,8 @@ public class ConfigCreateProject {
 	private String driver;
 	private String dataBaseName;
 	private String tablePartName;
+	private String pathFileRelation;
+	
 	
 	private String srcAopLoggingFolder = "aop.logging";
 	private String srcConfigFolder = "config";
@@ -68,12 +70,11 @@ public class ConfigCreateProject {
 		this.setDataBaseName("angulardb");
 		this.setPackageclass("it.exprivia");
 		this.setPassword("1980Mysql!");
-		//this.setPassword("root");
 		this.setUsername("root");
 		//this.setTablePartName("imp_");
 		this.setTablePartName("");
 		this.setPathname("/Users/marco/eclipse-workspace/");
-		//this.setPathname("C:\\eclipse-workspace\\");
+		this.pathFileRelation = "/Users/marco/git/generator-smart/relation.txt";
 		this.setProjectName("demogenerated");
 		//this.setUrlConnection("jdbc:mysql://localhost:3306/angulardb");
 		this.setUrlConnection("jdbc:mysql://127.0.0.1:3306/angulardb?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=true&serverTimezone=UTC");
@@ -421,6 +422,14 @@ public class ConfigCreateProject {
 
 	public void setSrcReportUtilFolder(String srcReportUtilFolder) {
 		this.srcReportUtilFolder = srcReportUtilFolder;
+	}
+
+	public String getPathFileRelation() {
+		return pathFileRelation;
+	}
+
+	public void setPathFileRelation(String pathFileRelation) {
+		this.pathFileRelation = pathFileRelation;
 	}
 	
 }
