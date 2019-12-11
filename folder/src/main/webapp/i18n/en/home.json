@@ -1,0 +1,19 @@
+{
+    "home": {
+        "title": "Welcome, Java Smart Generator!",
+        "subtitle": "This is your homepage",
+        "logged": {
+            "message": "You are logged in as user \"{{username}}\"."
+        },
+        "question": "If you have any question on Smart Generator:",
+        "link": {
+            "homepage": "Smart Generator homepage",
+            "stackoverflow": "Smart Generator on Stack Overflow",
+            "bugtracker": "Smart Generator bug tracker",
+            "chat": "Smart Generator public chat room",
+            "follow": "Follow on Twitter"
+        },
+        "like": "If you like Smart Generator, don't forget to give us a star on",
+        "github": "GitHub"
+    }
+}
