@@ -21,6 +21,10 @@ public class ProjectConfig {
     private String urlConnection;
     private List<String> languages;
     
+    @JsonProperty("entities")
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+    private List<ProjectEntity> entities;
+    
     @JsonProperty("enumerations")
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private List<ProjectEnum> enumerations;
@@ -115,4 +119,11 @@ public class ProjectConfig {
 	public void setEnumerations(List<ProjectEnum> enumerations) {
 		this.enumerations = enumerations;
 	}
+	public List<ProjectEntity> getEntities() {
+		return entities;
+	}
+	public void setEntities(List<ProjectEntity> entities) {
+		this.entities = entities;
+	}
+	
 }

@@ -18,5 +18,15 @@
 					 {"name":"EsitoStatus", "values":"OK#KO"},
 					 {"name":"CanaleTrasmissione", "values":"MAIL#SMS#FACEBOOK#TWITTER#INSTAGRAM"},
 					 {"name":"TipoTrattativa", "values":"COMPRAVENDITA#LOCAZIONE"},
-					 {"name":"CanaleTrasmissione", "values":"NOTIFICHE@CANALE#NOTIFICHE@ESITO"} ]
+					 {"name":"CanaleTrasmissione", "values":"NOTIFICHE@CANALE#NOTIFICHE@ESITO"} ],
+  "entities" : [ 
+  	{"name":"Autore", "fields": [
+  			{"fname":"id", "ftype":"Integer", "frequired":true}, 
+  			{"fname":"dataNascita", "ftype":"LocalDate", "frequired":false}, 
+  			{"fname":"sesso", "ftype":"String", "frequired":false}, 
+  			{"fname":"nome", "ftype":"String", "frequired":false}, 
+  			{"fname":"cognome", "ftype":"String", "frequired":false}, 
+  			{"fname":"note", "ftype":"String", "frequired":false}
+  	]}
+  ]
 }
