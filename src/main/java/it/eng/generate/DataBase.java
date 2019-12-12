@@ -1,10 +1,6 @@
 package it.eng.generate;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -16,7 +12,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import it.eng.generate.project.ApplicationApp;
 import it.eng.generate.project.TemplateAngular;
@@ -231,12 +226,12 @@ public class DataBase {
 		Class.forName(ccp.getDriver());
 		Connection con = DriverManager.getConnection(ccp.getUrlConnection(),ccp.getUsername(),ccp.getPassword());
 		DatabaseMetaData dmd = con.getMetaData();
-		String[] types = {"TABLE","VIEW"};
+		String[] types = {"TABLE", "VIEW"};
 		ResultSet rstabelle = dmd.getTables(ccp.getDataBaseName(),ccp.getOwner(),"%"+ccp.getTablePartName()+"%",types);
 		
 		System.out.println("DataBaseName:" + ccp.getDataBaseName() + " Owner:" + ccp.getOwner());
 		
-		while(rstabelle.next()){
+		while(rstabelle.next()) {
 			String tableName = rstabelle.getString("TABLE_NAME");
 			Table table = new Table();
 			table.setNomeTabellaCompleto(tableName);
@@ -273,6 +268,14 @@ public class DataBase {
 			}
 			
 		}	
+		
+		//Enumerations
+		List<ProjectEnum> enums = ccp.getEnumerations();
+		for (ProjectEnum projectEnum: enums) {
+			String[] values = projectEnum.getValues().split("#");
+			System.out.println("Define Enumeration: " + projectEnum.getName() + " Values: " + values);
+			this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
+		}
 	}
 	
 	public void addTable(String tableName, Table table) {
@@ -624,104 +627,9 @@ public class DataBase {
 	 */
 	public static void main(String[] args) throws IOException {
 		DataBase db = DataBase.getInstance();
-		ConfigCreateProject ccp = ConfigCreateProject.getIstance();
-		prompt(db, new FileInputStream(ccp.getPathFileRelation()));
 		db.generateFile();
 	}
 	
-	/**
-	 * Prompt Automatic Code Generation.
-	 * 
-	 * @param db DataBase
-	 * @param io InputStream
-	 * @throws IOException
-	 */
-	private static void prompt(DataBase db,InputStream io) throws IOException {
-		boolean b = true;
-		BufferedReader br = new BufferedReader(new InputStreamReader(io));
-		while(b) {
-			System.out.println("Choose option:");
-			System.out.println("1) - Relation             1 a 1  : 1 <table1> <table2>");
-			System.out.println("2) - Relation             1 a N  : 2 <table1> <table2>");
-			System.out.println("3) - Relation Struttura   N a N  : 3 <table1> <table12> <table2>");
-			System.out.println("4) - Relation Associativa N a N  : 4 <table1> <table12> <table2>");
-			System.out.println("8) - Define Enumeration          : 8 <EnumerationName> <choose1>#<choose2>"); 
-			System.out.println("9) - Define Relation About Enums : 9 <EnumerationName> <entity1Name>@<entity1Field>#"); 
-			System.out.println("5) - Exit			            : 0 ");
-			String command = br.readLine();
-			System.out.println(command);
-			StringTokenizer st = new StringTokenizer(command," ");
-			int count = st.countTokens();
-			try{
-				if(count == 1 && Integer.parseInt(st.nextToken())==0){
-					b = false;
-					br.close();
-				}else if(count == 3){
-					int commandNumber = Integer.parseInt(st.nextToken());
-					String table1 = st.nextToken();
-					String table2 = st.nextToken();
-					
-					if(commandNumber == 8) {
-						String[] values = table2.split("#");
-						System.out.println("Define Enumeration: "+table1+" Values: " + values);
-						db.addEnumeration(table1, Arrays.asList(values) );
-					}else if(commandNumber == 9) {
-						String[] values = table2.split("#");
-						System.out.println("Define Enumeration Relation: "+table1+" Values: " + values);
-						db.addEnumerationRelation(table1, Arrays.asList(values) );
-					}else if(db.getTables(table1)==null  || db.getTables(table2)==null){
-						System.err.println(" One table not exist "+count+"-"+table1+"-"+table2);
-						System.in.read();
-					}else if(commandNumber == 1){
-						db.addRelation1to1(table1,table2);
-					}else if(commandNumber == 2){
-						db.addRelation1toN(table1,table2);
-					}else{
-						System.err.println(" One table not exist "+count+"-"+table1+"-"+table2);
-						System.in.read();
-					}
-				}else if(count==4){
-					int commandNumber = Integer.parseInt(st.nextToken());
-					String table1 = st.nextToken();
-					String table12 = st.nextToken();
-					String table2 = st.nextToken();
-					if(db.getTables(table1)==null  || db.getTables(table12)==null || db.getTables(table2)==null){
-						System.err.println(" One table not exist "+count+"-"+table1+"-"+table12+"-"+table2);
-						System.in.read();
-					}else if(commandNumber == 3){
-						db.addRelationNtoNStruttura(table1, table12, table2);
-					}else if(commandNumber == 4){
-						db.addRelationNtoNAssociativa(table1, table12, table2);
-					}
-				}else{
-					System.err.println("command not supported "+count);
-					System.in.read();
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("command not supported ");
-			}
-		}
-	}
-
-	private void addRelationNtoNAssociativa(String table1, String table12, String table2) {
-		this.getTables(table1).addRelationNtoNAssociativa(this.getTables(table12),this.getTables(table2));
-		this.getTables(table2).addRelationNtoNAssociativa(this.getTables(table12),this.getTables(table1));
-		this.getTables(table12).setRelationAssociativa(this.getTables(table1), this.getTables(table2));
-		this.getTables(table12).addRelationNto1(this.getTables(table1));
-		this.getTables(table12).addRelationNto1(this.getTables(table2));
-		this.getTables(table12).setIsAssociativa();
-	}
-
-	private void addRelationNtoNStruttura(String table1, String table12, String table2) {
-		this.getTables(table1).addRelationNtoNStruttura(this.getTables(table12),this.getTables(table2));
-		this.getTables(table2).addRelationNtoNStruttura(this.getTables(table12),this.getTables(table1));
-		this.getTables(table12).setRelationStrutura(this.getTables(table1), this.getTables(table2));
-		this.getTables(table12).addRelationNto1(this.getTables(table1));
-		this.getTables(table12).addRelationNto1(this.getTables(table2));
-		this.getTables(table12).setIsStruttura();
-	}
-
 	public void addRelation1to1(String table1,String table2){
 		this.getTables(table1).addRelation1to1(this.getTables(table2));
 		this.getTables(table2).addRelation1to1(this.getTables(table1));

@@ -1,0 +1,22 @@
+{
+  "generateTest":true,
+  "owner":null,
+  "tablePartName":"",
+  "app" : "App",
+  "driver" : "com.mysql.jdbc.Driver",
+  "dataBaseName" : "angulardb",
+  "packageclass" : "it.exprivia",
+  "username" : "root",
+  "password" : "1980Mysql!",
+  "pathname" : "/Users/marco/eclipse-workspace/",
+  "pathFileRelation" : "/Users/marco/git/generator-smart/relation.txt",
+  "projectName" : "demogenerated",
+  "urlConnection" : "jdbc:mysql://127.0.0.1:3306/angulardb?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=true&serverTimezone=UTC",
+  "languages" : [ "it", "en" ],
+  "enumerations" : [ {"name":"TipoCliente", "values":"CLIENTE#ACQUIRENTE"},
+					 {"name":"BooleanStatus", "values":"SI#NO"},
+					 {"name":"EsitoStatus", "values":"OK#KO"},
+					 {"name":"CanaleTrasmissione", "values":"MAIL#SMS#FACEBOOK#TWITTER#INSTAGRAM"},
+					 {"name":"TipoTrattativa", "values":"COMPRAVENDITA#LOCAZIONE"},
+					 {"name":"CanaleTrasmissione", "values":"NOTIFICHE@CANALE#NOTIFICHE@ESITO"} ]
+}
