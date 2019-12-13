@@ -17,7 +17,6 @@ public class ConfigCreateProject {
 	private String driver;
 	private String dataBaseName;
 	private String tablePartName;
-	private String pathFileRelation;
 	private List<ProjectEnum> enumerations;
 	
 	private String srcAopLoggingFolder = "aop.logging";
@@ -81,7 +80,6 @@ public class ConfigCreateProject {
 		this.setUsername(jsonConf.getUsername());
 		this.setTablePartName(jsonConf.getTablePartName());
 		this.setPathname(jsonConf.getPathname());
-		this.setPathFileRelation(jsonConf.getPathFileRelation());
 		this.setProjectName(jsonConf.getProjectName());
 		this.setUrlConnection(jsonConf.getUrlConnection());
 		this.setEnumerations(jsonConf.getEnumerations());
@@ -96,12 +94,9 @@ public class ConfigCreateProject {
         ObjectMapper mapper = new ObjectMapper();
         try {
             // JSON file to Java object - TODO CHANGE ME!!!
-        		ProjectConfig jsonConf = mapper.readValue(new File("/Users/marco/git/generator-smart/project.json"), ProjectConfig.class);
+        	ProjectConfig jsonConf = mapper.readValue(new File("/Users/marco/git/generator-smart/project.json"), ProjectConfig.class);
             String prettyJsonConf = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonConf);
             System.out.println("# Test - Project Configuration JSON => " + prettyJsonConf);
-            
-            //CollectionType typeReference = TypeFactory.defaultInstance().constructCollectionType(List.class, ProjectConfig.class);
-            //ProjectConfig jsonConf = mapper.readValue(new File("/Users/marco/git/generator-smart/project.json"), typeReference);
             	
             return jsonConf;
         } catch (Exception e) {
@@ -450,14 +445,6 @@ public class ConfigCreateProject {
 
 	public void setSrcReportUtilFolder(String srcReportUtilFolder) {
 		this.srcReportUtilFolder = srcReportUtilFolder;
-	}
-
-	public String getPathFileRelation() {
-		return pathFileRelation;
-	}
-
-	public void setPathFileRelation(String pathFileRelation) {
-		this.pathFileRelation = pathFileRelation;
 	}
 
 	public List<ProjectEnum> getEnumerations() {

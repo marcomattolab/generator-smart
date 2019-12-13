@@ -16,7 +16,6 @@ public class ProjectConfig {
     private String username;
     private String password;
     private String pathname;
-    private String pathFileRelation;
     private String projectName;
     private String urlConnection;
     private List<String> languages;
@@ -70,12 +69,6 @@ public class ProjectConfig {
 	}
 	public void setPathname(String pathname) {
 		this.pathname = pathname;
-	}
-	public String getPathFileRelation() {
-		return pathFileRelation;
-	}
-	public void setPathFileRelation(String pathFileRelation) {
-		this.pathFileRelation = pathFileRelation;
 	}
 	public String getProjectName() {
 		return projectName;

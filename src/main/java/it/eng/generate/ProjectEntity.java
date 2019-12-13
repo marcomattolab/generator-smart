@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * ProjectEntity Model
+ * Project Entity Model
  */
 public class ProjectEntity {
 	private String name;
@@ -18,12 +18,15 @@ public class ProjectEntity {
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public List<Field> getFields() {
 		return fields;
 	}
+	
 	public void setFields(List<Field> fields) {
 		this.fields = fields;
 	}
