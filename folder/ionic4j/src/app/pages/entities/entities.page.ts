@@ -9,11 +9,12 @@ import { NavController } from '@ionic/angular';
 export class EntitiesPage {
   entities: Array<any> = [
     /* jhipster-needle-add-entity-page - JHipster will add entity pages here */
+	{name: 'publisher', component: 'PublisherPage', route: 'publisher'},
   ];
 
   constructor(public navController: NavController) {}
 
   openPage(page) {
-    this.navController.navigateForward('/tabs/entities/' + page.route);
+    this.navController.navigateForward(['/tabs','entities', page.route]);
   }
 }

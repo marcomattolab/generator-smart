@@ -26,6 +26,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'entities/publisher',
+        children: [
+          {
+            path: '',
+            loadChildren: '../entities/publisher/publisher.module#PublisherPageModule'
+          }
+        ]
+      },
+      {
         path: 'account',
         children: [
           {
