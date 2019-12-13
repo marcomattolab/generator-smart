@@ -3,6 +3,7 @@
   "owner":null,
   "tablePartName":"",
   "app" : "App",
+  "enableReverseEngineeringDB" : true,
   "driver" : "com.mysql.jdbc.Driver",
   "dataBaseName" : "angulardb",
   "packageclass" : "it.exprivia",

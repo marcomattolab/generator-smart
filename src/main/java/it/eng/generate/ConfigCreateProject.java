@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConfigCreateProject {
 	private boolean generateTest;
+	private boolean enableReverseEngineeringDB;
 	private String urlConnection;
 	private String username;
 	private String password;
@@ -18,6 +19,7 @@ public class ConfigCreateProject {
 	private String dataBaseName;
 	private String tablePartName;
 	private List<ProjectEnum> enumerations;
+	private List<ProjectEntity> projectEntities;
 	
 	private String srcAopLoggingFolder = "aop.logging";
 	private String srcConfigFolder = "config";
@@ -71,6 +73,7 @@ public class ConfigCreateProject {
 		ProjectConfig jsonConf = readProjectJson();
 
 		this.setGenerateTest(jsonConf.isGenerateTest());
+		this.setEnableReverseEngineeringDB(jsonConf.isEnableReverseEngineeringDB());
 		this.setApp(jsonConf.getApp());
 		this.setDriver(jsonConf.getDriver());
 		this.setOwner(jsonConf.getOwner());
@@ -83,8 +86,8 @@ public class ConfigCreateProject {
 		this.setProjectName(jsonConf.getProjectName());
 		this.setUrlConnection(jsonConf.getUrlConnection());
 		this.setEnumerations(jsonConf.getEnumerations());
-		String[] languages = jsonConf.getLanguages().toArray(new String[jsonConf.getLanguages().size()]);
-		this.setLanguages( languages );
+		this.setLanguages( jsonConf.getLanguages().toArray(new String[jsonConf.getLanguages().size()]) );
+		this.setProjectEntities(jsonConf.getEntities());
 	}
 	
 	/**
@@ -455,6 +458,22 @@ public class ConfigCreateProject {
 
 	public void setEnumerations(List<ProjectEnum> enumerations) {
 		this.enumerations = enumerations;
+	}
+
+	public boolean isEnableReverseEngineeringDB() {
+		return enableReverseEngineeringDB;
+	}
+
+	public void setEnableReverseEngineeringDB(boolean enableReverseEngineeringDB) {
+		this.enableReverseEngineeringDB = enableReverseEngineeringDB;
+	}
+
+	public List<ProjectEntity> getProjectEntities() {
+		return projectEntities;
+	}
+
+	public void setProjectEntities(List<ProjectEntity> projectEntities) {
+		this.projectEntities = projectEntities;
 	}
 	
 }

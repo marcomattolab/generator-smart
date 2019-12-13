@@ -9,6 +9,7 @@ public class ProjectConfig {
 	private String owner;
 	private String tablePartName;
     private boolean generateTest;
+    private boolean enableReverseEngineeringDB;
     private String app;
     private String driver;
     private String dataBaseName;
@@ -117,6 +118,12 @@ public class ProjectConfig {
 	}
 	public void setEntities(List<ProjectEntity> entities) {
 		this.entities = entities;
+	}
+	public boolean isEnableReverseEngineeringDB() {
+		return enableReverseEngineeringDB;
+	}
+	public void setEnableReverseEngineeringDB(boolean enableReverseEngineeringDB) {
+		this.enableReverseEngineeringDB = enableReverseEngineeringDB;
 	}
 	
 }

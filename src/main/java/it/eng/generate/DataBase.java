@@ -11,7 +11,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import org.springframework.util.CollectionUtils;
 
 import it.eng.generate.project.ApplicationApp;
 import it.eng.generate.project.TemplateAngular;
@@ -176,7 +179,7 @@ import it.eng.generate.template.web.vm.TemplateLoggerVM;
 import it.eng.generate.template.web.vm.TemplateManagedUserVM;
 
 public class DataBase {
-	public HashMap<String, Table> tabelle;
+	public Map<String, Table> tabelle;
 	public HashMap<String, List<String>> enumeration;
 	public HashMap<String, List<String>> enumerationRelation;
 
@@ -220,62 +223,121 @@ public class DataBase {
 		return tabelle.keySet();
 	}
 
-	public void init() throws ClassNotFoundException, SQLException{
-		//Inizializzazione Database
+	public void init() throws ClassNotFoundException, SQLException {
 		ConfigCreateProject ccp = ConfigCreateProject.getIstance();
-		Class.forName(ccp.getDriver());
-		Connection con = DriverManager.getConnection(ccp.getUrlConnection(), ccp.getUsername(),ccp.getPassword());
-		DatabaseMetaData dmd = con.getMetaData();
-		String[] types = {"TABLE", "VIEW"};
-		ResultSet rstabelle = dmd.getTables(ccp.getDataBaseName(),ccp.getOwner(),"%"+ccp.getTablePartName()+"%",types);
+		System.out.println("ReverseEngineeringDB is "  + (ccp.isEnableReverseEngineeringDB() ? "Enabled" : "NOT Enabled") );
+		
+		
+		if (ccp.isEnableReverseEngineeringDB()) {
+			//CASE A - Reverse Engineering for DataBase
+			
+			//Inizializzazione Database
+			Class.forName(ccp.getDriver());
+			Connection con = DriverManager.getConnection(ccp.getUrlConnection(), ccp.getUsername(),ccp.getPassword());
+			DatabaseMetaData dmd = con.getMetaData();
+			String[] types = {"TABLE", "VIEW"};
+			ResultSet rstabelle = dmd.getTables(ccp.getDataBaseName(),ccp.getOwner(), "%"+ccp.getTablePartName()+"%", types);
+			System.out.println("DataBaseName:" + ccp.getDataBaseName() + " Owner:" + ccp.getOwner());
 
-		System.out.println("DataBaseName:" + ccp.getDataBaseName() + " Owner:" + ccp.getOwner());
+			//A - Generate Tables
+			while(rstabelle.next()) {
+				String tableName = rstabelle.getString("TABLE_NAME");
+				Table table = new Table();
+				table.setNomeTabellaCompleto(tableName);
+				table.setNomeTabella(tableName.substring(ccp.getTablePartName().length()));
+				this.addTable(tableName, table);
+				ResultSet rs3 = dmd.getColumns(ccp.getDataBaseName(),ccp.getOwner(),tableName,"%%");
 
-		while(rstabelle.next()) {
-			String tableName = rstabelle.getString("TABLE_NAME");
-			Table table = new Table();
-			table.setNomeTabellaCompleto(tableName);
-			table.setNomeTabella(tableName.substring(ccp.getTablePartName().length()));
-			this.addTable(tableName, table);
-			ResultSet rs3 = dmd.getColumns(ccp.getDataBaseName(),ccp.getOwner(),tableName,"%%");
+				System.out.println("# tableName: "+tableName);
+				while(rs3.next()) {
+					String columnName = (String) rs3.getObject("COLUMN_NAME");
+					Integer typeColumn = (Integer) rs3.getObject("DATA_TYPE");
+					Integer columnSize = (Integer) rs3.getObject("COLUMN_SIZE");
+					String isNullable = (String) rs3.getObject("IS_NULLABLE");
 
-			System.out.println("# tableName: "+tableName);
-			while(rs3.next()) {
-				String columnName = (String) rs3.getObject("COLUMN_NAME");
-				Integer typeColumn = (Integer) rs3.getObject("DATA_TYPE");
-				Integer columnSize = (Integer) rs3.getObject("COLUMN_SIZE");
-				String isNullable = (String) rs3.getObject("IS_NULLABLE");
+					System.out.println("Column:"+columnName+" Type:"+typeColumn+" Size:"+columnSize+" Nullable:"+isNullable);
 
-				System.out.println("Column:"+columnName+" Type:"+typeColumn+" Size:"+columnSize+" Nullable:"+isNullable);
+					Column column = new Column();
+					column.setName(columnName);
+					column.setTypeColumn(typeColumn.intValue());
+					if(columnSize!=null) {
+						column.setColumnSize(columnSize.intValue());
+					}
+					if((isNullable!=null) && isNullable.equals("YES")) {
+						column.setNullable();
+					}
 
-				Column column = new Column();
-				column.setName(columnName);
-				column.setTypeColumn(typeColumn.intValue());
-				if(columnSize!=null) {
-					column.setColumnSize(columnSize.intValue());
+					table.addColumn(column);
 				}
-				if((isNullable!=null) && isNullable.equals("YES")) {
-					column.setNullable();
+
+				ResultSet rs4 = dmd.getPrimaryKeys(ccp.getDataBaseName(), ccp.getOwner(),tableName);
+				while(rs4.next()) {
+					String key = (String) rs4.getObject(4);
+					table.getColumn(key).setKey();
 				}
 
-				table.addColumn(column);
+			}	
+
+			//B - Generate Enumerations
+			List<ProjectEnum> enums = ccp.getEnumerations();
+			for (ProjectEnum projectEnum: enums) {
+				String[] values = projectEnum.getValues().split("#");
+				System.out.println("Define Enumeration: " + projectEnum.getName() + " Values: " + values);
+				this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
 			}
-
-			ResultSet rs4 = dmd.getPrimaryKeys(ccp.getDataBaseName(),ccp.getOwner(),tableName);
-			while(rs4.next()) {
-				String key = (String) rs4.getObject(4);
-				table.getColumn(key).setKey();
+			
+		} else {
+			//CASE B - Generate from Project Entities
+			List<ProjectEntity> prjEntities = ccp.getProjectEntities();
+			if (!CollectionUtils.isEmpty(prjEntities)) {
+				for(ProjectEntity entity : prjEntities) {
+					Table table = new Table();
+					String tableName = entity.getName();
+					System.out.println("# tableName: "+tableName);
+					
+					table.setNomeTabellaCompleto(tableName);
+					table.setNomeTabella(tableName);
+					this.addTable(tableName, table);
+					
+					for(Field field : entity.getFields()) {
+						String columnName = field.getFname();
+						String cTypeColumn = field.getFtype();
+						boolean isNullable = field.isFrequired();
+						//Integer columnSize = (Integer) rs3.getObject("COLUMN_SIZE");
+						
+						Column column = new Column();
+						column.setName(columnName);
+						Class fieldClass = column.convertDBtoJava(cTypeColumn);
+						column.setTypeColumn(column.converterTypeJavaintoRequestSQL(fieldClass));
+						if (isNullable) {
+							column.setNullable();
+						}
+						//if(columnSize!=null) {
+						//	column.setColumnSize(columnSize.intValue());
+						//}
+						table.addColumn(column);
+						
+						System.out.println("Column:"+columnName+" Type:"+cTypeColumn+" Size:"+"?"+" Nullable:"+isNullable);
+						
+						//Set Primary KEY
+						String key = "ID";
+						table.getColumn(key).setKey();
+						
+					}
+					
+				}
 			}
-
-		}	
-
-		//Enumerations
-		List<ProjectEnum> enums = ccp.getEnumerations();
-		for (ProjectEnum projectEnum: enums) {
-			String[] values = projectEnum.getValues().split("#");
-			System.out.println("Define Enumeration: " + projectEnum.getName() + " Values: " + values);
-			this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
+			
+			//B - Generate Enumerations
+			List<ProjectEnum> enums = ccp.getEnumerations();
+			for (ProjectEnum projectEnum: enums) {
+				String[] values = projectEnum.getValues().split("#");
+				System.out.println("Define Enumeration: " + projectEnum.getName() + " Values: " + values);
+				this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
+			}
+			
 		}
+		
 	}
 
 	public void addTable(String tableName, Table table) {
