@@ -151,6 +151,36 @@ public class Column {
 		else
 			return Object.class;
 	}
+	
+	public static int corvertModelType(String cTypeColumn) {
+		if ("String".equals(cTypeColumn)) 
+			return Types.VARCHAR;
+		else if ("Blob".equals(cTypeColumn))
+			return Types.BLOB;
+		else if ("Float".equals(cTypeColumn))
+			return Types.FLOAT;
+		else if ("Double".equals(cTypeColumn))
+			return Types.DOUBLE;
+		else if ("Integer".equals(cTypeColumn))
+			return Types.INTEGER;
+		else if ("BigDecimal".equals(cTypeColumn))
+			return Types.DECIMAL;
+		else if ("Double".equals(cTypeColumn))
+			return Types.DOUBLE;
+		else if ("Boolean".equals(cTypeColumn))
+			return Types.BOOLEAN;
+		else if ("LocalDate".equals(cTypeColumn) || "Date".equals(cTypeColumn))
+			return Types.DATE;
+		else if ("Time".equals(cTypeColumn))
+			return Types.TIME;
+		else if ("Instant".equals(cTypeColumn))
+			return Types.TIMESTAMP;
+		else if ("ZonedDateTime".equals(cTypeColumn))
+			return Types.TIMESTAMP_WITH_TIMEZONE;
+		else return Types.CHAR;
+			
+	}
+
 
 	public void setColumnSize(int columnSize) {
 		this.columnSize=columnSize;

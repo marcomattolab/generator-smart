@@ -1,11 +1,14 @@
 package it.eng.generate;
 
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -298,15 +301,17 @@ public class DataBase {
 					
 					for(Field field : entity.getFields()) {
 						String columnName = field.getFname();
-						String cTypeColumn = field.getFtype();
+						String mTypeColumn = field.getFtype();
 						boolean isNullable = field.isFrequired();
 						//TODO MANAGE SIZE
 						//Integer columnSize = (Integer) rs3.getObject("COLUMN_SIZE");
 						
 						Column column = new Column();
 						column.setName(columnName);
-						Class fieldClass = column.convertDBtoJava(cTypeColumn);
-						column.setTypeColumn(column.converterTypeJavaintoRequestSQL(fieldClass));
+						int iTypeColmn = Column.corvertModelType(mTypeColumn);
+						column.setTypeColumn(iTypeColmn);
+						System.out.println("column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn);
+						
 						if (isNullable) {
 							column.setNullable();
 						}
@@ -315,7 +320,7 @@ public class DataBase {
 						//}
 						table.addColumn(column);
 						
-						System.out.println("Column:"+columnName+" Type:"+cTypeColumn+" Size:"+"?"+" Nullable:"+isNullable);
+						System.out.println("Column: "+columnName+"  Type: "+column.getTypeColumn()+"  Size: "+"?"+"  Nullable: "+isNullable);
 						
 						//Set Primary KEY - TODO DEVELOP THIS!
 						String key = "id";

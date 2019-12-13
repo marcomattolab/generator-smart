@@ -22,7 +22,7 @@
   "entities" : [ 
   	{"name":"Autore", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true}, 
-  			{"fname":"dataNascita", "ftype":"LocalDate", "frequired":false}, 
+  			{"fname":"datanascita", "ftype":"LocalDate", "frequired":false}, 
   			{"fname":"sesso", "ftype":"String", "frequired":false}, 
   			{"fname":"nome", "ftype":"String", "frequired":true}, 
   			{"fname":"cognome", "ftype":"String", "frequired":false}, 
