@@ -35,4 +35,4 @@
 ## BUG Ricerca  (FILTRI RICERCA)
 1) Gestire i campi BLOB  / CLOB
 2) Non funzionano i filtri RANGE sulle DATE
-
+3) campo firstName camel case non funge!
