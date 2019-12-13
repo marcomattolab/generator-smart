@@ -225,7 +225,7 @@ public class DataBase {
 
 	public void init() throws ClassNotFoundException, SQLException {
 		ConfigCreateProject ccp = ConfigCreateProject.getIstance();
-		System.out.println("ReverseEngineeringDB is "  + (ccp.isEnableReverseEngineeringDB() ? "Enabled" : "NOT Enabled") );
+		System.out.println("## ReverseEngineeringDB is "  + (ccp.isEnableReverseEngineeringDB() ? "Enabled" : "NOT Enabled") );
 		
 		
 		//CASE A - Reverse Engineering for DataBase
