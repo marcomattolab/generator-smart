@@ -102,7 +102,7 @@ public class ConfigCreateProject {
         	String PATH = "C:\\Users\\Martorana\\git\\generator-smart\\project.json";
         	ProjectConfig jsonConf = mapper.readValue(new File(PATH), ProjectConfig.class);
             String prettyJsonConf = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonConf);
-            System.out.println("# Test - Project Configuration JSON => " + prettyJsonConf);
+            //System.out.println("# Test - Project Configuration JSON => " + prettyJsonConf);
             	
             return jsonConf;
         } catch (Exception e) {

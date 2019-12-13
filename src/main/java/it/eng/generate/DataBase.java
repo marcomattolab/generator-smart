@@ -197,7 +197,7 @@ public class DataBase {
 			try {
 				System.out.println("Loading database...");
 				conf.init();
-				System.out.println("Database has been succesfully loaded...\n");
+				System.out.println("\nDatabase has been succesfully loaded...\n\n");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {
@@ -290,7 +290,7 @@ public class DataBase {
 				for(ProjectEntity entity : prjEntities) {
 					Table table = new Table();
 					String tableName = entity.getName();
-					System.out.println("# tableName: "+tableName);
+					System.out.println("\n## TableName: "+tableName);
 					
 					table.setNomeTabellaCompleto(tableName);
 					table.setNomeTabella(tableName);
@@ -307,7 +307,7 @@ public class DataBase {
 						column.setName(columnName);
 						int iTypeColmn = Column.corvertModelType(mTypeColumn);
 						column.setTypeColumn(iTypeColmn);
-						System.out.println("Column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn);
+						System.out.println("# Column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn);
 						
 						if (!isRequired) {
 							column.setNullable();
@@ -317,7 +317,7 @@ public class DataBase {
 						}
 						table.addColumn(column);
 						
-						System.out.println("Column: "+columnName+"  Type: "+column.getTypeColumn()+"  Size: "+columnSize+"  Required: "+isRequired+"\n");
+						System.out.println("# Column: "+columnName+" ==> Type: "+column.getTypeColumn()+"  Size: "+columnSize+"  Required: "+isRequired);
 						
 						//Set Primary KEY - TODO DEVELOP THIS!
 						String key = "id";
@@ -346,7 +346,7 @@ public class DataBase {
 		List<ProjectEnum> enums = ccp.getEnumerations();
 		for (ProjectEnum projectEnum: enums) {
 			String[] values = projectEnum.getValues().split("#");
-			System.out.println("Define Enumeration: " + projectEnum.getName() + " Values: " + values);
+			//System.out.println("@ Define Enumeration: " + projectEnum.getName() + " Values: " + values + "");
 			this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
 		}
 	}
