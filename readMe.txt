@@ -37,4 +37,13 @@
 2) Non funzionano i filtri RANGE sulle DATE
 3) Modello JSON => se metto un campo "firstName" camel case non funge!
 4) Modello JSON => "id" deve essere sempre presente!
+5) Aggiungere altri tipologie: ImageBlob, Blob
 
+
+## COMPLETARE MODELLO JSON 
+- unique 
+- minlength(5) 
+- maxlength(13)  
+- COSTANTI => minlength(SIZE_MAX)  
+- Enumerations   
+- Relations =>  OneToOne  ManyToMany   OneToMany  ManyToOne
