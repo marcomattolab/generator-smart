@@ -134,10 +134,11 @@ public class Column {
 		else if(type==Types.BOOLEAN)
 			return Boolean.class;
 		else if(type==Types.DATE)
-			//return Date.class;
 			return LocalDate.class;
 		else if(type==Types.DOUBLE)
 			return Double.class;
+		else if(type==Types.NUMERIC)
+			return Long.class;
 		else if(type==Types.FLOAT)
 			return Float.class;
 		else if(type==Types.SMALLINT)
@@ -165,8 +166,8 @@ public class Column {
 			return Types.INTEGER;
 		else if ("BigDecimal".equals(cTypeColumn))
 			return Types.DECIMAL;
-		else if ("Double".equals(cTypeColumn))
-			return Types.DOUBLE;
+		else if ("Long".equals(cTypeColumn))
+			return Types.NUMERIC;
 		else if ("Boolean".equals(cTypeColumn))
 			return Types.BOOLEAN;
 		else if ("LocalDate".equals(cTypeColumn) || "Date".equals(cTypeColumn))
