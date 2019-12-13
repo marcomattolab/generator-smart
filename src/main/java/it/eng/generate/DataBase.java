@@ -1,14 +1,11 @@
 package it.eng.generate;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -581,7 +578,7 @@ public class DataBase {
 				new TemplateServiceCriteria(this, tabella).generateTemplate(); 				//TODO Add enumeration management
 				new TemplateResource(tabella).generateTemplate();
 				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS DEV  !!
-				//				new TemplateIntTest(tabella).generateTemplate(); 			//TODO COMPLETE THIS TEST !!
+				//new TemplateIntTest(tabella).generateTemplate(); 							//TODO COMPLETE THIS TEST !!
 
 				//MultiLanguages
 				for(String languageCode: config.getLanguages()) {

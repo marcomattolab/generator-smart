@@ -58,12 +58,20 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 			Column column = tabella.getColumn(key);
 			Class filterType = column.getTypeColumn();
 			
+			boolean isPrimaryKey = column.isKey();
+			
 			//String nomeColonna = Utils.getFieldName(column);  	// dataNascita
-			String nomeColonna = column.getName();				// data_nascita
+			String nomeColonna = column.getName();					// data_nascita
 			int sizeColumn = column.getColumnSize();
 			
 			//TODO MOVE INTO UTILS
-			if (filterType.getName().equals("java.lang.String")) {
+			if( Utils.isPrimaryKeyID(column) ) {
+				//Primary Key - FIXME retrieve from db
+				body += "            <column name=\"id\" type=\"bigint\" autoIncrement=\"${autoIncrement}\">\r\n" +
+						"                <constraints primaryKey=\"true\" nullable=\"false\"/>\r\n" +
+						"            </column>\r\n\n";
+				
+			} else if (filterType.getName().equals("java.lang.String")) {
 				body += "            <column name=\""+nomeColonna+"\" type=\"varchar("+sizeColumn+")\">\r\n" +
 						"                <constraints nullable=\"true\" />\r\n" +
 						"            </column>\r\n\n";
@@ -120,13 +128,13 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 				body += "            <column name=\""+fieldNameContentType +"\" type=\"varchar(255)\">\r\n" +
 						"                <constraints nullable=\"true\" />\r\n" +
 						"            </column>\r\n\n";
-				
-			} else if( Utils.isPrimaryKeyID(column) ) {
-				//Primary Key - FIXME retrieve from db
-				body += "            <column name=\"id\" type=\"bigint\" autoIncrement=\"${autoIncrement}\">\r\n" +
-						"                <constraints primaryKey=\"true\" nullable=\"false\"/>\r\n" +
-						"            </column>\r\n\n";
-			}
+			}				
+//			} else if( Utils.isPrimaryKeyID(column) ) {
+//				//Primary Key - FIXME retrieve from db
+//				body += "            <column name=\"id\" type=\"bigint\" autoIncrement=\"${autoIncrement}\">\r\n" +
+//						"                <constraints primaryKey=\"true\" nullable=\"false\"/>\r\n" +
+//						"            </column>\r\n\n";
+//			}
 		}
 		// MAIN CICLE DL - END
 		body += "        </createTable>\r\n";
