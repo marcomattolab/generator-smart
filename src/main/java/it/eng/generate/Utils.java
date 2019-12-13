@@ -498,12 +498,14 @@ public class Utils {
 		String nomeColonna = Utils.getFieldName(column);
 		String NomeColonna = Utils.getFieldNameForMethod(column);
 		
+		boolean isNullable = column.isNullable();
+		
 		if (filterType.getName().equals("java.lang.String") && !isEnumeration) {
 			result += //TEXT
 			"                <div class=\"form-group\">\r\n" +
 			"                    <label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+nomeColonna+"\" for=\"field_"+nomeColonna+"\">"+NomeColonna+"</label>\r\n" +
 			"                    <input type=\"text\" class=\"form-control\" name=\""+nomeColonna+"\" id=\"field_"+nomeColonna+"\"\r\n" +
-			"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" required/>\r\n" +
+			"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" "+ (!isNullable?"required":"")  +"/>\r\n" +
 			"                    <div [hidden]=\"!(editForm.controls."+nomeColonna+"?.dirty && editForm.controls."+nomeColonna+"?.invalid)\">\r\n" +
 			"                        <small class=\"form-text text-danger\"\r\n" +
 			"                        [hidden]=\"!editForm.controls."+nomeColonna+"?.errors?.required\" jhiTranslate=\"entity.validation.required\">\r\n" +
@@ -538,7 +540,7 @@ public class Utils {
 					"                <div class=\"form-group\">\r\n" +
 					"                    <label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+nomeColonna+"\" for=\"field_"+nomeColonna+"\">"+NomeColonna+"</label>\r\n" +
 					"                    <input type=\"number\" class=\"form-control\" name=\""+nomeColonna+"\" id=\"field_"+nomeColonna+"\"\r\n" +
-					"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" required/>\r\n" +
+					"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" "+ (!isNullable?"required":"") +"/>\r\n" +
 					"                    <div [hidden]=\"!(editForm.controls."+nomeColonna+"?.dirty && editForm.controls."+nomeColonna+"?.invalid)\">\r\n" +
 					"                        <small class=\"form-text text-danger\"\r\n" +
 					"                        [hidden]=\"!editForm.controls."+nomeColonna+"?.errors?.required\" jhiTranslate=\"entity.validation.required\">\r\n" +
@@ -575,8 +577,8 @@ public class Utils {
 				"                <div class=\"form-group\">\r\n" +
 				"                    <label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+nomeColonna+"\" for=\"field_"+nomeColonna+"\">"+nomeColonna+"</label>\r\n" +
 				"                    <div class=\"d-flex\">\r\n" +
-				"                        <input id=\"field_"+nomeColonna+"\" type=\"datetime-local\" class=\"form-control\" name=\""+nomeColonna+"\" [(ngModel)]=\""+nomeColonna+"\"\r\n" +
-				"                        required/>\r\n" +
+				"                        <input id=\"field_"+nomeColonna+"\" type=\"datetime-local\" class=\"form-control\" name=\""+nomeColonna+"\" [(ngModel)]=\""+nomeColonna+"\"\r\n" + (!isNullable?"required":"")+
+				"                        />\r\n" +
 				"                    </div>\r\n" +
 				"                    <div [hidden]=\"!(editForm.controls."+nomeColonna+"?.dirty && editForm.controls."+nomeColonna+"?.invalid)\">\r\n" +
 				"                        <small class=\"form-text text-danger\"\r\n" +
