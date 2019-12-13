@@ -228,8 +228,8 @@ public class DataBase {
 		System.out.println("ReverseEngineeringDB is "  + (ccp.isEnableReverseEngineeringDB() ? "Enabled" : "NOT Enabled") );
 		
 		
+		//CASE A - Reverse Engineering for DataBase
 		if (ccp.isEnableReverseEngineeringDB()) {
-			//CASE A - Reverse Engineering for DataBase
 			
 			//Inizializzazione Database
 			Class.forName(ccp.getDriver());
@@ -278,17 +278,14 @@ public class DataBase {
 
 			}	
 
-			//B - Generate Enumerations
-			List<ProjectEnum> enums = ccp.getEnumerations();
-			for (ProjectEnum projectEnum: enums) {
-				String[] values = projectEnum.getValues().split("#");
-				System.out.println("Define Enumeration: " + projectEnum.getName() + " Values: " + values);
-				this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
-			}
+			//Build Enumerations
+			buildEnumerations(ccp);
 			
 		} else {
+			
 			//CASE B - Generate from Project Entities
 			List<ProjectEntity> prjEntities = ccp.getProjectEntities();
+			
 			if (!CollectionUtils.isEmpty(prjEntities)) {
 				for(ProjectEntity entity : prjEntities) {
 					Table table = new Table();
@@ -303,6 +300,7 @@ public class DataBase {
 						String columnName = field.getFname();
 						String cTypeColumn = field.getFtype();
 						boolean isNullable = field.isFrequired();
+						//TODO MANAGE SIZE
 						//Integer columnSize = (Integer) rs3.getObject("COLUMN_SIZE");
 						
 						Column column = new Column();
@@ -319,8 +317,8 @@ public class DataBase {
 						
 						System.out.println("Column:"+columnName+" Type:"+cTypeColumn+" Size:"+"?"+" Nullable:"+isNullable);
 						
-						//Set Primary KEY
-						String key = "ID";
+						//Set Primary KEY - TODO DEVELOP THIS!
+						String key = "id";
 						table.getColumn(key).setKey();
 						
 					}
@@ -328,16 +326,25 @@ public class DataBase {
 				}
 			}
 			
-			//B - Generate Enumerations
-			List<ProjectEnum> enums = ccp.getEnumerations();
-			for (ProjectEnum projectEnum: enums) {
-				String[] values = projectEnum.getValues().split("#");
-				System.out.println("Define Enumeration: " + projectEnum.getName() + " Values: " + values);
-				this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
-			}
+			//Build Enumerations
+			buildEnumerations(ccp);
 			
 		}
 		
+	}
+
+	/**
+	 * Build Enumerations Stuff
+	 * @param ccp ConfigCreateProject
+	 */
+	private void buildEnumerations(ConfigCreateProject ccp) {
+		//B - Generate Enumerations
+		List<ProjectEnum> enums = ccp.getEnumerations();
+		for (ProjectEnum projectEnum: enums) {
+			String[] values = projectEnum.getValues().split("#");
+			System.out.println("Define Enumeration: " + projectEnum.getName() + " Values: " + values);
+			this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
+		}
 	}
 
 	public void addTable(String tableName, Table table) {
