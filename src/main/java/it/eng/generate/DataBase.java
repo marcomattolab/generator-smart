@@ -299,7 +299,7 @@ public class DataBase {
 					for(Field field : entity.getFields()) {
 						String columnName = field.getFname();
 						String mTypeColumn = field.getFtype();
-						boolean isNullable = field.isFrequired();
+						boolean isRequired = field.isFrequired();
 					  //Integer columnSize = field.getFsize()!=null ? field.getFsize() : ccp.getDefaultColumnSize();
 						Integer columnSize = field.getFsize()!=null ? field.getFsize() : null;
 						
@@ -309,7 +309,7 @@ public class DataBase {
 						column.setTypeColumn(iTypeColmn);
 						System.out.println("Column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn);
 						
-						if (isNullable) {
+						if (!isRequired) {
 							column.setNullable();
 						}
 						if(columnSize!=null) {
@@ -317,7 +317,7 @@ public class DataBase {
 						}
 						table.addColumn(column);
 						
-						System.out.println("Column: "+columnName+"  Type: "+column.getTypeColumn()+"  Size: "+columnSize+"  Nullable: "+isNullable+"\n");
+						System.out.println("Column: "+columnName+"  Type: "+column.getTypeColumn()+"  Size: "+columnSize+"  Required: "+isRequired+"\n");
 						
 						//Set Primary KEY - TODO DEVELOP THIS!
 						String key = "id";
