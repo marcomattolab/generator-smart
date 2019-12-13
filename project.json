@@ -37,6 +37,7 @@
   			{"fname":"copies", "ftype":"Integer", "frequired":false, "fsize":21}
   	]},
   	{"name":"Cliente", "fields": [
+  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
   			{"fname":"firstname", "ftype":"String", "frequired":true, "fsize":500}, 
   			{"fname":"lastname", "ftype":"String", "frequired":true, "fsize":500}, 
   			{"fname":"email", "ftype":"String", "frequired":false, "fsize":500}, 
