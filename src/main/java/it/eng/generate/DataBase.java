@@ -304,13 +304,14 @@ public class DataBase {
 						String mTypeColumn = field.getFtype();
 						boolean isNullable = field.isFrequired();
 						//TODO MANAGE SIZE
-						//Integer columnSize = (Integer) rs3.getObject("COLUMN_SIZE");
+						//Integer columnSize = (Integer) field.getSize();
+						Integer columnSize = new Integer("45");
 						
 						Column column = new Column();
 						column.setName(columnName);
 						int iTypeColmn = Column.corvertModelType(mTypeColumn);
 						column.setTypeColumn(iTypeColmn);
-						System.out.println("column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn);
+						System.out.println("Column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn);
 						
 						if (isNullable) {
 							column.setNullable();
@@ -320,7 +321,7 @@ public class DataBase {
 						//}
 						table.addColumn(column);
 						
-						System.out.println("Column: "+columnName+"  Type: "+column.getTypeColumn()+"  Size: "+"?"+"  Nullable: "+isNullable);
+						System.out.println("Column: "+columnName+"  Type: "+column.getTypeColumn()+"  Size: "+"?"+"  Nullable: "+isNullable+"\n");
 						
 						//Set Primary KEY - TODO DEVELOP THIS!
 						String key = "id";

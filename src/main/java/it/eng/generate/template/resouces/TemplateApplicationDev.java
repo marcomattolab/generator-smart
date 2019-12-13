@@ -56,7 +56,7 @@ public class TemplateApplicationDev extends AbstractResourceTemplate{
 		"            indent-output: true\r\n" +
 		"    datasource:\r\n" +
 		"        type: com.zaxxer.hikari.HikariDataSource\r\n" +
-		"        url: jdbc:mysql://localhost:3306/"+conf.getProjectName()+"?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false\r\n" +
+		"        url: jdbc:mysql://localhost:3306/"+conf.getProjectName()+"?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC\r\n" +
 		"        username: "+conf.getUsername()+"\r\n" +
 		"        password: "+conf.getPassword()+"\r\n" +
 		"        hikari:\r\n" +
