@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ConfigCreateProject {
 	private boolean generateTest;
 	private boolean enableReverseEngineeringDB;
-	private Integer defaultColumnSize;
 	private String urlConnection;
 	private String username;
 	private String password;
@@ -75,7 +74,6 @@ public class ConfigCreateProject {
 		this.setGenerateTest(jsonConf.isGenerateTest());
 		this.setEnableReverseEngineeringDB(jsonConf.isEnableReverseEngineeringDB());
 		this.setApp(jsonConf.getApp());
-		this.setDefaultColumnSize(jsonConf.getDefaultColumnSize());
 		this.setDriver(jsonConf.getDriver());
 		this.setOwner(jsonConf.getOwner());
 		this.setDataBaseName(jsonConf.getDataBaseName());
@@ -477,12 +475,4 @@ public class ConfigCreateProject {
 		this.projectEntities = projectEntities;
 	}
 
-	public Integer getDefaultColumnSize() {
-		return defaultColumnSize;
-	}
-
-	public void setDefaultColumnSize(Integer defaultColumnSize) {
-		this.defaultColumnSize = defaultColumnSize;
-	}
-	
 }

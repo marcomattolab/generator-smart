@@ -1,7 +1,6 @@
 {
   "generateTest":true,
   "owner":null,
-  "defaultColumnSize":100,
   "tablePartName":"",
   "app" : "App",
   "enableReverseEngineeringDB" : false,

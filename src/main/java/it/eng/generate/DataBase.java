@@ -300,7 +300,6 @@ public class DataBase {
 						String columnName = field.getFname();
 						String mTypeColumn = field.getFtype();
 						boolean isRequired = field.isFrequired();
-					  //Integer columnSize = field.getFsize()!=null ? field.getFsize() : ccp.getDefaultColumnSize();
 						Integer columnSize = field.getFsize()!=null ? field.getFsize() : null;
 						
 						Column column = new Column();
