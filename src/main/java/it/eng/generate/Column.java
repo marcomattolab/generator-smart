@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Types;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Column {
 	private String name;
@@ -60,8 +61,13 @@ public class Column {
 	}
 	
 	public Class convertDBtoJava(String type){
-		if(type.equals("VARCHAR")||type.equals("CHAR")||type.equals("String")) return String.class;
-		else if(type.equals("DECIMAL")||type.equals("INT")||type.equals("TYNINT")) return BigDecimal.class;
+		if(type.equals("VARCHAR") || type.equals("CHAR") || type.equals("String")) return String.class;
+		else if(type.equals("DECIMAL") || type.equals("INT") || type.equals("TYNINT")) return BigDecimal.class;
+		else if(type.equals("Boolean")) return Boolean.class;
+		else if(type.equals("Long")) return Long.class;
+		else if(type.equals("Double")) return Double.class;
+		else if(type.equals("Integer")) return Integer.class;
+		else if(type.equals("Date") || type.equals("LocalDate")) return Date.class;
 		else return Object.class;
 	}
 	

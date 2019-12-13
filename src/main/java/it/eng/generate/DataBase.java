@@ -319,7 +319,9 @@ public class DataBase {
 						
 						//Set Primary KEY - TODO DEVELOP THIS!
 						String key = "id";
-						table.getColumn(key).setKey();
+						if(table.getColumn(key)!=null) {
+							table.getColumn(key).setKey();
+						}
 						
 					}
 					

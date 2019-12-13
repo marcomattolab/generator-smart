@@ -21,10 +21,10 @@
 					 {"name":"CanaleTrasmissione", "values":"NOTIFICHE@CANALE#NOTIFICHE@ESITO"} ],
   "entities" : [ 
   	{"name":"Autore", "fields": [
-  			{"fname":"id", "ftype":"Integer", "frequired":true}, 
+  			{"fname":"id", "ftype":"Long", "frequired":true}, 
   			{"fname":"dataNascita", "ftype":"LocalDate", "frequired":false}, 
   			{"fname":"sesso", "ftype":"String", "frequired":false}, 
-  			{"fname":"nome", "ftype":"String", "frequired":false}, 
+  			{"fname":"nome", "ftype":"String", "frequired":true}, 
   			{"fname":"cognome", "ftype":"String", "frequired":false}, 
   			{"fname":"note", "ftype":"String", "frequired":false}
   	]}
