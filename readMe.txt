@@ -35,4 +35,6 @@
 ## BUG Ricerca  (FILTRI RICERCA)
 1) Gestire i campi BLOB  / CLOB
 2) Non funzionano i filtri RANGE sulle DATE
-3) campo firstName camel case non funge!
+3) Modello JSON => se metto un campo "firstName" camel case non funge!
+4) Modello JSON => "id" deve essere sempre presente!
+
