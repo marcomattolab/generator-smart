@@ -94,7 +94,9 @@ public class ConfigCreateProject {
         ObjectMapper mapper = new ObjectMapper();
         try {
             // JSON file to Java object - TODO CHANGE ME!!!
-        	ProjectConfig jsonConf = mapper.readValue(new File("/Users/marco/git/generator-smart/project.json"), ProjectConfig.class);
+        	// String PATH = "/Users/marco/git/generator-smart/project.json";
+        	String PATH = "C:\\Users\\Martorana\\git\\generator-smart\\project.json";
+        	ProjectConfig jsonConf = mapper.readValue(new File(PATH), ProjectConfig.class);
             String prettyJsonConf = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonConf);
             System.out.println("# Test - Project Configuration JSON => " + prettyJsonConf);
             	

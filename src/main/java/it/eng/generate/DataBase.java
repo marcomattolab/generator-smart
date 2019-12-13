@@ -179,9 +179,9 @@ public class DataBase {
 	public HashMap<String, Table> tabelle;
 	public HashMap<String, List<String>> enumeration;
 	public HashMap<String, List<String>> enumerationRelation;
-	
+
 	private static DataBase conf;
-	
+
 	private DataBase(){
 		tabelle = new HashMap<>();
 		enumeration = new HashMap<>();
@@ -211,26 +211,26 @@ public class DataBase {
 	public HashMap<String, List<String>> getEnumeration() {
 		return enumeration;
 	}
-	
+
 	public HashMap<String, List<String>> getEnumerationRelation() {
 		return enumerationRelation;
 	}
-	
+
 	public Set getTableName() {
 		return tabelle.keySet();
 	}
-	
+
 	public void init() throws ClassNotFoundException, SQLException{
 		//Inizializzazione Database
 		ConfigCreateProject ccp = ConfigCreateProject.getIstance();
 		Class.forName(ccp.getDriver());
-		Connection con = DriverManager.getConnection(ccp.getUrlConnection(),ccp.getUsername(),ccp.getPassword());
+		Connection con = DriverManager.getConnection(ccp.getUrlConnection(), ccp.getUsername(),ccp.getPassword());
 		DatabaseMetaData dmd = con.getMetaData();
 		String[] types = {"TABLE", "VIEW"};
 		ResultSet rstabelle = dmd.getTables(ccp.getDataBaseName(),ccp.getOwner(),"%"+ccp.getTablePartName()+"%",types);
-		
+
 		System.out.println("DataBaseName:" + ccp.getDataBaseName() + " Owner:" + ccp.getOwner());
-		
+
 		while(rstabelle.next()) {
 			String tableName = rstabelle.getString("TABLE_NAME");
 			Table table = new Table();
@@ -238,14 +238,14 @@ public class DataBase {
 			table.setNomeTabella(tableName.substring(ccp.getTablePartName().length()));
 			this.addTable(tableName, table);
 			ResultSet rs3 = dmd.getColumns(ccp.getDataBaseName(),ccp.getOwner(),tableName,"%%");
-			
+
 			System.out.println("# tableName: "+tableName);
 			while(rs3.next()) {
 				String columnName = (String) rs3.getObject("COLUMN_NAME");
 				Integer typeColumn = (Integer) rs3.getObject("DATA_TYPE");
 				Integer columnSize = (Integer) rs3.getObject("COLUMN_SIZE");
 				String isNullable = (String) rs3.getObject("IS_NULLABLE");
-				
+
 				System.out.println("Column:"+columnName+" Type:"+typeColumn+" Size:"+columnSize+" Nullable:"+isNullable);
 
 				Column column = new Column();
@@ -257,18 +257,18 @@ public class DataBase {
 				if((isNullable!=null) && isNullable.equals("YES")) {
 					column.setNullable();
 				}
-				
+
 				table.addColumn(column);
 			}
-			
+
 			ResultSet rs4 = dmd.getPrimaryKeys(ccp.getDataBaseName(),ccp.getOwner(),tableName);
 			while(rs4.next()) {
 				String key = (String) rs4.getObject(4);
 				table.getColumn(key).setKey();
 			}
-			
+
 		}	
-		
+
 		//Enumerations
 		List<ProjectEnum> enums = ccp.getEnumerations();
 		for (ProjectEnum projectEnum: enums) {
@@ -277,29 +277,29 @@ public class DataBase {
 			this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
 		}
 	}
-	
+
 	public void addTable(String tableName, Table table) {
 		tabelle.put(tableName, table);
 	}
-	
+
 	public void addEnumeration(String name, List<String> values) {
 		enumeration.put(name, values);
 	}
-	
+
 	public void addEnumerationRelation(String name, List<String> values) {
 		enumerationRelation.put(name, values);
 	}
-	
+
 	public void generateFile() {
 		System.out.println("-------------------------------------------------------");
 		System.out.println("Generating Project and project Files for BE and FE ...");
-		
+
 		try {
 			ConfigCreateProject config = ConfigCreateProject.getIstance();
 
 			//Build Enumerations for Application
 			fillEnumerations(this);
-			
+
 			//Project (statics)
 			//new TemplateProject(this).generateTemplate();
 			new TemplateClassPath(this).generateTemplate();
@@ -308,19 +308,19 @@ public class DataBase {
 			new TemplateAngular(this).generateTemplate();
 			new TemplatePackageLock(this).generateTemplate();
 			new TemplatePackage(this).generateTemplate();
-			
-		    //new TemplateJHipsterCostants(this).generateTemplate();
+
+			//new TemplateJHipsterCostants(this).generateTemplate();
 			new TemplateLoggingAspect(this).generateTemplate();
 			new TemplateApplicationWebXml(this).generateTemplate();
 			new ApplicationApp(this).generateTemplate();
-			
+
 			//Report Utils (statics)
 			new TemplateReportUtils(this).generateTemplate();
 
 			//Configuration (statics)
 			new TemplateApplicationProperties(this).generateTemplate();
 			new TemplateAsyncConfiguration(this).generateTemplate();
-		    new TemplateCacheConfiguration(this).generateTemplate(); 	
+			new TemplateCacheConfiguration(this).generateTemplate(); 	
 			new TemplateCloudDatabaseConfiguration(this).generateTemplate();
 			new TemplateCostants(this).generateTemplate();
 			new TemplateDatabaseConfiguration(this).generateTemplate();
@@ -334,14 +334,14 @@ public class DataBase {
 			new TemplateMetricsConfiguration(this).generateTemplate(); 	
 			new TemplateSecurityConfiguration(this).generateTemplate();
 			new TemplateWebConfigurer(this).generateTemplate();
-			
+
 			//Audit Config
 			new TemplateAuditEventConverter(this).generateTemplate();
 			new TemplateAsyncEntityAuditEventWriter(this).generateTemplate();
 			new TemplateEntityAuditEventListener(this).generateTemplate();
 			new TemplateEntityAuditAction(this).generateTemplate();
 			new TemplateEntityAuditEventConfig(this).generateTemplate();
-			
+
 			//Domain (statics)
 			new TemplateEntityAuditEvent(this).generateTemplate(); 	
 			new TemplateAbstractAuditingEntity(this).generateTemplate();
@@ -349,7 +349,7 @@ public class DataBase {
 			new TemplatePersistentToken(this).generateTemplate();
 			new TemplateAuthority(this).generateTemplate();
 			new TemplateUser(this).generateTemplate();
-			
+
 			//Repository (statics)
 			new TemplateEntityAuditEventRepository(this).generateTemplate();		
 			new TemplateAuthorityRepository(this).generateTemplate();
@@ -357,14 +357,14 @@ public class DataBase {
 			new TemplatePersistenceAuditEventRepository(this).generateTemplate();
 			new TemplatePersistenceTokenRepository(this).generateTemplate();
 			new TemplateUserRepository(this).generateTemplate();
-			
+
 			//RETRIEVE BY JDL/DB/PROPERTY DYNAMIC
 			System.out.println("Creating enumerations... ");
 			List<Enumeration> enumerations = buildEnumerations();
 			for (Enumeration cEnum : enumerations) {
 				new TemplateDomainEnumeration(cEnum).generateTemplate();
 			}
-			
+
 			//Security (statics)
 			new TemplateAuthoritiesConstants(this).generateTemplate();
 			new TemplateDomainUserDetailsService(this).generateTemplate();
@@ -372,7 +372,7 @@ public class DataBase {
 			new TemplatePersistentTokenRememberMeServices(this).generateTemplate();
 			new TemplateSpringSecurityAuditorAware(this).generateTemplate();
 			new TemplateUserNotActivatedException(this).generateTemplate();
-			
+
 			//Service (statics)
 			new TemplateRandomUtil(this).generateTemplate();
 			new TemplateMailService(this).generateTemplate();
@@ -381,31 +381,31 @@ public class DataBase {
 			new TemplateUserMapperService(this).generateTemplate();
 			new TemplateEntityMapperService(this).generateTemplate();
 			new TemplateReportService(this).generateTemplate();					//DONE COMPLETE THIS REPORT JASPER !
-			
-			
+
+
 			//DTO (statics)
 			new TemplateUserDTO(this).generateTemplate();
 			new TemplatePasswordChangeDTO(this).generateTemplate();
 			new TemplateAbstractAuditingDTO(this).generateTemplate();  		
-			
-			
+
+
 			//WEB.REST (statics)
 			new TemplateEntityAuditResource(this).generateTemplate(); 	
 			new TemplateAccountResource(this).generateTemplate();
 			new TemplateAuditResource(this).generateTemplate();
 			new TemplateUserResource(this).generateTemplate();
 			new TemplateLogsResource(this).generateTemplate();
-//			new TemplateReportResource(this).generateTemplate();					//TODO Report Complete
-			
+			//new TemplateReportResource(this).generateTemplate();				//TODO Report Complete
+
 			//WEB.REST.UTILS (statics)
 			new TemplateHeaderUtil(this).generateTemplate();
 			new TemplatePaginationUtil(this).generateTemplate();
-			
+
 			//WEB.REST.VM (statics)
 			new TemplateKeyAndPasswordVM(this).generateTemplate();
 			new TemplateLoggerVM(this).generateTemplate();
 			new TemplateManagedUserVM(this).generateTemplate();
-			
+
 			//WEB.REST.ERRORS (statics)
 			new TemplateBadRequestAlertException(this).generateTemplate();
 			new TemplateCustomParameterizedException(this).generateTemplate();
@@ -429,7 +429,7 @@ public class DataBase {
 
 			//Copy All Template
 			new TemplateCopyAll(this).generateTemplate();
-			
+
 			//Frontend
 			new TemplateManifest(this).generateTemplate(); 
 			new TemplateIndex(this).generateTemplate(); 
@@ -439,11 +439,11 @@ public class DataBase {
 			new TemplateAccountModule(this).generateTemplate(); 
 			new TemplateAdminModule(this).generateTemplate(); 
 			new TemplateAdminEntityAuditModule(this).generateTemplate(); 			//Audit Module TS
-			new TemplateDashboardModule(this).generateTemplate();  				//Chart Dashboard
-			new TemplateDashboardBarchartModule(this).generateTemplate();  		//Barchart Dashboard
+			new TemplateDashboardModule(this).generateTemplate();  					//Chart Dashboard
+			new TemplateDashboardBarchartModule(this).generateTemplate();  			//Barchart Dashboard
 			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  	//Doughnutchart Dashboard
 			new TemplateDashboardLinechartModule(this).generateTemplate();  		//Linechart Dashboard
-			new TemplateDashboardPiechartModule(this).generateTemplate();  		//Piechart Dashboard
+			new TemplateDashboardPiechartModule(this).generateTemplate();  			//Piechart Dashboard
 			new TemplateDashboardPolarareachartModule(this).generateTemplate(); 	//Polarareachart Dashboard
 			new TemplateDashboardRadarchartModule(this).generateTemplate();  		//Radarchart Dashboard
 			new TemplateConfigurationService(this).generateTemplate(); 
@@ -451,15 +451,15 @@ public class DataBase {
 			new TemplateCoreModule(this).generateTemplate(); 
 			new TemplateLanguageHelper(this).generateTemplate(); 
 			new TemplateHomeModule(this).generateTemplate(); 
-			new TemplateNavbarComponent(this).generateTemplate(); 				//Cicle Entities Done
+			new TemplateNavbarComponent(this).generateTemplate(); 					//Cicle Entities Done
 			new TemplateMainComponent(this).generateTemplate(); 
 			new TemplateSharedModule(this).generateTemplate(); 
 			new TemplateSharedLibsModule(this).generateTemplate(); 
 			new TemplateSharedCommonModule(this).generateTemplate(); 
 			new TemplateAlertErrorComponent(this).generateTemplate(); 
-			new TemplateModule(this).generateTemplate(); 						//Cicle Entities Done
-			
-			
+			new TemplateModule(this).generateTemplate(); 							//Cicle Entities Done
+
+
 			//TEST Classes
 			//TODO DEVELOP THIS!!
 			if (config.isGenerateTest()) {
@@ -482,14 +482,14 @@ public class DataBase {
 				new TemplateLogsResourceIntTest(this).generateTemplate();
 				new TemplateUserResourceIntTest(this).generateTemplate();
 			}
-			
+
 			//Building Data of All Enumerations- TODO MOVE TO UTILS
 			List<Enumeration> enumList = new ArrayList<>();
 			HashMap<String, List<String>> map = this.getEnumeration();
 			for(String enumName: map.keySet()) {
 				enumList.add( new Enumeration(enumName, map.get(enumName)) );
 			}
-			
+
 
 			//All Other Level (dynamics) 
 			System.out.println("Creating table dynamics in progress... ");
@@ -502,16 +502,16 @@ public class DataBase {
 				new TemplateQueryService(tabella).generateTemplate();
 				new TemplateMapperService(tabella).generateTemplate();
 				new TemplateServiceDTO(tabella).generateTemplate();
-				new TemplateServiceCriteria(this, tabella).generateTemplate(); 			//TODO Add enumeration management
+				new TemplateServiceCriteria(this, tabella).generateTemplate(); 				//TODO Add enumeration management
 				new TemplateResource(tabella).generateTemplate();
 				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS DEV  !!
-//				new TemplateIntTest(tabella).generateTemplate(); 				 			//TODO COMPLETE THIS TEST !!
-				
+				//				new TemplateIntTest(tabella).generateTemplate(); 			//TODO COMPLETE THIS TEST !!
+
 				//MultiLanguages
 				for(String languageCode: config.getLanguages()) {
 					new TemplateEntityI18N(tabella, languageCode).generateTemplate();  
 				}
-				
+
 				new TemplateEntityIndex(tabella).generateTemplate(); 
 				new TemplateEntityService(tabella).generateTemplate();  					//DONE MANAGE DATES
 				new TemplateEntityRoute(tabella).generateTemplate(); 
@@ -525,10 +525,10 @@ public class DataBase {
 				new TemplateEntityDeleteComponentTs(tabella).generateTemplate(); 		
 				new TemplateEntityDeleteComponentHtml(tabella).generateTemplate(); 	
 				new TemplateEntitySharedModel(this, tabella).generateTemplate(); 			//DONE COMPLETE ENUM
-				
+
 				new TemplateReportServiceImpl(this, tabella).generateTemplate();			//TODO COMPLETE THIS REPORT JASPER !
 			}
-			
+
 			//MultiLanguages 
 			for(String languageCode: config.getLanguages()) {
 				new TemplateGlobalI18N(this, languageCode).generateTemplate();  
@@ -538,7 +538,7 @@ public class DataBase {
 					new TemplateEnumerationsI18N(e, languageCode).generateTemplate();  
 				}
 			}
-			
+
 			System.out.println("Generating Project Files Succesfully Completed. Try It!");
 			System.out.println("-------------------------------------------------------");
 		} catch (IOException e) {
@@ -554,7 +554,7 @@ public class DataBase {
 		for (Iterator iter = set.iterator(); iter.hasNext();) {
 			String tabellaName = (String) iter.next();
 			Table tabella = dataBase.getTables(tabellaName);
-			
+
 			Set cset = tabella.getColumnNames();
 			for (Iterator citer = cset.iterator(); citer.hasNext();) {
 				String columnName = (String) citer.next();
@@ -566,7 +566,7 @@ public class DataBase {
 				}
 			}
 		}
-		
+
 		return dataBase;
 	}
 
@@ -607,7 +607,7 @@ public class DataBase {
 		}
 		return enumerations;
 	}
-	
+
 	public String toString() {
 		String ret ="";
 		Set set = tabelle.keySet();
@@ -618,7 +618,7 @@ public class DataBase {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Smart Generator Main Procedure.
 	 * 
@@ -629,15 +629,15 @@ public class DataBase {
 		DataBase db = DataBase.getInstance();
 		db.generateFile();
 	}
-	
+
 	public void addRelation1to1(String table1,String table2){
 		this.getTables(table1).addRelation1to1(this.getTables(table2));
 		this.getTables(table2).addRelation1to1(this.getTables(table1));
 	}
-	
+
 	public void addRelation1toN(String table1,String tableN){
 		this.getTables(table1).addRelation1toN(this.getTables(tableN));
 		this.getTables(tableN).addRelationNto1(this.getTables(table1));
 	}
-	
+
 }
