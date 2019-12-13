@@ -8,8 +8,9 @@ public class Field {
 	private String fname;
     private String ftype;
     private boolean frequired;
-    
-	public String getFname() {
+    private Integer fsize;
+
+    public String getFname() {
 		return fname;
 	}
 	
@@ -31,6 +32,14 @@ public class Field {
 	
 	public void setFrequired(boolean frequired) {
 		this.frequired = frequired;
+	}
+
+	public Integer getFsize() {
+		return fsize;
+	}
+
+	public void setFsize(Integer fsize) {
+		this.fsize = fsize;
 	}
     
 }

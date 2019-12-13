@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProjectConfig {
 	private String owner;
+	private Integer defaultColumnSize;
 	private String tablePartName;
     private boolean generateTest;
     private boolean enableReverseEngineeringDB;
@@ -124,6 +125,12 @@ public class ProjectConfig {
 	}
 	public void setEnableReverseEngineeringDB(boolean enableReverseEngineeringDB) {
 		this.enableReverseEngineeringDB = enableReverseEngineeringDB;
+	}
+	public Integer getDefaultColumnSize() {
+		return defaultColumnSize;
+	}
+	public void setDefaultColumnSize(Integer defaultColumnSize) {
+		this.defaultColumnSize = defaultColumnSize;
 	}
 	
 }

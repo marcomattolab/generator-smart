@@ -1,6 +1,7 @@
 {
   "generateTest":true,
   "owner":null,
+  "defaultColumnSize":100,
   "tablePartName":"",
   "app" : "App",
   "enableReverseEngineeringDB" : false,
@@ -17,16 +18,16 @@
 					 {"name":"BooleanStatus", "values":"SI#NO"},
 					 {"name":"EsitoStatus", "values":"OK#KO"},
 					 {"name":"CanaleTrasmissione", "values":"MAIL#SMS#FACEBOOK#TWITTER#INSTAGRAM"},
-					 {"name":"TipoTrattativa", "values":"COMPRAVENDITA#LOCAZIONE"},
-					 {"name":"CanaleTrasmissione", "values":"NOTIFICHE@CANALE#NOTIFICHE@ESITO"} ],
+					 {"name":"TipoTrattativa", "values":"COMPRAVENDITA#LOCAZIONE"}
+				 ],	 
   "entities" : [ 
   	{"name":"Autore", "fields": [
-  			{"fname":"id", "ftype":"Long", "frequired":true}, 
-  			{"fname":"datanascita", "ftype":"LocalDate", "frequired":false}, 
-  			{"fname":"sesso", "ftype":"String", "frequired":false}, 
-  			{"fname":"nome", "ftype":"String", "frequired":true}, 
-  			{"fname":"cognome", "ftype":"String", "frequired":false}, 
-  			{"fname":"note", "ftype":"String", "frequired":false}
+  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
+  			{"fname":"datanascita", "ftype":"LocalDate", "frequired":false, "fsize":null}, 
+  			{"fname":"sesso", "ftype":"String", "frequired":false, "fsize":10}, 
+  			{"fname":"nome", "ftype":"String", "frequired":true, "fsize":150}, 
+  			{"fname":"cognome", "ftype":"String", "frequired":false, "fsize":150}, 
+  			{"fname":"note", "ftype":"String", "frequired":false, "fsize":1000}
   	]}
   ]
 }

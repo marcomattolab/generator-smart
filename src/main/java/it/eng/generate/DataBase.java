@@ -303,9 +303,8 @@ public class DataBase {
 						String columnName = field.getFname();
 						String mTypeColumn = field.getFtype();
 						boolean isNullable = field.isFrequired();
-						//TODO MANAGE SIZE
-						//Integer columnSize = (Integer) field.getSize();
-						Integer columnSize = new Integer("45");
+					  //Integer columnSize = field.getFsize()!=null ? field.getFsize() : ccp.getDefaultColumnSize();
+						Integer columnSize = field.getFsize()!=null ? field.getFsize() : null;
 						
 						Column column = new Column();
 						column.setName(columnName);
@@ -316,12 +315,12 @@ public class DataBase {
 						if (isNullable) {
 							column.setNullable();
 						}
-						//if(columnSize!=null) {
-						//	column.setColumnSize(columnSize.intValue());
-						//}
+						if(columnSize!=null) {
+							column.setColumnSize(columnSize.intValue());
+						}
 						table.addColumn(column);
 						
-						System.out.println("Column: "+columnName+"  Type: "+column.getTypeColumn()+"  Size: "+"?"+"  Nullable: "+isNullable+"\n");
+						System.out.println("Column: "+columnName+"  Type: "+column.getTypeColumn()+"  Size: "+columnSize+"  Nullable: "+isNullable+"\n");
 						
 						//Set Primary KEY - TODO DEVELOP THIS!
 						String key = "id";
