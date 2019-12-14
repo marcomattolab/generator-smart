@@ -20,6 +20,7 @@ public class ConfigCreateProject {
 	private String tablePartName;
 	private List<ProjectEnum> enumerations;
 	private List<ProjectEntity> projectEntities;
+	private List<ProjectRelation> projectRelations;
 	
 	private String srcAopLoggingFolder = "aop.logging";
 	private String srcConfigFolder = "config";
@@ -87,6 +88,7 @@ public class ConfigCreateProject {
 		this.setEnumerations(jsonConf.getEnumerations());
 		this.setLanguages( jsonConf.getLanguages().toArray(new String[jsonConf.getLanguages().size()]) );
 		this.setProjectEntities(jsonConf.getEntities());
+		this.setProjectRelations(jsonConf.getRelations());
 	}
 	
 	/**
@@ -96,11 +98,11 @@ public class ConfigCreateProject {
         ObjectMapper mapper = new ObjectMapper();
         try {
             // JSON file to Java object - TODO CHANGE ME!!!
-        	// String PATH = "/Users/marco/git/generator-smart/project.json";
-        	String PATH = "C:\\Users\\Martorana\\git\\generator-smart\\project.json";
-        	ProjectConfig jsonConf = mapper.readValue(new File(PATH), ProjectConfig.class);
-            //String prettyJsonConf = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonConf);
-            //System.out.println("# Test - Project Configuration JSON => " + prettyJsonConf);
+	        	String PATH = "/Users/marco/git/generator-smart/project.json";
+	        	//String PATH = "C:\\Users\\Martorana\\git\\generator-smart\\project.json";
+	        	ProjectConfig jsonConf = mapper.readValue(new File(PATH), ProjectConfig.class);
+	        String prettyJsonConf = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonConf);
+	        System.out.println("# Test - Project Configuration JSON => " + prettyJsonConf);
             	
             return jsonConf;
         } catch (Exception e) {
@@ -473,6 +475,14 @@ public class ConfigCreateProject {
 
 	public void setProjectEntities(List<ProjectEntity> projectEntities) {
 		this.projectEntities = projectEntities;
+	}
+	
+	public List<ProjectRelation> getProjectRelations() {
+		return projectRelations;
+	}
+	
+	public void setProjectRelations(List<ProjectRelation> projectRelations) {
+		this.projectRelations = projectRelations;
 	}
 
 }

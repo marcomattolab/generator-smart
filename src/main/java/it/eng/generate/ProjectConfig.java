@@ -29,7 +29,11 @@ public class ProjectConfig {
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private List<ProjectEnum> enumerations;
     
-	public String getApp() {
+    @JsonProperty("relations")
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+    private List<ProjectRelation> relations;
+    
+    public String getApp() {
 		return app;
 	}
 	public void setApp(String app) {
@@ -124,6 +128,12 @@ public class ProjectConfig {
 	}
 	public void setEnableReverseEngineeringDB(boolean enableReverseEngineeringDB) {
 		this.enableReverseEngineeringDB = enableReverseEngineeringDB;
+	}
+	public List<ProjectRelation> getRelations() {
+		return relations;
+	}
+	public void setRelations(List<ProjectRelation> relations) {
+		this.relations = relations;
 	}
 	
 }

@@ -9,7 +9,7 @@
   "packageclass" : "it.exprivia",
   "username" : "root",
   "password" : "1980Mysql!",
-  "pathname" : "C:\\eclipse-workspace\\",
+  "pathname" : "Users/marco/eclipse-workspace/",
   "projectName" : "demogenerated",
   "urlConnection" : "jdbc:mysql://127.0.0.1:3306/angulardb?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=true&serverTimezone=UTC",
   "languages" : [ "it", "en" ],
@@ -42,5 +42,12 @@
   			{"fname":"email", "ftype":"String", "frequired":false, "fsize":500}, 
   			{"fname":"address", "ftype":"String", "frequired":false, "fsize":600}
   	]}
-  ]
+  ],
+ "relations" : [
+	{"type":"oneToOne", "name":null, "sx":null, "dx":null },
+	{"type":"manyToMany", "name":null, "sx":null, "dx":null },
+	{"type":"oneToMany", "name":null, "sx":null, "dx":null },
+	{"type":"manyToOne", "name":null, "sx":null, "dx":null }
+ ]  
 }
+
