@@ -211,20 +211,20 @@ public class TemplateDomain extends AbstractTemplate{
 			    this.geolocalizzazione = geolocalizzazione;
 			}    
 			
-			-- TODO
 			-- Liquibase Immobile: 
 			<column name="geolocalizzazione_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_immobile_geolocalizzazione_id" />
             </column>
 			
 			
+			-- TODO
 			-- ImmobileMapper:
 			@Mapping(source = "geolocalizzazione.id", target = "geolocalizzazioneId")
     			@Mapping(source = "geolocalizzazione.immobile", target = "geolocalizzazioneImmobile")
     			ImmobileDTO toDto(Immobile immobile);
     
     
-    			-- Immobile DTO:
+    			-- ImmobileDTO:
     			private Long geolocalizzazioneId;
     			private String geolocalizzazioneImmobile;
     			public Long getGeolocalizzazioneId() {
@@ -239,20 +239,17 @@ public class TemplateDomain extends AbstractTemplate{
 		    public void setGeolocalizzazioneImmobile(String geolocalizzazioneImmobile) {
 		        this.geolocalizzazioneImmobile = geolocalizzazioneImmobile;
 		    }
+		    
 		    ToString...
 		      	", geolocalizzazione=" + getGeolocalizzazioneId() +
             		", geolocalizzazione='" + getGeolocalizzazioneImmobile() + "'" +
     
     
-    
     			-- ImmobileCriteria:
-    			
     			private LongFilter geolocalizzazioneId;
-    			
     			public LongFilter getGeolocalizzazioneId() {
 		        return geolocalizzazioneId;
 		    }
-		
 		    public void setGeolocalizzazioneId(LongFilter geolocalizzazioneId) {
 		        this.geolocalizzazioneId = geolocalizzazioneId;
 		    }
