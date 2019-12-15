@@ -190,55 +190,99 @@ public class TemplateDomain extends AbstractTemplate{
 	}
 
 	/**
-	 * 		// Defining multiple oneToOne relationships
+	  		//JDL - Defining multiple oneToOne relationships
 			relationship OneToOne {
 				Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
 			}
 			
 			---------------------------------------------------------------
-			@@@ SX / Immobile :
-			
+			---- SX / Immobile :
+			---------------------------------------------------------------
 			@OneToOne(cascade = CascadeType.REMOVE)    
 			@JoinColumn(unique = true)
 			private Geolocalizzazione geolocalizzazione;
-			    
 			public Geolocalizzazione getGeolocalizzazione() {
 			    return geolocalizzazione;
 			}
-			
 			public Immobile geolocalizzazione(Geolocalizzazione geolocalizzazione) {
 			    this.geolocalizzazione = geolocalizzazione;
 			    return this;
 			}
-			
 			public void setGeolocalizzazione(Geolocalizzazione geolocalizzazione) {
 			    this.geolocalizzazione = geolocalizzazione;
 			}    
-			---------------------------------------------------------------
+			
+			-- TODO
+			-- Liquibase Immobile: 
+			<column name="geolocalizzazione_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_immobile_geolocalizzazione_id" />
+            </column>
 			
 			
+			-- ImmobileMapper:
+			@Mapping(source = "geolocalizzazione.id", target = "geolocalizzazioneId")
+    			@Mapping(source = "geolocalizzazione.immobile", target = "geolocalizzazioneImmobile")
+    			ImmobileDTO toDto(Immobile immobile);
+    
+    
+    			-- Immobile DTO:
+    			private Long geolocalizzazioneId;
+    			private String geolocalizzazioneImmobile;
+    			public Long getGeolocalizzazioneId() {
+		        return geolocalizzazioneId;
+		    }
+		    public void setGeolocalizzazioneId(Long geolocalizzazioneId) {
+		        this.geolocalizzazioneId = geolocalizzazioneId;
+		    }
+		    public String getGeolocalizzazioneImmobile() {
+		        return geolocalizzazioneImmobile;
+		    }
+		    public void setGeolocalizzazioneImmobile(String geolocalizzazioneImmobile) {
+		        this.geolocalizzazioneImmobile = geolocalizzazioneImmobile;
+		    }
+		    ToString...
+		      	", geolocalizzazione=" + getGeolocalizzazioneId() +
+            		", geolocalizzazione='" + getGeolocalizzazioneImmobile() + "'" +
+    
+    
+    
+    			-- ImmobileCriteria:
+    			
+    			private LongFilter geolocalizzazioneId;
+    			
+    			public LongFilter getGeolocalizzazioneId() {
+		        return geolocalizzazioneId;
+		    }
+		
+		    public void setGeolocalizzazioneId(LongFilter geolocalizzazioneId) {
+		        this.geolocalizzazioneId = geolocalizzazioneId;
+		    }
+		    
+		    toString().. 
+		    equals()..
+		    hasCode()..
+    			
+    
 			---------------------------------------------------------------    
-			@@@ DX / Geolocalizzazione:
-			
+			----  DX / Geolocalizzazione:
+			---------------------------------------------------------------
 			@OneToOne(mappedBy = "geolocalizzazione")
 			@JsonIgnore
 			private Immobile posizione;    
-
 			public Immobile getPosizione() {
 		        return posizione;
 		    }
-		
 		    public Geolocalizzazione posizione(Immobile immobile) {
 		        this.posizione = immobile;
 		        return this;
 		    }
-		
 		    public void setPosizione(Immobile immobile) {
 		        this.posizione = immobile;
 		    }
-			---------------------------------------------------------------
 
-	 */
+
+	 *
+	 **/
 	
 	
 }

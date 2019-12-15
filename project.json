@@ -44,7 +44,7 @@
   	]}
   ],
  "relations" : [
-	{"type":"OneToOne", "sxTable":"Autore", "sxName":"biografia", "sxSelect":null , "dxTable":"Libro", "dxName":"scrittoDa", "dxSelect":null},
+	{"type":"OneToOne", "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"},
 	{"type":"ManyToMany", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null},
 	{"type":"OneToMany", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null},
 	{"type":"ManyToOne", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null}
