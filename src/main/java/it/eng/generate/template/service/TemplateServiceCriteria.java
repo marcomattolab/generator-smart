@@ -5,9 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.DataBase;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractTemplate;
@@ -64,6 +67,8 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 
 		//Add Enumeration management
 	    //HashMap<String, List<String>> enums = database.getEnumeration();
+		//TODO DEVELOP ENUMERATIONS GET!!!!
+		System.out.println("## Enumeration for table: " + tabella.getNomeTabella() + " .. developing ");
 		HashMap<String, List<String>> enums = Utils.filterEnumeration(tabella.getNomeTabella(), database.getEnumerationRelation());
 		Set<String> enumNames = enums.keySet();
 		for (String enumName : enumNames) {
@@ -73,6 +78,33 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 			body+= "    public static class "+enumName+"Filter extends Filter<"+enumName+"> {\r\n" ;
 			body+= "    }\r\n\n";
 		}
+		
+		//[Manage Relations]
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToOne) 
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					
+					Column columnId = new Column();
+					columnId.setName(nomeRelazioneSx+"Id");
+					columnId.setTypeColumn(Column.corvertModelType("Long"));
+					tabella.addColumn(columnId);
+					//body += Utils.generaField(columnId, false)+"\n";
+					//body += Utils.generaAddForBeanSimple(columnId, getClassName(), false);
+				} else {
+					//TODO DEVELOP THIS!
+				}
+			}
+		}
+		
+		//[/Manage Relations]
 
 		body+=
 		"    private static final long serialVersionUID = 1L;\r\n";
@@ -80,7 +112,8 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 		for (Iterator iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
-			body += Utils.generaFieldFilter(column)+"\n";
+			//body += Utils.generaFieldFilter(column)+"\n";
+			body += Utils.generaFieldFilter(column, false)+"\n";
 		}	
 		
 		body+=
@@ -95,11 +128,11 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 			
 			String filterTypology = Utils.getFilterTypology(column);
 			body += 
-			"    public "+filterTypology+" get"+Utils.getFieldNameForMethod(column)+"() {\r\n" +
-			"        return "+Utils.getFieldName(column)+";\r\n" +
+			"    public "+filterTypology+" get"+Utils.getFieldNameForMethod(column,false)+"() {\r\n" +
+			"        return "+Utils.getFieldName(column, false)+";\r\n" +
 			"    }\r\n\n" +
-			"    public void set"+Utils.getFieldNameForMethod(column)+"("+filterTypology+" "+Utils.getFieldName(column)+") {\r\n" +
-			"        this."+Utils.getFieldName(column)+" = "+Utils.getFieldName(column)+";\r\n" +
+			"    public void set"+Utils.getFieldNameForMethod(column,false)+"("+filterTypology+" "+Utils.getFieldName(column, false)+") {\r\n" +
+			"        this."+Utils.getFieldName(column, false)+" = "+Utils.getFieldName(column, false)+";\r\n" +
 			"    }\r\n\n";
 		}
 		
@@ -119,7 +152,7 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 			String key = (String) iter.next();
 			boolean isLatest = !iter.hasNext();
 			Column column = tabella.getColumn(key);
-			body += "\t\t\tObjects.equals("+Utils.getFieldName(column)+", that."+Utils.getFieldName(column)+") ";
+			body += "\t\t\tObjects.equals("+Utils.getFieldName(column,false)+", that."+Utils.getFieldName(column,false)+") ";
 			body += (!isLatest ? "&&" : ";") + "\r\n";
 		}
 		body +=
@@ -134,7 +167,7 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 			String key = (String) iter.next();
 			boolean isLatest = !iter.hasNext();
 			Column column = tabella.getColumn(key);
-			body += "\t\t\t"+Utils.getFieldName(column)+"";
+			body += "\t\t\t"+Utils.getFieldName(column,false)+"";
 			body += (!isLatest ? "," : "") + "\r\n";
 		}
 		body +=
@@ -151,7 +184,7 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 			String key = (String) iter.next();
 			boolean isLatest = !iter.hasNext();
 			Column column = tabella.getColumn(key);
-			body += "\t\t\t("+Utils.getFieldName(column)+" != null ? \""+Utils.getFieldName(column)+"=\" + "+Utils.getFieldName(column)+" + \", \" : \"\") +";
+			body += "\t\t\t("+Utils.getFieldName(column,false)+" != null ? \""+Utils.getFieldName(column,false)+"=\" + "+Utils.getFieldName(column,false)+" + \", \" : \"\") +";
 			body += (!isLatest ? "" : "") + "\r\n";
 		}
 		body +=

@@ -62,7 +62,6 @@ public class TemplateServiceDTO extends AbstractTemplate{
 				String nomeRelazioneSx = rel.getSxName();
 				String nomeSelectSx = rel.getSxSelect();
 				String nomeTabellaDx = rel.getDxTable();
-				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null 

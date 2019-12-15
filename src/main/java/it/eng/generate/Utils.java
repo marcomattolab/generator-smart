@@ -126,9 +126,17 @@ public class Utils {
 		String name = getFieldNameForMethodReplace(column.getName(), false);
 		return name; 
 	}
+
+	public static String getFieldNameForMethod(Column column, boolean lowerCase){
+		return getFieldNameForMethodReplace(column.getName(), false, false);
+	}
 	
 	public static String getFieldName(Column column){
-		String name = getFieldNameForMethodReplace(column.getName(), true);
+		return getFieldName(column, true);
+	}
+
+	public static String getFieldName(Column column, boolean lowerCase){
+		String name = getFieldNameForMethodReplace(column.getName(), true, lowerCase);
 		return name; 
 	}
 	
@@ -823,7 +831,11 @@ public class Utils {
 	}
 	
 	public static String generaFieldFilter(Column column) {
-		return "\n\tprivate "+ getFilterTypology(column)  + " "+getFieldName(column)+";";
+		return generaFieldFilter(column, true);
+	}
+
+	public static String generaFieldFilter(Column column, boolean lowerCase) {
+		return "\n\tprivate "+ getFilterTypology(column)  + " "+getFieldName(column, lowerCase)+";";
 	}
 	
 	public static String generaField(Column column) {
@@ -1032,7 +1044,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Filter map based on tableName passed.
+	 * Filter map based on tableName passed. //TODO FIXME DEVELOP
 	 * 
 	 * @param nameTable
 	 * @param map

@@ -211,20 +211,6 @@ public class TemplateDomain extends AbstractTemplate{
 			    this.geolocalizzazione = geolocalizzazione;
 			}    
 			
-    			-- ImmobileCriteria:
-    			private LongFilter geolocalizzazioneId;
-    			public LongFilter getGeolocalizzazioneId() {
-		        return geolocalizzazioneId;
-		    }
-		    public void setGeolocalizzazioneId(LongFilter geolocalizzazioneId) {
-		        this.geolocalizzazioneId = geolocalizzazioneId;
-		    }
-		    
-		    toString().. 
-		    equals()..
-		    hasCode()..
-    			
-    
 			---------------------------------------------------------------    
 			----  DX / Geolocalizzazione:
 			---------------------------------------------------------------

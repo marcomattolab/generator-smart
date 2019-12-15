@@ -460,7 +460,6 @@ public class DataBase {
 			new TemplatePasswordChangeDTO(this).generateTemplate();
 			new TemplateAbstractAuditingDTO(this).generateTemplate();  		
 
-
 			//WEB.REST (statics)
 			new TemplateEntityAuditResource(this).generateTemplate(); 	
 			new TemplateAccountResource(this).generateTemplate();
