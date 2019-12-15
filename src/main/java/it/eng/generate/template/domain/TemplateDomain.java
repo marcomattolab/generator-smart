@@ -74,9 +74,8 @@ public class TemplateDomain extends AbstractTemplate{
 		}
 		
 		//Relations management
-		List<ProjectRelation> prjRelations = conf.getProjectRelations();
-		if(!CollectionUtils.isEmpty(prjRelations)) {
-			for(ProjectRelation rel: prjRelations) {
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();

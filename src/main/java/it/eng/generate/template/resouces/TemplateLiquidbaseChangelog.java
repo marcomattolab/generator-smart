@@ -3,8 +3,11 @@ package it.eng.generate.template.resouces;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
@@ -129,13 +132,33 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 						"                <constraints nullable=\"true\" />\r\n" +
 						"            </column>\r\n\n";
 			}				
-//			} else if( Utils.isPrimaryKeyID(column) ) {
-//				//Primary Key - FIXME retrieve from db
-//				body += "            <column name=\"id\" type=\"bigint\" autoIncrement=\"${autoIncrement}\">\r\n" +
-//						"                <constraints primaryKey=\"true\" nullable=\"false\"/>\r\n" +
-//						"            </column>\r\n\n";
-//			}
+
 		}
+		
+		//Relations management
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToOne) 
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					
+					body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +
+							"                <constraints unique=\"true\" nullable=\"true\" uniqueConstraintName=\"ux_"+nomeTabellaDx.toLowerCase()+"_"+nomeRelazioneSx+"_id\" />"+
+							"            </column>";
+				}
+				
+				//TODO DEVELOP THIS!! 
+				
+			}
+		}
+		
 		// MAIN CICLE DL - END
 		body += "        </createTable>\r\n";
 		
