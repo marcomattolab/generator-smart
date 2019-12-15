@@ -662,6 +662,7 @@ public class Utils {
 					"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" readonly />\r\n" +
 					"                </div>\r\n\n";
 		}
+		
 		return result;
 	}
 	
