@@ -191,7 +191,13 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		return "src/main/webapp/app/entities/"+Utils.getClassNameLowerCase(tabella);
 	}
 
-	
+	/**
+	 * Print OneToOne sentences.
+	 * 
+	 * @param conf ConfigCreateProject
+	 * @param section Section To Print
+	 * @return String with data
+	 */
 	private String printOneToOne(ConfigCreateProject conf, String section) {
 		String res = "";
 		//Relations management
@@ -211,8 +217,8 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 
 					if(IMPORT_SECTION.equals(section)) {
-						res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaDx)+".model'\n";
-						res += "import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaDx)+"'\n";
+						res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaDx)+".model';\n";
+						res += "import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n";
 					
 					}else if(INIT_SECTION.equals(section)) {
 						res += "    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n";
@@ -228,22 +234,22 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 						"    }\r\n\n";
 						
 					}else if(NG_ONINIT_SECTION.equals(section)) {
-						res += 	"\n      this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe( \n"+
-								"	   	  (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => { \n"+
-					             "		  	if (!this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id) { \n"+
-					             "         		this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body; \n"+
-					             "      		} else { \n"+
-					             "        	 	   this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.find(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id).subscribe( \n"+
-					             "            		 (subRes: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+">) => { \n"+
-					             "               		 this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = [subRes.body].concat(res.body); \n"+
-					             "            		}, \n"+
-					             "            		 (subRes: HttpErrorResponse) => this.onError(subRes.message) \n"+
-					             "        		    ); \n"+
-					             "      	        } \n"+
-					             "     	    }, \n"+
-					             "     	   (res: HttpErrorResponse) => this.onError(res.message) \n"+
-					             "        ); \n\n"+
-					             "        console.log(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id);\n\n";
+						res += 	"\n       this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe(\n"+
+								"         (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
+					             "         if (!this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id) {\n"+
+					             "             this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
+					             "         } else {\n"+
+					             "                  this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.find(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id).subscribe(\n"+
+					             "                  (subRes: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+">) => {\n"+
+					             "                           this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = [subRes.body].concat(res.body);\n"+
+					             "                  },\n"+
+					             "                  (subRes: HttpErrorResponse) => this.onError(subRes.message)\n"+
+					             "                  );\n"+
+					             "               }\n"+
+					             "         },\n"+
+					             "         (res: HttpErrorResponse) => this.onError(res.message)\n"+
+					             "         );\n\n"+
+					             "         console.log(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id);\n\n";
 					}
 				
 				}

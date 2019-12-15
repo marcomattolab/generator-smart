@@ -3,8 +3,11 @@ package it.eng.generate.template.fe.i18n;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
@@ -53,6 +56,32 @@ public class TemplateEntityI18N extends AbstractResourceTemplate{
 		"            \"detail\": {\r\n" +
 		"                \"title\": \""+Tablename+"\"\r\n" +
 		"            },\r\n" ;
+		
+		//[Manage Relations]
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToOne) 
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					
+					Column column = new Column();
+					// jhiTranslate="demogeneratedApp.autore.bestseller"
+					column.setName(nomeRelazioneSx);
+					//column.setTypeColumn(Column.corvertModelType("Long"));
+					body += Utils.generateJson(column)+",\n";
+
+				} else {
+					//TODO DEVELOP THIS!
+				}
+			}
+		}
+		//[/Manage Relations]
 		
 		Set set = tabella.getColumnNames();
 		for (Iterator iter = set.iterator(); iter.hasNext();) {

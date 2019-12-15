@@ -226,18 +226,17 @@ public class Utils {
 	}
 	
 	/**
-	 * @param tabella example Acquirente
+	 * @param tabella Table
+	 * @param extendedList List<Column>
 	 * @return snippet code as below
 	 */
-	public static String generateIInterface(Table tabella){
+	public static String generateIInterface(Table tabella, List<Column> extendedList){
 		String body = 
 		"export interface "+Utils.getIName(tabella)+" {\r\n";
 		//TODO MANAGE RELATION
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
-			String columnname = getFieldName(column);
+		for (Column column: extendedList) {
+			//String columnname = getFieldName(column);
+			String columnname = getFieldName(column, false);
 			Class filterType = column.getTypeColumn();
 			
 			if( filterType.getName().equals("java.sql.Blob") ) {
@@ -253,29 +252,30 @@ public class Utils {
 	}
 	
 	/**
-	 * @param tabella example Acquirente
+	 * @param tabella Table
+	 * @param extendedList List<Column>
 	 * @return snippet code as below
 	 */
-	public static String generateIClass(Table tabella){
+	public static String generateIClass(Table tabella, List<Column> extendedList){
 		String body = 
 		"export class "+Utils.getEntityName(tabella)+" implements "+Utils.getIName(tabella)+" {\r\n" +
 		"    constructor(\r\n" ;
 		
 		//TODO MANAGE RELATION
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
-			String columnname = getFieldName(column);
+		int i = 1;
+		for (Column column: extendedList) {
+			boolean isLast = i == extendedList.size();
+			//String columnname = getFieldName(column);
+			String columnname = getFieldName(column, false);
 			Class filterType = column.getTypeColumn();
 			
 			if( filterType.getName().equals("java.sql.Blob") ) {
 				body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+"\r\n";
-				body += "     public "+columnname+"ContentType?: string "+(iter.hasNext()?",":"")+"\r\n";
+				body += "     public "+columnname+"ContentType?: string "+(!isLast?",":"")+"\r\n";
 			} else {
-				body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+(iter.hasNext()?",":"")+"\r\n";
+				body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+(!isLast?",":"")+"\r\n";
 			}
-			
+			i++;
 		}
 		
 		body +=
@@ -1090,4 +1090,5 @@ public class Utils {
 		}
 		return resultType;
 	}
+	
 }

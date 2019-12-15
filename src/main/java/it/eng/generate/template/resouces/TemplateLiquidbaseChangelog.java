@@ -142,7 +142,6 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
 				String nomeTabellaDx = rel.getDxTable();
-				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null 

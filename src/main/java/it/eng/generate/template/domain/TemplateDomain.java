@@ -1,7 +1,6 @@
 package it.eng.generate.template.domain;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.util.CollectionUtils;
@@ -194,7 +193,9 @@ public class TemplateDomain extends AbstractTemplate{
 				Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
 			}
 			
-			jhiTranslate="demogeneratedApp.autore.bestseller"
+			DX LibroMapper ==> @Mapping(target = "writer", ignore = true) 
+			
+			 //@Mapping(source = "bestseller.isbn", target = "bestsellerIsbn")
 			
 			---------------------------------------------------------------
 			---- SX / Immobile :

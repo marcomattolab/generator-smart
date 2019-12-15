@@ -1,5 +1,6 @@
 package it.eng.generate.template.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -79,6 +80,9 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 			body+= "    }\r\n\n";
 		}
 		
+		//Before RelationsStore Original List
+		List<Column> extendedList = new ArrayList<>(tabella.getColumns());
+		
 		//[Manage Relations]
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
@@ -95,23 +99,19 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 					Column columnId = new Column();
 					columnId.setName(nomeRelazioneSx+"Id");
 					columnId.setTypeColumn(Column.corvertModelType("Long"));
-					tabella.addColumn(columnId);
-					//body += Utils.generaField(columnId, false)+"\n";
-					//body += Utils.generaAddForBeanSimple(columnId, getClassName(), false);
+					extendedList.add(columnId);
+
 				} else {
 					//TODO DEVELOP THIS!
 				}
 			}
 		}
-		
 		//[/Manage Relations]
-
+		 
+		
 		body+=
 		"    private static final long serialVersionUID = 1L;\r\n";
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for (Column column : extendedList) {
 			//body += Utils.generaFieldFilter(column)+"\n";
 			body += Utils.generaFieldFilter(column, false)+"\n";
 		}	
@@ -121,11 +121,7 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 		"    public "+getClassName()+"() {\r\n" +
 		"    }\r\n\n";
 		
-		set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
-			
+		for (Column column : extendedList) {
 			String filterTypology = Utils.getFilterTypology(column);
 			body += 
 			"    public "+filterTypology+" get"+Utils.getFieldNameForMethod(column,false)+"() {\r\n" +
@@ -147,13 +143,12 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 		"        }\r\n" +
 		"        final "+getClassName()+" that = ("+getClassName()+") o;\r\n" +
 		"        return\r\n";
-		set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			boolean isLatest = !iter.hasNext();
-			Column column = tabella.getColumn(key);
+		int count = 1;
+		for (Column column : extendedList) {
+			boolean isLatest = count == extendedList.size();
 			body += "\t\t\tObjects.equals("+Utils.getFieldName(column,false)+", that."+Utils.getFieldName(column,false)+") ";
 			body += (!isLatest ? "&&" : ";") + "\r\n";
+			count++;
 		}
 		body +=
 		"    }\r\n\n";
@@ -162,13 +157,12 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 		"    @Override\r\n" +
 		"    public int hashCode() {\r\n" +
 		"        return Objects.hash(\r\n";
-		set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			boolean isLatest = !iter.hasNext();
-			Column column = tabella.getColumn(key);
+		count = 1;
+		for (Column column : extendedList) {
+			boolean isLatest = count == extendedList.size();
 			body += "\t\t\t"+Utils.getFieldName(column,false)+"";
 			body += (!isLatest ? "," : "") + "\r\n";
+			count++;
 		}
 		body +=
 		"        );\r\n" +
@@ -179,20 +173,21 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 		"    public String toString() {\r\n" +
 		"        return \""+getClassName()+"{\" +\r\n";
 		
-		set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			boolean isLatest = !iter.hasNext();
-			Column column = tabella.getColumn(key);
+		count = 1;
+		for (Column column : extendedList) {
+			boolean isLatest = count == extendedList.size();
 			body += "\t\t\t("+Utils.getFieldName(column,false)+" != null ? \""+Utils.getFieldName(column,false)+"=\" + "+Utils.getFieldName(column,false)+" + \", \" : \"\") +";
 			body += (!isLatest ? "" : "") + "\r\n";
+			count++;
 		}
 		body +=
 		"            \"}\";\r\n" +
 		"    }\r\n" +
 		"}\r\n";
+		
 		return body;
 	}
+
 
 	public String getClassName() {
 		return Utils.getCriteriaClassName(tabella);

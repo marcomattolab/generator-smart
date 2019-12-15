@@ -84,7 +84,7 @@ public class TemplateMapperService extends AbstractTemplate{
 					
 					body +=
 					 		"    @Mapping(source = \""+nomeRelazioneSx+".id\", target = \""+nomeRelazioneSx+"Id\")\n"+
-						    "    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getClassNameCamelCase(nomeSelectSx)+"\")\n"+
+						  //"    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getClassNameCamelCase(nomeSelectSx)+"\")\n"+
 						    "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabellaSx)+");\n\n"+
 						    
 						    "    @Mapping(source = \""+nomeRelazioneSx+"Id\", target = \""+nomeRelazioneSx+"\")\n";

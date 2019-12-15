@@ -39,6 +39,11 @@ public class Table {
 		isAssociativa = false;
 	}
 	
+	public List<Column> getColumns(){
+		List<Column> list = new ArrayList<Column>(colonne.values());
+		return list;
+	}
+	
 	public Set getColumnNames(){
 		return colonne.keySet();
 	}
@@ -65,6 +70,10 @@ public class Table {
 	
 	public void addColumn(Column column){
 		colonne.put(column.getName(), column);
+	}
+
+	public void removeColumn(Column column){
+		colonne.remove(column.getName());
 	}
 	
 	public String toString() {

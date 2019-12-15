@@ -1,11 +1,17 @@
 package it.eng.generate.template.fe.shared;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
+import org.springframework.util.CollectionUtils;
+
+import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.DataBase;
 import it.eng.generate.Enumeration;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
@@ -53,14 +59,49 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 			body += "}\r\n\n";
 		}
 		
-        //public geolocalizzazioneImmobile?: string,
-        //public geolocalizzazioneId?: number,
+		//Before RelationsStore Original List
+		List<Column> extendedList = new ArrayList<>(tabella.getColumns());
+		
+		//[Manage Relations]
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToOne) 
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					
+					//public geolocalizzazioneImmobile?: string,
+			        //public geolocalizzazioneId?: number,
+					
+					Column columnId = new Column();
+					columnId.setName(nomeRelazioneSx+"Id");
+					columnId.setTypeColumn(Column.corvertModelType("Long"));
+					extendedList.add(columnId);
+
+					Column columnSelect = new Column();
+					columnSelect.setName(nomeRelazioneSx + Utils.getFirstUpperCase(rel.getSxSelect())); //TODO CHECH THIS!!
+					columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, rel.getSxSelect(), nomeTabellaDx));
+					extendedList.add(columnSelect);
+
+				} else {
+					//TODO DEVELOP THIS!
+				}
+			}
+		}
+		//[/Manage Relations]
+      
         		
 		//Generate IInetrface
-		body += Utils.generateIInterface(tabella);
+		body += Utils.generateIInterface(tabella, extendedList);
 		
 		//Generate Class
-		body += Utils.generateIClass(tabella);
+		body += Utils.generateIClass(tabella, extendedList);
+		
 				
 		body += "}\r\n";
 		
