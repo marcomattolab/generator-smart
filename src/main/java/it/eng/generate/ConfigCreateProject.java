@@ -6,6 +6,8 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConfigCreateProject {
+	private boolean isOracle;
+	private boolean isMysql;
 	private boolean generateTest;
 	private boolean enableReverseEngineeringDB;
 	private String urlConnection;
@@ -89,6 +91,9 @@ public class ConfigCreateProject {
 		this.setLanguages( jsonConf.getLanguages().toArray(new String[jsonConf.getLanguages().size()]) );
 		this.setProjectEntities(jsonConf.getEntities());
 		this.setProjectRelations(jsonConf.getRelations());
+
+		this.setMysql(jsonConf.getDriver().contains("mysql")?true:false);
+		this.setOracle(jsonConf.getDriver().contains("oracle")?true:false);
 	}
 	
 	/**
@@ -483,6 +488,22 @@ public class ConfigCreateProject {
 	
 	public void setProjectRelations(List<ProjectRelation> projectRelations) {
 		this.projectRelations = projectRelations;
+	}
+
+	public boolean isOracle() {
+		return isOracle;
+	}
+
+	public void setOracle(boolean isOracle) {
+		this.isOracle = isOracle;
+	}
+
+	public boolean isMysql() {
+		return isMysql;
+	}
+
+	public void setMysql(boolean isMysql) {
+		this.isMysql = isMysql;
 	}
 
 }

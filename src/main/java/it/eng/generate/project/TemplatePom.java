@@ -8,7 +8,6 @@ import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.DataBase;
 
 public class TemplatePom {
-	protected boolean IS_ORACLE = false; //TODO MOVE INTO CONFIG
 	protected DataBase database;
 
 	public TemplatePom(DataBase database) {
@@ -35,6 +34,7 @@ public class TemplatePom {
 
 	public String getBody(){
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+		boolean IS_ORACLE = conf.isOracle();
 		String body = 
 		//"\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 		"\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">" +

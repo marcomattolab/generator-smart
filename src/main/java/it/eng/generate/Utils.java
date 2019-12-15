@@ -11,6 +11,10 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
 public class Utils {
+	public static String OneToOne = "OneToOne";
+	public static String ManyToMany = "ManyToMany";
+	public static String OneToMany = "OneToMany";
+	public static String ManyToOne = "ManyToOne";
 	
 	public static String getServiceClassName(Table table){
 		return getEntityName(table)+"Service"; 
@@ -824,9 +828,11 @@ public class Utils {
 	
 	public static String generaFieldExt(Column column) {
 		String ret = "";
-		boolean IS_ORACLE = false; //TODO MOVE INTO CONFIG
 		
-		//FIXME Move this into DB
+		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+		boolean IS_ORACLE = conf.isOracle();
+		
+		//FIXME TODO Move this into DB
 		String PRECISION = "10";
 		String SCALE = "2";
 
@@ -837,7 +843,6 @@ public class Utils {
 			ret += "\n";
 			ret += "\n\t@Column(name = \""+getFieldNameContentType(column)+"\")";
 			ret += "\n\tprivate String "+getFieldNameForMethodReplace(column.getName()+"_"+"content_type", true)+";";
-			//isEnumeration
 		} else if( isPrimaryKeyID(column) ) {
 			ret += "\n\t@Id";
 			if( IS_ORACLE ) {
@@ -853,6 +858,7 @@ public class Utils {
 			
 			
 		} else {
+			//isEnumeration
 			ret += isEnumeration(column) ? "\n\t@Enumerated(EnumType.STRING)" : "";
 			ret += "\n\t@Column(name = \""+column.getName()+"\""+ (isBigDecimal(column)? ", precision = "+PRECISION+", scale = "+SCALE : "") +")";
 			ret += "\n\tprivate " + getTipoCampo(column) + " " + getFieldNameForMethodReplace(column.getName(), true) + ";";

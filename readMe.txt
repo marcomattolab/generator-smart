@@ -47,3 +47,7 @@
 - COSTANTI => minlength(SIZE_MAX)  
 - Enumerations   
 - Relations =>  OneToOne  ManyToMany   OneToMany  ManyToOne
+
+
+
+    

@@ -1,10 +1,14 @@
 package it.eng.generate.template.domain;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+
+import org.springframework.util.CollectionUtils;
 
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractTemplate;
@@ -69,6 +73,72 @@ public class TemplateDomain extends AbstractTemplate{
 			body += Utils.generaGetAndSetForBeanExt(column, getClassName());
 		}
 		
+		//Relations management
+		List<ProjectRelation> prjRelations = conf.getProjectRelations();
+		if(!CollectionUtils.isEmpty(prjRelations)) {
+			for(ProjectRelation rel: prjRelations) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& (nomeTabellaSx.toLowerCase().equals(nomeTabella) || nomeTabellaDx.toLowerCase().equals(nomeTabella)) ) {
+
+					System.out.println("## relationType: "+relationType+ "  nomeTabellaSx: "+ nomeTabellaSx+ "  nomeTabellaDx: " + nomeTabellaDx  +"  nomeTabella: "+ nomeTabella);
+				
+					//Relation Types
+					if (Utils.OneToOne.equals(relationType) ) {
+						
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							body += "\n	@OneToOne(cascade = CascadeType.REMOVE)\n";
+							body += "	@JoinColumn(unique = true)\n";
+							body += "	private "+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+nomeRelazioneSx+";\n\n";
+							body += "	public "+Utils.getClassNameCamelCase(nomeTabellaDx)+" get"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"() {\n";
+							body += "	    return "+nomeRelazioneSx+";\n";
+							body += "	}\n\n";
+							body += "	public "+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeRelazioneSx+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+nomeRelazioneSx+") {\n";
+							body += "	    this."+nomeRelazioneSx+" = "+nomeRelazioneSx+";\n";
+							body += "	    return this;\n";
+							body += "	}\n\n";
+							body += "	public void set"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+nomeRelazioneSx+") {\n";
+							body += "	    this."+nomeRelazioneSx+" = "+nomeRelazioneSx+";\n";
+							body += "	}\n\n";
+						}
+						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							body += "\n	@OneToOne(mappedBy = \""+nomeRelazioneSx+"\")\r\n";
+							body += "	@JsonIgnore\r\n";
+							body += "	private "+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeRelazioneDx+";    \r\n";
+							body += "	public "+Utils.getClassNameCamelCase(nomeTabellaSx)+" get"+Utils.getClassNameCamelCase(nomeRelazioneDx)+"() {\r\n";
+							body += "	    return "+nomeRelazioneDx+";\r\n";
+							body += "	}\r\n\n";
+							body += "	public "+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+nomeRelazioneDx+"("+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeTabellaSx.toLowerCase()+") {\r\n";
+							body += "	    this."+nomeRelazioneDx+" = "+nomeTabellaSx.toLowerCase()+";\r\n";
+							body += " 	    return this;\r\n";
+							body += "	}\r\n\n";
+							body += "	public void set"+Utils.getClassNameCamelCase(nomeRelazioneDx)+"("+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeTabellaSx.toLowerCase()+") {\r\n";
+							body += "	    this."+nomeRelazioneDx+" = "+nomeTabellaSx.toLowerCase()+";\r\n";
+							body += "	}  \r\n\n";
+						}
+						
+					} else if (Utils.ManyToMany.equals(relationType) ) {
+						//TODO DEVELOP THIS!
+
+					} else if (Utils.OneToMany.equals(relationType) ) {
+						//TODO DEVELOP THIS!
+
+					} else if (Utils.ManyToOne.equals(relationType) ) {
+						//TODO DEVELOP THIS!
+						
+					}
+					
+				}
+				
+			}
+		}
+		
 		//body += "\n";
 		body += "\n\t@Override";
 		body += "\n\tpublic int hashCode() {";
@@ -119,4 +189,56 @@ public class TemplateDomain extends AbstractTemplate{
 		return "src/main/java";
 	}
 
+	/**
+	 * 		// Defining multiple oneToOne relationships
+			relationship OneToOne {
+				Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
+			}
+			
+			---------------------------------------------------------------
+			@@@ SX / Immobile :
+			
+			@OneToOne(cascade = CascadeType.REMOVE)    
+			@JoinColumn(unique = true)
+			private Geolocalizzazione geolocalizzazione;
+			    
+			public Geolocalizzazione getGeolocalizzazione() {
+			    return geolocalizzazione;
+			}
+			
+			public Immobile geolocalizzazione(Geolocalizzazione geolocalizzazione) {
+			    this.geolocalizzazione = geolocalizzazione;
+			    return this;
+			}
+			
+			public void setGeolocalizzazione(Geolocalizzazione geolocalizzazione) {
+			    this.geolocalizzazione = geolocalizzazione;
+			}    
+			---------------------------------------------------------------
+			
+			
+			---------------------------------------------------------------    
+			@@@ DX / Geolocalizzazione:
+			
+			@OneToOne(mappedBy = "geolocalizzazione")
+			@JsonIgnore
+			private Immobile posizione;    
+
+			public Immobile getPosizione() {
+		        return posizione;
+		    }
+		
+		    public Geolocalizzazione posizione(Immobile immobile) {
+		        this.posizione = immobile;
+		        return this;
+		    }
+		
+		    public void setPosizione(Immobile immobile) {
+		        this.posizione = immobile;
+		    }
+			---------------------------------------------------------------
+
+	 */
+	
+	
 }
