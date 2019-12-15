@@ -194,6 +194,8 @@ public class TemplateDomain extends AbstractTemplate{
 				Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
 			}
 			
+			jhiTranslate="demogeneratedApp.autore.bestseller"
+			
 			---------------------------------------------------------------
 			---- SX / Immobile :
 			---------------------------------------------------------------

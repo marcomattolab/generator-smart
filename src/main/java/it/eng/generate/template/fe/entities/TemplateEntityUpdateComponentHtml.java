@@ -66,19 +66,10 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 						&& relationType.equals(Utils.OneToOne) 
 						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 					
-//                     <div class="col-sm-3">
-//                         <label class="form-control-label" jhiTranslate="imprendocasaApp.immobile.locazione" for="field_locazione">Locazione</label>
-//                         <select class="mdl-textfield__input" id="field_locazione" name="locazione" [(ngModel)]="immobile.locazioneId">
-//                             <input type="text" class="mdl-textfield__input" name="indirizzo" id="field_indirizzo" [(ngModel)]="immobile.indirizzo" />
-//                             <option [ngValue]="null"></option>
-//                             <option [ngValue]="geolocalizzazioneOption.id" *ngFor="let geolocalizzazioneOption of locaziones; trackBy: trackGeolocalizzazioneById">{{geolocalizzazioneOption.immobile}}</option>
-//                         </select>
-//                     </div>
-					
 					body += "\n                <div class=\"form-group\">\r\n" +
 							"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"\" for=\"field_"+nomeRelazioneSx+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
 							"             		<select class=\"mdl-textfield__input\" id=\"field_"+nomeRelazioneSx+"\" name=\""+nomeRelazioneSx+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"Id\">\r\n" +
-							"                 		<input type=\"text\" class=\"mdl-textfield__input\" name=\""+nomeSelectDx+"\" id=\"field_"+nomeSelectDx+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeSelectDx+"\" />\r\n" +
+						 // "                 		<input type=\"text\" class=\"mdl-textfield__input\" name=\""+nomeSelectDx+"\" id=\"field_"+nomeSelectDx+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeSelectDx+"\" />\r\n" +
 							"                 		<option [ngValue]=\"null\"></option>\r\n" +
 							"                 		<option [ngValue]=\""+nomeRelazioneSx+"Option.id\" *ngFor=\"let "+nomeRelazioneSx+"Option of "+nomeRelazioneSx+"s; trackBy: track"+Utils.getFirstUpperCase(nomeRelazioneSx)+"ById\">{{"+nomeRelazioneSx+"Option."+nomeSelectSx+"}}</option>\r\n" +
 							"            		 </select>\r\n" +
