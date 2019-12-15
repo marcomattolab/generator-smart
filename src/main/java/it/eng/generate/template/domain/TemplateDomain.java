@@ -105,12 +105,12 @@ public class TemplateDomain extends AbstractTemplate{
 							body += "	}\n\n";
 							body += "	public void set"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+nomeRelazioneSx+") {\n";
 							body += "	    this."+nomeRelazioneSx+" = "+nomeRelazioneSx+";\n";
-							body += "	}\n\n";
-						}
-						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							body += "	}\n";
+						
+						} else if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
 							body += "\n	@OneToOne(mappedBy = \""+nomeRelazioneSx+"\")\r\n";
 							body += "	@JsonIgnore\r\n";
-							body += "	private "+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeRelazioneDx+";    \r\n";
+							body += "	private "+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeRelazioneDx+";\n\n";
 							body += "	public "+Utils.getClassNameCamelCase(nomeTabellaSx)+" get"+Utils.getClassNameCamelCase(nomeRelazioneDx)+"() {\r\n";
 							body += "	    return "+nomeRelazioneDx+";\r\n";
 							body += "	}\r\n\n";
@@ -120,7 +120,7 @@ public class TemplateDomain extends AbstractTemplate{
 							body += "	}\r\n\n";
 							body += "	public void set"+Utils.getClassNameCamelCase(nomeRelazioneDx)+"("+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeTabellaSx.toLowerCase()+") {\r\n";
 							body += "	    this."+nomeRelazioneDx+" = "+nomeTabellaSx.toLowerCase()+";\r\n";
-							body += "	}  \r\n\n";
+							body += "	}\n";
 						}
 						
 					} else if (Utils.ManyToMany.equals(relationType) ) {
