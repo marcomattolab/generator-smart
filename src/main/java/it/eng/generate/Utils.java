@@ -136,10 +136,10 @@ public class Utils {
 		String name = column.getName().toLowerCase();
 		return name + "_" + "content_type";
 	}
-	
-	public static String getFieldNameForMethodReplace(String name, boolean firstLowercase){
+
+	public static String getFieldNameForMethodReplace(String name, boolean firstLowercase, boolean toLower){
 		String result = "";
-		String[] parts = name.toLowerCase().split("_");
+		String[] parts = toLower ? name.toLowerCase().split("_") : name.split("_");
 		for (int i = 0; i < parts.length; i++) {
 			result += parts[i].substring(0,1).toUpperCase()+parts[i].substring(1);
 		}
@@ -147,6 +147,10 @@ public class Utils {
 			result = result.substring(0,1).toLowerCase()+result.substring(1);
 		}
 		return result;
+	}
+	
+	public static String getFieldNameForMethodReplace(String name, boolean firstLowercase){
+		return getFieldNameForMethodReplace(name, firstLowercase, true);
 	}
 	
 	public static String getListCostantNameKeys(Table table){
@@ -420,34 +424,37 @@ public class Utils {
 		}
 		return ret;
 	}
-	
 	public static String generaAddForBeanSimple(Column column, String className) {
+		return generaAddForBeanSimple(column, className, true);
+	}
+	
+	public static String generaAddForBeanSimple(Column column, String className, boolean toLower) {
 		String ret = "";
 		if( isBlob(column) ) {
-			ret += "\n\tpublic byte[] get"+getFieldNameForMethodReplace(column.getName(), false)+"(){";
-			ret += "\n\t\treturn this."+getFieldNameForMethodReplace(column.getName(), true)+";";
+			ret += "\n\tpublic byte[] get"+getFieldNameForMethodReplace(column.getName(), false, toLower)+"(){";
+			ret += "\n\t\treturn this."+getFieldNameForMethodReplace(column.getName(), true, toLower)+";";
 			ret += "\n\t}";
 			ret += "\n";
-			ret += "\n\tpublic void set"+getFieldNameForMethod(column)+"( byte[] "+getFieldNameForMethodReplace(column.getName(), true)+"){";
-			ret += "\n\t\tthis."+getFieldNameForMethodReplace(column.getName(), true)+" = "+getFieldNameForMethodReplace(column.getName(), true)+";";
+			ret += "\n\tpublic void set"+getFieldNameForMethod(column)+"( byte[] "+getFieldNameForMethodReplace(column.getName(), true, toLower)+"){";
+			ret += "\n\t\tthis."+getFieldNameForMethodReplace(column.getName(), true, toLower)+" = "+getFieldNameForMethodReplace(column.getName(), true, toLower)+";";
 			ret += "\n\t}";
 			ret += "\n";
 			String contentType = column.getName() + "_" + "content_type";
-			ret += "\n\tpublic String get"+getFieldNameForMethodReplace(contentType, false)+"(){";
-			ret += "\n\t\treturn this."+getFieldNameForMethodReplace(contentType, true)+";";
+			ret += "\n\tpublic String get"+getFieldNameForMethodReplace(contentType, false, toLower)+"(){";
+			ret += "\n\t\treturn this."+getFieldNameForMethodReplace(contentType, true, toLower)+";";
 			ret += "\n\t}";
 			ret += "\n";
-			ret += "\n\tpublic void set"+getFieldNameForMethodReplace(contentType,false)+"( String "+getFieldNameForMethodReplace(contentType,true)+"){";
-			ret += "\n\t\tthis."+getFieldNameForMethodReplace(contentType, true)+" = "+getFieldNameForMethodReplace(contentType, true)+";";
+			ret += "\n\tpublic void set"+getFieldNameForMethodReplace(contentType,false, toLower)+"( String "+getFieldNameForMethodReplace(contentType,true, toLower)+"){";
+			ret += "\n\t\tthis."+getFieldNameForMethodReplace(contentType, true, toLower)+" = "+getFieldNameForMethodReplace(contentType, true, toLower)+";";
 			ret += "\n\t}";
 			ret += "\n";
 		} else {
-			ret += "\n\tpublic "+(isPrimaryKeyID(column)? "Long" : getTipoCampo(column))+ " get"+getFieldNameForMethodReplace(column.getName(), false)+"(){";
-			ret += "\n\t\treturn this."+getFieldNameForMethodReplace(column.getName(), true)+";";
+			ret += "\n\tpublic "+(isPrimaryKeyID(column)? "Long" : getTipoCampo(column))+ " get"+getFieldNameForMethodReplace(column.getName(), false, toLower)+"(){";
+			ret += "\n\t\treturn this."+getFieldNameForMethodReplace(column.getName(), true, toLower)+";";
 			ret += "\n\t}";
 			ret += "\n";
-			ret += "\n\tpublic void set"+getFieldNameForMethodReplace(column.getName(), false)+"("+(isPrimaryKeyID(column)? "Long" : getTipoCampo(column))+" "+getFieldNameForMethodReplace(column.getName(), true)+"){";
-			ret += "\n\t\tthis."+getFieldNameForMethodReplace(column.getName(), true)+" = "+getFieldNameForMethodReplace(column.getName(), true)+";";
+			ret += "\n\tpublic void set"+getFieldNameForMethodReplace(column.getName(), false, toLower)+"("+(isPrimaryKeyID(column)? "Long" : getTipoCampo(column))+" "+getFieldNameForMethodReplace(column.getName(), true, toLower)+"){";
+			ret += "\n\t\tthis."+getFieldNameForMethodReplace(column.getName(), true, toLower)+" = "+getFieldNameForMethodReplace(column.getName(), true, toLower)+";";
 			ret += "\n\t}";
 			ret += "\n";
 		}
@@ -820,13 +827,17 @@ public class Utils {
 	}
 	
 	public static String generaField(Column column) {
+		return generaField(column, true);
+	}
+	
+	public static String generaField(Column column, boolean toLower) {
 		String ret = "";
 		if( isBlob(column) ) {
 			ret += "\n\t@Lob";
-			ret += "\n\tprivate byte[] "+getFieldNameForMethodReplace(column.getName(), true)+";";
-			ret += "\n\tprivate String "+getFieldNameForMethodReplace(column.getName(), true)+"ContentType;";
+			ret += "\n\tprivate byte[] "+getFieldNameForMethodReplace(column.getName(), true, toLower)+";";
+			ret += "\n\tprivate String "+getFieldNameForMethodReplace(column.getName(), true, toLower)+"ContentType;";
 		} else {
-			ret += "\n\tprivate "+(isPrimaryKeyID(column) ? "Long" : getTipoCampo(column))+ " "+getFieldNameForMethodReplace(column.getName(), true)+";";
+			ret += "\n\tprivate "+(isPrimaryKeyID(column) ? "Long" : getTipoCampo(column))+ " "+getFieldNameForMethodReplace(column.getName(), true, toLower)+";";
 		}
 		return ret;
 	}
@@ -1041,4 +1052,29 @@ public class Utils {
 		return result;
 	}
 	
+	/**
+	 * JDL - Defining multiple oneToOne relationships
+			relationship OneToOne {
+				Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
+			}
+			
+	 * @param conf ConfigCreateProject
+	 * @param nomeSelectSx
+	 * @param nomeTabellaDx
+	 * @return int resultType  (Return type of field ==> Geolocalizzazione.immobile that is String)
+	 */
+	public static int getTypeColumnFromRelation(ConfigCreateProject conf, String nomeSelectSx, String nomeTabellaDx) {
+		int resultType = -9999;
+		for(ProjectEntity entity : conf.getProjectEntities()) {
+			if(nomeTabellaDx.equals(entity.getName())) {
+				for(Field field : entity.getFields()) {
+					if(nomeSelectSx.equals(field.getFname())) {
+						resultType = Column.corvertModelType(field.getFtype());
+						return resultType;
+					}
+				}
+			}
+		}
+		return resultType;
+	}
 }

@@ -3,8 +3,13 @@ package it.eng.generate.template.service;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
+import it.eng.generate.Field;
+import it.eng.generate.ProjectEntity;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractTemplate;
@@ -49,6 +54,41 @@ public class TemplateServiceDTO extends AbstractTemplate{
 			body += Utils.generaField(column)+"\n";
 		}
 		
+		//[Relations]
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeSelectSx = rel.getSxSelect();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToOne) 
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					
+					Column columnId = new Column();
+					columnId.setName(nomeRelazioneSx+"Id");
+					columnId.setTypeColumn(Column.corvertModelType("Long"));
+					
+					Column columnSelect = new Column();
+					columnSelect.setName(nomeRelazioneSx+Utils.getFirstUpperCase(nomeTabellaSx));
+					columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, nomeSelectSx, nomeTabellaDx));
+
+					body += Utils.generaField(columnId, false)+"\n";
+					body += Utils.generaField(columnSelect, false)+"\n";
+
+					body += Utils.generaAddForBeanSimple(columnId, getClassName(), false);
+					body += Utils.generaAddForBeanSimple(columnSelect, getClassName(), false);
+				} else {
+					//TODO DEVELOP THIS!
+				}
+			}
+		}
+		//[/Relations]
+		
 		set = tabella.getColumnNames();
 		for (Iterator iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
@@ -82,7 +122,7 @@ public class TemplateServiceDTO extends AbstractTemplate{
 		
 		return body;
 	}
-	
+
 	public String getClassName() {
 		return Utils.getDTOClassName(tabella);
 	}
