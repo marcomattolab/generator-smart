@@ -193,45 +193,9 @@ public class TemplateDomain extends AbstractTemplate{
 				Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
 			}
 			
-			DX LibroMapper ==> @Mapping(target = "writer", ignore = true) 
+			- Lista Ricerca
+			- Criteria
 			
-			 //@Mapping(source = "bestseller.isbn", target = "bestsellerIsbn")
-			
-			---------------------------------------------------------------
-			---- SX / Immobile :
-			---------------------------------------------------------------
-			@OneToOne(cascade = CascadeType.REMOVE)    
-			@JoinColumn(unique = true)
-			private Geolocalizzazione geolocalizzazione;
-			public Geolocalizzazione getGeolocalizzazione() {
-			    return geolocalizzazione;
-			}
-			public Immobile geolocalizzazione(Geolocalizzazione geolocalizzazione) {
-			    this.geolocalizzazione = geolocalizzazione;
-			    return this;
-			}
-			public void setGeolocalizzazione(Geolocalizzazione geolocalizzazione) {
-			    this.geolocalizzazione = geolocalizzazione;
-			}    
-			
-			---------------------------------------------------------------    
-			----  DX / Geolocalizzazione:
-			---------------------------------------------------------------
-			@OneToOne(mappedBy = "geolocalizzazione")
-			@JsonIgnore
-			private Immobile posizione;    
-			public Immobile getPosizione() {
-		        return posizione;
-		    }
-		    public Geolocalizzazione posizione(Immobile immobile) {
-		        this.posizione = immobile;
-		        return this;
-		    }
-		    public void setPosizione(Immobile immobile) {
-		        this.posizione = immobile;
-		    }
-
-
 	 *
 	 **/
 	
