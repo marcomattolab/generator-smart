@@ -85,9 +85,14 @@ public class Utils {
 		className = className.substring(0,1).toUpperCase()+className.substring(1);
 		return className; 
 	}
+
+	public static String getFirstUpperCase(String fieldName) {
+		String nameField = fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
+		return nameField; 
+	}
 	
-	public static String getFirstLowerCase(String NameField) {
-		String nameField = NameField.substring(0,1).toLowerCase()+NameField.substring(1);
+	public static String getFirstLowerCase(String fieldName) {
+		String nameField = fieldName.substring(0,1).toLowerCase()+fieldName.substring(1);
 		return nameField; 
 	}
 

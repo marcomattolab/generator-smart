@@ -211,19 +211,6 @@ public class TemplateDomain extends AbstractTemplate{
 			    this.geolocalizzazione = geolocalizzazione;
 			}    
 			
-			-- Liquibase Immobile: 
-			<column name="geolocalizzazione_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_immobile_geolocalizzazione_id" />
-            </column>
-			
-			
-			-- TODO
-			-- ImmobileMapper:
-			@Mapping(source = "geolocalizzazione.id", target = "geolocalizzazioneId")
-    			@Mapping(source = "geolocalizzazione.immobile", target = "geolocalizzazioneImmobile")
-    			ImmobileDTO toDto(Immobile immobile);
-    
-    
     			-- ImmobileDTO:
     			private Long geolocalizzazioneId;
     			private String geolocalizzazioneImmobile;

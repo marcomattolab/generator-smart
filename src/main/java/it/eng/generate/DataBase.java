@@ -496,7 +496,7 @@ public class DataBase {
 			new TemplateApplicationProd(this).generateTemplate();
 			new TemplateApplicationDev(this).generateTemplate();
 			new TemplateLiquidbaseMasterInitialSchema(this).generateTemplate(); 
-			new TemplateLiquidbaseMaster(this).generateTemplate(); 				//Cicle Entities Done
+			new TemplateLiquidbaseMaster(this).generateTemplate(); 					//Cicle Entities Done
 			new TemplateMessage(this).generateTemplate();
 
 			//Copy All Template
@@ -510,14 +510,14 @@ public class DataBase {
 			new TemplateAppRoutingModule(this).generateTemplate(); 
 			new TemplateAccountModule(this).generateTemplate(); 
 			new TemplateAdminModule(this).generateTemplate(); 
-			new TemplateAdminEntityAuditModule(this).generateTemplate(); 			//Audit Module TS
+			new TemplateAdminEntityAuditModule(this).generateTemplate(); 				//Audit Module TS
 			new TemplateDashboardModule(this).generateTemplate();  					//Chart Dashboard
 			new TemplateDashboardBarchartModule(this).generateTemplate();  			//Barchart Dashboard
-			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  	//Doughnutchart Dashboard
-			new TemplateDashboardLinechartModule(this).generateTemplate();  		//Linechart Dashboard
+			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  		//Doughnutchart Dashboard
+			new TemplateDashboardLinechartModule(this).generateTemplate();  			//Linechart Dashboard
 			new TemplateDashboardPiechartModule(this).generateTemplate();  			//Piechart Dashboard
-			new TemplateDashboardPolarareachartModule(this).generateTemplate(); 	//Polarareachart Dashboard
-			new TemplateDashboardRadarchartModule(this).generateTemplate();  		//Radarchart Dashboard
+			new TemplateDashboardPolarareachartModule(this).generateTemplate(); 		//Polarareachart Dashboard
+			new TemplateDashboardRadarchartModule(this).generateTemplate();  			//Radarchart Dashboard
 			new TemplateConfigurationService(this).generateTemplate(); 
 			new TemplateErrorehandlerInterceptor(this).generateTemplate(); 
 			new TemplateCoreModule(this).generateTemplate(); 
@@ -529,7 +529,7 @@ public class DataBase {
 			new TemplateSharedLibsModule(this).generateTemplate(); 
 			new TemplateSharedCommonModule(this).generateTemplate(); 
 			new TemplateAlertErrorComponent(this).generateTemplate(); 
-			new TemplateModule(this).generateTemplate(); 							//Cicle Entities Done
+			new TemplateModule(this).generateTemplate(); 								//Cicle Entities Done
 
 
 			//TEST Classes
@@ -574,10 +574,10 @@ public class DataBase {
 				new TemplateQueryService(tabella).generateTemplate();
 				new TemplateMapperService(tabella).generateTemplate();
 				new TemplateServiceDTO(tabella).generateTemplate();
-				new TemplateServiceCriteria(this, tabella).generateTemplate(); 				//TODO Add enumeration management
+				new TemplateServiceCriteria(this, tabella).generateTemplate(); 			//TODO Add enumeration management
 				new TemplateResource(tabella).generateTemplate();
 				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS DEV  !!
-				//new TemplateIntTest(tabella).generateTemplate(); 							//TODO COMPLETE THIS TEST !!
+				//new TemplateIntTest(tabella).generateTemplate(); 						//TODO COMPLETE THIS TEST !!
 
 				//MultiLanguages
 				for(String languageCode: config.getLanguages()) {

@@ -1,6 +1,9 @@
 package it.eng.generate.template.service;
 
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.ConfigCreateProject;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractTemplate;
@@ -20,19 +23,80 @@ public class TemplateMapperService extends AbstractTemplate{
 		return "java";
 	}
 
+	/**
+	 * TODO MOVE into Utils
+	 * @param conf ConfigCreateProject
+	 * @return List of UsesMapperClass
+	 */
+	private String getUsesMapperClass(ConfigCreateProject conf) {
+		String result = "";
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeSelectSx = rel.getSxSelect();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToOne) 
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					result += Utils.getFirstUpperCase(nomeTabellaDx)+"Mapper.class" + ",";
+				}
+				
+				//TODO DEVELOP THIS!! 
+			}
+		}
+		return result.length()>0 ? result.substring(0, result.length()-1) : "";
+	}
+	
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcServiceMapperFolder()+";\r\n\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".*;\r\n" +
-		"import "+ conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder()+"."+Utils.getEntityName(tabella)+"DTO;\r\n" +
+		"import "+ conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder()+"."+Utils.getEntityName(tabella)+"DTO;\r\n\n" +
 		"import org.mapstruct.*;\r\n\n" +
 		"/**\r\n" +
 		" * Mapper for the entity "+Utils.getEntityName(tabella)+" and its DTO "+Utils.getEntityName(tabella)+"DTO.\r\n" +
 		" */\r\n" +
-		"@Mapper(componentModel = \"spring\", uses = {})\r\n" +
-		"public interface "+getClassName()+" extends EntityMapper<"+Utils.getEntityName(tabella)+"DTO, "+Utils.getEntityName(tabella)+"> {\r\n\n" +
-	  //"    @Mapping(target = \"incaricos\", ignore = true)\r\n" +
+		
+		
+		"@Mapper(componentModel = \"spring\", uses = {"+getUsesMapperClass(conf)+"})\r\n" +
+		"public interface "+getClassName()+" extends EntityMapper<"+Utils.getEntityName(tabella)+"DTO, "+Utils.getEntityName(tabella)+"> {\r\n\n";
+
+		//[Relation Management]
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeSelectSx = rel.getSxSelect();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToOne) 
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					
+					body +=
+					 		"    @Mapping(source = \""+nomeRelazioneSx+".id\", target = \""+nomeRelazioneSx+"Id\")\n"+
+						    "    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getClassNameCamelCase(nomeSelectSx)+"\")\n"+
+						    "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabellaSx)+");\n\n"+
+						    
+						    "    @Mapping(source = \""+nomeRelazioneSx+"Id\", target = \""+nomeRelazioneSx+"\")\n";
+				}
+				
+				//TODO DEVELOP THIS!! 
+			}
+		}
+	  	//[/Relation Management]
+	  	
+	  	
+	    body += 
 		"    "+Utils.getEntityName(tabella)+" toEntity("+Utils.getEntityName(tabella)+"DTO "+Utils.getClassNameLowerCase(tabella)+"DTO);\r\n\n" +
 		"    default "+Utils.getEntityName(tabella)+" fromId(Long id) {\r\n" +
 		"        if (id == null) {\r\n" +
