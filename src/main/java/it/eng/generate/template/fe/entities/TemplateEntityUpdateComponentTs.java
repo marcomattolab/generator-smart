@@ -3,14 +3,22 @@ package it.eng.generate.template.fe.entities;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
-
+	private String IMPORT_SECTION = "IMPORT_SECTION";
+	private String INIT_SECTION = "INIT_SECTION";
+	private String CONSTRUCTOR_SECTION = "CONSTRUCTOR_SECTION";
+	private String TRACKBY_SECTION = "TRACKBY_SECTION";
+	private String NG_ONINIT_SECTION = "NG_ONINIT_SECTION";
+	
 	public TemplateEntityUpdateComponentTs(Table tabella) {
 		super(tabella);
 	}
@@ -35,11 +43,16 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';\r\n" +
 		"import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';\r\n" +
 		"import { "+INometabella+" } from 'app/shared/model/"+nometabella+".model';\r\n" +
-		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n" +
-		"@Component({\r\n" +
+		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n";
+		
+//		import {IGeolocalizzazione} from 'app/shared/model/geolocalizzazione.model';
+//		import {GeolocalizzazioneService} from 'app/entities/geolocalizzazione';
+		body += printOneToOne(conf, IMPORT_SECTION);
+		
+		body += "\n@Component({\r\n" +
 		"    selector: 'jhi-"+nometabella+"-update',\r\n" +
 		"    templateUrl: './"+nometabella+"-update.component.html'\r\n" +
-		"})\r\n\n" +
+		"})\r\n" +
 		"export class "+Nometabella+"UpdateComponent implements OnInit {\r\n" +
 		"    "+nometabella+": "+INometabella+";\r\n\n" +
 		"    isSaving: boolean;\r\n";
@@ -47,6 +60,8 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		//TODO MANAGE RELATIONS AND DATES
   		//"    incaricos: IIncarico[];\r\n" +
   		//"    dataNascitaDp: any;\r\n" +
+		body += printOneToOne(conf, INIT_SECTION);
+
 		Set set = tabella.getColumnNames();
 		for (Iterator iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
@@ -63,8 +78,12 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"\n" +
 		"    constructor(\r\n" +
 		"        private dataUtils: JhiDataUtils,\r\n" +
-		"        private jhiAlertService: JhiAlertService,\r\n" +
+		"        private jhiAlertService: JhiAlertService,\r\n";
+	  
 	  //"        private incaricoService: IncaricoService,\r\n" +
+		body += printOneToOne(conf, CONSTRUCTOR_SECTION);
+	  
+		body +=
 		"        private "+nometabella+"Service: "+Nometabella+"Service,\r\n" +
 		"        private activatedRoute: ActivatedRoute\r\n" +
 		"    ) {}\r\n\n" +
@@ -83,16 +102,20 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 				body += "            this."+nomeColonna+" = this."+Utils.getClassNameLowerCase(tabella)+"."+nomeColonna+" != null ? this."+Utils.getClassNameLowerCase(tabella)+"."+nomeColonna+".format(DATE_TIME_FORMAT) : null;\r\n";
 			}
 		}
-
 		body +=
-		"       });\r\n" +
-		"    }\r\n\n" +
+		"       });\r\n";
+		//Relations
+		body += printOneToOne(conf, NG_ONINIT_SECTION);
+		body +="    }\r\n\n" +
+				
+				
+		
 		"    byteSize(field) {\r\n" +
 		"        return this.dataUtils.byteSize(field);\r\n" +
 		"    }\r\n\n" +
 		"    openFile(contentType, field) {\r\n" +
 		"        return this.dataUtils.openFile(contentType, field);\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    setFileData(event, entity, field, isImage) {\r\n" +
 		"        this.dataUtils.setFileData(event, entity, field, isImage);\r\n" +
 		"    }\r\n\n" +
@@ -131,10 +154,14 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"    }\r\n\n" +
 		"    private onError(errorMessage: string) {\r\n" +
 		"        this.jhiAlertService.error(errorMessage, null, null);\r\n" +
-		"    }\r\n\n" +
+		"    }\r\n\n";
+		
 		//"    trackIncaricoById(index: number, item: IIncarico) {\r\n" +
 		//"        return item.id;\r\n" +
 		//"    }\r\n" +
+		body += printOneToOne(conf, TRACKBY_SECTION);
+		
+		body += 
 		"    getSelected(selectedVals: Array<any>, option: any) {\r\n" +
 		"        if (selectedVals) {\r\n" +
 		"            for (let i = 0; i < selectedVals.length; i++) {\r\n" +
@@ -164,4 +191,68 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		return "src/main/webapp/app/entities/"+Utils.getClassNameLowerCase(tabella);
 	}
 
+	
+	private String printOneToOne(ConfigCreateProject conf, String section) {
+		String res = "";
+		//Relations management
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeSelectDx = rel.getDxSelect();
+				String nomeSelectSx = rel.getSxSelect();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToOne) 
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+
+					if(IMPORT_SECTION.equals(section)) {
+						res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaDx)+".model'\n";
+						res += "import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaDx)+"'\n";
+					
+					}else if(INIT_SECTION.equals(section)) {
+						res += "    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n";
+						res += "    id"+Utils.getFirstUpperCase(nomeRelazioneSx)+": any;\n";
+					
+					}else if(CONSTRUCTOR_SECTION.equals(section)) {
+						res += "        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n";
+
+					}else if(TRACKBY_SECTION.equals(section)) {
+						res += 
+						"    track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaDx)+") {\r\n" +
+						"        return item.id;\r\n" +
+						"    }\r\n\n";
+						
+					}else if(NG_ONINIT_SECTION.equals(section)) {
+						res += 	"\n      this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe( \n"+
+								"	   	  (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => { \n"+
+					             "		  	if (!this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id) { \n"+
+					             "         		this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body; \n"+
+					             "      		} else { \n"+
+					             "        	 	   this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.find(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id).subscribe( \n"+
+					             "            		 (subRes: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+">) => { \n"+
+					             "               		 this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = [subRes.body].concat(res.body); \n"+
+					             "            		}, \n"+
+					             "            		 (subRes: HttpErrorResponse) => this.onError(subRes.message) \n"+
+					             "        		    ); \n"+
+					             "      	        } \n"+
+					             "     	    }, \n"+
+					             "     	   (res: HttpErrorResponse) => this.onError(res.message) \n"+
+					             "        ); \n\n"+
+					             "        console.log(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id);\n\n";
+					}
+				
+				}
+				
+				//TODO DEVELOP THIS!! 
+				
+			}
+		}
+		return res;
+	}
+	
 }

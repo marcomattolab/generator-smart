@@ -53,6 +53,9 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 			body += "}\r\n\n";
 		}
 		
+        //public geolocalizzazioneImmobile?: string,
+        //public geolocalizzazioneId?: number,
+        		
 		//Generate IInetrface
 		body += Utils.generateIInterface(tabella);
 		
