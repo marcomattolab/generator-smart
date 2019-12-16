@@ -5,7 +5,10 @@ export const createRequestOption = (req?: any): HttpParams => {
     if (req) {
         Object.keys(req).forEach(key => {
             if (key !== 'sort') {
-                options = options.set(key, req[key]);
+            	if (req[key].length > 0 || key == 'page' ||  key == 'size') {
+                   console.log('## TEST - Filter key: '+key + "  req[key]: "+ req[key]);
+                   options = options.set(key, req[key]);
+                }
             }
         });
         if (req.sort) {

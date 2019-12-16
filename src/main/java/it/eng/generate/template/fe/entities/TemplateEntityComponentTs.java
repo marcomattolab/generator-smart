@@ -41,7 +41,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"import * as moment from 'moment';\r\n" +
 		"import { toTimestampInizio, toTimestampFine } from 'app/shared/util/date-util';\r\n" +
 		"import { "+INometabella+" } from 'app/shared/model/"+nometabella+".model';\r\n" +
-		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n" +
+		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n" +
 		"@Component({\r\n" +
 		"    selector: 'jhi-"+nometabella+"',\r\n" +
 		"    templateUrl: './"+nometabella+".component.html'\r\n" +
@@ -80,7 +80,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"            this.predicate = data.pagingParams.predicate;\r\n" +
 		"        });\r\n\n" +
 		"        this.initFormRicerca();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		
 		 // Search Filters
 		"    initFormRicerca() {\r\n" +
