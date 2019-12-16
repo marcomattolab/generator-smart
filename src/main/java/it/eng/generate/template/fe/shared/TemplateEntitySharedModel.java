@@ -83,10 +83,11 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 					columnId.setTypeColumn(Column.corvertModelType("Long"));
 					extendedList.add(columnId);
 
-					Column columnSelect = new Column();
-					columnSelect.setName(nomeRelazioneSx + Utils.getFirstUpperCase(rel.getSxSelect())); //TODO CHECH THIS!!
-					columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, rel.getSxSelect(), nomeTabellaDx));
-					extendedList.add(columnSelect);
+					//TODO CHECH THIS!!
+//					Column columnSelect = new Column();
+//					columnSelect.setName(nomeRelazioneSx + Utils.getFirstUpperCase(rel.getSxSelect())); 
+//					columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, rel.getSxSelect(), nomeTabellaDx));
+//					extendedList.add(columnSelect);
 
 				} else {
 					//TODO DEVELOP THIS!
