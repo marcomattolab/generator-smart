@@ -414,12 +414,12 @@ public class TemplatePom {
 		"\n        </dependency>" +
 
 //		//Dynamic Jasper 1 
-//		"\n 		<!-- Dynamic Jasper 1-->" +
-//		"\n			<dependency>" +
-//		"\n		  		<groupId>ar.com.fdvs</groupId>" +
-//		"\n		  		<artifactId>DynamicJasper</artifactId>" +
-//		"\n		  		<version>5.1.2</version>" +
-//		"\n			</dependency>" +
+		"\n 		<!-- Dynamic Jasper 1-->" +
+		"\n			<dependency>" +
+		"\n		  		<groupId>ar.com.fdvs</groupId>" +
+		"\n		  		<artifactId>DynamicJasper</artifactId>" +
+		"\n		  		<version>5.1.2</version>" +
+		"\n			</dependency>" +
 		
 		//Dynamic Jasper 2 START
 		"\n 		<!-- Dynamic Jasper 2-->" +

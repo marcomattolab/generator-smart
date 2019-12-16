@@ -53,13 +53,3 @@
 - Enumerations   
 - Relations =>  OneToOne  ManyToMany   OneToMany  ManyToOne
 
-
--- autore.component.ts
--- 'nome.contains': nome ? nome : '', ==>  '': nome ? 'nome.contains=' + nome : '',
-
--- request-util.tx    
-    if (req[key].length>0){
-		console.log('## key: '+key + "  req[key]: "+ req[key]);
-    	options = options.set(key, req[key]);
-	}
-    

@@ -7,8 +7,6 @@ import org.springframework.util.CollectionUtils;
 
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
-import it.eng.generate.Field;
-import it.eng.generate.ProjectEntity;
 import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;

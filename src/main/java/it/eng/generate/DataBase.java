@@ -128,8 +128,6 @@ import it.eng.generate.template.service.TemplateMapperService;
 import it.eng.generate.template.service.TemplatePasswordChangeDTO;
 import it.eng.generate.template.service.TemplateQueryService;
 import it.eng.generate.template.service.TemplateRandomUtil;
-import it.eng.generate.template.service.TemplateReportService;
-import it.eng.generate.template.service.TemplateReportServiceImpl;
 import it.eng.generate.template.service.TemplateService;
 import it.eng.generate.template.service.TemplateServiceCriteria;
 import it.eng.generate.template.service.TemplateServiceDTO;
@@ -160,6 +158,8 @@ import it.eng.generate.template.web.TemplateAccountResource;
 import it.eng.generate.template.web.TemplateAuditResource;
 import it.eng.generate.template.web.TemplateEntityAuditResource;
 import it.eng.generate.template.web.TemplateLogsResource;
+import it.eng.generate.template.web.TemplateReportBase;
+import it.eng.generate.template.web.TemplateDynamicReportResource;
 import it.eng.generate.template.web.TemplateResource;
 import it.eng.generate.template.web.TemplateUserResource;
 import it.eng.generate.template.web.errors.TemplateBadRequestAlertException;
@@ -452,7 +452,7 @@ public class DataBase {
 			new TemplateAuditEventService(this).generateTemplate();
 			new TemplateUserMapperService(this).generateTemplate();
 			new TemplateEntityMapperService(this).generateTemplate();
-			new TemplateReportService(this).generateTemplate();					//DONE COMPLETE THIS REPORT JASPER !
+			//new TemplateReportService(this).generateTemplate();					//DONE COMPLETE THIS REPORT JASPER !
 
 
 			//DTO (statics)
@@ -466,7 +466,10 @@ public class DataBase {
 			new TemplateAuditResource(this).generateTemplate();
 			new TemplateUserResource(this).generateTemplate();
 			new TemplateLogsResource(this).generateTemplate();
-			//new TemplateReportResource(this).generateTemplate();				//TODO Report Complete
+			
+			//new TemplateReportResource(this).generateTemplate();  //FIXME Report Jasper !!!
+			new TemplateReportBase(this).generateTemplate();		
+//			new TemplateReportDynamicResource(this).generateTemplate();
 
 			//WEB.REST.UTILS (statics)
 			new TemplateHeaderUtil(this).generateTemplate();
@@ -578,6 +581,8 @@ public class DataBase {
 				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 		//TODO COMPLETE THIS DEV  !!
 				//new TemplateIntTest(tabella).generateTemplate(); 						//TODO COMPLETE THIS TEST !!
 
+				new TemplateDynamicReportResource(tabella).generateTemplate();
+				
 				//MultiLanguages
 				for(String languageCode: config.getLanguages()) {
 					new TemplateEntityI18N(tabella, languageCode).generateTemplate();  
@@ -597,7 +602,7 @@ public class DataBase {
 				new TemplateEntityDeleteComponentHtml(tabella).generateTemplate(); 	
 				new TemplateEntitySharedModel(this, tabella).generateTemplate(); 			//DONE COMPLETE ENUM
 
-				new TemplateReportServiceImpl(this, tabella).generateTemplate();			//TODO COMPLETE THIS REPORT JASPER !
+				//new TemplateReportServiceImpl(this, tabella).generateTemplate();			//TODO COMPLETE THIS REPORT JASPER !
 			}
 
 			//MultiLanguages 
