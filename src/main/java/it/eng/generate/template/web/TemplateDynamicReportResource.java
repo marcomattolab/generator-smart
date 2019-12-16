@@ -115,7 +115,7 @@ public class TemplateDynamicReportResource extends AbstractTemplate{
          List<Column> columns = tabella.getColumns();
          int cSize = 100 / columns.size();
 		 for(Column c: columns) {
-			 body += "		builder.addColumn(\""+c.getName()+"\", \""+c.getName()+"\", "+c.getTypeColumn()+".class.get"+c.getName()+"(), "+cSize+");\r\n";
+			 body += "		builder.addColumn(\""+c.getName()+"\", \""+c.getName()+"\", "+c.getTypeColumn().getName()+".class.getName(), "+cSize+");\r\n";
 		 }
 		 //CICLE COLUMN
 		 
