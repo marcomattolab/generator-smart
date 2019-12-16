@@ -452,8 +452,6 @@ public class DataBase {
 			new TemplateAuditEventService(this).generateTemplate();
 			new TemplateUserMapperService(this).generateTemplate();
 			new TemplateEntityMapperService(this).generateTemplate();
-			//new TemplateReportService(this).generateTemplate();					//DONE COMPLETE THIS REPORT JASPER !
-
 
 			//DTO (statics)
 			new TemplateUserDTO(this).generateTemplate();
@@ -466,10 +464,7 @@ public class DataBase {
 			new TemplateAuditResource(this).generateTemplate();
 			new TemplateUserResource(this).generateTemplate();
 			new TemplateLogsResource(this).generateTemplate();
-			
-			//new TemplateReportResource(this).generateTemplate();  //FIXME Report Jasper !!!
-			new TemplateReportBase(this).generateTemplate();		
-//			new TemplateReportDynamicResource(this).generateTemplate();
+			new TemplateReportBase(this).generateTemplate();				//Dynamic Jasper	
 
 			//WEB.REST.UTILS (statics)
 			new TemplateHeaderUtil(this).generateTemplate();
@@ -534,8 +529,7 @@ public class DataBase {
 			new TemplateModule(this).generateTemplate(); 								//Cicle Entities Done
 
 
-			//TEST Classes
-			//TODO DEVELOP THIS!!
+			//TEST Classes - TODO DEVELOP THIS!!
 			if (config.isGenerateTest()) {
 				new TemplateWebConfigurerTest(this).generateTemplate();
 				new TemplateWebConfigurerTestController(this).generateTemplate();
@@ -578,7 +572,7 @@ public class DataBase {
 				new TemplateServiceDTO(tabella).generateTemplate();
 				new TemplateServiceCriteria(this, tabella).generateTemplate(); 			//TODO Add enumeration management
 				new TemplateResource(tabella).generateTemplate();
-				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 		//TODO COMPLETE THIS DEV  !!
+				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS DEV  !!
 				//new TemplateIntTest(tabella).generateTemplate(); 						//TODO COMPLETE THIS TEST !!
 
 				new TemplateDynamicReportResource(tabella).generateTemplate();
@@ -601,8 +595,6 @@ public class DataBase {
 				new TemplateEntityDeleteComponentTs(tabella).generateTemplate(); 		
 				new TemplateEntityDeleteComponentHtml(tabella).generateTemplate(); 	
 				new TemplateEntitySharedModel(this, tabella).generateTemplate(); 			//DONE COMPLETE ENUM
-
-				//new TemplateReportServiceImpl(this, tabella).generateTemplate();			//TODO COMPLETE THIS REPORT JASPER !
 			}
 
 			//MultiLanguages 

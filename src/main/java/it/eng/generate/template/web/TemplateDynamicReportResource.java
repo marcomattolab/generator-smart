@@ -124,7 +124,7 @@ public class TemplateDynamicReportResource extends AbstractTemplate{
 		 "		builder.setPrintBackgroundOnOddRows(true);\r\n" +
 		 "		builder.setUseFullPageWidth(true);\r\n" +
 		 "		getParams().put(\"paramAlgo\", \""+entita+":\");\r\n" +
-		 "		builder.setTemplateFile(\""+templateJRXML+".jrxml\");\r\n" +
+		 "		builder.setTemplateFile(\""+templateJRXML+"\");\r\n" +
 		 "		return builder.build();\r\n" +
 		 "	}\r\n\n" +
 		 "	@Override\r\n" +

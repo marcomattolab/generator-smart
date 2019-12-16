@@ -144,12 +144,27 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			
 		}
 		
-		
 		//Campi di ricerca
 		body +=
 		"                    </div>\r\n" +
 		"				   <!-- [/filtri di ricerca] -->\r\n" +
 		
+		
+		//<i class="fa fa-file-excel-o" aria-hidden="true"></i>
+		//<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+		
+		//bottoni download PDF/XLS 
+		"                    <div class=\"form-group float-left\">\r\n" +
+		"                        <button class=\"btn btn-primary\" type=\"button\" (click)=\"alert('Print PDF')\">\r\n" +
+		"                            <fa-icon [icon]=\"'file-pdf'\"></fa-icon>\r\n" +
+		"                            <span jhiTranslate=\"global.search.buttonLabel\">PDF</span>\r\n" +
+		"                        </button>\r\n" +
+		"                        <button class=\"btn btn-primary\" type=\"button\" (click)=\"alert('Print XLS')\">\r\n" +
+		"                            <fa-icon [icon]=\"'fa-file-excel-o'\"></fa-icon>\r\n" +
+		"                            <span jhiTranslate=\"global.search.buttonLabel\">XLS</span>\r\n" +
+		"                        </button>\r\n" +
+		"                    </div>\r\n" +
+
 		//bottoni cerca e cancella filtri 
 		"                    <div class=\"form-group float-right\">\r\n" +
 		"                        <button class=\"btn btn-link\" type=\"button\" (click)=\"resetFiltri()\">\r\n" +
