@@ -194,6 +194,21 @@ public class TemplateDomain extends AbstractTemplate{
 			Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
 		}
 		
+		-- ImmobileQueryService.createSpecification
+		  if (criteria.getGeolocalizzazioneId() != null) {
+              specification = specification.and(buildSpecification(criteria.getGeolocalizzazioneId(),
+                  root -> root.join(Immobile_.geolocalizzazione, JoinType.LEFT).get(Geolocalizzazione_.id)));
+          }
+		
+		-- Immobile.component.html
+//		<th jhiSortBy="geolocalizzazioneImmobile"><span jhiTranslate="imprendocasaApp.immobile.geolocalizzazione">Geolocalizzazione</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+//                
+//		<td>
+//          <div *ngIf="immobile.geolocalizzazioneId">
+//                <a [routerLink]="['../geolocalizzazione', immobile.geolocalizzazioneId , 'view' ]" >{{immobile.geolocalizzazioneImmobile}}</a>
+//          </div>
+//      </td>
+                    
 	 **/
 	
 	
