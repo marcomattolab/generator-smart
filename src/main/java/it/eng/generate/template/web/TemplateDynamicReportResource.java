@@ -159,7 +159,7 @@ public class TemplateDynamicReportResource extends AbstractTemplate{
 	}
 
 	public String getClassName() {
-		return "DynamicReportResource";
+		return "DynamicReportResource"+Utils.getEntityName(tabella);
 	}
 
 	public String getSourceFolder() {
