@@ -188,15 +188,12 @@ public class TemplateDomain extends AbstractTemplate{
 	}
 
 	/**
-	  		//JDL - Defining multiple oneToOne relationships
-			relationship OneToOne {
-				Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
-			}
-			
-			- Lista Ricerca
-			- Criteria
-			
-	 *
+  		JDL - Defining multiple oneToOne relationships
+		
+		relationship OneToOne {
+			Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
+		}
+		
 	 **/
 	
 	

@@ -35,12 +35,17 @@
 ## BUG Ricerca  (FILTRI RICERCA)
 1) Gestire i campi BLOB  / CLOB
 2) Non funzionano i filtri RANGE sulle DATE
-3) Modello JSON => se metto un campo "firstName" camel case non funge! (Deve essere tutto minuscolo)
-4) Modello JSON => "id" deve essere sempre presente!
-5) Aggiungere altri tipologie: ImageBlob, Blob
+3) ==> Modello JSON => se metto un campo "firstName" camel case non funge! (Deve essere tutto minuscolo)
+4) ==> Modello JSON => "id" deve essere sempre presente!
+5) ==> Nascondere Id duplicato da GUI
+6) ==> Aggiungere Kostanti nel JSON (SIZE_MAX=189, SIZE_DEFAULT=100)
+7) Aggiungere altri tipologie: ImageBlob, Blob
+8) Agganciare enumeration
 
+9) Bug nella ricerca (manda sempre tutti i filtri vuoti e non trova nulla) **
+10) Completare OneToOne ==> Add Lista Ricerca  e Criteria **
 
-## COMPLETARE MODELLO JSON 
+11) COMPLETARE MODELLO JSON 
 - unique 
 - minlength(5) 
 - maxlength(13)  
