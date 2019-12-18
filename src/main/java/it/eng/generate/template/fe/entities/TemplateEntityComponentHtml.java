@@ -314,7 +314,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 							"			</td>\r\n";
 					} else if("TH".equals(type)) {
 						result += 
-							"			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeTabellaSx)+"\"><span jhiTranslate=\""+Utils.getClassNameCamelCase(conf.getProjectName())+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaDx)+"</span> <fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
+							"			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeTabellaSx)+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaDx)+"</span> <fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
 
 					}
 					
