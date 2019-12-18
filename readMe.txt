@@ -47,6 +47,7 @@
 - Relations =>  OneToOne  ManyToMany   OneToMany  ManyToOne
 
 
+12) Migliorare Layout stampe 
 ==> http://dynamicjasper.com/docs/current/xref-test/ar/com/fdvs/dj/test/ConditionalStylesReportTest.html
 ==> http://dynamicjasper.com/docs/current/xref-test/ar/com/fdvs/dj/test/ImageBannerReportTest.html
 
