@@ -45,7 +45,7 @@
 - Relations =>  OneToOne  ManyToMany   OneToMany  ManyToOne
 
 
-
+- Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
     
     
     

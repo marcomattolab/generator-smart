@@ -309,7 +309,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 						result += 
 							"			<td>\r\n" +
 							"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\">\r\n" +
-							"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeRelazioneSx)+"', "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>\r\n" +
+							"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeTabellaDx)+"', "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>\r\n" +
 							"			   </div>\r\n" +
 							"			</td>\r\n";
 					} else if("TH".equals(type)) {
