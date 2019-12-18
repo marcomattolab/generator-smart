@@ -34,17 +34,15 @@
 6) ==> Aggiungere Costanti nel JSON (SIZE_MAX=189, SIZE_DEFAULT=100)
 7) Aggiungere altri tipologie: ImageBlob, Blob
 8) Agganciare enumeration
-10) Completare OneToOne ==> Add Lista Ricerca  e Criteria **
 
-11) COMPLETARE MODELLO JSON 
+9) COMPLETARE MODELLO JSON 
 - unique 
 - minlength(5) 
 - maxlength(13)  
 - COSTANTI => minlength(SIZE_MAX)  
-- Enumerations   
+
+
 - Relations =>  OneToOne  ManyToMany   OneToMany  ManyToOne
-
-
 - Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
     
     
