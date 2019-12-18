@@ -63,7 +63,6 @@ public class TemplateMapperService extends AbstractTemplate{
 		" * Mapper for the entity "+Utils.getEntityName(tabella)+" and its DTO "+Utils.getEntityName(tabella)+"DTO.\r\n" +
 		" */\r\n" +
 		
-		
 		"@Mapper(componentModel = \"spring\", uses = {"+getUsesMapperClass(conf)+"})\r\n" +
 		"public interface "+getClassName()+" extends EntityMapper<"+Utils.getEntityName(tabella)+"DTO, "+Utils.getEntityName(tabella)+"> {\r\n\n";
 
@@ -82,7 +81,7 @@ public class TemplateMapperService extends AbstractTemplate{
 					
 					if (nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 					body += "    @Mapping(source = \""+nomeRelazioneSx+".id\", target = \""+nomeRelazioneSx+"Id\")\n"+
-						  //"    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getClassNameCamelCase(nomeSelectSx)+"\")\n"+
+						    "    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getFirstUpperCase(nomeSelectSx)+"\")\n"+
 						    "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabellaSx)+");\n\n"+
 						    
 						    "    @Mapping(source = \""+nomeRelazioneSx+"Id\", target = \""+nomeRelazioneSx+"\")\n";

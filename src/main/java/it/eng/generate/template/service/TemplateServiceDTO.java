@@ -71,7 +71,7 @@ public class TemplateServiceDTO extends AbstractTemplate{
 					columnId.setTypeColumn(Column.corvertModelType("Long"));
 					
 					Column columnSelect = new Column();
-					columnSelect.setName(nomeRelazioneSx+Utils.getFirstUpperCase(nomeTabellaSx));
+					columnSelect.setName(nomeRelazioneSx+Utils.getFirstUpperCase(nomeSelectSx));
 					columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, nomeSelectSx, nomeTabellaDx));
 
 					body += Utils.generaField(columnId, false)+"\n";
