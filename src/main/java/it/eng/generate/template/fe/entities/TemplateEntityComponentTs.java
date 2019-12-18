@@ -196,6 +196,8 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		// Export File (PDF XLS, TXT etc)
 		"    exportFile(fileType) {\r\n" +
 		"        console.log('Export file with type: ' + fileType);\r\n" +
+		//TODO ADD CRITERIA!!
+		"        return window.location.href = this.autoreService.resourceUrl + '/"+nometabella+"sExport'+\"?fileType=\"+fileType;\r\n" +
 		"    }\r\n\n"+
 		
 		

@@ -159,7 +159,6 @@ import it.eng.generate.template.web.TemplateAuditResource;
 import it.eng.generate.template.web.TemplateEntityAuditResource;
 import it.eng.generate.template.web.TemplateLogsResource;
 import it.eng.generate.template.web.TemplateReportBase;
-import it.eng.generate.template.web.TemplateDynamicReportResource;
 import it.eng.generate.template.web.TemplateResource;
 import it.eng.generate.template.web.TemplateUserResource;
 import it.eng.generate.template.web.errors.TemplateBadRequestAlertException;
@@ -574,8 +573,7 @@ public class DataBase {
 				new TemplateResource(tabella).generateTemplate();
 				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 		//TODO COMPLETE THIS DEV  !!
 				//new TemplateIntTest(tabella).generateTemplate(); 						//TODO COMPLETE THIS TEST !!
-
-				new TemplateDynamicReportResource(tabella).generateTemplate();
+				//new TemplateDynamicReportResource(tabella).generateTemplate();
 				
 				//MultiLanguages
 				for(String languageCode: config.getLanguages()) {

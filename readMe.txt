@@ -61,3 +61,15 @@
 
 
 
+https://stackoverflow.com/questions/35138424/how-do-i-download-a-file-with-angular2
+
+
+    exportFile(fileType) {
+        console.log('Export file with type: ' + fileType);
+
+		return window.location.href = SERVER_API_URL + 'api/exportAutore'+"?fileType="+fileType;
+
+    }
+    
+    
+    

@@ -1,12 +1,16 @@
 package it.eng.generate.template.web;
 
+import java.util.List;
+
+import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractTemplate;
 
 public class TemplateResource extends AbstractTemplate{
-
+	private static final String templateJRXML = "template-report.jrxml";
+	
 	public TemplateResource(Table tabella) {
 		super(tabella);
 	}
@@ -23,34 +27,55 @@ public class TemplateResource extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcWebRestFolder()+";\r\n\n" +
-		"import com.codahale.metrics.annotation.Timed;\r\n" +
-		"import " + conf.getPackageclass() + "." + conf.getSrcServiceFolder() + "." + Utils.getEntityName(tabella)+"Service;\r\n\n" +
-		"import " + conf.getPackageclass() + "." + conf.getSrcWebRestErrorsFolder() + ".BadRequestAlertException;\r\n" +
-		"import " + conf.getPackageclass() + "." + conf.getSrcWebRestUtilFolder() + ".HeaderUtil;\r\n" +
-		"import " + conf.getPackageclass() + "." + conf.getSrcWebRestUtilFolder() + ".PaginationUtil;\r\n" +
-		"import " + conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder() + "." + Utils.getEntityName(tabella)+"DTO;\r\n" +
-		"import " + conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder() + "." + Utils.getEntityName(tabella)+"Criteria;\r\n" +
-		"import " + conf.getPackageclass() + "." + conf.getSrcServiceFolder() + "." + Utils.getEntityName(tabella)+"QueryService;\r\n" +
-		"import io.github.jhipster.web.util.ResponseUtil;\r\n" +
+		
+		//MANAGE THIS
+		String entityName = Utils.getEntityName(tabella);
+		String entita = Utils.getFirstLowerCase(entityName);
+		String Entita = Utils.getFirstUpperCase(entityName);
+				
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestFolder()+";\r\n\n" +
+		"import java.io.ByteArrayOutputStream;\r\n" +
+		"import java.net.URI;\r\n" +
+		"import java.net.URISyntaxException;\r\n" +
+		"import java.util.Date;\r\n" +
+		"import java.util.List;\r\n" +
+		"import java.util.Optional;\r\n" +
+		"import javax.validation.Valid;\r\n" +
+		"import org.apache.commons.lang.StringUtils;\r\n" +
 		"import org.slf4j.Logger;\r\n" +
 		"import org.slf4j.LoggerFactory;\r\n" +
 		"import org.springframework.data.domain.Page;\r\n" +
 		"import org.springframework.data.domain.Pageable;\r\n" +
 		"import org.springframework.http.HttpHeaders;\r\n" +
+		"import org.springframework.http.HttpStatus;\r\n" +
+		"import org.springframework.http.MediaType;\r\n" +
 		"import org.springframework.http.ResponseEntity;\r\n" +
-		"import org.springframework.web.bind.annotation.*;\r\n" +
-		"import javax.validation.Valid;\r\n" +
-		"import java.net.URI;\r\n" +
-		"import java.net.URISyntaxException;\r\n" +
-		"import java.util.List;\r\n" +
-		"import java.util.Optional;\r\n\n" +
+		"import org.springframework.web.bind.annotation.DeleteMapping;\r\n" +
+		"import org.springframework.web.bind.annotation.GetMapping;\r\n" +
+		"import org.springframework.web.bind.annotation.PathVariable;\r\n" +
+		"import org.springframework.web.bind.annotation.PostMapping;\r\n" +
+		"import org.springframework.web.bind.annotation.PutMapping;\r\n" +
+		"import org.springframework.web.bind.annotation.RequestBody;\r\n" +
+		"import org.springframework.web.bind.annotation.RequestMapping;\r\n" +
+		"import org.springframework.web.bind.annotation.RestController;\r\n" +
+		"import com.codahale.metrics.annotation.Timed;\r\n" +
+		"import ar.com.fdvs.dj.domain.AutoText;\r\n" +
+		"import ar.com.fdvs.dj.domain.DynamicReport;\r\n" +
+		"import ar.com.fdvs.dj.domain.builders.FastReportBuilder;\r\n" +
+		"import io.github.jhipster.web.util.ResponseUtil;\r\n" +
+		"import " + conf.getPackageclass() + "." + conf.getSrcServiceFolder()+ ".*;\r\n" +
+		"import " + conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder()+ ".*;\r\n" +
+		"import " + conf.getPackageclass() + "." + conf.getSrcWebRestErrorsFolder()+ ".*;\r\n" +
+		"import " + conf.getPackageclass() + "." + conf.getSrcWebRestUtilFolder()+ ".*;\r\n" +
+		"import net.sf.jasperreports.engine.JRDataSource;\r\n" +
+		"import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;\r\n\n" + 
 		"/**\r\n" +
 		" * REST controller for managing "+Utils.getEntityName(tabella)+".\r\n" +
 		" */\r\n" +
 		"@RestController\r\n" +
 		"@RequestMapping(\"/api\")\r\n" +
-		"public class "+getClassName() +" {\r\n" +
+		"public class "+getClassName() +" extends BaseReport {\r\n" +
 		"    private final Logger log = LoggerFactory.getLogger("+getClassName() +".class);\r\n" +
 		"    private static final String ENTITY_NAME = \""+Utils.getClassNameLowerCase(tabella)+"\";\r\n" +
 		"    private final "+Utils.getEntityName(tabella)+"Service "+Utils.getClassNameLowerCase(tabella)+"Service;\r\n" +
@@ -152,6 +177,84 @@ public class TemplateResource extends AbstractTemplate{
 		"        "+Utils.getClassNameLowerCase(tabella)+"Service.delete(id);\r\n" +
 		"        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();\r\n" +
 		"    }\r\n\n" +
+	
+		
+		//REPORTISTICA
+		 "	@GetMapping(\"/"+entita+"sExport\")\r\n" +
+		"	@Timed\r\n" +
+		 "	public ResponseEntity<byte[]> export"+Entita+"("+Entita+"Criteria criteria, FileType fileType) throws Exception {\r\n" +
+		"		byte[] report = null;\r\n" +
+		"		HttpHeaders httpHeaders = new HttpHeaders();\r\n" +
+		"		try {\r\n" +
+		"			ByteArrayOutputStream baos = new ByteArrayOutputStream();\r\n" +
+		"			generateReport();\r\n" +
+		"			if( fileType == null || (fileType != null && StringUtils.isEmpty(fileType.toString())) ) {\r\n" +
+		"				log.warn(\"Parameter fileType is blank. Set fileType=PDF\");\r\n" +
+		"				fileType = FileType.PDF;\r\n" +
+		"			}\r\n" +
+		"			switch (fileType) {\r\n" +
+		"			case PDF:\r\n" +
+		"				exportPdf(getJasperPrint(), baos);\r\n" +
+		"				httpHeaders.setContentType(MediaType.valueOf(\"application/pdf\"));\r\n" +
+		"				httpHeaders.setContentDispositionFormData(\"inline\", \"report"+Entita+".pdf\");\r\n" +
+		"				break;\r\n" +
+		"			case XLS:\r\n" +
+		"				exportXls(getJasperPrint(), baos);\r\n" +
+		"				httpHeaders.setContentType(MediaType.valueOf(\"application/vnd.ms-excel\"));\r\n" +
+		"				httpHeaders.setContentDispositionFormData(\"inline\", \"report"+Entita+".xls\");\r\n" +
+		"				break;\r\n" +
+		"			case CSV:\r\n" +
+		"				exportCsv(getJasperPrint(), baos);\r\n" +
+		"				httpHeaders.setContentType(MediaType.valueOf(\"text/csv\"));\r\n" +
+		"				httpHeaders.setContentDispositionFormData(\"inline\", \"report"+Entita+".csv\");\r\n" +
+		"				break;\r\n" +
+		"			case DOC:\r\n" +
+		"				exportRtf(getJasperPrint(), baos);\r\n" +
+		"				httpHeaders.setContentType(MediaType.valueOf(\"application/rtf\"));\r\n" +
+		"				httpHeaders.setContentDispositionFormData(\"inline\", \"report"+Entita+".rtf\");\r\n" +
+		"				break;\r\n" +
+		"			default:\r\n" +
+		"				break;\r\n" +
+		"			}\r\n" +
+		"			\r\n" +
+		"			report = baos.toByteArray();\r\n" +
+		"			httpHeaders.setContentLength(report.length);\r\n" +
+		"			return new ResponseEntity<byte[]>(report, httpHeaders, HttpStatus.OK);\r\n" +
+		"		} catch (Exception ex) {\r\n" +
+		"			log.error(\"Errore in fase di generazione export "+entita+"\", ex);\r\n" +
+		"			throw ex;\r\n" +
+		"		}\r\n" +
+		"	}\r\n\n" +
+		 "	@Override\r\n" +
+		 "	public DynamicReport buildReport() throws Exception {\r\n" +
+		 "		FastReportBuilder builder = new FastReportBuilder();\r\n" +
+		 "		builder.setMargins(20, 40, 30, 30);\r\n" +
+		 "		builder.setDetailHeight(10);\r\n" +
+		 "		builder.setTitle(\"Report "+entita+"\");\r\n" +
+		 "		builder.setSubtitle(\"Generato in data: \" + new Date());\r\n";
+		 
+		 //CICLE COLUMN AND TYPE
+         List<Column> columns = tabella.getColumns();
+         int cSize = 100 / columns.size();
+		 for(Column c: columns) {
+			 body += "		builder.addColumn(\""+c.getName()+"\", \""+c.getName()+"\", "+c.getTypeColumn().getName()+".class.getName(), "+cSize+");\r\n";
+		 }
+		 //CICLE COLUMN
+		 
+		 body +=
+		 "		builder.addAutoText(AutoText.AUTOTEXT_PAGE_X_OF_Y, AutoText.POSITION_FOOTER, AutoText.ALIGMENT_RIGHT);\r\n" +
+		 "		builder.setPrintBackgroundOnOddRows(true);\r\n" +
+		 "		builder.setUseFullPageWidth(true);\r\n" +
+		 "		getParams().put(\"paramAlgo\", \""+entita+":\");\r\n" +
+		 "		builder.setTemplateFile(\""+templateJRXML+"\");\r\n" +
+		 "		return builder.build();\r\n" +
+		 "	}\r\n\n" +
+		"	@Override\r\n" +
+		"	public JRDataSource getDataSource() {\r\n" +
+		"		return new JRBeanCollectionDataSource( "+entita+"QueryService.findByCriteria(new "+Entita+"Criteria()) );\r\n" +
+		"	}\r\n\n"+
+		//END REPORTISTICA
+		
 		"}\r\n";
 		return body;
 	}

@@ -156,7 +156,6 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('PDF')\">PDF <i class=\"fa fa-file-pdf-o\"></i></button>\r\n" +
 		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('XLS')\">XLS <i class=\"fa fa-file-excel-o\"></i></button>\r\n" +
 		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('DOC')\">DOC <i class=\"fa fa-file-word-o\"></i></button>\r\n" +
-		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('TXT')\">TXT <i class=\"fa fa-file-text\"></i></button>\r\n" +
 		"                    </div>\r\n\n" +
 		
 
