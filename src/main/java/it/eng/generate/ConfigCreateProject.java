@@ -71,7 +71,6 @@ public class ConfigCreateProject {
 
 
 	private void init() {
-		//ReadME!! - Project configuration JSON
 		ProjectConfig jsonConf = readProjectJson();
 
 		this.setGenerateTest(jsonConf.isGenerateTest());
@@ -91,9 +90,8 @@ public class ConfigCreateProject {
 		this.setLanguages( jsonConf.getLanguages().toArray(new String[jsonConf.getLanguages().size()]) );
 		this.setProjectEntities(jsonConf.getEntities());
 		this.setProjectRelations(jsonConf.getRelations());
-
-		this.setMysql(jsonConf.getDriver().contains("mysql")?true:false);
-		this.setOracle(jsonConf.getDriver().contains("oracle")?true:false);
+		this.setMysql(jsonConf.getDriver().contains("mysql") ? true : false);
+		this.setOracle(jsonConf.getDriver().contains("oracle") ? true : false);
 	}
 	
 	/**
@@ -103,8 +101,8 @@ public class ConfigCreateProject {
         ObjectMapper mapper = new ObjectMapper();
         try {
             // JSON file to Java object - TODO CHANGE ME!!!
-	        //String PATH = "/Users/marco/git/generator-smart/project.json";
-	        String PATH = "C:\\Users\\Martorana\\git\\generator-smart\\project.json";
+	        String PATH = "/Users/marco/git/generator-smart/project.json";
+	        //String PATH = "C:\\Users\\Martorana\\git\\generator-smart\\project.json";
 	        ProjectConfig jsonConf = mapper.readValue(new File(PATH), ProjectConfig.class);
 	        String prettyJsonConf = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonConf);
 	        System.out.println("# Test - Project Configuration JSON => " + prettyJsonConf);

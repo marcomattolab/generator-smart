@@ -4,10 +4,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.DataBase;
 import it.eng.generate.Enumeration;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
@@ -199,6 +202,10 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			String Splitted = Utils.splitCamelCase(ColumnName);
 			body += "\t\t\t<th jhiSortBy=\""+columnname+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+Splitted+"</span><fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
 		}
+		
+		//relations
+		body += buildOneToOne(conf, "TH");
+		
 		body +=
 		"            <th></th>\r\n" +
 		"            </tr>\r\n" +
@@ -237,6 +244,9 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 				body += "\t\t\t<td>{{"+nometabella+"."+columnname+"}}</td>\r\n";
 			}
 		}
+		
+		//Relations
+		body += buildOneToOne(conf, "TD");
 		
 		body +=
 		"                <td class=\"text-right\">\r\n" +
@@ -277,6 +287,41 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		"    </div>\r\n" +
 		"</div>\r\n";
 		return body;
+	}
+
+	private String buildOneToOne(ConfigCreateProject conf, String type) {
+		String result = "";
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeSelectDx = rel.getDxSelect();
+				String nomeSelectSx = rel.getSxSelect();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToOne) 
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					if("TD".equals(type)) {
+						result += 
+							"			<td>\r\n" +
+							"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"Id\">\r\n" +
+							"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeTabellaDx)+"', "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>\r\n" +
+							"			   </div>\r\n" +
+							"			</td>\r\n";
+					} else if("TH".equals(type)) {
+						result += 
+							"			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeTabellaSx)+"\"><span jhiTranslate=\""+Utils.getClassNameCamelCase(conf.getProjectName())+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaDx)+"</span> <fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
+
+					}
+					
+				}
+			}
+		}
+		return result;
 	}
 	
 	public String getClassName(){

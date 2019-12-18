@@ -8,7 +8,6 @@
 	- Gestire le varie tipologie di relazioni (1..1,   0...N,   N...M ) scelta componente grafico
 	- Inserire logica di navigazione (ROUTING) di imprendocasa!! (si sfruttano interfaccie presenti)
 	- Generare filtri di ricerca da file di configurazione (ricerca per testo, range date, enumeration, range valori numerici)
-
 	
 #Migliorie / Plugin
     - Creazione XML / UML per definire progetto prima della creazione con ENUMERATION, DASHBOARD, RUOLI ...!!!
@@ -46,10 +45,6 @@
 - Enumerations   
 - Relations =>  OneToOne  ManyToMany   OneToMany  ManyToOne
 
-
-12) Migliorare Layout stampe 
-==> http://dynamicjasper.com/docs/current/xref-test/ar/com/fdvs/dj/test/ConditionalStylesReportTest.html
-==> http://dynamicjasper.com/docs/current/xref-test/ar/com/fdvs/dj/test/ImageBannerReportTest.html
 
 
     

@@ -2,8 +2,11 @@ package it.eng.generate.template.service;
 
 import java.util.Iterator;
 
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractTemplate;
@@ -124,6 +127,7 @@ public class TemplateQueryService extends AbstractTemplate{
 		}
 		
 		//TODO DEVELOP RELATIONS
+		body += buildOneToOne(conf);
 		/*body +=	
 		"            if (criteria.getListaContattiId() != null) {\r\n" +
 		"                specification = specification.and(buildSpecification(criteria.getListaContattiId(),\r\n" +
@@ -142,6 +146,30 @@ public class TemplateQueryService extends AbstractTemplate{
 		return body;
 	}
 
+	private String buildOneToOne(ConfigCreateProject conf) {
+		String result = "";
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToOne) 
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+						result += 
+						"		    if (criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id() != null) {\r\n" +
+						"                specification = specification.and(buildSpecification(criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id(),\r\n" +
+						"                    root -> root.join("+Utils.getFirstUpperCase(nomeTabellaSx)+"_."+Utils.getFirstLowerCase(nomeRelazioneSx)+", JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaDx)+"_.id)));\r\n" +
+						"            }\r\n";
+				}
+			}
+		}
+		return result;
+	}
+	
 	public String getClassName() {
 		return Utils.getQueryServiceClassName(tabella);
 	}

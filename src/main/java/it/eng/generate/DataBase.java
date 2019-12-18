@@ -181,7 +181,6 @@ public class DataBase {
 	public Map<String, Table> tabelle;
 	public HashMap<String, List<String>> enumeration;
 	public HashMap<String, List<String>> enumerationRelation;
-
 	private static DataBase conf;
 
 	private DataBase(){
@@ -225,7 +224,6 @@ public class DataBase {
 	public void init() throws ClassNotFoundException, SQLException {
 		ConfigCreateProject ccp = ConfigCreateProject.getIstance();
 		System.out.println("## ReverseEngineeringDB is "  + (ccp.isEnableReverseEngineeringDB() ? "Enabled" : "NOT Enabled") );
-		
 		
 		//CASE A - Reverse Engineering for DataBase
 		if (ccp.isEnableReverseEngineeringDB()) {
@@ -332,7 +330,6 @@ public class DataBase {
 			buildEnumerations(ccp);
 			
 		}
-		
 	}
 
 	/**
@@ -507,11 +504,11 @@ public class DataBase {
 			new TemplateAccountModule(this).generateTemplate(); 
 			new TemplateAdminModule(this).generateTemplate(); 
 			new TemplateAdminEntityAuditModule(this).generateTemplate(); 				//Audit Module TS
-			new TemplateDashboardModule(this).generateTemplate();  						//Chart Dashboard
-			new TemplateDashboardBarchartModule(this).generateTemplate();  				//Barchart Dashboard
+			new TemplateDashboardModule(this).generateTemplate();  					//Chart Dashboard
+			new TemplateDashboardBarchartModule(this).generateTemplate();  			//Barchart Dashboard
 			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  		//Doughnutchart Dashboard
 			new TemplateDashboardLinechartModule(this).generateTemplate();  			//Linechart Dashboard
-			new TemplateDashboardPiechartModule(this).generateTemplate();  				//Piechart Dashboard
+			new TemplateDashboardPiechartModule(this).generateTemplate();  			//Piechart Dashboard
 			new TemplateDashboardPolarareachartModule(this).generateTemplate(); 		//Polarareachart Dashboard
 			new TemplateDashboardRadarchartModule(this).generateTemplate();  			//Radarchart Dashboard
 			new TemplateConfigurationService(this).generateTemplate(); 
@@ -519,14 +516,13 @@ public class DataBase {
 			new TemplateCoreModule(this).generateTemplate(); 
 			new TemplateLanguageHelper(this).generateTemplate(); 
 			new TemplateHomeModule(this).generateTemplate(); 
-			new TemplateNavbarComponent(this).generateTemplate(); 						//Cicle Entities Done
+			new TemplateNavbarComponent(this).generateTemplate(); 					//Cicle Entities Done
 			new TemplateMainComponent(this).generateTemplate(); 
 			new TemplateSharedModule(this).generateTemplate(); 
 			new TemplateSharedLibsModule(this).generateTemplate(); 
 			new TemplateSharedCommonModule(this).generateTemplate(); 
 			new TemplateAlertErrorComponent(this).generateTemplate(); 
 			new TemplateModule(this).generateTemplate(); 								//Cicle Entities Done
-
 
 			//TEST Classes - TODO DEVELOP THIS!!
 			if (config.isGenerateTest()) {
@@ -557,7 +553,6 @@ public class DataBase {
 				enumList.add( new Enumeration(enumName, map.get(enumName)) );
 			}
 
-
 			//All Other Level (dynamics) 
 			System.out.println("Creating table dynamics in progress... ");
 			for (Table tabella : Utils.getTables(this)) {
@@ -571,7 +566,7 @@ public class DataBase {
 				new TemplateServiceDTO(tabella).generateTemplate();
 				new TemplateServiceCriteria(this, tabella).generateTemplate(); 			//TODO Add enumeration management
 				new TemplateResource(tabella).generateTemplate();
-				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 		//TODO COMPLETE THIS DEV  !!
+				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS DEV  !!
 				//new TemplateIntTest(tabella).generateTemplate(); 						//TODO COMPLETE THIS TEST !!
 				//new TemplateDynamicReportResource(tabella).generateTemplate();
 				
