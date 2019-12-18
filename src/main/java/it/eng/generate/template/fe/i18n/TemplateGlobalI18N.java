@@ -94,6 +94,14 @@ public class TemplateGlobalI18N extends AbstractResourceTemplate{
 		"            \"filtersLabel\": \"Filtri Ricerca\",\r\n" +
 		"            \"clearfiltersLabel\": \"Pulisci Filtri\"\r\n" +
 		"        },\r\n"+
+		"        \"print\": {\r\n" +
+		"            \"buttonPDF\": \"PDF\",\r\n" +
+		"            \"buttonXLS\": \"XLS\",\r\n" +
+		"            \"buttonCSV\": \"CSV\",\r\n" +
+		"            \"buttonXML\": \"XML\",\r\n" +
+		"            \"buttonTXT\": \"TXT\",\r\n" +
+		"            \"buttonDOC\": \"DOC\"\r\n" +
+		"        },\r\n"+
 		"        \"form\": {\r\n" +
 		"            \"username\": \"Utente\",\r\n" +
 		"            \"username.placeholder\": \"Il tuo nome utente\",\r\n" +

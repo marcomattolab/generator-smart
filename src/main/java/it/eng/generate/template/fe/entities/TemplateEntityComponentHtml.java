@@ -157,11 +157,11 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		"                    <div class=\"form-group float-left\">\r\n" +
 		"                        <button class=\"btn btn-primary\" type=\"button\" (click)=\"alert('Print PDF')\">\r\n" +
 		"                            <fa-icon [icon]=\"'file-pdf'\"></fa-icon>\r\n" +
-		"                            <span jhiTranslate=\"global.search.buttonLabel\">PDF</span>\r\n" +
+		"                            <span jhiTranslate=\"global.print.buttonPDF\">PDF</span>\r\n" +
 		"                        </button>\r\n" +
 		"                        <button class=\"btn btn-primary\" type=\"button\" (click)=\"alert('Print XLS')\">\r\n" +
 		"                            <fa-icon [icon]=\"'fa-file-excel-o'\"></fa-icon>\r\n" +
-		"                            <span jhiTranslate=\"global.search.buttonLabel\">XLS</span>\r\n" +
+		"                            <span jhiTranslate=\"global.print.buttonXLS\">XLS</span>\r\n" +
 		"                        </button>\r\n" +
 		"                    </div>\r\n" +
 
