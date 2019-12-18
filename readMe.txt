@@ -16,7 +16,6 @@
 	- Inserire componenti utili ==> Login Social, IFTT, Editor Mail ...
 	- Inserire Google MAPS
 
-
 #Punti Aperti
 	- IONIC 4
 	- HA singleton e scalabilità

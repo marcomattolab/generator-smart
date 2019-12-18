@@ -308,13 +308,13 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 					if("TD".equals(type)) {
 						result += 
 							"			<td>\r\n" +
-							"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"Id\">\r\n" +
-							"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeTabellaDx)+"', "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>\r\n" +
+							"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\">\r\n" +
+							"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeRelazioneSx)+"', "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>\r\n" +
 							"			   </div>\r\n" +
 							"			</td>\r\n";
 					} else if("TH".equals(type)) {
 						result += 
-							"			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeTabellaSx)+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaDx)+"</span> <fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
+							"			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span> <fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
 
 					}
 					
