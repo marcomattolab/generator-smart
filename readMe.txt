@@ -27,7 +27,7 @@
 
 ## BUG Ricerca  (FILTRI RICERCA)
 1) Gestire i campi BLOB  / CLOB
-2) Non funzionano i filtri RANGE sulle DATE
+2) Non funzionano i filtri RANGE sulle DATE, ed i filtri numerici non vengono inviati dal FE!!
 3) ==> Modello JSON => se metto un campo "firstName" camel case non funge! (Deve essere tutto minuscolo)
 4) ==> Modello JSON => "id" deve essere sempre presente!
 5) ==> Nascondere Id duplicato da GUI
