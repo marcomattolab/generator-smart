@@ -23,6 +23,8 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 
 	public String getBody(){
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+		
+		
 		// https://www.buildmystring.com/
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
@@ -189,6 +191,12 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"        this.queryCount = this.totalItems;\r\n" +
 		"        this."+nometabella+"s = data;\r\n" +
 		"    }\r\n\n" +
+		
+		
+		// Export File (PDF XLS, TXT etc)
+		"    exportFile(fileType) {\r\n" +
+		"        console.log('Export file with type: ' + fileType);\r\n" +
+		"    }\r\n\n"+
 		
 		
 		// Reset Filtri di RICERCA

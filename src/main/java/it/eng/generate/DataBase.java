@@ -508,11 +508,11 @@ public class DataBase {
 			new TemplateAccountModule(this).generateTemplate(); 
 			new TemplateAdminModule(this).generateTemplate(); 
 			new TemplateAdminEntityAuditModule(this).generateTemplate(); 				//Audit Module TS
-			new TemplateDashboardModule(this).generateTemplate();  					//Chart Dashboard
-			new TemplateDashboardBarchartModule(this).generateTemplate();  			//Barchart Dashboard
+			new TemplateDashboardModule(this).generateTemplate();  						//Chart Dashboard
+			new TemplateDashboardBarchartModule(this).generateTemplate();  				//Barchart Dashboard
 			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  		//Doughnutchart Dashboard
 			new TemplateDashboardLinechartModule(this).generateTemplate();  			//Linechart Dashboard
-			new TemplateDashboardPiechartModule(this).generateTemplate();  			//Piechart Dashboard
+			new TemplateDashboardPiechartModule(this).generateTemplate();  				//Piechart Dashboard
 			new TemplateDashboardPolarareachartModule(this).generateTemplate(); 		//Polarareachart Dashboard
 			new TemplateDashboardRadarchartModule(this).generateTemplate();  			//Radarchart Dashboard
 			new TemplateConfigurationService(this).generateTemplate(); 
@@ -520,7 +520,7 @@ public class DataBase {
 			new TemplateCoreModule(this).generateTemplate(); 
 			new TemplateLanguageHelper(this).generateTemplate(); 
 			new TemplateHomeModule(this).generateTemplate(); 
-			new TemplateNavbarComponent(this).generateTemplate(); 					//Cicle Entities Done
+			new TemplateNavbarComponent(this).generateTemplate(); 						//Cicle Entities Done
 			new TemplateMainComponent(this).generateTemplate(); 
 			new TemplateSharedModule(this).generateTemplate(); 
 			new TemplateSharedLibsModule(this).generateTemplate(); 
@@ -572,7 +572,7 @@ public class DataBase {
 				new TemplateServiceDTO(tabella).generateTemplate();
 				new TemplateServiceCriteria(this, tabella).generateTemplate(); 			//TODO Add enumeration management
 				new TemplateResource(tabella).generateTemplate();
-				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS DEV  !!
+				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 		//TODO COMPLETE THIS DEV  !!
 				//new TemplateIntTest(tabella).generateTemplate(); 						//TODO COMPLETE THIS TEST !!
 
 				new TemplateDynamicReportResource(tabella).generateTemplate();
@@ -583,7 +583,7 @@ public class DataBase {
 				}
 
 				new TemplateEntityIndex(tabella).generateTemplate(); 
-				new TemplateEntityService(tabella).generateTemplate();  					//DONE MANAGE DATES
+				new TemplateEntityService(tabella).generateTemplate();  				//DONE MANAGE DATES
 				new TemplateEntityRoute(tabella).generateTemplate(); 
 				new TemplateEntityModule(tabella).generateTemplate(); 
 				new TemplateEntityComponentTs(this, tabella).generateTemplate(); 

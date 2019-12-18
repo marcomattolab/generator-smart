@@ -147,25 +147,20 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		//Campi di ricerca
 		body +=
 		"                    </div>\r\n" +
-		"				   <!-- [/filtri di ricerca] -->\r\n" +
+		"				   <!-- [/filtri di ricerca] -->\r\n\n" +
 		
 		
-		//<i class="fa fa-file-excel-o" aria-hidden="true"></i>
-		//<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-		
-		//bottoni download PDF/XLS 
+		//Bottoni Download PDF/XLS and so On
 		"                    <div class=\"form-group float-left\">\r\n" +
-		"                        <button class=\"btn btn-primary\" type=\"button\" (click)=\"alert('Print PDF')\">\r\n" +
-		"                            <fa-icon [icon]=\"'file-pdf-o'\"></fa-icon>\r\n" +
-		"                            <span jhiTranslate=\"global.print.buttonPDF\">PDF</span>\r\n" +
-		"                        </button>\r\n" +
-		"                        <button class=\"btn btn-primary\" type=\"button\" (click)=\"alert('Print XLS')\">\r\n" +
-		"                            <fa-icon [icon]=\"'file-excel-o'\"></fa-icon>\r\n" +
-		"                            <span jhiTranslate=\"global.print.buttonXLS\">XLS</span>\r\n" +
-		"                        </button>\r\n" +
-		"                    </div>\r\n" +
+		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('CSV')\">CSV <i class=\"fa fa-file-o\"></i></button>\r\n" +
+		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('PDF')\">PDF <i class=\"fa fa-file-pdf-o\"></i></button>\r\n" +
+		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('XLS')\">XLS <i class=\"fa fa-file-excel-o\"></i></button>\r\n" +
+		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('DOC')\">DOC <i class=\"fa fa-file-word-o\"></i></button>\r\n" +
+		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('TXT')\">TXT <i class=\"fa fa-file-text\"></i></button>\r\n" +
+		"                    </div>\r\n\n" +
+		
 
-		//bottoni cerca e cancella filtri 
+		//Bottoni Cerca e Cancella Filtri 
 		"                    <div class=\"form-group float-right\">\r\n" +
 		"                        <button class=\"btn btn-link\" type=\"button\" (click)=\"resetFiltri()\">\r\n" +
 		"                            <span jhiTranslate=\"global.search.clearfiltersLabel\">Pulisci Filtri</span>\r\n" +

@@ -33,6 +33,7 @@ public class TemplateIndex extends AbstractResourceTemplate {
 		"    <link rel=\"manifest\" href=\"manifest.webapp\" />\r\n" +
 		"    <link rel=\"stylesheet\" href=\"content/css/loading.css\">\r\n" +
 		"    <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->\r\n" +
+		"    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\r\n\n" +
 		"</head>\r\n" +
 		"<body>\r\n" +
 		"    <!--[if lt IE 9]>\r\n" +
