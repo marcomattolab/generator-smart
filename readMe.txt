@@ -41,8 +41,6 @@
 6) ==> Aggiungere Kostanti nel JSON (SIZE_MAX=189, SIZE_DEFAULT=100)
 7) Aggiungere altri tipologie: ImageBlob, Blob
 8) Agganciare enumeration
-
-9) Bug nella ricerca (manda sempre tutti i filtri vuoti e non trova nulla) **
 10) Completare OneToOne ==> Add Lista Ricerca  e Criteria **
 
 11) COMPLETARE MODELLO JSON 
@@ -56,3 +54,6 @@
 
 ==> http://dynamicjasper.com/docs/current/xref-test/ar/com/fdvs/dj/test/ConditionalStylesReportTest.html
 ==> http://dynamicjasper.com/docs/current/xref-test/ar/com/fdvs/dj/test/ImageBannerReportTest.html
+
+
+==> Button https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-file-pdf-o
