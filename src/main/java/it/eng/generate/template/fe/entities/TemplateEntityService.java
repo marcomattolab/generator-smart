@@ -41,6 +41,7 @@ public class TemplateEntityService extends AbstractResourceTemplate {
 		"@Injectable({ providedIn: 'root' })\r\n" +
 		"export class "+NometabellaService+" {\r\n\n" +
 		"    public resourceUrl = SERVER_API_URL + 'api/"+nometabella+"s';\r\n" +
+		"    public resourceExportUrl = SERVER_API_URL + 'api/"+nometabella+"sExport';\r\n" +
 		"    constructor(private http: HttpClient) {}\r\n\n" +
 		"    create("+nometabella+": "+INometabella+"): Observable<EntityResponseType> {\r\n" +
 		"        const copy = this.convertDateFromClient("+nometabella+");\r\n" +

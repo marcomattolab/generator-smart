@@ -12,11 +12,6 @@
 	
 #Migliorie / Plugin
     - Creazione XML / UML per definire progetto prima della creazione con ENUMERATION, DASHBOARD, RUOLI ...!!!
-    - Inserire Reportistica generata automaticamente (DOING...)   
-              -- Completare generazione JRXML, 
-              -- Completare Stub java per ciclare entità (done)
-              -- Creare classe REST 
-              -- Msettere pulsanti su FE!!!
 	- Inserire motore di workflow (Activity BPS , Spring workflow ....)
 	- Inserire vari tipi DB => Oracle!, Mysql, nosql Mongodb
 	- Inserire componenti utili ==> Login Social, IFTT, Editor Mail ...
@@ -38,7 +33,7 @@
 3) ==> Modello JSON => se metto un campo "firstName" camel case non funge! (Deve essere tutto minuscolo)
 4) ==> Modello JSON => "id" deve essere sempre presente!
 5) ==> Nascondere Id duplicato da GUI
-6) ==> Aggiungere Kostanti nel JSON (SIZE_MAX=189, SIZE_DEFAULT=100)
+6) ==> Aggiungere Costanti nel JSON (SIZE_MAX=189, SIZE_DEFAULT=100)
 7) Aggiungere altri tipologie: ImageBlob, Blob
 8) Agganciare enumeration
 10) Completare OneToOne ==> Add Lista Ricerca  e Criteria **
@@ -56,20 +51,6 @@
 ==> http://dynamicjasper.com/docs/current/xref-test/ar/com/fdvs/dj/test/ImageBannerReportTest.html
 
 
-==> Button https://www.w3schools.com/icons/tryit.asp?filename=tryicons_fa-file-pdf-o
-
-
-
-
-https://stackoverflow.com/questions/35138424/how-do-i-download-a-file-with-angular2
-
-
-    exportFile(fileType) {
-        console.log('Export file with type: ' + fileType);
-
-		return window.location.href = SERVER_API_URL + 'api/exportAutore'+"?fileType="+fileType;
-
-    }
     
     
     

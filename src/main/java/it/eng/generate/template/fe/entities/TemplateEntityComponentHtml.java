@@ -150,7 +150,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		"				   <!-- [/filtri di ricerca] -->\r\n\n" +
 		
 		
-		//Bottoni Download PDF/XLS and so On
+		//Bottoni Download PDF/XLS and so on
 		"                    <div class=\"form-group float-left\">\r\n" +
 		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('CSV')\">CSV <i class=\"fa fa-file-o\"></i></button>\r\n" +
 		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('PDF')\">PDF <i class=\"fa fa-file-pdf-o\"></i></button>\r\n" +
