@@ -93,15 +93,15 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& relationType.equals(Utils.OneToOne) 
 						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-					
+					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 					Column columnId = new Column();
 					columnId.setName(nomeRelazioneSx+"Id");
 					columnId.setTypeColumn(Column.corvertModelType("Long"));
 					extendedList.add(columnId);
-
-				} else {
+					}
+				
+				} else if (relationType.equals(Utils.OneToMany) || relationType.equals(Utils.ManyToMany)) {
 					//TODO DEVELOP THIS!
 				}
 			}
