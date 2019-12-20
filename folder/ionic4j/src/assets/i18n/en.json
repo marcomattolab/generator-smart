@@ -1,80 +1,68 @@
 {
   "BACK_BUTTON_TEXT": "Back",
-
-  "NAME": "Name",
-  "FIRST_NAME": "First Name",
-  "LAST_NAME": "Last Name",
+  "CANCEL_BUTTON": "Cancel",
+  "CARDS_TITLE": "Social",
+  "DELETE_BUTTON": "Delete",
+  "DONE_BUTTON": "Done",
+  "EDIT_BUTTON": "Modify",
   "EMAIL": "Email",
-  "USERNAME": "Username",
-  "PASSWORD": "Password",
-  "REMEMBER_ME": "Remember Me",
+  "EMPTY_ENTITIES_MESSAGE": "You haven't generated entities yet. Run `yo jhipster-ionic:entity <name>`",
+  "EXISTING_USER_ERROR": "Email is already in use! Please choose another one.",
+  "FIRST_NAME": "First Name",
+  "GENERIC_ERROR": "Generic error!",
+  "ID": "Id",
+  "INVALID_PASSWORD_ERROR": "Invalid password, please try again.",
+  "ITEM_ABOUT_PLACEHOLDER": "About",
+  "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
+  "ITEM_CREATE_TITLE": "New Item",
+  "ITEM_NAME_PLACEHOLDER": "Name",
+  "LAST_NAME": "Last Name",
+  "LIST_MASTER_TITLE": "Items",
   "LOGIN": "Sign in",
-  "SIGNUP": "Sign up",
-  "NO_ACCOUNT_MESSAGE": "Don't have an account yet?",
-
-  "TAB1_TITLE": "Home",
-  "TAB2_TITLE": "Entities",
-  "TAB3_TITLE": "Account",
-
+  "LOGIN_BUTTON": "Sign in",
+  "LOGIN_ERROR": "Unable to sign in. Please check your account information and try again.",
+  "LOGIN_TITLE": "Sign in",
+  "LOGOUT_TITLE": "Logout",
   "MAP_TITLE": "Map",
-
-  "TUTORIAL_SKIP_BUTTON": "Skip",
-  "TUTORIAL_CONTINUE_BUTTON": "Continue",
-
-  "TUTORIAL_SLIDE1_TITLE": "Welcome to the Ionic Super Starter",
-  "TUTORIAL_SLIDE1_DESCRIPTION": "The <b>Ionic Super Starter</b> is a fully-featured Ionic starter with many pre-built pages and best practices.",
-
-  "TUTORIAL_SLIDE2_TITLE": "How to use the Super Starter",
-  "TUTORIAL_SLIDE2_DESCRIPTION": "Assemble the various page types you want and remove the ones you don't. We've provided many common mobile app page layouts, like login and signup pages, tabs, and this tutorial page.",
-
-  "TUTORIAL_SLIDE3_TITLE": "Getting Started",
-  "TUTORIAL_SLIDE3_DESCRIPTION": "Need help? Check out the Super Starter README for a full tutorial",
-
-  "TUTORIAL_SLIDE4_TITLE": "Ready to Play?",
-
-  "WELCOME_INTRO": "The starting point for your next hipster Ionic app",
-
-  "SETTINGS_TITLE": "Settings",
+  "NAME": "Name",
+  "NO_ACCOUNT_MESSAGE": "Don't have an account yet?",
+  "PASSWORD": "Password",
+  "PUBLISHER": {
+    "DELETE_SUCCESS": "Publisher \"{{name}}\" deleted successfully.",
+    "DETAIL": "Publisher detail",
+    "EDIT": "Edit Publisher",
+    "NEW": "New Publisher"
+  },
+  "REMEMBER_ME": "Remember Me",
+  "SAVE_BUTTON": "Save",
+  "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\"",
+  "SEARCH_TITLE": "Search",
   "SETTINGS_OPTION1": "Option 1",
   "SETTINGS_OPTION2": "Option 2",
   "SETTINGS_OPTION3": "Option 3",
   "SETTINGS_OPTION4": "Option 4",
-
-  "SETTINGS_PROFILE_BUTTON": "Edit Profile",
-
   "SETTINGS_PAGE_PROFILE": "Edit Profile",
-
-  "WELCOME_TITLE": "Welcome",
-  "LOGOUT_TITLE": "Logout",
-
-  "LOGIN_TITLE": "Sign in",
-  "LOGIN_ERROR": "Unable to sign in. Please check your account information and try again.",
-  "LOGIN_BUTTON": "Sign in",
-  "SIGNUP_TITLE": "Sign up",
+  "SETTINGS_PROFILE_BUTTON": "Edit Profile",
+  "SETTINGS_TITLE": "Settings",
+  "SIGNOUT_BUTTON": "Sign Out",
+  "SIGNUP": "Sign up",
+  "SIGNUP_BUTTON": "Sign up",
   "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
   "SIGNUP_SUCCESS": "Registration saved! Please check your email for confirmation.",
-  "EXISTING_USER_ERROR": "Email is already in use! Please choose another one.",
-  "INVALID_PASSWORD_ERROR": "Invalid password, please try again.",
-  "SIGNUP_BUTTON": "Sign up",
-  "SIGNOUT_BUTTON": "Sign Out",
-
-  "LIST_MASTER_TITLE": "Items",
-
-  "ITEM_CREATE_TITLE": "New Item",
-  "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
-
-  "ITEM_NAME_PLACEHOLDER": "Name",
-  "ITEM_ABOUT_PLACEHOLDER": "About",
-
-  "EDIT_BUTTON": "Edit",
-  "DONE_BUTTON": "Done",
-  "CANCEL_BUTTON": "Cancel",
-  "DELETE_BUTTON": "Delete",
-  "EDIT_BUTTON": "Modify",
-  
-  "CARDS_TITLE": "Social",
-
-  "SEARCH_TITLE": "Search",
-  "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\"",
-  "EMPTY_ENTITIES_MESSAGE": "You haven't generated entities yet. Run `yo jhipster-ionic:entity <name>`"
+  "SIGNUP_TITLE": "Sign up",
+  "TAB1_TITLE": "Home",
+  "TAB2_TITLE": "Entities",
+  "TAB3_TITLE": "Account",
+  "TUTORIAL_CONTINUE_BUTTON": "Continue",
+  "TUTORIAL_SKIP_BUTTON": "Skip",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "The <b>Ionic Super Starter</b> is a fully-featured Ionic starter with many pre-built pages and best practices.",
+  "TUTORIAL_SLIDE1_TITLE": "Welcome to the Ionic Super Starter",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Assemble the various page types you want and remove the ones you don't. We've provided many common mobile app page layouts, like login and signup pages, tabs, and this tutorial page.",
+  "TUTORIAL_SLIDE2_TITLE": "How to use the Super Starter",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Need help? Check out the Super Starter README for a full tutorial",
+  "TUTORIAL_SLIDE3_TITLE": "Getting Started",
+  "TUTORIAL_SLIDE4_TITLE": "Ready to Play?",
+  "USERNAME": "Username",
+  "WELCOME_INTRO": "The starting point for your next hipster Ionic app",
+  "WELCOME_TITLE": "Welcome"
 }

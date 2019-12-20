@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
-import { LoginService } from 'src/app/services/login/login.service';
+import {Component, OnInit} from '@angular/core';
+import {LoadingController, NavController, ToastController} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
+import {LoginService} from 'src/app/services/login/login.service';
 
 @Component({
   selector: 'app-login',
@@ -23,8 +23,10 @@ export class LoginPage implements OnInit {
     public translateService: TranslateService,
     public loginService: LoginService,
     public toastController: ToastController,
-    public navController: NavController
-  ) {}
+    public navController: NavController,
+    private loadingCtrl: LoadingController
+  ) {
+  }
 
   ngOnInit() {
     this.translateService.get('LOGIN_ERROR').subscribe(value => {
@@ -33,20 +35,27 @@ export class LoginPage implements OnInit {
   }
 
   doLogin() {
-    this.loginService.login(this.account).then(
-      () => {
-        this.navController.navigateRoot('/tabs');
-      },
-      async err => {
-        // Unable to log in
-        this.account.password = '';
-        const toast = await this.toastController.create({
-          message: this.loginErrorString,
-          duration: 3000,
-          position: 'top'
-        });
-        toast.present();
-      }
-    );
+    this.loadingCtrl.create({keyboardClose: false})
+      .then(loadingEl => {
+        loadingEl.present();
+
+        this.loginService.login(this.account).then(
+          () => {
+            loadingEl.dismiss();
+            this.navController.navigateRoot('/tabs');
+          },
+          async err => {
+            // Unable to log in
+            this.account.password = '';
+            loadingEl.dismiss();
+            const toast = await this.toastController.create({
+              message: this.loginErrorString,
+              duration: 3000,
+              position: 'top'
+            });
+            toast.present();
+          }
+        );
+      });
   }
 }

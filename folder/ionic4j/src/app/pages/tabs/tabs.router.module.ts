@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {TabsPage} from './tabs.page';
 
 const routes: Routes = [
   {
@@ -15,8 +15,7 @@ const routes: Routes = [
             loadChildren: '../home/home.module#HomePageModule'
           }
         ]
-      },
-      {
+      }, {
         path: 'entities',
         children: [
           {
@@ -24,8 +23,7 @@ const routes: Routes = [
             loadChildren: '../entities/entities.module#EntitiesPageModule'
           }
         ]
-      },
-      {
+      }, {
         path: 'entities/publisher',
         children: [
           {
@@ -33,8 +31,7 @@ const routes: Routes = [
             loadChildren: '../entities/publisher/publisher.module#PublisherPageModule'
           }
         ]
-      },
-      {
+      }, {
         path: 'account',
         children: [
           {
@@ -42,15 +39,13 @@ const routes: Routes = [
             loadChildren: '../account/account.module#AccountPageModule'
           }
         ]
-      },
-      {
+      }, {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
       }
     ]
-  },
-  {
+  }, {
     path: '',
     redirectTo: '/tabs/home',
     pathMatch: 'full'
@@ -61,4 +56,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule {
+}
