@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'PUBLISHER.DETAIL' | translate}} {{publisher? publisher.name : ''}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid text-center>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3" text-center padding>
+        <h1>{{ publisher?.name }}</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3" padding text-center>
+        <h3>{{ publisher?.id }}</h3>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-sm="6">
+        <ion-button color="primary" expand="block" (click)="onEdit(publisher)">
+          {{ 'EDIT_BUTTON' | translate }}</ion-button>
+      </ion-col>
+      <ion-col size-sm="6">
+        <ion-button color="danger" expand="block" (click)="onDelete(publisher)">
+          {{ 'DELETE_BUTTON' | translate }}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
