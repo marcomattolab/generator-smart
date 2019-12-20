@@ -47,7 +47,10 @@ public class TemplateDomain extends AbstractTemplate{
 		"import java.util.HashSet;\r\n" +
 		"import java.util.Set;\r\n" +
 		"import java.util.Objects;\r\n" +
+		"import com.fasterxml.jackson.annotation.JsonIgnore;\n" +
+		"import com.fasterxml.jackson.annotation.JsonIgnoreProperties;\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder() + ".enumeration.*;\r\n\n" +
+
 		"/**\r\n" +
 		" * Entity "+getClassName()+"\r\n" +
 		" */\r\n" +
@@ -127,10 +130,21 @@ public class TemplateDomain extends AbstractTemplate{
 					} else if (Utils.OneToMany.equals(relationType) ) {
 						//TODO DEVELOP THIS!
 
-					} else if (Utils.ManyToOne.equals(relationType) ) {
-						//TODO DEVELOP THIS!
-						
-					}
+					} else if (Utils.ManyToOne.equals(relationType) && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+						body += "\n	@ManyToOne\n";
+						body += "	@JsonIgnoreProperties(\"\")\n";
+						body += "	private "+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+nomeRelazioneSx+";\n\n";
+						body += "	public "+Utils.getClassNameCamelCase(nomeTabellaDx)+" get"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"() {\n";
+						body += "	    return "+nomeRelazioneSx+";\n";
+						body += "	}\n\n";
+						body += "	public "+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeRelazioneSx+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+nomeRelazioneSx+") {\n";
+						body += "	    this."+nomeRelazioneSx+" = "+nomeRelazioneSx+";\n";
+						body += "	    return this;\n";
+						body += "	}\n\n";
+						body += "	public void set"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+nomeRelazioneSx+") {\n";
+						body += "	    this."+nomeRelazioneSx+" = "+nomeRelazioneSx+";\n";
+						body += "	}\n";
+   					}
 					
 				}
 				
@@ -193,7 +207,13 @@ public class TemplateDomain extends AbstractTemplate{
 		relationship OneToOne {
 			Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
 		}
+                 
                     
+		relationship ManyToOne {
+			Partner{professione(denominazione)} to Professione
+		}
+
+
 	 **/
 	
 	

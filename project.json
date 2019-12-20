@@ -35,6 +35,10 @@
   			{"fname":"publishyear", "ftype":"String", "frequired":false, "fsize":4}, 
   			{"fname":"copies", "ftype":"Integer", "frequired":false, "fsize":21}
   	]},
+  	{"name":"Collana", "fields": [
+  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
+  			{"fname":"nomeCollana", "ftype":"String", "frequired":true, "fsize":500}
+  	]},
   	{"name":"Cliente", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
   			{"fname":"firstname", "ftype":"String", "frequired":true, "fsize":500}, 
@@ -47,7 +51,7 @@
 	{"type":"OneToOne", "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"},
 	{"type":"ManyToMany", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null},
 	{"type":"OneToMany", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null},
-	{"type":"ManyToOne", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null}
+	{"type":"ManyToOne", "sxTable":"Libro", "sxName":"collana", "sxSelect":"nomeCollana" , "dxTable":"Collana"}
   ]  
 }
 
