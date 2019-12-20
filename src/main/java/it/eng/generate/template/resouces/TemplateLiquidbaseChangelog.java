@@ -144,17 +144,25 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& relationType.equals(Utils.OneToOne) 
-						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-					
-					body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +
-							"                <constraints unique=\"true\" nullable=\"true\" uniqueConstraintName=\"ux_"+nomeTabellaDx.toLowerCase()+"_"+nomeRelazioneSx+"_id\" />"+
-							"            </column>";
+				if(nomeTabellaSx!=null && nomeTabellaDx != null && nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+					if ( relationType.equals(Utils.OneToOne) ) {
+						body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +
+								"                <constraints unique=\"true\" nullable=\"true\" uniqueConstraintName=\"ux_"+nomeTabellaDx.toLowerCase()+"_"+nomeRelazioneSx+"_id\" />\n"+
+								"            </column>\n";
+						
+					} else if (relationType.equals(Utils.ManyToMany)) {
+						//TODO DEVELOP THIS
+						
+					} else if (relationType.equals(Utils.OneToMany)) {
+						//TODO DEVELOP THIS
+						
+					} else if (relationType.equals(Utils.ManyToOne)) {
+						body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +
+								"                <constraints nullable=\"true\" />\n"+
+								"            </column>\n";
+					}
 				}
-				
-				//TODO DEVELOP THIS!! 
-				
+            
 			}
 		}
 		
@@ -201,9 +209,19 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 		"            <column name=\"last_modified_by\" type=\"varchar(50)\"/>\r\n" +
 		"            <column name=\"last_modified_date\" type=\"timestamp\"/>\r\n" +
 		"        </addColumn>\r\n" +
-		"    </changeSet>\r\n" + 
+		"    </changeSet>\r\n\n" + 
 		//Audit
 		
+		//Riempimento Dati tramite file CSV
+		"    <!--\n" +
+		"    <changeSet id=\""+Utils.getCurrentDate(tabella.getSort())+"-audit-91\" author=\"smart\">\n" +
+		"     	<loadData encoding=\"UTF-8\"\n" + 
+		"                  file=\"config/liquibase/"+entityname+"s.csv\"\n" +
+		"                  separator=\";\"\n" +
+		"                  tableName=\""+entityname+"\">\n" +
+		"        </loadData>\n" +
+		"    </changeSet>\n" +
+		"    -->\n\n" +
 		
 		"    <!-- jh-needle-liquibase-add-changeset - JH will add changesets here, do not remove-->\r\n" +
 		"</databaseChangeLog>\r\n";
