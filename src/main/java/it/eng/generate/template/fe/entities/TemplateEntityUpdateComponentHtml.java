@@ -57,26 +57,24 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
 				String nomeTabellaDx = rel.getDxTable();
-				String nomeRelazioneDx = rel.getDxName();
-				String nomeSelectDx = rel.getDxSelect();
 				String nomeSelectSx = rel.getSxSelect();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& relationType.equals(Utils.OneToOne) 
-						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+				if(nomeTabellaSx!=null && nomeTabellaDx != null && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
+						String track = (relationType.equals(Utils.OneToOne)) ? "; trackBy: track"+Utils.getFirstUpperCase(nomeRelazioneSx)+"ById" : "";
+						body += "\n                <div class=\"form-group\">\r\n" +
+								"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"\" for=\"field_"+nomeRelazioneSx+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
+								"             		<select class=\"form-control\" id=\"field_"+nomeRelazioneSx+"\" name=\""+nomeRelazioneSx+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"Id\">\r\n" +
+								"                 		<option [ngValue]=\"null\"></option>\r\n" +
+								"                 		<option [ngValue]=\""+nomeRelazioneSx+"Option.id\" *ngFor=\"let "+nomeRelazioneSx+"Option of "+nomeRelazioneSx+"s"+track+"\">{{"+nomeRelazioneSx+"Option."+nomeSelectSx+"}}</option>\r\n" +
+								"             		</select>\r\n" +
+								"                </div>\r\n\n";
+					} else if(relationType.equals(Utils.ManyToMany) || relationType.equals(Utils.OneToMany)) {
+						//TODO DEVELOP THIS!! 
+					}
 					
-					body += "\n                <div class=\"form-group\">\r\n" +
-							"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"\" for=\"field_"+nomeRelazioneSx+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
-							"             		<select class=\"form-control\" id=\"field_"+nomeRelazioneSx+"\" name=\""+nomeRelazioneSx+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"Id\">\r\n" +
-						 // "                 		<input type=\"text\" class=\"mdl-textfield__input\" name=\""+nomeSelectDx+"\" id=\"field_"+nomeSelectDx+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeSelectDx+"\" />\r\n" +
-							"                 		<option [ngValue]=\"null\"></option>\r\n" +
-							"                 		<option [ngValue]=\""+nomeRelazioneSx+"Option.id\" *ngFor=\"let "+nomeRelazioneSx+"Option of "+nomeRelazioneSx+"s; trackBy: track"+Utils.getFirstUpperCase(nomeRelazioneSx)+"ById\">{{"+nomeRelazioneSx+"Option."+nomeSelectSx+"}}</option>\r\n" +
-							"            		 </select>\r\n" +
-							"                </div>\r\n\n";
 				}
-				
-				//TODO DEVELOP THIS!! 
 				
 			}
 		}

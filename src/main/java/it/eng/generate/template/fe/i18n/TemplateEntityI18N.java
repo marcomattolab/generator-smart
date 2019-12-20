@@ -67,16 +67,13 @@ public class TemplateEntityI18N extends AbstractResourceTemplate{
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& relationType.equals(Utils.OneToOne) 
 						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-					
-					Column column = new Column();
-					// jhiTranslate="demogeneratedApp.autore.bestseller"
-					column.setName(nomeRelazioneSx);
-					//column.setTypeColumn(Column.corvertModelType("Long"));
-					body += Utils.generateJson(column)+",\n";
-
-				} else {
+					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne) ) {
+						Column column = new Column();
+						column.setName(nomeRelazioneSx);
+						body += Utils.generateJson(column)+",\n";
+					}
+				} else if (relationType.equals(Utils.OneToMany) || relationType.equals(Utils.ManyToMany) ) {
 					//TODO DEVELOP THIS!
 				}
 			}
