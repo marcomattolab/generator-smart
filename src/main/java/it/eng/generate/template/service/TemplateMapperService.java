@@ -34,10 +34,7 @@ public class TemplateMapperService extends AbstractTemplate{
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
-				String nomeRelazioneSx = rel.getSxName();
-				String nomeSelectSx = rel.getSxSelect();
 				String nomeTabellaDx = rel.getDxTable();
-				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null 
@@ -77,16 +74,17 @@ public class TemplateMapperService extends AbstractTemplate{
 				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null && relationType.equals(Utils.OneToOne) ) {
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne))) {
 					
-					if (nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-					body += "    @Mapping(source = \""+nomeRelazioneSx+".id\", target = \""+nomeRelazioneSx+"Id\")\n"+
-						    "    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getFirstUpperCase(nomeSelectSx)+"\")\n"+
-						    "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabellaSx)+");\n\n"+
-						    
-						    "    @Mapping(source = \""+nomeRelazioneSx+"Id\", target = \""+nomeRelazioneSx+"\")\n";
-					
-					} else if (nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
+					if (nomeTabellaSx.toLowerCase().equals(nomeTabella) && (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne))) {
+						body += "    @Mapping(source = \""+nomeRelazioneSx+".id\", target = \""+nomeRelazioneSx+"Id\")\n"+
+							    "    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getFirstUpperCase(nomeSelectSx)+"\")\n"+
+							    "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabellaSx)+");\n\n"+
+							    
+							    "    @Mapping(source = \""+nomeRelazioneSx+"Id\", target = \""+nomeRelazioneSx+"\")\n";
+						
+					} else if (nomeTabellaDx.toLowerCase().equals(nomeTabella) && relationType.equals(Utils.OneToOne)) {
 						body += "    @Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\", ignore = true)\n"; 
 					}
 					
