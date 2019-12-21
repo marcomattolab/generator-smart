@@ -78,7 +78,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		body += printRelations(conf, INIT_SECTION);
 		
 		body += 
-		"    constructor(\r\n" +
+		"\n    constructor(\r\n" +
 		"        private "+nometabella+"Service: "+Nometabella+"Service,\r\n" +
 		"        private parseLinks: JhiParseLinks,\r\n" +
 		"        private jhiAlertService: JhiAlertService,\r\n" +
@@ -411,8 +411,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 						             "               }\n"+
 						             "         },\n"+
 						             "         (res: HttpErrorResponse) => this.onError(res.message)\n"+
-						             "         );\n\n"+
-						             "         console.log(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id);\n\n";
+						             "         );\n\n";
 						}
 						if (relationType.equals(Utils.ManyToOne)) {
 							
