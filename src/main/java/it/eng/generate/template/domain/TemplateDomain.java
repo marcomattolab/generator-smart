@@ -125,19 +125,26 @@ public class TemplateDomain extends AbstractTemplate{
 						}
 						
 					} else if (Utils.ManyToMany.equals(relationType) ) {
-						//TODO DEVELOP THIS!
+//						body += "\n	@OneToOne(mappedBy = \""+nomeRelazioneSx+"\")\r\n";
+//						body += "	@JsonIgnore\r\n";
+//						body += "	private "+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeRelazioneDx+";\n\n";
+//						body += "	public "+Utils.getClassNameCamelCase(nomeTabellaSx)+" get"+Utils.getClassNameCamelCase(nomeRelazioneDx)+"() {\r\n";
+//						body += "	    return "+nomeRelazioneDx+";\r\n";
+//						body += "	}\r\n\n";
+//						body += "	public "+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+nomeRelazioneDx+"("+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeTabellaSx.toLowerCase()+") {\r\n";
+//						body += "	    this."+nomeRelazioneDx+" = "+nomeTabellaSx.toLowerCase()+";\r\n";
+//						body += " 	    return this;\r\n";
+//						body += "	}\r\n\n";
+//						body += "	public void set"+Utils.getClassNameCamelCase(nomeRelazioneDx)+"("+Utils.getClassNameCamelCase(nomeTabellaSx)+" "+nomeTabellaSx.toLowerCase()+") {\r\n";
+//						body += "	    this."+nomeRelazioneDx+" = "+nomeTabellaSx.toLowerCase()+";\r\n";
+//						body += "	}\n";
 
 					} else if (Utils.OneToMany.equals(relationType) ) {
-						//Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
-						
 						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-							String relationSX = 
-								Utils.getFirstLowerCase(
-									Utils.getClassNameCamelCase(nomeRelazioneSx)
-								);
+							String relationSX =  Utils.getFirstLowerCase( Utils.getClassNameCamelCase(nomeRelazioneSx) );
 							body += "\n	@OneToMany(mappedBy = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\")\n";
 							body += "	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\n";
-							body += "	private Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+" = new HashSet<>();\n\n";
+							body += "	private Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = new HashSet<>();\n\n";
 							body += "	public Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> get"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"s() {\n";
 							body += "	   return "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\n";
 							body += "	}\n\n";
@@ -159,7 +166,24 @@ public class TemplateDomain extends AbstractTemplate{
 							body += "	    this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\n";
 							body += "	}\n\n";
 						}
-						
+						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							String TblSxUp = Utils.getFirstUpperCase(nomeTabellaSx);
+							String TblDxUp = Utils.getFirstUpperCase(nomeTabellaDx);
+							
+							body +="\n	@ManyToOne(mappedBy = \""+nomeRelazioneSx+"s\")\n";
+							body +="	@JsonIgnoreProperties(\""+nomeRelazioneSx+"s\")\n";
+							body +="	public "+TblSxUp+" get"+TblSxUp+"() {\n";
+							body +="	    return "+nomeRelazioneDx+";\n";
+							body +="	}\n\n";
+							body +="	public "+TblDxUp+" "+nomeRelazioneDx+"("+TblSxUp+" "+nomeRelazioneDx+") {\n";
+							body +="	    this."+nomeRelazioneDx+" = "+nomeRelazioneDx+";\n";
+							body +="	    return this;\n";
+							body +="	}\n\n";
+							body +="	public void set"+TblSxUp+"("+TblSxUp+" "+nomeRelazioneDx+") {\n";
+							body +="	    this."+nomeRelazioneDx+" = "+nomeRelazioneDx+";\n";
+							body +="	}\n\n";
+						    
+						}
 					    
 					} else if (Utils.ManyToOne.equals(relationType) && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 						body += "\n	@ManyToOne\n";
@@ -256,12 +280,14 @@ public class TemplateDomain extends AbstractTemplate{
 	
 	public static void main(String[] args) {
 		String body = "";
+		
 		//Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
+		
+		
 		String nomeRelazioneSx = "listaContatti";
 		String nomeRelazioneDx = "incarico";
 		String nomeTabellaDx = "ListaContatti";
 		String nomeTabella = "Incarico";
-		
 		
 			String relationSX = 
 				Utils.getFirstLowerCase(
