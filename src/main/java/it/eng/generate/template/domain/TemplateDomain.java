@@ -128,8 +128,39 @@ public class TemplateDomain extends AbstractTemplate{
 						//TODO DEVELOP THIS!
 
 					} else if (Utils.OneToMany.equals(relationType) ) {
-						//TODO DEVELOP THIS!
-
+						//Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
+						
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							String relationSX = 
+								Utils.getFirstLowerCase(
+									Utils.getClassNameCamelCase(nomeRelazioneSx)
+								);
+							body += "\n	@OneToMany(mappedBy = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\")\n";
+							body += "	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\n";
+							body += "	private Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+" = new HashSet<>();\n\n";
+							body += "	public Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> get"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"s() {\n";
+							body += "	   return "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\n";
+							body += "	}\n\n";
+							body += "	public "+Utils.getFirstUpperCase(nomeTabella)+ " "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s(Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s) {\n";
+							body += "	    this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\n";
+							body += "	    return this;\n";
+							body += "	}\n\n";
+							body += "	public "+Utils.getFirstUpperCase(nomeTabella)+" add"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+relationSX+") {\n";
+							body += "	   this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s.add("+relationSX+");\n";
+							body += "	   "+relationSX+".set"+Utils.getFirstUpperCase(nomeTabella)+"(this);\n";
+							body += "	   return this;\n";
+							body += "	}\n\n";
+							body += "	public "+Utils.getFirstUpperCase(nomeTabella)+" remove"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+relationSX+") {\n";
+							body += "	    this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s.remove("+relationSX+");\n";
+							body += "	    "+relationSX+".set"+Utils.getFirstUpperCase(nomeTabella)+"(null);\n";
+							body += "	    return this;\n";
+							body += "	}\n\n";
+							body += "	public void set"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"s(Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s) {\n";
+							body += "	    this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\n";
+							body += "	}\n\n";
+						}
+						
+					    
 					} else if (Utils.ManyToOne.equals(relationType) && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 						body += "\n	@ManyToOne\n";
 						body += "	@JsonIgnoreProperties(\"\")\n";
@@ -212,9 +243,54 @@ public class TemplateDomain extends AbstractTemplate{
 		relationship ManyToOne {
 			Partner{professione(denominazione)} to Professione
 		}
-
+		
+		relationship OneToMany {
+			Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
+		}
+		
+		relationship ManyToMany {
+			Candidate{language(languageCode)} to LanguageSkill{candidateName(lastName)},
+		}
 
 	 **/
 	
+	public static void main(String[] args) {
+		String body = "";
+		//Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
+		String nomeRelazioneSx = "listaContatti";
+		String nomeRelazioneDx = "incarico";
+		String nomeTabellaDx = "ListaContatti";
+		String nomeTabella = "Incarico";
+		
+		
+			String relationSX = 
+				Utils.getFirstLowerCase(
+					Utils.getClassNameCamelCase(nomeRelazioneSx)
+				);
+			body += "\n	@OneToMany(mappedBy = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\")\n";
+			body += "	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\n";
+			body += "	private Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = new HashSet<>();\n\n";
+			body += "	public Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> get"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"s() {\n";
+			body += "	   return "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\n";
+			body += "	}\n\n";
+			body += "	public "+Utils.getFirstUpperCase(nomeTabella)+ " "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s(Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s) {\n";
+			body += "	    this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\n";
+			body += "	    return this;\n";
+			body += "	}\n\n";
+			body += "	public "+Utils.getFirstUpperCase(nomeTabella)+" add"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+relationSX+") {\n";
+			body += "	   this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s.add("+relationSX+");\n";
+			body += "	   "+relationSX+".set"+Utils.getFirstUpperCase(nomeTabella)+"(this);\n";
+			body += "	   return this;\n";
+			body += "	}\n\n";
+			body += "	public "+Utils.getFirstUpperCase(nomeTabella)+" remove"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+relationSX+") {\n";
+			body += "	    this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s.remove("+relationSX+");\n";
+			body += "	    "+relationSX+".set"+Utils.getFirstUpperCase(nomeTabella)+"(null);\n";
+			body += "	    return this;\n";
+			body += "	}\n\n";
+			body += "	public void set"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"s(Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s) {\n";
+			body += "	    this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\n";
+			body += "	}\n\n";
+			System.out.println(body);
+	}
 	
 }

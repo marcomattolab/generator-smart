@@ -42,7 +42,7 @@
 - COSTANTI => minlength(SIZE_MAX)  
 
 
-- Relations =>  OneToOne*  ManyToMany   OneToMany  ManyToOne*
+- Relations =>  OneToOne*  ManyToMany   OneToMany  ManyToOne* (manca la pagina di detail FE)
 - Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
     
     

@@ -50,7 +50,7 @@
  "relations" : [
 	{"type":"OneToOne", "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"},
 	{"type":"ManyToMany", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null},
-	{"type":"OneToMany", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null},
+	{"type":"OneToMany", "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito", "dxSelect":"nome"},
 	{"type":"ManyToOne", "sxTable":"Libro", "sxName":"collana", "sxSelect":"nome" , "dxTable":"Collana"}
   ]  
 }
