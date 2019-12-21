@@ -79,7 +79,8 @@ public class TemplateMapperService extends AbstractTemplate{
 				if(nomeTabellaSx!=null && nomeTabellaDx != null 
 						&& (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne))) {
 					
-					if (nomeTabellaSx.toLowerCase().equals(nomeTabella) && (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne))) {
+					if (nomeTabellaSx.toLowerCase().equals(nomeTabella) 
+							&& (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne))) {
 						body += "    @Mapping(source = \""+nomeRelazioneSx+".id\", target = \""+nomeRelazioneSx+"Id\")\n"+
 							    "    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getFirstUpperCase(nomeSelectSx)+"\")\n"+
 							    "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabellaSx)+");\n\n"+
@@ -87,7 +88,7 @@ public class TemplateMapperService extends AbstractTemplate{
 							    "    @Mapping(source = \""+nomeRelazioneSx+"Id\", target = \""+nomeRelazioneSx+"\")\n";
 						
 					} else if (nomeTabellaDx.toLowerCase().equals(nomeTabella) && relationType.equals(Utils.OneToOne)) {
-						body += "    @Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\", ignore = true)\n"; 
+						body += "    //@Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\", ignore = true)\n"; 
 					}
 					
 				}
