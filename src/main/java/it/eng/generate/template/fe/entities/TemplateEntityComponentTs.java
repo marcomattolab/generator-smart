@@ -78,7 +78,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		body += printRelations(conf, INIT_SECTION);
 		
 		body += 
-		"\n    constructor(\r\n" +
+		"    constructor(\r\n" +
 		"        private "+nometabella+"Service: "+Nometabella+"Service,\r\n" +
 		"        private parseLinks: JhiParseLinks,\r\n" +
 		"        private jhiAlertService: JhiAlertService,\r\n" +
@@ -396,31 +396,32 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 							"    }\r\n\n";
 						}
 					}else if(NG_ONINIT_SECTION.equals(section) && isOne2OneOrMany2One) {
-						if (relationType.equals(Utils.OneToOne)) {
-							res += 	"\n       this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe(\n"+
-									"         (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
-						             "         if (!this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id) {\n"+
-						             "             this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
-						             "         } else {\n"+
-						             "                  this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.find(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id).subscribe(\n"+
-						             "                  (subRes: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+">) => {\n"+
-						             "                           this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = [subRes.body].concat(res.body);\n"+
-						             "                  },\n"+
-						             "                  (subRes: HttpErrorResponse) => this.onError(subRes.message)\n"+
-						             "                  );\n"+
-						             "               }\n"+
-						             "         },\n"+
-						             "         (res: HttpErrorResponse) => this.onError(res.message)\n"+
-						             "         );\n\n";
-						}
+//						if (relationType.equals(Utils.OneToOne)) {
+//							res += 	"\n       this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe(\n"+
+//									"         (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
+//						             "         if (!this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id) {\n"+
+//						             "             this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
+//						             "         } else {\n"+
+//						             "                  this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.find(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id).subscribe(\n"+
+//						             "                  (subRes: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+">) => {\n"+
+//						             "                           this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = [subRes.body].concat(res.body);\n"+
+//						             "                  },\n"+
+//						             "                  (subRes: HttpErrorResponse) => this.onError(subRes.message)\n"+
+//						             "                  );\n"+
+//						             "               }\n"+
+//						             "         },\n"+
+//						             "         (res: HttpErrorResponse) => this.onError(res.message)\n"+
+//						             "         );\n\n";
+//						}
 						if (relationType.equals(Utils.ManyToOne)) {
 							
-							res +=  "\n         this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
+							res +=  "\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
 						            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
 						            "            this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
 						            "        },\n"+
 						            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
 						            "        );\n\n";
+							
 						}
 						//TODO DEVELOP THIS!! 
 					}
