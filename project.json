@@ -37,7 +37,7 @@
   	]},
   	{"name":"Collana", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
-  			{"fname":"nomeCollana", "ftype":"String", "frequired":true, "fsize":500}
+  			{"fname":"nome", "ftype":"String", "frequired":true, "fsize":500}
   	]},
   	{"name":"Cliente", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
@@ -51,7 +51,7 @@
 	{"type":"OneToOne", "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"},
 	{"type":"ManyToMany", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null},
 	{"type":"OneToMany", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null},
-	{"type":"ManyToOne", "sxTable":"Libro", "sxName":"collana", "sxSelect":"nomeCollana" , "dxTable":"Collana"}
+	{"type":"ManyToOne", "sxTable":"Libro", "sxName":"collana", "sxSelect":"nome" , "dxTable":"Collana"}
   ]  
 }
 

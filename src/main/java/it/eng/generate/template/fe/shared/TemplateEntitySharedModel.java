@@ -71,25 +71,22 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& relationType.equals(Utils.OneToOne) 
-						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-					
-					//public geolocalizzazioneImmobile?: string,
-			        //public geolocalizzazioneId?: number,
-					
-					Column columnId = new Column();
-					columnId.setName(nomeRelazioneSx+"Id");
-					columnId.setTypeColumn(Column.corvertModelType("Long"));
-					extendedList.add(columnId);
+				if(nomeTabellaSx!=null && nomeTabellaDx != null && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
+						Column columnId = new Column();
+						columnId.setName(nomeRelazioneSx+"Id");
+						columnId.setTypeColumn(Column.corvertModelType("Long"));
+						extendedList.add(columnId);
+	
+						if (relationType.equals(Utils.ManyToOne)) {
+							Column columnSelect = new Column();
+							columnSelect.setName(nomeRelazioneSx + Utils.getFirstUpperCase(rel.getSxSelect())); 
+							columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, rel.getSxSelect(), nomeTabellaDx));
+							extendedList.add(columnSelect);
+						}
+					}
 
-					//TODO CHECH THIS!!
-//					Column columnSelect = new Column();
-//					columnSelect.setName(nomeRelazioneSx + Utils.getFirstUpperCase(rel.getSxSelect())); 
-//					columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, rel.getSxSelect(), nomeTabellaDx));
-//					extendedList.add(columnSelect);
-
-				} else {
+				} else if (relationType.equals(Utils.OneToMany) || relationType.equals(Utils.ManyToMany)) {
 					//TODO DEVELOP THIS!
 				}
 			}

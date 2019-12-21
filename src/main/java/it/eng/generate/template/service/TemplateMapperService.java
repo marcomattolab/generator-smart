@@ -38,12 +38,14 @@ public class TemplateMapperService extends AbstractTemplate{
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& relationType.equals(Utils.OneToOne) 
 						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-					result += Utils.getFirstUpperCase(nomeTabellaDx)+"Mapper.class" + ",";
+					if( relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne) ) {
+						result += Utils.getFirstUpperCase(nomeTabellaDx)+"Mapper.class" + ",";
+					} else {
+						//TODO DEVELOP THIS!! 
+					}
 				}
 				
-				//TODO DEVELOP THIS!! 
 			}
 		}
 		return result.length()>0 ? result.substring(0, result.length()-1) : "";
