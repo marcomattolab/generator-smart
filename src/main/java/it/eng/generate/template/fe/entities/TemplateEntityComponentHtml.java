@@ -17,6 +17,10 @@ import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 
+	private static final String TH = "TH";
+	private static final String TD = "TD";
+	private static final String printButtonSizeMedium = "16px";
+
 	public TemplateEntityComponentHtml(DataBase database, Table tabella) {
 		super(database);
 		this.tabella = tabella;
@@ -28,6 +32,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 
 	public String getBody(){
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+		
 		// https://www.buildmystring.com/
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
@@ -145,6 +150,8 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 				// TODO DEVELOP THESE CLOB/BLOBS ...
 			}
 			
+			//TODO DEVELOP RELATIONS (SEARCH FILTERS)
+			
 		}
 		
 		//Campi di ricerca
@@ -155,10 +162,10 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		
 		//Bottoni Download PDF/XLS and so on
 		"                    <div class=\"form-group float-left\">\r\n" +
-		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('CSV')\">CSV <i class=\"fa fa-file-o\"></i></button>\r\n" +
-		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('PDF')\">PDF <i class=\"fa fa-file-pdf-o\"></i></button>\r\n" +
-		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('XLS')\">XLS <i class=\"fa fa-file-excel-o\"></i></button>\r\n" +
-		"						<button style=\"font-size:16px;\" type=\"button\" (click)=\"exportFile('DOC')\">DOC <i class=\"fa fa-file-word-o\"></i></button>\r\n" +
+		"						<button style=\"font-size:"+printButtonSizeMedium+";\" type=\"button\" (click)=\"exportFile('CSV')\">CSV <i class=\"fa fa-file-o\"></i></button>\r\n" +
+		"						<button style=\"font-size:"+printButtonSizeMedium+";\" type=\"button\" (click)=\"exportFile('PDF')\">PDF <i class=\"fa fa-file-pdf-o\"></i></button>\r\n" +
+		"						<button style=\"font-size:"+printButtonSizeMedium+";\" type=\"button\" (click)=\"exportFile('XLS')\">XLS <i class=\"fa fa-file-excel-o\"></i></button>\r\n" +
+		"						<button style=\"font-size:"+printButtonSizeMedium+";\" type=\"button\" (click)=\"exportFile('DOC')\">DOC <i class=\"fa fa-file-word-o\"></i></button>\r\n" +
 		"                    </div>\r\n\n" +
 		
 
@@ -204,7 +211,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		}
 		
 		//relations
-		body += buildOneToOne(conf, "TH");
+		body += buildOneToOne(conf, TH);
 		
 		body +=
 		"            <th></th>\r\n" +
@@ -246,7 +253,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		}
 		
 		//Relations
-		body += buildOneToOne(conf, "TD");
+		body += buildOneToOne(conf, TD);
 		
 		body +=
 		"                <td class=\"text-right\">\r\n" +
@@ -297,24 +304,23 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
 				String nomeTabellaDx = rel.getDxTable();
-				String nomeRelazioneDx = rel.getDxName();
-				String nomeSelectDx = rel.getDxSelect();
 				String nomeSelectSx = rel.getSxSelect();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& relationType.equals(Utils.OneToOne) 
 						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-					if("TD".equals(type)) {
+					if(TD.equals(type) && (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne) )) {
 						result += 
 							"			<td>\r\n" +
 							"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\">\r\n" +
 							"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeTabellaDx)+"', "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>\r\n" +
 							"			   </div>\r\n" +
 							"			</td>\r\n";
-					} else if("TH".equals(type)) {
+					} else if(TH.equals(type) && (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne) )) {
 						result += 
-							"			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span> <fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
+							"			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n"
+						  + "			  <fa-icon [icon]=\"'sort'\"></fa-icon>\n"
+						  + "			</th>\r\n";
 
 					}
 					

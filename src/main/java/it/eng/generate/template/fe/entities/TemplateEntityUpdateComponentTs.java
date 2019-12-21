@@ -44,10 +44,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';\r\n" +
 		"import { "+INometabella+" } from 'app/shared/model/"+nometabella+".model';\r\n" +
 		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n";
-		
-//		import {IGeolocalizzazione} from 'app/shared/model/geolocalizzazione.model';
-//		import {GeolocalizzazioneService} from 'app/entities/geolocalizzazione';
-		body += printOneToOne(conf, IMPORT_SECTION);
+		body += printRelations(conf, IMPORT_SECTION);
 		
 		body += "\n@Component({\r\n" +
 		"    selector: 'jhi-"+nometabella+"-update',\r\n" +
@@ -60,7 +57,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		//TODO MANAGE RELATIONS AND DATES
   		//"    incaricos: IIncarico[];\r\n" +
   		//"    dataNascitaDp: any;\r\n" +
-		body += printOneToOne(conf, INIT_SECTION);
+		body += printRelations(conf, INIT_SECTION);
 
 		Set set = tabella.getColumnNames();
 		for (Iterator iter = set.iterator(); iter.hasNext();) {
@@ -80,8 +77,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"        private dataUtils: JhiDataUtils,\r\n" +
 		"        private jhiAlertService: JhiAlertService,\r\n";
 	  
-	  //"        private incaricoService: IncaricoService,\r\n" +
-		body += printOneToOne(conf, CONSTRUCTOR_SECTION);
+		body += printRelations(conf, CONSTRUCTOR_SECTION);
 	  
 		body +=
 		"        private "+nometabella+"Service: "+Nometabella+"Service,\r\n" +
@@ -105,7 +101,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		body +=
 		"        });\r\n";
 		//Relations
-		body += printOneToOne(conf, NG_ONINIT_SECTION);
+		body += printRelations(conf, NG_ONINIT_SECTION);
 		body +="    }\r\n\n" +
 				
 				
@@ -156,10 +152,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"        this.jhiAlertService.error(errorMessage, null, null);\r\n" +
 		"    }\r\n\n";
 		
-		//"    trackIncaricoById(index: number, item: IIncarico) {\r\n" +
-		//"        return item.id;\r\n" +
-		//"    }\r\n" +
-		body += printOneToOne(conf, TRACKBY_SECTION);
+		body += printRelations(conf, TRACKBY_SECTION);
 		
 		body += 
 		"    getSelected(selectedVals: Array<any>, option: any) {\r\n" +
@@ -191,14 +184,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		return "src/main/webapp/app/entities/"+Utils.getClassNameLowerCase(tabella);
 	}
 
-	/**
-	 * Print OneToOne sentences.
-	 * 
-	 * @param conf ConfigCreateProject
-	 * @param section Section To Print
-	 * @return String with data
-	 */
-	private String printOneToOne(ConfigCreateProject conf, String section) {
+	private String printRelations(ConfigCreateProject conf, String section) {
 		String res = "";
 		//Relations management
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
@@ -261,11 +247,11 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 						            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
 						            "        );\n\n";
 						}
+						//TODO DEVELOP THIS!! 
 					}
 				
 				}
 				
-				//TODO DEVELOP THIS!! 
 				
 			}
 		}

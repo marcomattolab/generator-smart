@@ -3,15 +3,24 @@ package it.eng.generate.template.fe.entities;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.DataBase;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityComponentTs extends AbstractResourceTemplate {
-
+	private String IMPORT_SECTION = "IMPORT_SECTION";
+	private String INIT_SECTION = "INIT_SECTION";
+	private String SEARCH = "SEARCH";
+	private String CONSTRUCTOR_SECTION = "CONSTRUCTOR_SECTION";
+	private String TRACKBY_SECTION = "TRACKBY_SECTION";
+	private String NG_ONINIT_SECTION = "NG_ONINIT_SECTION";
+	
 	public TemplateEntityComponentTs(DataBase database, Table tabella) {
 		super(database);
 		this.tabella = tabella;
@@ -23,7 +32,6 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 
 	public String getBody(){
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		
 		
 		// https://www.buildmystring.com/
 		String Nometabella = Utils.getEntityName(tabella);
@@ -43,8 +51,11 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"import * as moment from 'moment';\r\n" +
 		"import { toTimestampInizio, toTimestampFine } from 'app/shared/util/date-util';\r\n" +
 		"import { "+INometabella+" } from 'app/shared/model/"+nometabella+".model';\r\n" +
-		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n" +
-		"@Component({\r\n" +
+		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n";
+		body += printRelations(conf, IMPORT_SECTION);
+		
+		body += 
+		"\n@Component({\r\n" +
 		"    selector: 'jhi-"+nometabella+"',\r\n" +
 		"    templateUrl: './"+nometabella+".component.html'\r\n" +
 		"})\r\n" +
@@ -63,7 +74,10 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"    predicate: any;\r\n" +
 		"    previousPage: any;\r\n" +
 		"    reverse: any;\r\n" +
-		"    myGroup: FormGroup;\r\n\n" +
+		"    myGroup: FormGroup;\r\n\n";
+		body += printRelations(conf, INIT_SECTION);
+		
+		body += 
 		"    constructor(\r\n" +
 		"        private "+nometabella+"Service: "+Nometabella+"Service,\r\n" +
 		"        private parseLinks: JhiParseLinks,\r\n" +
@@ -71,7 +85,9 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"        private principal: Principal,\r\n" +
 		"        private activatedRoute: ActivatedRoute,\r\n" +
 		"        private dataUtils: JhiDataUtils,\r\n" +
-		"        private router: Router,\r\n" +
+		"        private router: Router,\r\n";
+		body += printRelations(conf, CONSTRUCTOR_SECTION);
+		body += 
 		"        private eventManager: JhiEventManager\r\n" +
 		"    ) {\r\n" +
 		"        this.itemsPerPage = ITEMS_PER_PAGE;\r\n" +
@@ -88,6 +104,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"    initFormRicerca() {\r\n" +
 		"        this.myGroup = new FormGroup({\r\n";
 		
+		body += printRelations(conf, SEARCH);
 		Set set = tabella.getColumnNames();
 		for (Iterator iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
@@ -110,6 +127,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 			}
 			// TODO DEVELOP BLOB/CLOB
 		}
+		
 		
 		body +=
 		"        });\r\n" +
@@ -161,7 +179,9 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"        this.principal.identity().then(account => {\r\n" +
 		"            this.currentAccount = account;\r\n" +
 		"        });\r\n" +
-		"        this.registerChangeIn"+Nometabella+"s();\r\n" +
+		"        this.registerChangeIn"+Nometabella+"s();\r\n";
+		body += printRelations(conf, NG_ONINIT_SECTION);
+		body += 
 		"    }\r\n\n" +
 		"    ngOnDestroy() {\r\n" +
 		"        this.eventManager.destroy(this.eventSubscriber);\r\n" +
@@ -193,7 +213,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"    }\r\n\n" +
 		
 		
-		// Export File (PDF XLS, TXT etc)
+		// Export File (PDF, XLS, DOC etc)
 		"    exportFile(fileType) {\r\n" +
 		"        console.log('Export file with type: ' + fileType);\r\n" +
 		"        return window.location.href = this." + nometabella + "Service.resourceExportUrl + '?fileType=' + fileType;\r\n" +
@@ -334,6 +354,84 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 	@Override
 	public String getSourceFolder() {
 		return "src/main/webapp/app/entities/"+Utils.getClassNameLowerCase(tabella);
+	}
+	
+	private String printRelations(ConfigCreateProject conf, String section) {
+		String res = "";
+		//Relations management
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeSelectDx = rel.getDxSelect();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+					boolean isOne2OneOrMany2One = relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne);
+					
+					if(IMPORT_SECTION.equals(section) && isOne2OneOrMany2One) {
+						res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaDx)+".model';\n";
+						res += "import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n";
+					
+					}else if(SEARCH.equals(section) && isOne2OneOrMany2One) {
+						res += "            "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id: new FormControl('')";
+						
+					}else if(INIT_SECTION.equals(section) && isOne2OneOrMany2One) {
+						res += "    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n";
+						if (relationType.equals(Utils.OneToOne)) {
+							res += "    id"+Utils.getFirstUpperCase(nomeRelazioneSx)+": any;\n";
+						}
+						
+					}else if(CONSTRUCTOR_SECTION.equals(section) && isOne2OneOrMany2One) {
+						res += "        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n";
+
+					}else if(TRACKBY_SECTION.equals(section) && isOne2OneOrMany2One) {
+						if (relationType.equals(Utils.OneToOne)) {
+							res += 
+							"    track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaDx)+") {\r\n" +
+							"        return item.id;\r\n" +
+							"    }\r\n\n";
+						}
+					}else if(NG_ONINIT_SECTION.equals(section) && isOne2OneOrMany2One) {
+						if (relationType.equals(Utils.OneToOne)) {
+							res += 	"\n       this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe(\n"+
+									"         (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
+						             "         if (!this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id) {\n"+
+						             "             this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
+						             "         } else {\n"+
+						             "                  this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.find(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id).subscribe(\n"+
+						             "                  (subRes: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+">) => {\n"+
+						             "                           this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = [subRes.body].concat(res.body);\n"+
+						             "                  },\n"+
+						             "                  (subRes: HttpErrorResponse) => this.onError(subRes.message)\n"+
+						             "                  );\n"+
+						             "               }\n"+
+						             "         },\n"+
+						             "         (res: HttpErrorResponse) => this.onError(res.message)\n"+
+						             "         );\n\n"+
+						             "         console.log(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id);\n\n";
+						}
+						if (relationType.equals(Utils.ManyToOne)) {
+							
+							res +=  "\n         this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
+						            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
+						            "            this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
+						            "        },\n"+
+						            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
+						            "        );\n\n";
+						}
+						//TODO DEVELOP THIS!! 
+					}
+				
+				}
+				
+				
+			}
+		}
+		return res;
 	}
 
 }
