@@ -28,9 +28,8 @@
 ## BUG Ricerca  (FILTRI RICERCA)
 1) Gestire i campi BLOB  / CLOB
 2) Non funzionano i filtri RANGE sulle DATE, ed i filtri numerici non vengono inviati dal FE!!
-3) ==> Modello JSON => se metto un campo "firstName" camel case non funge! (Deve essere tutto minuscolo)
-4) ==> Modello JSON => "id" deve essere sempre presente!
-5) ==> Nascondere Id duplicato da GUI
+3) ==> Modello JSON => se metto un campo "firstName" camel case non funge! (Deve essere tutto minuscolo es. firstname)
+4) ==> Modello JSON => "id" deve essere sempre presente! (PS: Nascondere Id duplicato da GUI)
 6) ==> Aggiungere Costanti nel JSON (SIZE_MAX=189, SIZE_DEFAULT=100)
 7) Aggiungere altri tipologie: ImageBlob, Blob
 8) Agganciare enumeration
@@ -40,9 +39,9 @@
 - minlength(5) 
 - maxlength(13)  
 - COSTANTI => minlength(SIZE_MAX)  
+- Add Validation Pattern (Mail, PhoneNumber etc)
 
-
-- Relations =>  OneToOne*  ManyToMany   OneToMany  ManyToOne* (manca la pagina di detail FE)
+- Relations =>  OneToOne*  ManyToMany   OneToMany  ManyToOne** (**,* manca la pagina di Detail da FE con i campi relazione)
 - Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
     
     
