@@ -111,6 +111,7 @@ import it.eng.generate.template.resouces.TemplateApplicationProd;
 import it.eng.generate.template.resouces.TemplateBanner;
 import it.eng.generate.template.resouces.TemplateI18N;
 import it.eng.generate.template.resouces.TemplateLiquidbaseChangelog;
+import it.eng.generate.template.resouces.TemplateLiquidbaseChangelogConstraint;
 import it.eng.generate.template.resouces.TemplateLiquidbaseMaster;
 import it.eng.generate.template.resouces.TemplateLiquidbaseMasterInitialSchema;
 import it.eng.generate.template.resouces.TemplateMessage;
@@ -546,7 +547,7 @@ public class DataBase {
 				new TemplateUserResourceIntTest(this).generateTemplate();
 			}
 
-			//Building Data of All Enumerations- TODO MOVE TO UTILS
+			//Building Data of All Enumerations - TODO MOVE TO UTILS
 			List<Enumeration> enumList = new ArrayList<>();
 			HashMap<String, List<String>> map = this.getEnumeration();
 			for(String enumName: map.keySet()) {
@@ -566,9 +567,11 @@ public class DataBase {
 				new TemplateServiceDTO(tabella).generateTemplate();
 				new TemplateServiceCriteria(this, tabella).generateTemplate(); 			//TODO Add enumeration management
 				new TemplateResource(tabella).generateTemplate();
-				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS DEV  !!
-				//new TemplateIntTest(tabella).generateTemplate(); 						//TODO COMPLETE THIS TEST !!
-				//new TemplateDynamicReportResource(tabella).generateTemplate();
+				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS  !!
+				if (Utils.havingConstraints(config, tabella)) {
+					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate(); 	//TODO COMPLETE THIS  !!
+				}
+				//new TemplateIntTest(tabella).generateTemplate(); 						//TODO COMPLETE THIS  !!
 				
 				//MultiLanguages
 				for(String languageCode: config.getLanguages()) {
@@ -576,7 +579,7 @@ public class DataBase {
 				}
 
 				new TemplateEntityIndex(tabella).generateTemplate(); 
-				new TemplateEntityService(tabella).generateTemplate();  				//DONE MANAGE DATES
+				new TemplateEntityService(tabella).generateTemplate();  					//DONE MANAGE DATES
 				new TemplateEntityRoute(tabella).generateTemplate(); 
 				new TemplateEntityModule(tabella).generateTemplate(); 
 				new TemplateEntityComponentTs(this, tabella).generateTemplate(); 

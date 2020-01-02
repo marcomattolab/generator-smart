@@ -141,6 +141,7 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
@@ -154,7 +155,11 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 						//TODO DEVELOP THIS
 						
 					} else if (relationType.equals(Utils.OneToMany)) {
-						//TODO DEVELOP THIS
+						if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+			                body += "            <column name=\""+nomeRelazioneDx+"_id\" type=\"bigint\">\n" +
+									"                <constraints nullable=\"true\" />\n"+
+									"            </column>\n";
+						}
 						
 					} else if (relationType.equals(Utils.ManyToOne)) {
 						body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +

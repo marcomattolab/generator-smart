@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 public class Utils {
 	public static String OneToOne = "OneToOne";
@@ -1089,6 +1090,39 @@ public class Utils {
 			}
 		}
 		return resultType;
+	}
+	
+	/**
+	 * Check if table having constraints
+	 * 
+	 * @param conf
+	 * @param table
+	 * @return boolean 
+	 */
+	public static boolean havingConstraints(ConfigCreateProject conf, Table table) {
+		boolean havingConstrains = false;
+
+		//Relations management
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeTabella = table.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) { 
+					if (relationType.equals(Utils.OneToMany) && nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+						havingConstrains = true;
+						return havingConstrains;
+					}
+				}
+            
+			}
+		}
+		
+		return havingConstrains;
 	}
 	
 }
