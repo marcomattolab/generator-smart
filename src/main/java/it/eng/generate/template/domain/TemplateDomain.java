@@ -142,7 +142,7 @@ public class TemplateDomain extends AbstractTemplate{
 					} else if (Utils.OneToMany.equals(relationType) ) {
 						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 							String relationSX =  Utils.getFirstLowerCase( Utils.getClassNameCamelCase(nomeRelazioneSx) );
-							body += "\n	@OneToMany(mappedBy = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\")\n";
+							body += "\n	@OneToMany(mappedBy = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"\")\n";
 							body += "	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\n";
 							body += "	private Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = new HashSet<>();\n\n";
 							body += "	public Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> get"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"s() {\n";
@@ -166,23 +166,27 @@ public class TemplateDomain extends AbstractTemplate{
 							body += "	    this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\n";
 							body += "	}\n\n";
 						}
-						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+						else if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
 							String TblSxUp = Utils.getFirstUpperCase(nomeTabellaSx);
 							String TblDxUp = Utils.getFirstUpperCase(nomeTabellaDx);
+							String tblSxLw = Utils.getFirstLowerCase(nomeTabellaSx);
 							
-							body +="\n	@ManyToOne(mappedBy = \""+nomeRelazioneSx+"s\")\n";
-							body +="	@JsonIgnoreProperties(\""+nomeRelazioneSx+"s\")\n";
+							body +="\n	@ManyToOne\n";
+							body +="	@JsonIgnoreProperties(\""+Utils.getFirstLowerCase(nomeTabellaDx)+"s\")\n";
+							body +="	private "+TblSxUp+" "+tblSxLw+";\n\n";
+							
 							body +="	public "+TblSxUp+" get"+TblSxUp+"() {\n";
-							body +="	    return "+nomeRelazioneDx+";\n";
+							body +="	    return "+tblSxLw+";\n";
 							body +="	}\n\n";
-							body +="	public "+TblDxUp+" "+nomeRelazioneDx+"("+TblSxUp+" "+nomeRelazioneDx+") {\n";
-							body +="	    this."+nomeRelazioneDx+" = "+nomeRelazioneDx+";\n";
+							
+							body +="	public "+TblDxUp+" "+tblSxLw+"("+TblSxUp+" "+tblSxLw+") {\n";
+							body +="	    this."+tblSxLw+" = "+tblSxLw+";\n";
 							body +="	    return this;\n";
 							body +="	}\n\n";
-							body +="	public void set"+TblSxUp+"("+TblSxUp+" "+nomeRelazioneDx+") {\n";
-							body +="	    this."+nomeRelazioneDx+" = "+nomeRelazioneDx+";\n";
+							
+							body +="	public void set"+TblSxUp+"("+TblSxUp+" "+tblSxLw+") {\n";
+							body +="	    this."+tblSxLw+" = "+tblSxLw+";\n";
 							body +="	}\n\n";
-						    
 						}
 					    
 					} else if (Utils.ManyToOne.equals(relationType) && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {

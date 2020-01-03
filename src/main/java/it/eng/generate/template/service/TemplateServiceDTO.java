@@ -44,9 +44,8 @@ public class TemplateServiceDTO extends AbstractTemplate{
 		" */\r\n" +
 		"public class "+getClassName()+" extends AbstractAuditingDTO implements Serializable {\r\n";
 
-		
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = tabella.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			body += Utils.generaField(column)+"\n";
@@ -62,23 +61,36 @@ public class TemplateServiceDTO extends AbstractTemplate{
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null && nomeTabellaSx.toLowerCase().equals(nomeTabella)  ) {
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
+					
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
-						Column columnId = new Column();
-						columnId.setName(nomeRelazioneSx+"Id");
-						columnId.setTypeColumn(Column.corvertModelType("Long"));
+						if( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+							Column columnId = new Column();
+							columnId.setName(nomeRelazioneSx+"Id");
+							columnId.setTypeColumn(Column.corvertModelType("Long"));
+							
+							Column columnSelect = new Column();
+							columnSelect.setName(nomeRelazioneSx+Utils.getFirstUpperCase(nomeSelectSx));
+							columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, nomeSelectSx, nomeTabellaDx));
+		
+							body += Utils.generaField(columnId, false)+"\n";
+							body += Utils.generaField(columnSelect, false)+"\n";
+		
+							body += Utils.generaAddForBeanSimple(columnId, getClassName(), false);
+							body += Utils.generaAddForBeanSimple(columnSelect, getClassName(), false);
+						}
 						
-						Column columnSelect = new Column();
-						columnSelect.setName(nomeRelazioneSx+Utils.getFirstUpperCase(nomeSelectSx));
-						columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, nomeSelectSx, nomeTabellaDx));
-	
-						body += Utils.generaField(columnId, false)+"\n";
-						body += Utils.generaField(columnSelect, false)+"\n";
-	
-						body += Utils.generaAddForBeanSimple(columnId, getClassName(), false);
-						body += Utils.generaAddForBeanSimple(columnSelect, getClassName(), false);
-				
-					} else if(relationType.equals(Utils.OneToMany) || relationType.equals(Utils.ManyToMany)) {
+					} else if(relationType.equals(Utils.OneToMany)) {
+						if( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
+							Column columnId = new Column();
+							columnId.setName(Utils.getFirstLowerCase(nomeTabellaSx)+"Id");
+							columnId.setTypeColumn(Column.corvertModelType("Long"));
+							
+							body += Utils.generaField(columnId, false)+"\n";
+							body += Utils.generaAddForBeanSimple(columnId, getClassName(), false);
+						}
+						
+					} else if(relationType.equals(Utils.ManyToMany)) {
 						//TODO DEVELOP THIS!
 					}
 			    
@@ -88,7 +100,7 @@ public class TemplateServiceDTO extends AbstractTemplate{
 		//[/Relations]
 		
 		set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			body += Utils.generaAddForBeanSimple(column, getClassName());

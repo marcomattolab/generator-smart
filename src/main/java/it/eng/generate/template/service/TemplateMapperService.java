@@ -37,11 +37,14 @@ public class TemplateMapperService extends AbstractTemplate{
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if( relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne) ) {
-						result += Utils.getFirstUpperCase(nomeTabellaDx)+"Mapper.class" + ",";
-					} else {
+						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+							result += Utils.getFirstUpperCase(nomeTabellaDx)+"Mapper.class" + ",";
+						}
+					} else if( relationType.equals(Utils.OneToMany) ) {
+						//TODO DEVELOP THIS!! 
+					} else if( relationType.equals(Utils.ManyToMany) ) {
 						//TODO DEVELOP THIS!! 
 					}
 				}
@@ -65,6 +68,10 @@ public class TemplateMapperService extends AbstractTemplate{
 		"@Mapper(componentModel = \"spring\", uses = {"+getUsesMapperClass(conf)+"})\r\n" +
 		"public interface "+getClassName()+" extends EntityMapper<"+Utils.getEntityName(tabella)+"DTO, "+Utils.getEntityName(tabella)+"> {\r\n\n";
 
+		String toEntity = "";
+		String toDTO = "";
+		String toDTOS = "";
+		
 		//[Relation Management]
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
@@ -76,30 +83,47 @@ public class TemplateMapperService extends AbstractTemplate{
 				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne))) {
-					
-					if (nomeTabellaSx.toLowerCase().equals(nomeTabella) 
-							&& (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne))) {
-						body += "    @Mapping(source = \""+nomeRelazioneSx+".id\", target = \""+nomeRelazioneSx+"Id\")\n"+
-							    "    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getFirstUpperCase(nomeSelectSx)+"\")\n"+
-							    "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabellaSx)+");\n\n"+
-							    
-							    "    @Mapping(source = \""+nomeRelazioneSx+"Id\", target = \""+nomeRelazioneSx+"\")\n";
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
+					if ( relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne) ) {
+						if (nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+							toDTO += "    @Mapping(source = \""+nomeRelazioneSx+".id\", target = \""+nomeRelazioneSx+"Id\")\n"+
+								     "    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getFirstUpperCase(nomeSelectSx)+"\")\n";
+							
+							toDTOS+=	 "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabellaSx)+");\n\n";
+
+							toEntity +="    @Mapping(source = \""+nomeRelazioneSx+"Id\", target = \""+nomeRelazioneSx+"\")\n";
+							
+						} else if (nomeTabellaDx.toLowerCase().equals(nomeTabella) && relationType.equals(Utils.OneToOne)) {
+							toEntity += "    //@Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\", ignore = true)\n"; 
+						}
 						
-					} else if (nomeTabellaDx.toLowerCase().equals(nomeTabella) && relationType.equals(Utils.OneToOne)) {
-						body += "    //@Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\", ignore = true)\n"; 
+					} else if ( relationType.equals(Utils.OneToMany) ) {
+						
+						if (nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+							toDTO += "    @Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneSx)+"s\", ignore = true)\n"; 
+					
+						} else if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							toDTO += "    @Mapping(source = \""+Utils.getFirstLowerCase(nomeTabellaSx)+".id\", target = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\")\n";
+							toDTOS+= "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabella)+");\n\n";
+									
+							toEntity +="    //@Mapping(source = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\", target = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"\")\n";
+						}
+						
+					} else if ( relationType.equals(Utils.ManyToMany) ) {
+						//TODO DEVELOP THIS!
 					}
 					
 				}
 				
-				//TODO DEVELOP THIS!! 
 			}
 		}
 	  	//[/Relation Management]
+
+		//ToDTO
+		body += toDTO + toDTOS;
 	  	
-	  	
-	    body += 
+		//ToEntity
+	    body += toEntity + 	
 		"    "+Utils.getEntityName(tabella)+" toEntity("+Utils.getEntityName(tabella)+"DTO "+Utils.getClassNameLowerCase(tabella)+"DTO);\r\n\n" +
 		"    default "+Utils.getEntityName(tabella)+" fromId(Long id) {\r\n" +
 		"        if (id == null) {\r\n" +
