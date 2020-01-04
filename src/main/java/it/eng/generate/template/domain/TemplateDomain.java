@@ -266,17 +266,14 @@ public class TemplateDomain extends AbstractTemplate{
 		relationship OneToOne {
 			Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
 		}
-                 
                     
 		relationship ManyToOne {
 			Partner{professione(denominazione)} to Professione
 		}
 		
-		
 		relationship OneToMany {
 			Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
 		}
-		
 		
 		relationship ManyToMany {
 			Candidate{language(languageCode)} to LanguageSkill{candidateName(lastName)},
