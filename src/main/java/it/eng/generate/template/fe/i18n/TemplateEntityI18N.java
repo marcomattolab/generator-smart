@@ -66,22 +66,32 @@ public class TemplateEntityI18N extends AbstractResourceTemplate{
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne) ) {
-						Column column = new Column();
-						column.setName(nomeRelazioneSx);
-						body += Utils.generateJson(column)+",\n";
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
+					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
+						if (nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+							Column column = new Column();
+							column.setName(nomeRelazioneSx);
+							body += Utils.generateJson(column)+",\n";
+						}
+					
+					} else if (relationType.equals(Utils.OneToMany) ) {
+						if (nomeTabellaDx.toLowerCase().equals(nomeTabella.toLowerCase()) ) {
+							Column column = new Column();
+							column.setName(nomeTabellaSx);
+							String json = Utils.generateJson(column)+",\n";
+							//System.out.println("# translate json: "+json);
+							body += json;
+						}
+					} else if (relationType.equals(Utils.ManyToMany) ) {
+						//TODO DEVELOP THIS!
 					}
-				} else if (relationType.equals(Utils.OneToMany) || relationType.equals(Utils.ManyToMany) ) {
-					//TODO DEVELOP THIS!
 				}
 			}
 		}
 		//[/Manage Relations]
 		
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = tabella.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			body += Utils.generateJson(column)+ (iter.hasNext()?",\n":"\n");

@@ -197,30 +197,31 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 				String nomeSelectDx = rel.getDxSelect();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-					boolean isOne2OneOrMany2One = relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne);
-					
-					if(IMPORT_SECTION.equals(section) && isOne2OneOrMany2One) {
+				//Relations OneToOne / ManyToOne
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne))
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+					if(IMPORT_SECTION.equals(section)) {
 						res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaDx)+".model';\n";
 						res += "import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n";
 					
-					}else if(INIT_SECTION.equals(section) && isOne2OneOrMany2One) {
+					}else if(INIT_SECTION.equals(section)) {
 						res += "    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n";
 						if (relationType.equals(Utils.OneToOne)) {
 							res += "    id"+Utils.getFirstUpperCase(nomeRelazioneSx)+": any;\n";
 						}
 						
-					}else if(CONSTRUCTOR_SECTION.equals(section) && isOne2OneOrMany2One) {
+					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						res += "        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n";
 
-					}else if(TRACKBY_SECTION.equals(section) && isOne2OneOrMany2One) {
+					}else if(TRACKBY_SECTION.equals(section)) {
 						if (relationType.equals(Utils.OneToOne)) {
 							res += 
 							"    track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaDx)+") {\r\n" +
 							"        return item.id;\r\n" +
 							"    }\r\n\n";
 						}
-					}else if(NG_ONINIT_SECTION.equals(section) && isOne2OneOrMany2One) {
+					}else if(NG_ONINIT_SECTION.equals(section)) {
 						if (relationType.equals(Utils.OneToOne)) {
 							res += 	"\n       this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe(\n"+
 									"         (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
@@ -247,10 +248,39 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 						            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
 						            "        );\n\n";
 						}
-						//TODO DEVELOP THIS!! 
 					}
-				
 				}
+				
+				
+				//Relations OneToMany
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.OneToMany)
+						&& nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+					if(IMPORT_SECTION.equals(section)) {
+						res += "import { I"+Utils.getFirstUpperCase(nomeTabellaSx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaSx)+".model';\n";
+						res += "import { "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaSx)+"';\n";
+					}else if(INIT_SECTION.equals(section)) {
+						res += "    "+Utils.getFirstLowerCase(nomeTabellaSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaSx)+"[];\n";
+					}else if(CONSTRUCTOR_SECTION.equals(section)) {
+						res += "        private "+Utils.getFirstLowerCase(nomeTabellaSx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service,\r\n";
+					}else if(TRACKBY_SECTION.equals(section)) {
+						res += 
+						"    track"+Utils.getFirstUpperCase(nomeTabellaSx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaSx)+") {\r\n" +
+						"        return item.id;\r\n" +
+						"    }\r\n\n";
+					}else if(NG_ONINIT_SECTION.equals(section)) {
+						res +=  "\n        this."+Utils.getFirstLowerCase(nomeTabellaSx)+"Service.query().subscribe(\n"+
+					            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaSx)+"[]>) => {\n"+
+					            "            this."+Utils.getFirstLowerCase(nomeTabellaSx)+"s = res.body;\n"+
+					            "        },\n"+
+					            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
+					            "        );\n\n";
+					}
+				}
+				
+				
+				//TODO Relations ManyToMany
+				
 				
 				
 			}

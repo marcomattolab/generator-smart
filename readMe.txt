@@ -1,8 +1,6 @@
 -----------------------------------
 #Sommario Attività da completare
-#Sezione BE
-	- Gestire le varie tipologie di relazioni (1..1,   0...N,   N...M )
-	
+
 #Sezione FE
 	- Completare generazione automatica classi di TEST (LOW)
 	- Gestire le varie tipologie di relazioni (1..1,   0...N,   N...M ) scelta componente grafico
@@ -25,24 +23,28 @@
 	- IA	
 --------------------------------
 
-## BUG Ricerca  (FILTRI RICERCA)
+
+## Appunti ToDo
 1) Gestire i campi BLOB  / CLOB
-2) Non funzionano i filtri RANGE sulle DATE, ed i filtri numerici non vengono inviati dal FE!!
+2) bug filtri ricerca => Non funzionano i filtri RANGE sulle DATE, ed i filtri numerici non vengono inviati dal FE!!
 3) ==> Modello JSON => se metto un campo "firstName" camel case non funge! (Deve essere tutto minuscolo es. firstname)
 4) ==> Modello JSON => "id" deve essere sempre presente! (PS: Nascondere Id duplicato da GUI)
 6) ==> Aggiungere Costanti nel JSON (SIZE_MAX=189, SIZE_DEFAULT=100)
 7) Aggiungere altri tipologie: ImageBlob, Blob
 8) Agganciare enumeration
-
 9) COMPLETARE MODELLO JSON 
 - unique 
 - minlength(5) 
 - maxlength(13)  
 - COSTANTI => minlength(SIZE_MAX)  
 - Add Validation Pattern (Mail, PhoneNumber etc)
+10) Relations =>  OneToOne*  ManyToMany   OneToMany  ManyToOne** (**,* manca la pagina di Detail da FE con i campi relazione)
+11) Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
+12) Test/Fix relazioni su medesima tabella con naming differente!
 
-- Relations =>  OneToOne*  ManyToMany   OneToMany  ManyToOne** (**,* manca la pagina di Detail da FE con i campi relazione)
-- Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
+
+
+
     
     
     
