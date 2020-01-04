@@ -76,12 +76,13 @@ public class TemplateEntityDetailComponentHtml extends AbstractResourceTemplate 
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 							body += "\n                <!-- Add Relation: OneToOne / ManyToOne -->\n";
-//							body += "                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaSx)+"</span></dt>\r\n" +
-//									"                <dd>\r\n" + 
-//									"                    <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\">\r\n"+
-//									"                        <a [routerLink]=\"['/"+Utils.getFirstLowerCase(nomeTabellaSx)+"', "+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id, 'view']\">{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</a>\r\n"+
-//									"                    </div>\r\n"+
-//									"                </dd>\r\n";
+							body += "                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span></dt>\r\n" +
+									"                <dd>\r\n" + 
+									"                    <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\">\r\n"+
+									"                        <a [routerLink]=\"['/"+Utils.getFirstLowerCase(nomeTabellaDx)+"', "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id, 'view']\">{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>\r\n"+
+									"                    </div>\r\n"+
+									"                </dd>\r\n";
+							
 						}
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
