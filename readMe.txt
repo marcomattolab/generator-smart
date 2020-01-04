@@ -39,7 +39,7 @@
 1) Gestire i campi BLOB  / CLOB  ed Aggiungere altri tipologie: ImageBlob, Blob
 2) bug filtri ricerca => Non funzionano i filtri RANGE sulle DATE, ed i filtri numerici non vengono inviati dal FE!!
 8) Agganciare enumeration
-10) Relations =>  OneToOne*  ManyToMany   OneToMany  ManyToOne** (**,* manca la pagina di Detail da FE con i campi relazione)
+10) Relations =>  OneToOne*  ManyToMany   OneToMany***  ManyToOne** (**,*,*** manca la pagina di Detail da FE con i campi relazione)
 11) Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
 12) Test/Fix relazioni su medesima tabella con naming differente! (==> OneToMany e ManyToMany)
 

@@ -314,12 +314,15 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 							if(TH.equals(type)){
+								result += "			<!-- TH - OneToOne / ManyToOne -->\n";
 								result += 
-									  "			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n"
+									  "			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"\">"
+									+ "			  <span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n"
 									+ "			  <fa-icon [icon]=\"'sort'\"></fa-icon>\n"
 									+ "			</th>\r\n";
 							}
 							if(TD.equals(type)) {
+								result += "			<!-- TD - OneToOne / ManyToOne -->\n";
 								result += 
 										"			<td>\r\n" +
 										"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\">\r\n" +
@@ -333,7 +336,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 						//Relations OneToMany	
 						if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
 							if(TH.equals(type)){
-								//TODO TEST
+								//TODO ADD getOrderByIcon** into TS
 								result += "			<!-- TH - OneToMany -->\n";
 								result += 
 									  "			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeTabellaDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"\">"
