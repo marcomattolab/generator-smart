@@ -272,9 +272,32 @@ public class TemplateDomain extends AbstractTemplate{
 			Partner{professione(denominazione)} to Professione
 		}
 		
+		
+		
 		relationship OneToMany {
 			Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
 		}
+		
+		## ListaContattiDTO:
+		-private Long incaricoId;
+    		-private String incaricoRiferimento;
+     
+     	## ListaContattiMapper:
+     	-@Mapper(componentModel = "spring", uses = {IncaricoMapper.class})
+     	
+     	-@Mapping(source = "incarico.id", target = "incaricoId")
+	    -@Mapping(source = "incarico.riferimento", target = "incaricoRiferimento")
+	    -ListaContattiDTO toDto(ListaContatti listaContatti);
+
+	    -@Mapping(source = "incaricoId", target = "incarico")
+	    -ListaContatti toEntity(ListaContattiDTO listaContattiDTO);
+
+	    
+     	## IncaricoMapper:
+     	- @Mapping(target = "listaContattis", ignore = true)
+    		- Incarico toEntity(IncaricoDTO incaricoDTO);
+		
+		
 		
 		relationship ManyToMany {
 			Candidate{language(languageCode)} to LanguageSkill{candidateName(lastName)},

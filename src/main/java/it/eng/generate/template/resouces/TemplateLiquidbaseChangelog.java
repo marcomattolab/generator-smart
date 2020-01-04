@@ -145,26 +145,31 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null && nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if ( relationType.equals(Utils.OneToOne) ) {
+						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 						body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +
 								"                <constraints unique=\"true\" nullable=\"true\" uniqueConstraintName=\"ux_"+nomeTabellaDx.toLowerCase()+"_"+nomeRelazioneSx+"_id\" />\n"+
 								"            </column>\n";
+						}
 						
 					} else if (relationType.equals(Utils.ManyToMany)) {
 						//TODO DEVELOP THIS
 						
 					} else if (relationType.equals(Utils.OneToMany)) {
 						if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-			                body += "            <column name=\""+nomeRelazioneDx+"_id\" type=\"bigint\">\n" +
+							//FIXME nomeTabellaSx==>nomeRelazione ??
+			                body += "            <column name=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"_id\" type=\"bigint\">\n" +
 									"                <constraints nullable=\"true\" />\n"+
 									"            </column>\n";
 						}
 						
 					} else if (relationType.equals(Utils.ManyToOne)) {
+						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 						body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +
 								"                <constraints nullable=\"true\" />\n"+
 								"            </column>\n";
+						}
 					}
 				}
             

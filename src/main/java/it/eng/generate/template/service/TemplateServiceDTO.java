@@ -58,6 +58,7 @@ public class TemplateServiceDTO extends AbstractTemplate{
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
 				String nomeSelectSx = rel.getSxSelect();
+				String nomeSelectDx = rel.getDxSelect();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
@@ -86,8 +87,17 @@ public class TemplateServiceDTO extends AbstractTemplate{
 							columnId.setName(Utils.getFirstLowerCase(nomeTabellaSx)+"Id");
 							columnId.setTypeColumn(Column.corvertModelType("Long"));
 							
+							//TODO TEST !!
+							Column columnSelect = new Column();
+							columnSelect.setName(Utils.getFirstLowerCase(nomeTabellaSx)+Utils.getFirstUpperCase(nomeSelectDx));
+							columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, nomeSelectDx, nomeTabellaSx));
+		
 							body += Utils.generaField(columnId, false)+"\n";
+							body += Utils.generaField(columnSelect, false)+"\n";
+		
 							body += Utils.generaAddForBeanSimple(columnId, getClassName(), false);
+							body += Utils.generaAddForBeanSimple(columnSelect, getClassName(), false);
+							
 						}
 						
 					} else if(relationType.equals(Utils.ManyToMany)) {

@@ -569,7 +569,7 @@ public class DataBase {
 				new TemplateResource(tabella).generateTemplate();
 				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS  !!
 				if (Utils.havingConstraints(config, tabella)) {
-					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate(); 	//TODO COMPLETE THIS  !!
+					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate();//TODO COMPLETE THIS  !!
 				}
 				//new TemplateIntTest(tabella).generateTemplate(); 						//TODO COMPLETE THIS  !!
 				
