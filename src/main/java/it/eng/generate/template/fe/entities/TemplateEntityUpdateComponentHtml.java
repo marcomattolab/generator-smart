@@ -49,7 +49,6 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 			body += Utils.getTemplateHtmlByType(database, column, tabella, conf);
 		}
 		
-		
 		//Relations management
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {

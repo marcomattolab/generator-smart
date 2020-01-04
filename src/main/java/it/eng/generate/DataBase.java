@@ -367,7 +367,7 @@ public class DataBase {
 			ConfigCreateProject config = ConfigCreateProject.getIstance();
 
 			//Build Enumerations for Application
-			fillEnumerations(this);
+			fillEnumerations(this); //FIXME
 
 			//Project (statics)
 			//new TemplateProject(this).generateTemplate();
@@ -613,6 +613,7 @@ public class DataBase {
 	}
 
 	private DataBase fillEnumerations(DataBase db) {
+		//TODO FIXME
 		DataBase dataBase = db;
 		Set<?> set = dataBase.getTableName();
 		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
@@ -636,7 +637,6 @@ public class DataBase {
 
 	/**
 	 * Retrieve Enumeration Name from configuration file.
-	 * 
 	 * @param tabellaName
 	 * @param columnName
 	 * @param enumMap Map
@@ -647,6 +647,7 @@ public class DataBase {
 		for (String enumName : enumMap.keySet()) {
 			List<String> values = enumMap.get(enumName);
 			for(String tableATColumn : values) {
+				System.out.println("# todo develop enumeration.. ===> Enumeration is "+enumName);
 				String[] elements = tableATColumn.split("@");
 				String ctableName = elements[0];
 				String ccolumnName = elements[1];
@@ -660,7 +661,6 @@ public class DataBase {
 
 	/**
 	 * Retrieve Enumerations from external configuration file.
-	 * 
 	 * @return List<Enumeration>
 	 */
 	private List<Enumeration> buildEnumerations() {

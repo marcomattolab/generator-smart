@@ -207,7 +207,11 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
 			String Splitted = Utils.splitCamelCase(ColumnName);
-			body += "\t\t\t<th jhiSortBy=\""+columnname+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+Splitted+"</span><fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
+			if(Utils.isPrimaryKeyID(column) ) {
+				//System.out.println("#Skip generation for Primary Key ID..");
+			} else {
+				body += "\t\t\t<th jhiSortBy=\""+columnname+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+Splitted+"</span><fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
+			}
 		}
 		
 		//Relations  TH
@@ -231,7 +235,10 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			String columnname = Utils.getFieldName(column);
-			if(Utils.isDateField(column)) {
+			
+			if(Utils.isPrimaryKeyID(column) ) {
+				//System.out.println("#Skip generation for Primary Key ID..");
+			} else if(Utils.isDateField(column)) {
 				/**
 				 * LocalDate ==> | date:'mediumDate'"
 				 * Instant   ==> | date:'medium'

@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Column {
 	private String name;
-	private Class typeColumn;
+	private Class<?> typeColumn;
 	private boolean key = false;
 	private int columnSize;
 	private boolean nullable =false;
@@ -26,7 +26,7 @@ public class Column {
 	/**
 	 * @return Returns the typeColumn.
 	 */
-	public Class getTypeColumn() {
+	public Class<?> getTypeColumn() {
 		return typeColumn;
 	}
 
@@ -52,7 +52,7 @@ public class Column {
 		return name;
 	}
 	
-	public Class typeColumn(){
+	public Class<?> typeColumn(){
 		return typeColumn;
 	}
 	
@@ -60,7 +60,7 @@ public class Column {
 		return key;
 	}
 	
-	public Class convertDBtoJava(String type){
+	public Class<?> convertDBtoJava(String type){
 		if(type.equals("VARCHAR") || type.equals("CHAR") || type.equals("String")) return String.class;
 		else if(type.equals("DECIMAL") || type.equals("INT") || type.equals("TYNINT")) return BigDecimal.class;
 		else if(type.equals("Boolean")) return Boolean.class;
@@ -122,7 +122,7 @@ public class Column {
 			return "String";
 	}
 	
-	public static Class converterRequestSQLintoTypeJava(int type) {
+	public static Class<?> converterRequestSQLintoTypeJava(int type) {
 		if (type==Types.CHAR||type==Types.LONGVARCHAR||type==Types.VARCHAR)
 			return String.class;
 		else if (type==Types.INTEGER)

@@ -271,13 +271,6 @@ public class TemplateDomain extends AbstractTemplate{
 			Partner{professione(denominazione)} to Professione
 		}
 		
-				<dt><span jhiTranslate="imprendocasaApp.partner.professione">Professione</span></dt>
-                <dd>
-                    <div *ngIf="partner.professioneId">
-                        <a [routerLink]="['/professione', partner.professioneId, 'view']">{{partner.professioneDenominazione}}</a>
-                    </div>
-                </dd>
-		
 		relationship OneToMany {
 			Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
 		}

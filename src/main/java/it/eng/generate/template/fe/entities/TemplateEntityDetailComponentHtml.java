@@ -46,18 +46,23 @@ public class TemplateEntityDetailComponentHtml extends AbstractResourceTemplate 
 			String columnname = Utils.getFieldName(column);
 			String splitted = Utils.splitCamelCase(ColumnName);
 			
-			String spanField = Utils.isBlob(column) 
-								? 	"					<div *ngIf=\""+nometabella+"."+columnname+"\">\r\n" +
-									"                        <a (click)=\"openFile("+nometabella+"."+columnname+"ContentType, "+nometabella+"."+columnname+")\" jhiTranslate=\"entity.action.open\">open</a>\r\n" +
-									"                        {{"+nometabella+"."+columnname+"ContentType}}, {{byteSize("+nometabella+"."+columnname+")}}\r\n" +
-									"                    </div>\r\n"
-								: 	"                    <span>{{"+nometabella+"."+columnname+"}}</span>\r\n";
-			
-			body += 
-			"                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+splitted+"</span></dt>\r\n" +
-			"                <dd>\r\n" + 
+			if(Utils.isPrimaryKeyID(column) ) {
+				//System.out.println("#Skip generation for Primary Key ID..");
+			} else {
+				String spanField = Utils.isBlob(column) 
+						? 	"					<div *ngIf=\""+nometabella+"."+columnname+"\">\r\n" +
+						"                        <a (click)=\"openFile("+nometabella+"."+columnname+"ContentType, "+nometabella+"."+columnname+")\" jhiTranslate=\"entity.action.open\">open</a>\r\n" +
+						"                        {{"+nometabella+"."+columnname+"ContentType}}, {{byteSize("+nometabella+"."+columnname+")}}\r\n" +
+						"                    </div>\r\n"
+						: 	"                    <span>{{"+nometabella+"."+columnname+"}}</span>\r\n";
+				
+				body += 
+						"                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+splitted+"</span></dt>\r\n" +
+								"                <dd>\r\n" + 
 								spanField + 
-			"                </dd>\r\n";
+								"                </dd>\r\n";
+			}
+			
 		}
 		
 		

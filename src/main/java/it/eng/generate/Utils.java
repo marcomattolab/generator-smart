@@ -226,11 +226,6 @@ public class Utils {
 		return ret;
 	}
 	
-	/**
-	 * @param tabella Table
-	 * @param extendedList List<Column>
-	 * @return snippet code as below
-	 */
 	public static String generateIInterface(Table tabella, List<Column> extendedList){
 		String body = 
 		"export interface "+Utils.getIName(tabella)+" {\r\n";
@@ -252,11 +247,6 @@ public class Utils {
 		return body;
 	}
 	
-	/**
-	 * @param tabella Table
-	 * @param extendedList List<Column>
-	 * @return snippet code as below
-	 */
 	public static String generateIClass(Table tabella, List<Column> extendedList){
 		String body = 
 		"export class "+Utils.getEntityName(tabella)+" implements "+Utils.getIName(tabella)+" {\r\n" +
@@ -525,7 +515,16 @@ public class Utils {
 		
 		boolean isNullable = column.isNullable();
 		
-		if (filterType.getName().equals("java.lang.String") && !isEnumeration) {
+		if( isPrimaryKeyID(column) ) {
+			//System.out.println("## Column primary key is "+column.getName());
+			result += //TEXT ID 
+					"                <jhi-alert-error></jhi-alert-error>\r\n" +
+					"                <div class=\"form-group\" [hidden]=\"!"+nometabella+"."+nomeColonna+"\">\r\n" +
+					"                    <label for=\""+nomeColonna+"\" jhiTranslate=\"global.field."+nomeColonna+"\">"+NomeColonna+"</label>\r\n" +
+					"                    <input type=\"text\" class=\"form-control\" id=\""+nomeColonna+"\" name=\""+nomeColonna+"\"\r\n" +
+					"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" readonly />\r\n" +
+					"                </div>\r\n\n";
+		} else if (filterType.getName().equals("java.lang.String") && !isEnumeration) {
 			result += //TEXT
 			"                <div class=\"form-group\">\r\n" +
 			"                    <label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+nomeColonna+"\" for=\"field_"+nomeColonna+"\">"+NomeColonna+"</label>\r\n" +
@@ -653,17 +652,7 @@ public class Utils {
 			"                    <input type=\"hidden\" class=\"form-control\" name=\""+nomeColonna+"ContentType\" id=\"field_"+nomeColonna+"ContentType\"\r\n" +
 			"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"ContentType\" />\r\n" +
 			"                </div>\r\n";
-		
-		} else if( isPrimaryKeyID(column) ) {
-			result += //TEXT ID 
-					"                <jhi-alert-error></jhi-alert-error>\r\n" +
-					"                <div class=\"form-group\" [hidden]=\"!"+nometabella+"."+nomeColonna+"\">\r\n" +
-					"                    <label for=\""+nomeColonna+"\" jhiTranslate=\"global.field."+nomeColonna+"\">"+NomeColonna+"</label>\r\n" +
-					"                    <input type=\"text\" class=\"form-control\" id=\""+nomeColonna+"\" name=\""+nomeColonna+"\"\r\n" +
-					"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" readonly />\r\n" +
-					"                </div>\r\n\n";
 		}
-		
 		return result;
 	}
 	
@@ -1045,8 +1034,7 @@ public class Utils {
 	}
 	
 	/**
-	 * Filter map based on tableName passed. 
-	 * //TODO FIXME DEVELOP
+	 * Filter map based on tableName passed.  //TODO FIXME DEVELOP
 	 * 
 	 * @param nameTable
 	 * @param map
@@ -1067,7 +1055,6 @@ public class Utils {
 	}
 	
 	/**
-	 * JDL - Defining relationships
 	 * @param conf ConfigCreateProject
 	 * @param nomeSelectSx
 	 * @param nomeTabellaDx
