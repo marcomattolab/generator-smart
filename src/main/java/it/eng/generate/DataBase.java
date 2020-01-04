@@ -574,7 +574,7 @@ public class DataBase {
 			//All Other Level (dynamics) 
 			System.out.println("Creating table dynamics in progress... ");
 			for (Table tabella : Utils.getTables(this)) {
-				System.out.println("# Generating table : "+tabella.getNomeTabella());
+				System.out.println("\n# Generating table : "+tabella.getNomeTabella());
 				new TemplateDomain(tabella).generateTemplate();
 				new TemplateRepository(tabella).generateTemplate();
 				new TemplateService(tabella).generateTemplate();   
@@ -620,7 +620,7 @@ public class DataBase {
 				}
 			}
 
-			System.out.println("Generating Project Files Succesfully Completed. Try It!");
+			System.out.println("\nGenerating Project Files Succesfully Completed. Try It!");
 			System.out.println("-------------------------------------------------------");
 		} catch (IOException e) {
 			e.printStackTrace();
