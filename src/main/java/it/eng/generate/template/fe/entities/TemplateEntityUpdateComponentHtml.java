@@ -65,6 +65,7 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 						String track = (relationType.equals(Utils.OneToOne)) ? "; trackBy: track"+Utils.getFirstUpperCase(nomeRelazioneSx)+"ById" : "";
+						body += "\n               <!-- Add Relation: OneToOne / ManyToOne -->";
 						body += "\n                <div class=\"form-group\">\r\n" +
 								"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"\" for=\"field_"+nomeRelazioneSx+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
 								"             		<select class=\"form-control\" id=\"field_"+nomeRelazioneSx+"\" name=\""+nomeRelazioneSx+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"Id\">\r\n" +
@@ -75,7 +76,7 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 						}
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n               <!-- Add Relation: One To Many -->";
+							body += "\n               <!-- Add Relation: OneToMany -->";
 							String track = "; trackBy: track"+Utils.getFirstUpperCase(nomeTabellaSx)+"ById";
 							body += "\n                <div class=\"form-group\">\r\n" +
 									"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"\" for=\"field_"+Utils.getFirstLowerCase(nomeTabellaSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaSx)+"</label>\r\n" +

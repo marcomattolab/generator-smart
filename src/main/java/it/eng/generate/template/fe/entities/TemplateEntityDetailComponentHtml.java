@@ -3,8 +3,11 @@ package it.eng.generate.template.fe.entities;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
@@ -56,6 +59,50 @@ public class TemplateEntityDetailComponentHtml extends AbstractResourceTemplate 
 								spanField + 
 			"                </dd>\r\n";
 		}
+		
+		
+		//[Relations]
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeSelectSx = rel.getSxSelect();
+				String nomeSelectDx = rel.getDxSelect();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
+					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
+						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+							body += "\n                <!-- Add Relation: OneToOne / ManyToOne -->\n";
+//							body += "                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaSx)+"</span></dt>\r\n" +
+//									"                <dd>\r\n" + 
+//									"                    <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\">\r\n"+
+//									"                        <a [routerLink]=\"['/"+Utils.getFirstLowerCase(nomeTabellaSx)+"', "+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id, 'view']\">{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</a>\r\n"+
+//									"                    </div>\r\n"+
+//									"                </dd>\r\n";
+						}
+					} else if(relationType.equals(Utils.OneToMany)) {
+						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
+							body += "\n                <!-- Add Relation: OneToMany -->\n";
+							body += "                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaSx)+"</span></dt>\r\n" +
+									"                <dd>\r\n" + 
+									"                    <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\">\r\n"+
+									"                        <a [routerLink]=\"['/"+Utils.getFirstLowerCase(nomeTabellaSx)+"', "+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id, 'view']\">{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</a>\r\n"+
+									"                    </div>\r\n"+
+									"                </dd>\r\n";
+						}
+					} else if(relationType.equals(Utils.ManyToMany)) {
+						//TODO DEVELOP THIS! 
+					}
+				}
+			}
+		}
+		//[/Relations]
+		
+		
+		
 		body +=
 		"            </dl>\r\n";
 		// MAIN CICLE DL - END
