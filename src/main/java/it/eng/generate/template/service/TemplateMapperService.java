@@ -96,6 +96,7 @@ public class TemplateMapperService extends AbstractTemplate{
 							toEntity +="    @Mapping(source = \""+nomeRelazioneSx+"Id\", target = \""+nomeRelazioneSx+"\")\n";
 							
 						} else if (nomeTabellaDx.toLowerCase().equals(nomeTabella) && relationType.equals(Utils.OneToOne)) {
+							//FIXME TODO decomment and test!
 							toEntity += "    //@Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\", ignore = true)\n"; 
 						}
 						
