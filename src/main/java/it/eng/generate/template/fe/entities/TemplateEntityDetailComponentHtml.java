@@ -38,10 +38,8 @@ public class TemplateEntityDetailComponentHtml extends AbstractResourceTemplate 
 		
 		// MAIN CICLE DL - START
 		"            <dl class=\"row-md jh-entity-details\">\r\n";
-		Set<?> set = tabella.getColumnNames();
-		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		
+		for (Column column : tabella.getSortedColumns()) {
 			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
 			String splitted = Utils.splitCamelCase(ColumnName);

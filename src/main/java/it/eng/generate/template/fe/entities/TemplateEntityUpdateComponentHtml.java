@@ -42,10 +42,7 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 
 		// MAIN CICLE DL - START
 		"            <div>\r\n" ;
-		Set<?> set = tabella.getColumnNames();
-		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for (Column column : tabella.getSortedColumns()) {
 			body += Utils.getTemplateHtmlByType(database, column, tabella, conf);
 		}
 		

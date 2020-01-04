@@ -1,6 +1,7 @@
 package it.eng.generate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +25,10 @@ public class Table {
 
 	public List<Column> getSortedColumns(){
 		List<Column> list = new ArrayList<Column>(colonne.values());
-		//TODO DEVELOP SORTING FOR COLUMS
+		//DEVELOP SORTING FOR COLUMS
+		Collections.sort(list, (d1, d2) -> {
+			return d1.getSortColumn() - d2.getSortColumn();
+		});
 		return list;
 	}
 	

@@ -246,14 +246,14 @@ public class DataBase {
 				this.addTable(tableName, table);
 				ResultSet rs3 = dmd.getColumns(ccp.getDataBaseName(),ccp.getOwner(),tableName,"%%");
 
-				System.out.println("# tableName: "+tableName);
+				System.out.println("# TableName: "+tableName);
 				while(rs3.next()) {
 					String columnName = (String) rs3.getObject("COLUMN_NAME");
 					Integer typeColumn = (Integer) rs3.getObject("DATA_TYPE");
 					Integer columnSize = (Integer) rs3.getObject("COLUMN_SIZE");
 					String isNullable = (String) rs3.getObject("IS_NULLABLE");
 
-					System.out.println("Column:"+columnName+" Type:"+typeColumn+" Size:"+columnSize+" Nullable:"+isNullable);
+					System.out.println(" - Column:"+columnName+" Type:"+typeColumn+" Size:"+columnSize+" Nullable:"+isNullable);
 
 					Column column = new Column();
 					column.setName(columnName);
@@ -294,6 +294,7 @@ public class DataBase {
 					table.setNomeTabella(tableName);
 					this.addTable(tableName, table);
 					
+					int sortColumn = 1;
 					for(Field field : entity.getFields()) {
 						String columnName = field.getFname();
 						String mTypeColumn = field.getFtype();
@@ -302,9 +303,11 @@ public class DataBase {
 						
 						Column column = new Column();
 						column.setName(columnName);
+						column.setSortColumn(sortColumn++);
+						
 						int iTypeColmn = Column.corvertModelType(mTypeColumn);
 						column.setTypeColumn(iTypeColmn);
-						System.out.println("# Column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn);
+						System.out.println("  - Column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn + " sortColumn: "+sortColumn);
 						
 						if (!isRequired) {
 							column.setNullable();
@@ -314,7 +317,7 @@ public class DataBase {
 						}
 						table.addColumn(column);
 						
-						System.out.println("# Column: "+columnName+" ==> Type: "+column.getTypeColumn()+"  Size: "+columnSize+"  Required: "+isRequired);
+						System.out.println("  - Column: "+columnName+" ==> Type: "+column.getTypeColumn()+"  Size: "+columnSize+"  Required: "+isRequired);
 						
 						//Set Primary KEY - TODO DEVELOP THIS!
 						String key = "id";
@@ -328,7 +331,7 @@ public class DataBase {
 			}
 			
 			//Build Enumerations
-			buildEnumerations(ccp);
+			buildEnumerationsJson(ccp);
 			
 		}
 	}
@@ -338,6 +341,20 @@ public class DataBase {
 	 * @param ccp ConfigCreateProject
 	 */
 	private void buildEnumerations(ConfigCreateProject ccp) {
+		//B - Generate Enumerations
+		List<ProjectEnum> enums = ccp.getEnumerations();
+		for (ProjectEnum projectEnum: enums) {
+			String[] values = projectEnum.getValues().split("#");
+			//System.out.println("@ Define Enumeration: " + projectEnum.getName() + " Values: " + values + "");
+			this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
+		}
+	}
+	
+	/**
+	 * Build Enumerations Stuff
+	 * @param ccp ConfigCreateProject
+	 */
+	private void buildEnumerationsJson(ConfigCreateProject ccp) {
 		//B - Generate Enumerations
 		List<ProjectEnum> enums = ccp.getEnumerations();
 		for (ProjectEnum projectEnum: enums) {
@@ -612,6 +629,11 @@ public class DataBase {
 		}
 	}
 
+	/**
+	 * Fill Enumeration (Before start) TODO
+	 * @param db
+	 * @return
+	 */
 	private DataBase fillEnumerations(DataBase db) {
 		//TODO FIXME
 		DataBase dataBase = db;
@@ -626,7 +648,7 @@ public class DataBase {
 				Column column = tabella.getColumn(columnName);
 				String enumeration = findEnumerationName(tabellaName, columnName, dataBase.getEnumerationRelation());
 				if(enumeration!=null && enumeration.length()>0) {
-					System.out.println("## enumeration ==> " + enumeration);
+					//System.out.println("## enumeration ==> " + enumeration);
 					column.setEnumeration(enumeration);
 				}
 			}
@@ -647,7 +669,7 @@ public class DataBase {
 		for (String enumName : enumMap.keySet()) {
 			List<String> values = enumMap.get(enumName);
 			for(String tableATColumn : values) {
-				System.out.println("# todo develop enumeration.. ===> Enumeration is "+enumName);
+				System.out.println(" - ToDo develop enumeration ===> Enumeration is "+enumName);
 				String[] elements = tableATColumn.split("@");
 				String ctableName = elements[0];
 				String ccolumnName = elements[1];

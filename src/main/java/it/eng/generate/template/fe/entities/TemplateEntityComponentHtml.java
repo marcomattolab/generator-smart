@@ -200,10 +200,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		"            <thead>\r\n"+
 		"            <tr jhiSort [(predicate)]=\"predicate\" [(ascending)]=\"reverse\" [callback]=\"transition.bind(this)\">\r\n"+
 	    "            <th jhiSortBy=\"id\"><span jhiTranslate=\"global.field.id\">ID</span> <fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
-		Set<?> setBis = tabella.getColumnNames();
-		for (Iterator<?> iter = setBis.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for (Column column : tabella.getSortedColumns()) {
 			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
 			String Splitted = Utils.splitCamelCase(ColumnName);
@@ -230,12 +227,8 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		"                <td><a [routerLink]=\"['/"+nometabella+"', "+nometabella+".id, 'view' ]\">{{"+nometabella+".id}}</a></td>\r\n";
 		
 		
-		Set<?> set2 = tabella.getColumnNames();
-		for (Iterator<?> iter = set2.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for (Column column : tabella.getSortedColumns()) {
 			String columnname = Utils.getFieldName(column);
-			
 			if(Utils.isPrimaryKeyID(column) ) {
 				//System.out.println("#Skip generation for Primary Key ID..");
 			} else if(Utils.isDateField(column)) {
@@ -346,7 +339,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 								//TODO ADD getOrderByIcon** into TS
 								result += "			<!-- TH - OneToMany -->\n";
 								result += 
-									  "			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeTabellaDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"\">"
+									  "			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeTabellaDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"\">\n"
 									+ "			  <span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaSx)+"</span>\n"
 									+ "			  <fa-icon [icon]=\"'sort'\"></fa-icon>\n"
 								//+ "			  <span class=\"fa\" [ngClass]=\"getOrderByIcon('"+Utils.getFirstLowerCase(nomeTabellaDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"')\"></span>\n"

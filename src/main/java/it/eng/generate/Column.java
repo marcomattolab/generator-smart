@@ -13,6 +13,7 @@ public class Column {
 	private int columnSize;
 	private boolean nullable =false;
 	private String enumeration; //TODO Fill This!!
+	private int sortColumn;
 	
 	/**
 	 * @param key
@@ -207,4 +208,11 @@ public class Column {
 		this.enumeration = enumeration;
 	}
 
+	public int getSortColumn() {
+		return sortColumn;
+	}
+
+	public void setSortColumn(int sortColumn) {
+		this.sortColumn = sortColumn;
+	}
 }
