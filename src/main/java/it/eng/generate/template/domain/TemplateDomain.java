@@ -61,15 +61,15 @@ public class TemplateDomain extends AbstractTemplate{
 		"public class "+getClassName()+" extends AbstractAuditingEntity implements Serializable  {\r\n" +
 		"\tprivate static final long serialVersionUID = 1L;\r\n";
 		
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = tabella.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			body += Utils.generaFieldExt(column)+"\n";
 		}
 		
 		set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			body += Utils.generaGetAndSetForBeanExt(column, getClassName());
@@ -235,7 +235,7 @@ public class TemplateDomain extends AbstractTemplate{
 		body += "\n\tpublic String toString(){";
 		body += "\n\t\treturn this.getClass().getName()+\":{";
 		boolean isFirst = true;
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			if(isFirst){

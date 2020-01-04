@@ -218,7 +218,7 @@ public class DataBase {
 		return enumerationRelation;
 	}
 
-	public Set getTableName() {
+	public Set<String> getTableName() {
 		return tabelle.keySet();
 	}
 
@@ -490,7 +490,7 @@ public class DataBase {
 			new TemplateApplicationProd(this).generateTemplate();
 			new TemplateApplicationDev(this).generateTemplate();
 			new TemplateLiquidbaseMasterInitialSchema(this).generateTemplate(); 
-			new TemplateLiquidbaseMaster(this).generateTemplate(); 					//Cicle Entities Done
+			new TemplateLiquidbaseMaster(this).generateTemplate(); 					
 			new TemplateMessage(this).generateTemplate();
 
 			//Copy All Template
@@ -504,14 +504,14 @@ public class DataBase {
 			new TemplateAppRoutingModule(this).generateTemplate(); 
 			new TemplateAccountModule(this).generateTemplate(); 
 			new TemplateAdminModule(this).generateTemplate(); 
-			new TemplateAdminEntityAuditModule(this).generateTemplate(); 				//Audit Module TS
+			new TemplateAdminEntityAuditModule(this).generateTemplate(); 			//Audit Module TS
 			new TemplateDashboardModule(this).generateTemplate();  					//Chart Dashboard
 			new TemplateDashboardBarchartModule(this).generateTemplate();  			//Barchart Dashboard
 			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  		//Doughnutchart Dashboard
 			new TemplateDashboardLinechartModule(this).generateTemplate();  			//Linechart Dashboard
 			new TemplateDashboardPiechartModule(this).generateTemplate();  			//Piechart Dashboard
 			new TemplateDashboardPolarareachartModule(this).generateTemplate(); 		//Polarareachart Dashboard
-			new TemplateDashboardRadarchartModule(this).generateTemplate();  			//Radarchart Dashboard
+			new TemplateDashboardRadarchartModule(this).generateTemplate();  		//Radarchart Dashboard
 			new TemplateConfigurationService(this).generateTemplate(); 
 			new TemplateErrorehandlerInterceptor(this).generateTemplate(); 
 			new TemplateCoreModule(this).generateTemplate(); 
@@ -523,7 +523,7 @@ public class DataBase {
 			new TemplateSharedLibsModule(this).generateTemplate(); 
 			new TemplateSharedCommonModule(this).generateTemplate(); 
 			new TemplateAlertErrorComponent(this).generateTemplate(); 
-			new TemplateModule(this).generateTemplate(); 								//Cicle Entities Done
+			new TemplateModule(this).generateTemplate(); 							//Cicle Entities Done
 
 			//TEST Classes - TODO DEVELOP THIS!!
 			if (config.isGenerateTest()) {
@@ -565,13 +565,13 @@ public class DataBase {
 				new TemplateQueryService(tabella).generateTemplate();
 				new TemplateMapperService(tabella).generateTemplate();
 				new TemplateServiceDTO(tabella).generateTemplate();
-				new TemplateServiceCriteria(this, tabella).generateTemplate(); 			//TODO Add enumeration management
+				new TemplateServiceCriteria(this, tabella).generateTemplate(); 				//TODO Add enumeration management
 				new TemplateResource(tabella).generateTemplate();
 				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS  !!
 				if (Utils.havingConstraints(config, tabella)) {
-					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate();//TODO COMPLETE THIS  !!
+					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate();	//TODO COMPLETE THIS  !!
 				}
-				//new TemplateIntTest(tabella).generateTemplate(); 						//TODO COMPLETE THIS  !!
+				//new TemplateIntTest(tabella).generateTemplate(); 							//TODO COMPLETE THIS  !!
 				
 				//MultiLanguages
 				for(String languageCode: config.getLanguages()) {
@@ -579,7 +579,7 @@ public class DataBase {
 				}
 
 				new TemplateEntityIndex(tabella).generateTemplate(); 
-				new TemplateEntityService(tabella).generateTemplate();  					//DONE MANAGE DATES
+				new TemplateEntityService(tabella).generateTemplate();  						//DONE MANAGE DATES
 				new TemplateEntityRoute(tabella).generateTemplate(); 
 				new TemplateEntityModule(tabella).generateTemplate(); 
 				new TemplateEntityComponentTs(this, tabella).generateTemplate(); 
@@ -614,13 +614,13 @@ public class DataBase {
 
 	private DataBase fillEnumerations(DataBase db) {
 		DataBase dataBase = db;
-		Set set = dataBase.getTableName();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = dataBase.getTableName();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String tabellaName = (String) iter.next();
 			Table tabella = dataBase.getTables(tabellaName);
 
-			Set cset = tabella.getColumnNames();
-			for (Iterator citer = cset.iterator(); citer.hasNext();) {
+			Set<?> cset = tabella.getColumnNames();
+			for (Iterator<?> citer = cset.iterator(); citer.hasNext();) {
 				String columnName = (String) citer.next();
 				Column column = tabella.getColumn(columnName);
 				String enumeration = findEnumerationName(tabellaName, columnName, dataBase.getEnumerationRelation());
@@ -674,8 +674,8 @@ public class DataBase {
 
 	public String toString() {
 		String ret ="";
-		Set set = tabelle.keySet();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<String> set = tabelle.keySet();
+		for (Iterator<String> iter = set.iterator(); iter.hasNext();) {
 			String tablename = (String) iter.next();
 			Table table = (Table)tabelle.get(tablename);
 			ret+="\n"+table;			
@@ -692,16 +692,6 @@ public class DataBase {
 	public static void main(String[] args) throws IOException {
 		DataBase db = DataBase.getInstance();
 		db.generateFile();
-	}
-
-	public void addRelation1to1(String table1,String table2){
-		this.getTables(table1).addRelation1to1(this.getTables(table2));
-		this.getTables(table2).addRelation1to1(this.getTables(table1));
-	}
-
-	public void addRelation1toN(String table1,String tableN){
-		this.getTables(table1).addRelation1toN(this.getTables(tableN));
-		this.getTables(tableN).addRelationNto1(this.getTables(table1));
 	}
 
 }

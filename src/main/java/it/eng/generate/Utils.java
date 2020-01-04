@@ -179,15 +179,15 @@ public class Utils {
 	}
 	
 	public static String getValue(String label,Column column) {
-		Class typeClass = column.getTypeColumn();
+		Class<?> typeClass = column.getTypeColumn();
 		return "\n\t\t"+typeClass.getName()+" "+getFieldName(column)+" = "+label+".get"+getFieldNameForMethod(column)+"();";
 	}
 	
 	public static String getListCostantName(Table table, boolean isKey){
 		String ret = "";
 		boolean first = true;
-		Set set = table.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = table.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String columnName = (String) iter.next();
 			Column column = table.getColumn(columnName);
 			if((isKey && column.isKey())||(!isKey && !column.isKey())){
@@ -213,7 +213,7 @@ public class Utils {
 	}
 	
 	public static String generaGetAndSet(Column column){
-		Class typeClass = column.getTypeColumn();
+		Class<?> typeClass = column.getTypeColumn();
 		String ret  = "\n";
 		ret += "\n\tpublic "+typeClass.getName()+ " get"+getFieldNameForMethod(column)+"(){";
 		ret += "\n\t\treturn ("+typeClass.getName()+")hm.get(ConstantName.COL_"+getCostantName(column)+");";
@@ -238,7 +238,7 @@ public class Utils {
 		for (Column column: extendedList) {
 			//String columnname = getFieldName(column);
 			String columnname = getFieldName(column, false);
-			Class filterType = column.getTypeColumn();
+			Class<?> filterType = column.getTypeColumn();
 			
 			if( filterType.getName().equals("java.sql.Blob") ) {
 				body += "      "+columnname+"?: "+getIInterfaceTypology(column)+";\n";
@@ -266,9 +266,8 @@ public class Utils {
 		int i = 1;
 		for (Column column: extendedList) {
 			boolean isLast = i == extendedList.size();
-			//String columnname = getFieldName(column);
 			String columnname = getFieldName(column, false);
-			Class filterType = column.getTypeColumn();
+			Class<?> filterType = column.getTypeColumn();
 			
 			if( filterType.getName().equals("java.sql.Blob") ) {
 				body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+"\r\n";
@@ -289,12 +288,12 @@ public class Utils {
 	
 	public static String createFileds(Table tabella){
 		String ret ="";
-		Set set = tabella.getColumnNames();
+		Set<?> set = tabella.getColumnNames();
 		boolean first = true;
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String columnName = (String) iter.next();
 			Column column = tabella.getColumn(columnName);
-			Class typeClass = column.getTypeColumn();
+			Class<?> typeClass = column.getTypeColumn();
 			if(first){
 				ret += typeClass.getName()+" "+getFieldName(column)+"";
 				first = false;
@@ -307,9 +306,9 @@ public class Utils {
 	
 	public static String createFiledsWithoutType(Table tabella){
 		String ret ="";
-		Set set = tabella.getColumnNames();
+		Set<?> set = tabella.getColumnNames();
 		boolean first = true;
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String columnName = (String) iter.next();
 			Column column = tabella.getColumn(columnName);
 			if(first){
@@ -324,12 +323,12 @@ public class Utils {
 	
 	public static String createFiledsKey(Table tabella){
 		String ret ="";
-		Set set = tabella.getColumnNames();
+		Set<?> set = tabella.getColumnNames();
 		boolean first = true;
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String columnName = (String) iter.next();
 			Column column = tabella.getColumn(columnName);
-			Class typeClass = column.getTypeColumn();
+			Class<?> typeClass = column.getTypeColumn();
 			if(column.isKey()){
 				if(first){
 					ret += typeClass.getName()+" "+getFieldName(column)+"";
@@ -344,9 +343,9 @@ public class Utils {
 	
 	public static String createKeysWithOutType(Table tabella){
 		String body = "";
-		Set set2 = tabella.getColumnNames();
+		Set<?> set2 = tabella.getColumnNames();
 		boolean first = true;
-		for (Iterator iter = set2.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = set2.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			if(column.isKey()){
@@ -363,8 +362,8 @@ public class Utils {
 	
 	public static String setGenericValue(Table tabella,String label,boolean isKey,boolean allField) {
 		String ret ="";
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = tabella.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String columnName = (String) iter.next();
 			Column column = tabella.getColumn(columnName);
 			if(column.isKey()==isKey){
@@ -381,8 +380,8 @@ public class Utils {
 	
 	public static String setGenericValue(Table tabella,String label1,String label2,boolean isKey,boolean allField) {
 		String ret ="";
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = tabella.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String columnName = (String) iter.next();
 			Column column = tabella.getColumn(columnName);
 			if(column.isKey()==isKey){
@@ -398,7 +397,7 @@ public class Utils {
 	}
 
 	public static String generaGetAndSetForBean(Column column) {
-		Class typeClass = column.getTypeColumn();
+		Class<?> typeClass = column.getTypeColumn();
 		String ret  = "\n";
 		ret += "\n\tpublic "+typeClass.getName()+ " get"+getFieldNameForMethod(column)+"(){";
 		ret += "\n\t\treturn this."+getFieldName(column)+";";
@@ -433,6 +432,7 @@ public class Utils {
 		}
 		return ret;
 	}
+	
 	public static String generaAddForBeanSimple(Column column, String className) {
 		return generaAddForBeanSimple(column, className, true);
 	}
@@ -480,7 +480,7 @@ public class Utils {
 
 	public static String getFilterTypology(Column column) {
 		String filterTypology = "";
-		Class filterType = column.getTypeColumn();
+		Class<?> filterType = column.getTypeColumn();
 		
 		if (column.getEnumeration()!=null && column.getEnumeration().length()>0) {
 			//Done Enumeration type
@@ -519,7 +519,7 @@ public class Utils {
 		String result = "";
 		boolean isEnumeration = column.getEnumeration()!=null ? true : false;
 		String nometabella = Utils.getClassNameLowerCase(tabella);
-		Class filterType = column.getTypeColumn();
+		Class<?> filterType = column.getTypeColumn();
 		String nomeColonna = Utils.getFieldName(column);
 		String NomeColonna = Utils.getFieldNameForMethod(column);
 		
@@ -681,7 +681,7 @@ public class Utils {
 	
 	public static String getIInterfaceTypology(Column column) {
 		String filterTypology = "";
-		Class filterType = column.getTypeColumn();
+		Class<?> filterType = column.getTypeColumn();
 		//System.out.println("filterType: "+filterType);
 		if (filterType.getName().equals("java.lang.String")) {
 			filterTypology = "string";
@@ -719,7 +719,7 @@ public class Utils {
 	 */
 	public static boolean isDateField(Column column) {
 		boolean idDateField = false;
-		Class filterType = column.getTypeColumn();
+		Class<?> filterType = column.getTypeColumn();
 		if(	filterType.getName().equals("java.sql.Date") || 
 			filterType.getName().equals("java.util.Date") || 
 			filterType.getName().equals("java.time.LocalDate") ||
@@ -737,7 +737,7 @@ public class Utils {
 	 */
 	public static boolean isTextField(Column column) {
 		boolean idTxtField = false;
-		Class filterType = column.getTypeColumn();
+		Class<?> filterType = column.getTypeColumn();
 		if(	filterType.getName().equals("java.lang.String") ) {
 			idTxtField = true;
 		} 
@@ -750,7 +750,7 @@ public class Utils {
 	 */
 	public static boolean isNumericField(Column column) {
 		boolean isNumericField = false;
-		Class filterType = column.getTypeColumn();
+		Class<?> filterType = column.getTypeColumn();
 		if(	filterType.getName().equals("java.lang.Float") || 
 				filterType.getName().equals("java.lang.Long") || 
 				filterType.getName().equals("java.lang.Integer") ||
@@ -766,7 +766,7 @@ public class Utils {
 	 */
 	public static boolean isLocalDate(Column column) {
 		boolean isLocalDate = false;
-		Class filterType = column.getTypeColumn();
+		Class<?> filterType = column.getTypeColumn();
 		if(	filterType.getName().equals("java.time.LocalDate") ) {
 			isLocalDate = true;
 		} 
@@ -862,7 +862,7 @@ public class Utils {
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		boolean IS_ORACLE = conf.isOracle();
 		
-		//FIXME TODO Move this into DB
+		//FIXME TODO Move this into DB / JSON
 		String PRECISION = "10";
 		String SCALE = "2";
 
@@ -905,7 +905,6 @@ public class Utils {
 	}
 
 	public static String splitCamelCase(String column) {
-		//TODO DEVELOP THIS BETTER!
 		String result = StringUtils.capitalize(StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(column), " "));
 		result = result.replaceAll(" _ ", " "); //RAPID FIX
 		return result;
@@ -936,9 +935,9 @@ public class Utils {
 		ret += "\t@Override\r\n";
 		ret += "\tpublic String toString() {\r\n";
 		ret += "\t\treturn \""+className+"{\" + \r\n";
-		Set set = tabella.getColumnNames();
+		Set<?> set = tabella.getColumnNames();
 		boolean isFirst = true;
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			if(isFirst){
@@ -955,9 +954,9 @@ public class Utils {
 	
 	public static String generaParametri1to1(String label,Table table2){
 		String body = "";
-		Set set2 = table2.getColumnNames();
+		Set<?> set2 = table2.getColumnNames();
 		boolean first = true;
-		for (Iterator iter = set2.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = set2.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = table2.getColumn(key);
 			if(column.isKey()){
@@ -975,17 +974,16 @@ public class Utils {
 	
 	public static String generaParametri1toN(String label,Table table1,Table table2){
 		String body ="";
-		Set set = table2.getColumnNames();
+		Set<?> set = table2.getColumnNames();
 		boolean first = true;
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String columnName = (String) iter.next();
 			Column column = table1.getColumn(columnName);
 			if(column!=null && column.isKey()){
 				if(first){
 					body += label+".get"+getFieldNameForMethod(column)+"()";
 					first = false;
-				}
-				else{
+				} else{
 					body += ","+label+".get"+Utils.getFieldNameForMethod(column)+"()";;
 				}
 			}else{
@@ -1002,6 +1000,7 @@ public class Utils {
 	
 	public static String getCurrentDate(int digit) {
 		Date curDate = new Date();
+		//TODO MOVE INTO PROPERTIES
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 		String formatted = format.format(curDate);
 		String result = formatted + String.format("%05d", digit);
@@ -1009,8 +1008,8 @@ public class Utils {
 	}
 	
 	public static boolean isKeyForSecondTable(Column column,Table table2){
-		Set set = table2.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = table2.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String columnName = (String) iter.next();
 			Column columnCurr = table2.getColumn(columnName);
 			if(columnCurr.isKey() && columnCurr.getName().equals(column.getName()))
@@ -1030,8 +1029,8 @@ public class Utils {
 	
 		int sort = 1;
 		List<Table> tables = new ArrayList<>();
-		Set setTabNames = database.getTableName();
-		for (Iterator iter = setTabNames.iterator(); iter.hasNext();) {
+		Set<?> setTabNames = database.getTableName();
+		for (Iterator<?> iter = setTabNames.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			if( key.toUpperCase().startsWith(PREFIX_JHI) || key.toUpperCase().startsWith(PREFIX_LIQUIDBASE) ) {
 				//System.out.println("# Skipping table : "+key);
@@ -1046,7 +1045,8 @@ public class Utils {
 	}
 	
 	/**
-	 * Filter map based on tableName passed. //TODO FIXME DEVELOP
+	 * Filter map based on tableName passed. 
+	 * //TODO FIXME DEVELOP
 	 * 
 	 * @param nameTable
 	 * @param map
@@ -1067,11 +1067,7 @@ public class Utils {
 	}
 	
 	/**
-	 * JDL - Defining multiple oneToOne relationships
-			relationship OneToOne {
-				Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
-			}
-			
+	 * JDL - Defining relationships
 	 * @param conf ConfigCreateProject
 	 * @param nomeSelectSx
 	 * @param nomeTabellaDx
@@ -1107,8 +1103,8 @@ public class Utils {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
-				String nomeRelazioneSx = rel.getSxName();
-				String nomeRelazioneDx = rel.getDxName();
+				//String nomeRelazioneSx = rel.getSxName();
+				//String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = table.getNomeTabella().toLowerCase();
 				
@@ -1121,7 +1117,6 @@ public class Utils {
             
 			}
 		}
-		
 		return havingConstrains;
 	}
 	
