@@ -25,7 +25,6 @@
 	- Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri numerici non vengono inviati dal FE!!
 	- @Agganciare enumeration 
 	- @Relations =>  OneToOne*  ManyToMany^   OneToMany***  ManyToOne**
-	- @Sorting => Inserire il sorting nelle colonne come specificato nel modello JSON
 	- Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
 	- Test/Fix relazioni su medesima tabella con naming differente! ( ? ==> OneToMany e ManyToMany)
 
