@@ -65,14 +65,14 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		
 		
 		int COLUMN_SIZE = 4;
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = tabella.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
 			String Splitted = Utils.splitCamelCase(ColumnName);
-			Class filterType = column.getTypeColumn();
+			Class<?> filterType = column.getTypeColumn();
 			boolean isEnumeration = column.getEnumeration()!=null ? true : false;
 			
 			if (filterType.getName().equals("java.lang.String") && !isEnumeration) {
@@ -200,8 +200,8 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		"            <thead>\r\n"+
 		"            <tr jhiSort [(predicate)]=\"predicate\" [(ascending)]=\"reverse\" [callback]=\"transition.bind(this)\">\r\n"+
 	    "            <th jhiSortBy=\"id\"><span jhiTranslate=\"global.field.id\">ID</span> <fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
-		Set setBis = tabella.getColumnNames();
-		for (Iterator iter = setBis.iterator(); iter.hasNext();) {
+		Set<?> setBis = tabella.getColumnNames();
+		for (Iterator<?> iter = setBis.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			String ColumnName = Utils.getFieldNameForMethod(column);
@@ -210,8 +210,8 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			body += "\t\t\t<th jhiSortBy=\""+columnname+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+Splitted+"</span><fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
 		}
 		
-		//relations
-		body += buildOneToOne(conf, TH);
+		//Relations  TH
+		body += buildRelations(conf, TH);
 		
 		body +=
 		"            <th></th>\r\n" +
@@ -226,8 +226,8 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		"                <td><a [routerLink]=\"['/"+nometabella+"', "+nometabella+".id, 'view' ]\">{{"+nometabella+".id}}</a></td>\r\n";
 		
 		
-		Set set2 = tabella.getColumnNames();
-		for (Iterator iter = set2.iterator(); iter.hasNext();) {
+		Set<?> set2 = tabella.getColumnNames();
+		for (Iterator<?> iter = set2.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			String columnname = Utils.getFieldName(column);
@@ -252,8 +252,8 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			}
 		}
 		
-		//Relations
-		body += buildOneToOne(conf, TD);
+		//Relations fields
+		body += buildRelations(conf, TD);
 		
 		body +=
 		"                <td class=\"text-right\">\r\n" +
@@ -296,7 +296,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		return body;
 	}
 
-	private String buildOneToOne(ConfigCreateProject conf, String type) {
+	private String buildRelations(ConfigCreateProject conf, String type) {
 		String result = "";
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
@@ -305,26 +305,62 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 				String nomeRelazioneSx = rel.getSxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeSelectSx = rel.getSxSelect();
+				String nomeSelectDx = rel.getDxSelect();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-					if(TD.equals(type) && (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne) )) {
-						result += 
-							"			<td>\r\n" +
-							"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\">\r\n" +
-							"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeTabellaDx)+"', "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>\r\n" +
-							"			   </div>\r\n" +
-							"			</td>\r\n";
-					} else if(TH.equals(type) && (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne) )) {
-						result += 
-							"			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n"
-						  + "			  <fa-icon [icon]=\"'sort'\"></fa-icon>\n"
-						  + "			</th>\r\n";
-
-					}
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					
+					//Relations OneToOne / ManyToOne
+					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
+						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							if(TH.equals(type)){
+								result += 
+									  "			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n"
+									+ "			  <fa-icon [icon]=\"'sort'\"></fa-icon>\n"
+									+ "			</th>\r\n";
+							}
+							if(TD.equals(type)) {
+								result += 
+										"			<td>\r\n" +
+										"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\">\r\n" +
+										"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeTabellaDx)+"', "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>\r\n" +
+										"			   </div>\r\n" +
+										"			</td>\r\n";
+							}
+						}
+						
+					} else if (relationType.equals(Utils.OneToMany)) {
+						//Relations OneToMany	
+						if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							if(TH.equals(type)){
+								//TODO TEST
+								result += "			<!-- TH - OneToMany -->\n";
+								result += 
+									  "			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeTabellaDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"\">"
+									+ "			  <span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaSx)+"</span>\n"
+									+ "			  <fa-icon [icon]=\"'sort'\"></fa-icon>\n"
+								//+ "			  <span class=\"fa\" [ngClass]=\"getOrderByIcon('"+Utils.getFirstLowerCase(nomeTabellaDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"')\"></span>\n"
+									+ "			</th>\r\n";
+							}
+							if(TD.equals(type)) {
+								result += "			<!-- TD - OneToMany -->\n";
+								result += 
+										"			<td>\r\n" +
+										"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\">\r\n" +
+										"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeTabellaSx)+"', "+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</a>\r\n" +
+										"			   </div>\r\n" +
+										"			</td>\r\n";
+							}
+						}
+						
+						
+					} else if (relationType.equals(Utils.ManyToMany)) {
+						//Relations ManyToMany - DEVELOP THIS!
+					}
 				}
+				
+				
+				
 			}
 		}
 		return result;

@@ -273,15 +273,9 @@ public class TemplateDomain extends AbstractTemplate{
 		}
 		
 		
-		
 		relationship OneToMany {
 			Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
 		}
-		
-		## ListaContatti FE:
-		- Edit (add select Incarico)
-		- List (add select Incarico)
-		
 		
 		
 		relationship ManyToMany {

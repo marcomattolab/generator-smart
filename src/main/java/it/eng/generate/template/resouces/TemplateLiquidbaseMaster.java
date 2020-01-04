@@ -50,7 +50,7 @@ public class TemplateLiquidbaseMaster extends AbstractResourceTemplate{
 			if (Utils.havingConstraints(conf, table)) {
 				body+="    <include file=\"config/liquibase/changelog/"+Utils.getCurrentDate(table.getSort())+"_added_entity_constraints_"+Tablename+".xml\" relativeToChangelogFile=\"false\"/>\r\n" ;
 			} else {
-				System.out.println("## Skip constraints.xml for entity " + Tablename + " ..");
+				//System.out.println("## Skip constraints.xml for entity " + Tablename + " ..");
 			}
 		}
 		

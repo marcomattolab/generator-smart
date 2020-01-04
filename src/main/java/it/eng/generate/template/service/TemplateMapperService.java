@@ -81,6 +81,7 @@ public class TemplateMapperService extends AbstractTemplate{
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
 				String nomeSelectSx = rel.getSxSelect();
+				String nomeSelectDx = rel.getDxSelect();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
@@ -106,7 +107,9 @@ public class TemplateMapperService extends AbstractTemplate{
 							toEntity += "    @Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneSx)+"s\", ignore = true)\n"; 
 					
 						} else if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-							toDTO += "    @Mapping(source = \""+Utils.getFirstLowerCase(nomeTabellaSx)+".id\", target = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\")\n";
+							toDTO += "    @Mapping(source = \""+Utils.getFirstLowerCase(nomeTabellaSx)+".id\", target = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\")\n"+
+							 		 "    @Mapping(source = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeSelectDx+"\", target = \""+Utils.getFirstLowerCase(nomeTabellaSx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"\")\n";
+						    
 							toDTOS+= "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabella)+");\n\n";
 									
 							toEntity+="    @Mapping(source = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\", target = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"\")\n";
