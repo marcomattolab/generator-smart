@@ -230,19 +230,22 @@ public class Utils {
 	public static String generateIInterface(Table tabella, List<Column> extendedList){
 		String body = 
 		"export interface "+Utils.getIName(tabella)+" {\r\n";
-		//TODO MANAGE RELATION
 		for (Column column: extendedList) {
-			//String columnname = getFieldName(column);
 			String columnname = getFieldName(column, false);
 			Class<?> filterType = column.getTypeColumn();
+			String typeColumnRel = column.getTypeColumnRelation();
 			
-			if( filterType.getName().equals("java.sql.Blob") ) {
-				body += "      "+columnname+"?: "+getIInterfaceTypology(column)+";\n";
-				body += "      "+columnname+"ContentType?: string;\n";
+			if (typeColumnRel != null && typeColumnRel.length()>0) {
+				// TODO TEST ME ==> myKeywords?: ICompanyKeyword[];
+				body += "      "+columnname+"?: "+typeColumnRel+"[];\n";
 			} else {
-				body += "      "+columnname+"?: "+getIInterfaceTypology(column)+";\n";
+				if( filterType.getName().equals("java.sql.Blob") ) {
+					body += "      "+columnname+"?: "+getIInterfaceTypology(column)+";\n";
+					body += "      "+columnname+"ContentType?: string;\n";
+				} else {
+					body += "      "+columnname+"?: "+getIInterfaceTypology(column)+";\n";
+				}
 			}
-			
 		}
 		body += "}\r\n";
 		return body;
@@ -253,18 +256,23 @@ public class Utils {
 		"export class "+Utils.getEntityName(tabella)+" implements "+Utils.getIName(tabella)+" {\r\n" +
 		"    constructor(\r\n" ;
 		
-		//TODO MANAGE RELATION
 		int i = 1;
 		for (Column column: extendedList) {
 			boolean isLast = i == extendedList.size();
 			String columnname = getFieldName(column, false);
 			Class<?> filterType = column.getTypeColumn();
+			String typeColumnRel = column.getTypeColumnRelation();
 			
-			if( filterType.getName().equals("java.sql.Blob") ) {
-				body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+"\r\n";
-				body += "     public "+columnname+"ContentType?: string "+(!isLast?",":"")+"\r\n";
+			if (typeColumnRel != null && typeColumnRel.length()>0) {
+				// TODO TEST ME ==>  public myKeywords?: ICompanyKeyword[]
+				body += "     public "+columnname+"?: "+typeColumnRel+"[]"+(!isLast?",":"")+"\r\n";
 			} else {
-				body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+(!isLast?",":"")+"\r\n";
+				if( filterType.getName().equals("java.sql.Blob") ) {
+					body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+"\r\n";
+					body += "     public "+columnname+"ContentType?: string "+(!isLast?",":"")+"\r\n";
+				} else {
+					body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+(!isLast?",":"")+"\r\n";
+				}
 			}
 			i++;
 		}
@@ -700,6 +708,8 @@ public class Utils {
 			//FIX for ID (primary key of table)
 		} else if( isPrimaryKeyID(column) ) {
 			filterTypology = "number";
+		} else {
+			filterTypology = filterType.getName(); //FIX FOR MANY2MANY
 		}
 		return filterTypology;
 	}

@@ -9,6 +9,7 @@ import java.util.Date;
 public class Column {
 	private String name;
 	private Class<?> typeColumn;
+	private String typeColumnRelation; //
 	private boolean key = false;
 	private int columnSize;
 	private boolean nullable =false;
@@ -183,7 +184,6 @@ public class Column {
 			
 	}
 
-
 	public void setColumnSize(int columnSize) {
 		this.columnSize=columnSize;
 	}
@@ -215,4 +215,13 @@ public class Column {
 	public void setSortColumn(int sortColumn) {
 		this.sortColumn = sortColumn;
 	}
+
+	public String getTypeColumnRelation() {
+		return typeColumnRelation;
+	}
+
+	public void setTypeColumnRelation(String typeColumnRelation) {
+		this.typeColumnRelation = typeColumnRelation;
+	}
+	
 }

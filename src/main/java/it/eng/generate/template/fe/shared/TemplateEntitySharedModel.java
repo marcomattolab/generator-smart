@@ -3,7 +3,6 @@ package it.eng.generate.template.fe.shared;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.util.CollectionUtils;
 
@@ -52,7 +51,7 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 		for(Enumeration enumeration : enumList) {
 			body += "export const enum "+enumeration.getNomeEnumeration()+" {\r\n";
 			List<String> values = enumeration.getValoriEnumeration();
-			for (Iterator it = values.iterator(); it.hasNext();) {
+			for (Iterator<String> it = values.iterator(); it.hasNext();) {
 				String value = (String) it.next();
 				body += 	"    "+value+" = '"+value+"'" + (it.hasNext()?",\r\n":"\r\n");
 			}
@@ -67,28 +66,49 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneDx = rel.getDxName();
 				String nomeRelazioneSx = rel.getSxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+				if(nomeTabellaSx!=null && nomeTabellaDx != null  ) {
+					
 					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
-						Column columnId = new Column();
-						columnId.setName(nomeRelazioneSx+"Id");
-						columnId.setTypeColumn(Column.corvertModelType("Long"));
-						extendedList.add(columnId);
-	
-						if (relationType.equals(Utils.ManyToOne)) {
-							Column columnSelect = new Column();
-							columnSelect.setName(nomeRelazioneSx + Utils.getFirstUpperCase(rel.getSxSelect())); 
-							columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, rel.getSxSelect(), nomeTabellaDx));
-							extendedList.add(columnSelect);
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							Column columnId = new Column();
+							columnId.setName(nomeRelazioneSx+"Id");
+							columnId.setTypeColumn(Column.corvertModelType("Long"));
+							extendedList.add(columnId);
+		
+							if (relationType.equals(Utils.ManyToOne)) {
+								Column columnSelect = new Column();
+								columnSelect.setName(nomeRelazioneSx + Utils.getFirstUpperCase(rel.getSxSelect())); 
+								columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, rel.getSxSelect(), nomeTabellaDx));
+								extendedList.add(columnSelect);
+							}
 						}
+						
+					} else if (relationType.equals(Utils.ManyToMany)) {
+						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							//import { ICompanyKeyword } from 'app/shared/model//company-keyword.model'; 
+							Column columnRel = new Column();
+							columnRel.setName(nomeRelazioneSx+"s");
+							columnRel.setTypeColumnRelation("I"+Utils.getFirstUpperCase(nomeTabellaDx));
+							extendedList.add(columnRel);
+						}
+						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							//import { ICompany } from 'app/shared/model//company.model';
+							Column columnRel = new Column();
+							columnRel.setName(nomeRelazioneDx+"s");
+							columnRel.setTypeColumnRelation("I"+Utils.getFirstUpperCase(nomeTabellaSx));
+							extendedList.add(columnRel);
+						}
+						
+					} else if (relationType.equals(Utils.OneToMany)) {
+						//TODO DEVELOP THIS!
 					}
-
-				} else if (relationType.equals(Utils.OneToMany) || relationType.equals(Utils.ManyToMany)) {
-					//TODO DEVELOP THIS!
-				}
+				} 
 			}
 		}
 		//[/Manage Relations]
