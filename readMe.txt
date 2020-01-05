@@ -18,7 +18,7 @@
 	- Modello JSON => Colonna "id" deve essere sempre presente! (ToDo: Add automatically)
 	- COMPLETARE MODELLO JSON: Aggiungere Costanti nel JSON (SIZE_MAX=189, SIZE_DEFAULT=100)
 		+ unique, minlength(5) e maxlength(13) e COSTANTI => es minlength(SIZE_MAX)  
-		+ Add Validation Pattern (Mail, URL, Phone etc) 
+		+ @Add Validation Pattern (Mail, URL, Phone etc) 
 			++ => email String pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/) required
 			++ => urlSite String pattern(/^www.[^@\s]+\.[^@\s]+$/)
 
@@ -26,7 +26,7 @@
 	- Gestire i campi BLOB / CLOB - Aggiungere altri tipologie: ImageBlob, Blob
 	- @Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri numerici non vengono inviati dal FE!!
 	- @Relations => OneToOne*  ManyToMany^   OneToMany***  ManyToOne**
-	- Relations => Test/Fix relazioni su medesima tabella con naming differente! ( ? ==> OneToMany e ManyToMany)
+	- @Relations => Test/Fix relazioni su medesima tabella con naming differente! ( ? ==> OneToMany e ManyToMany)
 	- @Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout PDF stampato
   	- Creare scheletro IONIC 4
   			
