@@ -79,11 +79,17 @@ public class TemplateEntityI18N extends AbstractResourceTemplate{
 							Column column = new Column();
 							column.setName(nomeTabellaSx);
 							String json = Utils.generateJson(column)+",\n";
-							//System.out.println("# translate json: "+json);
 							body += json;
 						}
+						
 					} else if (relationType.equals(Utils.ManyToMany) ) {
-						//TODO DEVELOP THIS!
+						if (nomeTabellaSx.toLowerCase().equals(nomeTabella.toLowerCase()) ) {
+							Column column = new Column();
+							column.setName(nomeRelazioneSx);
+							String json = Utils.generateJson(column)+",\n";
+							body += json;
+						}
+						
 					}
 				}
 			}
