@@ -23,7 +23,6 @@
 ## BUG e/o Altre Migliorie
 	- Gestire i campi BLOB / CLOB  ed Aggiungere altri tipologie: ImageBlob, Blob
 	- Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri numerici non vengono inviati dal FE!!
-	- @Agganciare enumeration 
 	- @Relations =>  OneToOne*  ManyToMany^   OneToMany***  ManyToOne**
 	- Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
 	- Test/Fix relazioni su medesima tabella con naming differente! ( ? ==> OneToMany e ManyToMany)

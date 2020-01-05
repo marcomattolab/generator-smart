@@ -69,7 +69,6 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 		//Add Enumeration management
 		//System.out.println("\n#ServiceCriteria - Enumeration for table: " + tabella.getNomeTabella() );
 		HashMap<String, List<String>> enums = Utils.filterEnumeration(tabella.getNomeTabella(), null);
-		//TODOOOOOOOOOOOO TODO!!!
 		Set<String> enumNames = enums.keySet();
 		for (String enumName : enumNames) {
 			body+= "    /**\r\n";

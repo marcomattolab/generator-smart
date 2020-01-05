@@ -361,7 +361,7 @@ public class DataBase {
 			ConfigCreateProject config = ConfigCreateProject.getIstance();
 
 			//Build Enumerations for Application
-			fillEnumerations(this); 
+			buildEnumerationsNameInColumn(this); 
 			
 			//Project (statics)
 			//new TemplateProject(this).generateTemplate();
@@ -422,8 +422,7 @@ public class DataBase {
 			new TemplateUserRepository(this).generateTemplate();
 
 			//RETRIEVE BY JDL/DB/PROPERTY DYNAMIC
-			System.out.println("Creating enumerations... ");
-			List<Enumeration> enumerations = buildEnumerations();
+			List<Enumeration> enumerations = buildEnumerationsMap();
 			for (Enumeration cEnum : enumerations) {
 				new TemplateDomainEnumeration(cEnum).generateTemplate();
 			}
@@ -541,7 +540,7 @@ public class DataBase {
 				new TemplateUserResourceIntTest(this).generateTemplate();
 			}
 
-			//Building Data of All Enumerations - CHECK AND REMOVE FIXME!
+			//Building Data of All Enumerations - CHECK OR REMOVE THIS FIXME!
 			List<Enumeration> enumList = new ArrayList<>();
 			HashMap<String, List<String>> map = this.getEnumeration();
 			for(String enumName: map.keySet()) {
@@ -610,7 +609,8 @@ public class DataBase {
 	 * Retrieve Enumerations from external configuration file.
 	 * @return List<Enumeration>
 	 */
-	private List<Enumeration> buildEnumerations() {
+	private List<Enumeration> buildEnumerationsMap() {
+		System.out.println("Build enumerations map... ");
 		List<Enumeration> enumerations = new ArrayList<>();
 		for ( String enumName : this.enumeration.keySet() ) {
 			List<String> enumValues = this.getEnumeration().get(enumName);
@@ -619,7 +619,12 @@ public class DataBase {
 		return enumerations;
 	}
 	
-	private DataBase fillEnumerations(DataBase db) {
+	/**
+	 * Build Enumerations Name for all columns about application
+	 * @param db
+	 * @return db
+	 */
+	private DataBase buildEnumerationsNameInColumn(DataBase db) {
 		DataBase dataBase = db;
 		Set<?> set = dataBase.getTableName();
 		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {

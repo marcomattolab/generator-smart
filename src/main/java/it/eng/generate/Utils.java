@@ -659,14 +659,13 @@ public class Utils {
 	public static List<Enumeration> getEnumerationsByDbAndTable(DataBase database, Table tabella) {
 		List<Enumeration> enumList = new ArrayList<>();
 		HashMap<String, List<String>> enums = Utils.filterEnumeration(tabella.getNomeTabella(), null);
-		//TODOOOOOOOOOOOOOOOO TODO!!!
 		for(String key: database.getEnumeration().keySet()) {
 			if( enums.keySet().contains(key) ) {
 				enumList.add( new Enumeration(key, database.getEnumeration().get(key)) );
 			}
 		}
 		if (enumList.size()>0) {
-			System.out.println("## Entity/Shared - Enumeration for table: " + tabella.getNomeTabella() +"  SIZE: "+enumList.size());
+			System.out.println("## Entity/Shared - Enumeration for table: " + tabella.getNomeTabella() +"  _Size: "+enumList.size());
 		}
 		return enumList;
 	}
@@ -1070,7 +1069,6 @@ public class Utils {
 				for (ProjectEnum cenum : ccp.getEnumerations()) {
 					if(field.getFtype().equalsIgnoreCase(cenum.getName())) {
 						String[] vect = cenum.getValues().split("#");
-						//TODO CHECK THISSSSSSSSS!!!!!!!!
 						if(columnName==null || (columnName!=null && columnName.equalsIgnoreCase(field.getFname()))) {
 							result.put(cenum.getName(), Arrays.asList(vect));
 						}
