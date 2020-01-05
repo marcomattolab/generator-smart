@@ -37,7 +37,6 @@ public class TemplateLiquidbaseChangelogConstraint extends AbstractResourceTempl
 				"    <!--\r\n" +
 				"        Added the constraints for entity "+Utils.getEntityName(tabella)+".\r\n" +
 				"    -->\r\n" +
-				//"    <changeSet id=\"20190112094623-2\" author=\"smart\">\r\n\n";
 				"    <changeSet id=\""+Utils.getCurrentDate(tabella.getSort())+"-01"+"\" author=\"smart\">\r\n\n";
 		
 				//Relations management
@@ -54,15 +53,24 @@ public class TemplateLiquidbaseChangelogConstraint extends AbstractResourceTempl
 							if ( relationType.equals(Utils.OneToOne) ) {
 								//TODO DEVELOP THIS
 							} else if (relationType.equals(Utils.ManyToMany)) {
-								//TODO DEVELOP THIS
+								// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
+								if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+									body +=  
+									"        <addForeignKeyConstraint baseColumnNames=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"s_id\"\r\n" +
+									"                                 baseTableName=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\"\r\n" +
+									"                                 constraintName=\"fk_"+Utils.getFirstLowerCase(nomeTabellaSx)+"_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"_"+Utils.getFirstLowerCase(nomeTabellaSx)+"s_id\"\r\n" +
+									"                                 referencedColumnNames=\"id\"\r\n" +
+									"                                 referencedTableName=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"\"/>\r\n" +
+									"        <addForeignKeyConstraint baseColumnNames=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"s_id\"\r\n" +
+									"                                 baseTableName=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\"\r\n" +
+									"                                 constraintName=\"fk_"+Utils.getFirstLowerCase(nomeTabellaSx)+"_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"s_id\"\r\n" +
+									"                                 referencedColumnNames=\"id\"\r\n" +
+									"                                 referencedTableName=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"\"/>\r\n";
+								}
+								
 							} else if (relationType.equals(Utils.OneToMany)) {
 								if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-									
 					                body += 
-//									relationship OneToMany {
-//										Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
-//									}
-					                		//TODO CHECK THIS!!
 					                	"        <addForeignKeyConstraint baseColumnNames=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"_id\"\r\n" +
 									"                                 baseTableName=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"\"\r\n" +
 									"                                 constraintName=\"fk_"+Utils.getFirstLowerCase(nomeTabellaDx)+"_"+Utils.getFirstLowerCase(nomeTabellaSx)+"_id\"\r\n" +

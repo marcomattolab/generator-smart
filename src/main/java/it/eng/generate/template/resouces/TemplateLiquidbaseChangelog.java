@@ -55,16 +55,16 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 		
 		
 		//MAIN CICLE DL - START
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = tabella.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
-			Class filterType = column.getTypeColumn();
+			Class<?> filterType = column.getTypeColumn();
 			
-			boolean isPrimaryKey = column.isKey();
+			//boolean isPrimaryKey = column.isKey();
 			
 			//String nomeColonna = Utils.getFieldName(column);  	// dataNascita
-			String nomeColonna = column.getName();					// data_nascita
+			String nomeColonna = column.getName();				// data_nascita
 			int sizeColumn = column.getColumnSize();
 			
 			//TODO MOVE INTO UTILS
@@ -141,7 +141,6 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
-				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
@@ -152,9 +151,6 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 								"                <constraints unique=\"true\" nullable=\"true\" uniqueConstraintName=\"ux_"+nomeTabellaDx.toLowerCase()+"_"+nomeRelazioneSx+"_id\" />\n"+
 								"            </column>\n";
 						}
-						
-					} else if (relationType.equals(Utils.ManyToMany)) {
-						//TODO DEVELOP THIS
 						
 					} else if (relationType.equals(Utils.OneToMany)) {
 						if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
@@ -180,12 +176,42 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 		body += "        </createTable>\r\n";
 		
 		
+		//Relations ManyToMany
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
+					if ( relationType.equals(Utils.ManyToMany) ) {
+						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)} 
+						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+						body += "\n		<createTable tableName=\""+ Utils.getFirstLowerCase(nomeTabellaSx) + "_"+ Utils.getFirstLowerCase(nomeRelazioneSx) +"\">\r\n" +
+								"          <column name=\""+ Utils.getFirstLowerCase(nomeRelazioneSx) +"s_id\" type=\"bigint\">\r\n" +
+								"              <constraints nullable=\"false\"/>\r\n" +
+								"          </column>\r\n" +
+								"          <column name=\""+ Utils.getFirstLowerCase(nomeTabellaSx) + "s_id\" type=\"bigint\">\r\n" +
+								"              <constraints nullable=\"false\"/>\r\n" +
+								"          </column>\r\n" +
+								"	    </createTable>\r\n\n" +
+								"	    <addPrimaryKey columnNames=\""+ Utils.getFirstLowerCase(nomeTabellaSx) + "s_id, "+ Utils.getFirstLowerCase(nomeRelazioneSx) +"s_id\" tableName=\""+ Utils.getFirstLowerCase(nomeTabellaSx) + "_"+ Utils.getFirstLowerCase(nomeRelazioneSx) +"\"/>\r\n\n";
+						}
+					}
+				}
+			}
+		}
+		//
+		
+		
 		//CICLE DATES - START
-		Set cset = tabella.getColumnNames();
-		for (Iterator iter = cset.iterator(); iter.hasNext();) {
+		Set<?> cset = tabella.getColumnNames();
+		for (Iterator<?> iter = cset.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
-			Class filterType = column.getTypeColumn();
+			Class<?> filterType = column.getTypeColumn();
 			//String nomeColonna = Utils.getFieldName(column);	//dataNascita
 			String nomeColonna = column.getName();				// data_nascita
 			

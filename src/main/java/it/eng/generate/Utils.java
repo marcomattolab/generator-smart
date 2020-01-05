@@ -1128,6 +1128,10 @@ public class Utils {
 						havingConstrains = true;
 						return havingConstrains;
 					}
+					if (relationType.equals(Utils.ManyToMany) && nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+						havingConstrains = true;
+						return havingConstrains;
+					}
 				}
             
 			}
