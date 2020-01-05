@@ -277,6 +277,7 @@ public class TemplateDomain extends AbstractTemplate{
 		
 		relationship ManyToMany {
 			Candidate{language(languageCode)} to LanguageSkill{candidateName(lastName)},
+			Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
 		}
 
 	 **/
