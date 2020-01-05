@@ -37,6 +37,8 @@ public class TemplateServiceDTO extends AbstractTemplate{
 		"import javax.validation.constraints.*;\r\n" +
 		"import java.io.Serializable;\r\n" +
 		"import java.util.Objects;\r\n" +
+		"import java.util.HashSet;\r\n" +
+		"import java.util.Set;\r\n" +
 		"import javax.persistence.Lob;\r\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcDomainEnumerationFolder()+".*;\r\n\n" +
 		"/**\r\n" +
@@ -87,7 +89,6 @@ public class TemplateServiceDTO extends AbstractTemplate{
 							columnId.setName(Utils.getFirstLowerCase(nomeTabellaSx)+"Id");
 							columnId.setTypeColumn(Column.corvertModelType("Long"));
 							
-							//TODO TEST !!
 							Column columnSelect = new Column();
 							columnSelect.setName(Utils.getFirstLowerCase(nomeTabellaSx)+Utils.getFirstUpperCase(nomeSelectDx));
 							columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, nomeSelectDx, nomeTabellaSx));
@@ -101,7 +102,16 @@ public class TemplateServiceDTO extends AbstractTemplate{
 						}
 						
 					} else if(relationType.equals(Utils.ManyToMany)) {
-						//TODO DEVELOP THIS!
+						//Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
+						if( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
+							body += "\n\tprivate Set<"+Utils.getFirstUpperCase(nomeTabellaDx)+"DTO> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = new HashSet<>();\n\n";
+							body += "    public Set<"+Utils.getFirstUpperCase(nomeTabellaDx)+"DTO> get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"s() {\r\n" +
+									"        return "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\r\n" +
+									"    }\r\n\n" +
+									"    public void set"+Utils.getFirstUpperCase(nomeRelazioneSx)+"s(Set<"+Utils.getFirstUpperCase(nomeTabellaDx)+"DTO> "+Utils.getFirstLowerCase(nomeTabellaDx)+"s) {\r\n" +
+									"        this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = "+Utils.getFirstLowerCase(nomeTabellaDx)+"s;\r\n" +
+									"    }\r\n\n";
+						}
 					}
 			    
 				}
