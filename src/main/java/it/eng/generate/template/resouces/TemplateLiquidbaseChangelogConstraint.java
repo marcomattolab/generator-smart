@@ -26,7 +26,7 @@ public class TemplateLiquidbaseChangelogConstraint extends AbstractResourceTempl
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String entityname = Utils.getClassNameLowerCase(tabella);
+		//String entityname = Utils.getClassNameLowerCase(tabella);
 		
 		String body = 
 				"<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n" +
@@ -45,7 +45,7 @@ public class TemplateLiquidbaseChangelogConstraint extends AbstractResourceTempl
 						String relationType = rel.getType();
 						String nomeTabellaSx = rel.getSxTable();
 						String nomeRelazioneSx = rel.getSxName();
-						String nomeRelazioneDx = rel.getDxName();
+						//String nomeRelazioneDx = rel.getDxName();
 						String nomeTabellaDx = rel.getDxTable();
 						String nomeTabella = tabella.getNomeTabella().toLowerCase();
 						

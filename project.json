@@ -61,7 +61,7 @@
   ],
  "relations" : [
 	{"type":"OneToOne", "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"},
-	{"type":"ManyToMany", "sxTable":"Azienda", "sxName":"mySector", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myAzienda", "dxSelect":"nominativo"},
+	{"type":"ManyToMany", "sxTable":"Azienda", "sxName":"mysector", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myazienda", "dxSelect":"nominativo"},
 	{"type":"OneToMany", "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito", "dxSelect":"nome"},
 	{"type":"ManyToOne", "sxTable":"Libro", "sxName":"collana", "sxSelect":"nome" , "dxTable":"Collana"}
   ]  

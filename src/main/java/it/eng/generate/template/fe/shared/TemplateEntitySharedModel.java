@@ -153,7 +153,7 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 						}
 						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
 							//import { ICompany } from 'app/shared/model/company.model';
-							res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+nomeTabellaSx.toLowerCase()+".model';\n";
+							res += "import { I"+Utils.getFirstUpperCase(nomeTabellaSx)+" } from 'app/shared/model/"+nomeTabellaSx.toLowerCase()+".model';\n";
 						}
 					} 
 				} 

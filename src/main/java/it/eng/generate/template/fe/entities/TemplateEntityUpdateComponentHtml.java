@@ -85,7 +85,7 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 							//Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
 							body += "\n                <!-- Add Relation: ManyToMany -->";
 							body += "\n                <div class=\"form-group\">\r\n" +
-									"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" for=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
+									"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx.toLowerCase()+"\" for=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
 									"             		<select class=\"form-control\" id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" multiple name=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s\">\r\n" +
 									"                 		<option [ngValue]=\"getSelected("+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s, "+Utils.getFirstLowerCase(nomeTabellaDx)+"Option)\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeTabellaDx)+"Option of "+Utils.getFirstLowerCase(nomeTabellaDx)+"s"+" trackBy: track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById\">{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"Option."+nomeSelectSx+"}}</option>\r\n" +
 									"             		</select>\r\n" +

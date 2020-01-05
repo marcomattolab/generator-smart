@@ -117,7 +117,7 @@ public class TemplateMapperService extends AbstractTemplate{
 						}
 						
 					} else if ( relationType.equals(Utils.ManyToMany) ) {
-						 if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+						 if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 							 	//Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
 							 	//@Mapping(target = "myCompanies", ignore = true)
 								toEntity+="    @Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"s\", ignore = true)\n";
