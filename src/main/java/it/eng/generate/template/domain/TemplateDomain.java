@@ -157,7 +157,7 @@ public class TemplateDomain extends AbstractTemplate{
 									"	}\r\n\n";
 						} else if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
 							//Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
-							body += "\n	@ManyToMany(mappedBy = \"myKeywords\")\r\n";
+							body += "\n	@ManyToMany(mappedBy = \""+Utils.getFirstLowerCase(nomeRelazioneSx)+"s\")\r\n";
 							body += "	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\n";
 							body += "	@JsonIgnore\n";
 							body += "	private Set<"+Utils.getClassNameCamelCase(nomeTabellaSx)+"> "+nomeRelazioneDx+"s = new HashSet<>();\n\n";
