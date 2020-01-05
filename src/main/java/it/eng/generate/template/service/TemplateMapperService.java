@@ -24,7 +24,6 @@ public class TemplateMapperService extends AbstractTemplate{
 	}
 
 	/**
-	 * TODO MOVE into Utils
 	 * @param conf ConfigCreateProject
 	 * @return List of UsesMapperClass
 	 */
@@ -47,7 +46,9 @@ public class TemplateMapperService extends AbstractTemplate{
 							result += Utils.getFirstUpperCase(nomeTabellaSx)+"Mapper.class" + ",";
 						}
 					} else if( relationType.equals(Utils.ManyToMany) ) {
-						//TODO DEVELOP THIS!! 
+						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+							result += Utils.getFirstUpperCase(nomeTabellaDx)+"Mapper.class" + ",";
+						}
 					}
 				}
 				
@@ -116,7 +117,11 @@ public class TemplateMapperService extends AbstractTemplate{
 						}
 						
 					} else if ( relationType.equals(Utils.ManyToMany) ) {
-						//TODO DEVELOP THIS!
+						 if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							 	//Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
+							 	//@Mapping(target = "myCompanies", ignore = true)
+								toEntity+="    @Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"s\", ignore = true)\n";
+						}
 					}
 					
 				}
