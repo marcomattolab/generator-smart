@@ -176,7 +176,8 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 		//Audit - BuildMyString.com generated code. Please enjoy your string responsibly.
 		"                    <li>\r\n" +
 		"                        <a class=\"dropdown-item\" routerLink=\"admin/entity-audit\" routerLinkActive=\"active\" (click)=\"collapseNavbar()\">\r\n" +
-		"                            <fa-icon [icon]=\"'list-alt'\" [fixedWidth]=\"true\"></fa-icon>&nbsp;\r\n" +
+	  //"                            <fa-icon [icon]=\"'list-alt'\" [fixedWidth]=\"true\"></fa-icon>&nbsp;\r\n" +
+		"                            <fa-icon icon=\"tasks\" fixedWidth=\"true\"></fa-icon>\n"+
 		"                            <span jhiTranslate=\"global.menu.admin.entity-audit\">Entity Audit</span>\r\n" +
 		"                        </a>\r\n" +
 		"                    </li>\r\n"+
