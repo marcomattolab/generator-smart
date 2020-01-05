@@ -2,6 +2,7 @@ package it.eng.generate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -546,8 +547,7 @@ public class Utils {
 			
 			List<Enumeration> enumList = Utils.getEnumerationsByDbAndTable(database, tabella);
 			for(Enumeration e : enumList) {
-				if ( column.getEnumeration()!=null 
-						&& column.getEnumeration().equals(e.getNomeEnumeration()) ) { 
+				if ( column.getEnumeration()!=null && column.getEnumeration().equals(e.getNomeEnumeration()) ) { 
 					for(String vEnum : e.getValoriEnumeration()) {
 						result +="                        <option value=\""+vEnum+"\">{{'"+conf.getProjectName()+"App."+e.getNomeEnumeration()+"."+vEnum+"' | translate}}</option>\r\n" ;
 					}
@@ -658,12 +658,15 @@ public class Utils {
 	
 	public static List<Enumeration> getEnumerationsByDbAndTable(DataBase database, Table tabella) {
 		List<Enumeration> enumList = new ArrayList<>();
-		//System.out.println("@@ tabella: "+tabella + "  database: " + database);
-		HashMap<String, List<String>> enums = Utils.filterEnumeration(tabella.getNomeTabella(), database.getEnumerationRelation());
+		HashMap<String, List<String>> enums = Utils.filterEnumeration(tabella.getNomeTabella(), null);
+		//TODOOOOOOOOOOOOOOOO TODO!!!
 		for(String key: database.getEnumeration().keySet()) {
 			if( enums.keySet().contains(key) ) {
 				enumList.add( new Enumeration(key, database.getEnumeration().get(key)) );
 			}
+		}
+		if (enumList.size()>0) {
+			System.out.println("## Entity/Shared - Enumeration for table: " + tabella.getNomeTabella() +"  SIZE: "+enumList.size());
 		}
 		return enumList;
 	}
@@ -1034,22 +1037,49 @@ public class Utils {
 	}
 	
 	/**
-	 * Filter map based on tableName passed.  //TODO FIXME DEVELOP
+	 * Return current ProjectEntity By Table Name passed.
+	 * 
+	 * @param ccp ConfigCreateProject
+	 * @param nameTable Table Name
+	 * @return ProjectEntity
+	 */
+	public static ProjectEntity getProjectEntityByName(ConfigCreateProject ccp, String nameTable) {
+		ProjectEntity curEntity = null;
+		List<ProjectEntity> entities = ccp.getProjectEntities();
+		for (ProjectEntity projectEntity : entities) {
+			if(nameTable.toLowerCase().equals(projectEntity.getName().toLowerCase())) {
+				curEntity = projectEntity;
+			}
+		}
+		return curEntity;
+	}
+	
+	/**
+	 * Filter map based on tableName passed.
 	 * 
 	 * @param nameTable
-	 * @param map
 	 * @return Map
 	 */
-	public static HashMap<String, List<String>> filterEnumeration(String nameTable, HashMap<String, List<String>> map) {
+	public static HashMap<String, List<String>> filterEnumeration(String nameTable, String columnName) {
 		HashMap<String, List<String>> result = new HashMap<>();
-		for(String enumName : map.keySet()) {
-			List<String> values = map.get(enumName);
-			for(String value : values) {
-				String[] vect = value.split("@");
-				if(vect[0].equalsIgnoreCase(nameTable)) {
-					result.put(enumName, values);
+		ConfigCreateProject ccp = ConfigCreateProject.getIstance();
+		
+		ProjectEntity curEntity = Utils.getProjectEntityByName(ccp, nameTable);
+		if(curEntity!=null) {
+			for (Field field : curEntity.getFields()) {
+				for (ProjectEnum cenum : ccp.getEnumerations()) {
+					if(field.getFtype().equalsIgnoreCase(cenum.getName())) {
+						String[] vect = cenum.getValues().split("#");
+						//TODO CHECK THISSSSSSSSS!!!!!!!!
+						if(columnName==null || (columnName!=null && columnName.equalsIgnoreCase(field.getFname()))) {
+							result.put(cenum.getName(), Arrays.asList(vect));
+						}
+					}
 				}
 			}
+		}
+		if(result.size()>0) {
+			System.out.println("- NameTable.ColumnName: "+nameTable+"."+columnName+" - Build enums with Size>0 ==> " + result.size());
 		}
 		return result;
 	}

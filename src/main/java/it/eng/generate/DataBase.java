@@ -181,13 +181,11 @@ import it.eng.generate.template.web.vm.TemplateManagedUserVM;
 public class DataBase {
 	public Map<String, Table> tabelle;
 	public HashMap<String, List<String>> enumeration;
-	public HashMap<String, List<String>> enumerationRelation;
 	private static DataBase conf;
 
 	private DataBase(){
 		tabelle = new HashMap<>();
 		enumeration = new HashMap<>();
-		enumerationRelation = new HashMap<>();
 	}
 
 	public static DataBase getInstance(){
@@ -212,10 +210,6 @@ public class DataBase {
 
 	public HashMap<String, List<String>> getEnumeration() {
 		return enumeration;
-	}
-
-	public HashMap<String, List<String>> getEnumerationRelation() {
-		return enumerationRelation;
 	}
 
 	public Set<String> getTableName() {
@@ -331,49 +325,32 @@ public class DataBase {
 			}
 			
 			//Build Enumerations
-			buildEnumerationsJson(ccp);
+			buildEnumerations(ccp);
 			
 		}
 	}
 
 	/**
-	 * Build Enumerations Stuff
+	 * Build Enumerations Stuff from JSON
 	 * @param ccp ConfigCreateProject
 	 */
 	private void buildEnumerations(ConfigCreateProject ccp) {
-		//B - Generate Enumerations
+		//Generate Enumerations
 		List<ProjectEnum> enums = ccp.getEnumerations();
+		System.out.println("\n# Enumeration ");
 		for (ProjectEnum projectEnum: enums) {
 			String[] values = projectEnum.getValues().split("#");
-			//System.out.println("@ Define Enumeration: " + projectEnum.getName() + " Values: " + values + "");
+			System.out.println("    - Define Enumeration: " + projectEnum.getName() + "  -  Values: " + Arrays.asList(values) + "");
 			this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
 		}
 	}
 	
-	/**
-	 * Build Enumerations Stuff
-	 * @param ccp ConfigCreateProject
-	 */
-	private void buildEnumerationsJson(ConfigCreateProject ccp) {
-		//B - Generate Enumerations
-		List<ProjectEnum> enums = ccp.getEnumerations();
-		for (ProjectEnum projectEnum: enums) {
-			String[] values = projectEnum.getValues().split("#");
-			//System.out.println("@ Define Enumeration: " + projectEnum.getName() + " Values: " + values + "");
-			this.addEnumeration(projectEnum.getName(), Arrays.asList(values) );
-		}
-	}
-
 	public void addTable(String tableName, Table table) {
 		tabelle.put(tableName, table);
 	}
 
 	public void addEnumeration(String name, List<String> values) {
 		enumeration.put(name, values);
-	}
-
-	public void addEnumerationRelation(String name, List<String> values) {
-		enumerationRelation.put(name, values);
 	}
 
 	public void generateFile() {
@@ -384,8 +361,8 @@ public class DataBase {
 			ConfigCreateProject config = ConfigCreateProject.getIstance();
 
 			//Build Enumerations for Application
-			fillEnumerations(this); //FIXME
-
+			fillEnumerations(this); 
+			
 			//Project (statics)
 			//new TemplateProject(this).generateTemplate();
 			new TemplateClassPath(this).generateTemplate();
@@ -564,7 +541,7 @@ public class DataBase {
 				new TemplateUserResourceIntTest(this).generateTemplate();
 			}
 
-			//Building Data of All Enumerations - TODO MOVE TO UTILS
+			//Building Data of All Enumerations - CHECK AND REMOVE FIXME!
 			List<Enumeration> enumList = new ArrayList<>();
 			HashMap<String, List<String>> map = this.getEnumeration();
 			for(String enumName: map.keySet()) {
@@ -630,58 +607,6 @@ public class DataBase {
 	}
 
 	/**
-	 * Fill Enumeration (Before start) TODO
-	 * @param db
-	 * @return
-	 */
-	private DataBase fillEnumerations(DataBase db) {
-		//TODO FIXME
-		DataBase dataBase = db;
-		Set<?> set = dataBase.getTableName();
-		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
-			String tabellaName = (String) iter.next();
-			Table tabella = dataBase.getTables(tabellaName);
-
-			Set<?> cset = tabella.getColumnNames();
-			for (Iterator<?> citer = cset.iterator(); citer.hasNext();) {
-				String columnName = (String) citer.next();
-				Column column = tabella.getColumn(columnName);
-				String enumeration = findEnumerationName(tabellaName, columnName, dataBase.getEnumerationRelation());
-				if(enumeration!=null && enumeration.length()>0) {
-					//System.out.println("## enumeration ==> " + enumeration);
-					column.setEnumeration(enumeration);
-				}
-			}
-		}
-
-		return dataBase;
-	}
-
-	/**
-	 * Retrieve Enumeration Name from configuration file.
-	 * @param tabellaName
-	 * @param columnName
-	 * @param enumMap Map
-	 * @return EnumerationName
-	 */
-	private String findEnumerationName(String tabellaName, String columnName, HashMap<String, List<String>> enumMap) {
-		String enumerationName = null;
-		for (String enumName : enumMap.keySet()) {
-			List<String> values = enumMap.get(enumName);
-			for(String tableATColumn : values) {
-				System.out.println(" - ToDo develop enumeration ===> Enumeration is "+enumName);
-				String[] elements = tableATColumn.split("@");
-				String ctableName = elements[0];
-				String ccolumnName = elements[1];
-				if( ctableName.equals(ctableName) && ccolumnName.equals(columnName) ) {
-					enumerationName = enumName;
-				}
-			}
-		}
-		return enumerationName;
-	}
-
-	/**
 	 * Retrieve Enumerations from external configuration file.
 	 * @return List<Enumeration>
 	 */
@@ -693,7 +618,46 @@ public class DataBase {
 		}
 		return enumerations;
 	}
+	
+	private DataBase fillEnumerations(DataBase db) {
+		DataBase dataBase = db;
+		Set<?> set = dataBase.getTableName();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
+			String tabellaName = (String) iter.next();
+			Table tabella = dataBase.getTables(tabellaName);
 
+			Set<?> cset = tabella.getColumnNames();
+			for (Iterator<?> citer = cset.iterator(); citer.hasNext();) {
+				String columnName = (String) citer.next();
+				Column column = tabella.getColumn(columnName);
+				String enumeration = findEnumerationName(tabellaName, columnName);
+				if(enumeration!=null && enumeration.length()>0) {
+					System.out.println("@ Added Enum tabellaName.columnName.enum ===> "+tabellaName+"."+columnName+"."+enumeration);
+					column.setEnumeration(enumeration);
+				}
+			}
+		}
+		return dataBase;
+	}
+	
+	/**
+	 * Retrieve Enumeration Name from configuration file.
+	 * @param tabellaName
+	 * @param columnName
+	 * @return EnumerationName
+	 */
+	private String findEnumerationName(String tabellaName, String columnName) {
+		String enumerationName = null;
+		HashMap<String, List<String>> enums = Utils.filterEnumeration(tabellaName, columnName);
+		if(enums!=null) {
+	        for (String key : enums.keySet()) {
+	            enumerationName = key;
+	        }
+		}
+		//System.out.println(" TABLE ============> " + tabellaName + "  ENUM =======> " + enumerationName);
+		return enumerationName;
+	}
+	
 	public String toString() {
 		String ret ="";
 		Set<String> set = tabelle.keySet();

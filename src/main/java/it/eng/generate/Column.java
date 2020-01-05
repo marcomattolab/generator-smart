@@ -12,7 +12,7 @@ public class Column {
 	private boolean key = false;
 	private int columnSize;
 	private boolean nullable =false;
-	private String enumeration; //TODO Fill This!!
+	private String enumeration;
 	private int sortColumn;
 	
 	/**

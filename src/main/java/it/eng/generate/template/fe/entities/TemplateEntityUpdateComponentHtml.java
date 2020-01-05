@@ -1,8 +1,5 @@
 package it.eng.generate.template.fe.entities;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import org.springframework.util.CollectionUtils;
 
 import it.eng.generate.Column;

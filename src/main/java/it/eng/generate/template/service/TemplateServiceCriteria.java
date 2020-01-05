@@ -67,10 +67,9 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 		"public class "+getClassName()+" implements Serializable {\r\n\n";
 
 		//Add Enumeration management
-	    //HashMap<String, List<String>> enums = database.getEnumeration();
-		//TODO DEVELOP ENUMERATIONS GET!!!!
-		System.out.println("## Enumeration for table: " + tabella.getNomeTabella() + " .. developing ");
-		HashMap<String, List<String>> enums = Utils.filterEnumeration(tabella.getNomeTabella(), database.getEnumerationRelation());
+		//System.out.println("\n#ServiceCriteria - Enumeration for table: " + tabella.getNomeTabella() );
+		HashMap<String, List<String>> enums = Utils.filterEnumeration(tabella.getNomeTabella(), null);
+		//TODOOOOOOOOOOOO TODO!!!
 		Set<String> enumNames = enums.keySet();
 		for (String enumName : enumNames) {
 			body+= "    /**\r\n";
