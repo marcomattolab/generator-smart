@@ -14,24 +14,23 @@
 	- Inserire Google MAPS
 
 ## Sezione Modello JSON
-	- Modello JSON => Se metto un campo "firstName" CamelCase non funge! (Deve essere tutto minuscolo es. firstname)
-	- Modello JSON => Colonna "id" deve essere sempre presente! (Todo: Add automatically)
+	- Modello JSON => Se metto un campo CamelCase "firstName" non funge! (Deve essere tutto minuscolo "firstname")
+	- Modello JSON => Colonna "id" deve essere sempre presente! (ToDo: Add automatically)
 	- COMPLETARE MODELLO JSON: Aggiungere Costanti nel JSON (SIZE_MAX=189, SIZE_DEFAULT=100)
 		+ unique, minlength(5) e maxlength(13) e COSTANTI => es minlength(SIZE_MAX)  
 		+ Add Validation Pattern (Mail, PhoneNumber etc)
 
 ## BUG e/o Altre Migliorie
-	- Gestire i campi BLOB / CLOB  ed Aggiungere altri tipologie: ImageBlob, Blob
-	- Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri numerici non vengono inviati dal FE!!
-	- @Relations =>  OneToOne*  ManyToMany^   OneToMany***  ManyToOne**
-	- Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
-	- Test/Fix relazioni su medesima tabella con naming differente! ( ? ==> OneToMany e ManyToMany)
+	- Gestire i campi BLOB / CLOB - Aggiungere altri tipologie: ImageBlob, Blob
+	- @Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri numerici non vengono inviati dal FE!!
+	- @Relations => OneToOne*  ManyToMany^   OneToMany***  ManyToOne**
+	- Relations => Test/Fix relazioni su medesima tabella con naming differente! ( ? ==> OneToMany e ManyToMany)
+	- @Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout
+  	- Creare scheletro IONIC 4
   			
 ## Punti Aperti
-	- IONIC 4
 	- HA singleton e scalabilità
 	- JMS e code asincrone
 	- BPS
 	- Big Data
 	- IA	
-   
