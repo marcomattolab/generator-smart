@@ -27,7 +27,9 @@ public class TemplateQueryService extends AbstractTemplate{
 	}
 
 	public String getBody() {
+		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+		
 		String body = 
 		"package "+ conf.getPackageclass() + "." + conf.getSrcServiceFolder()+";\r\n\n" +
 		"import java.util.List;\r\n" +
@@ -105,10 +107,10 @@ public class TemplateQueryService extends AbstractTemplate{
 		"        Specification<"+Utils.getEntityName(tabella)+"> specification = Specification.where(null);\r\n"+
 		"        if (criteria != null) {\r\n";
 		
-		for (Iterator iter = tabella.getColumnNames().iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = tabella.getColumnNames().iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
-			Class filterType = column.getTypeColumn();
+			Class<?> filterType = column.getTypeColumn();
 			boolean isEnumeration = column.getEnumeration()!=null ? true : false;
 			
 			if ( Utils.isDateField(column) || (Utils.isNumericField(column) && !Utils.isPrimaryKeyID(column) ) ) {
@@ -126,17 +128,8 @@ public class TemplateQueryService extends AbstractTemplate{
 			}
 		}
 		
-		//TODO DEVELOP RELATIONS
-		body += buildOneToOne(conf);
-		/*body +=	
-		"            if (criteria.getListaContattiId() != null) {\r\n" +
-		"                specification = specification.and(buildSpecification(criteria.getListaContattiId(),\r\n" +
-		"                    root -> root.join(Cliente_.listaContattis, JoinType.LEFT).get(ListaContatti_.id)));\r\n" +
-		"            }\r\n" +
-		"            if (criteria.getIncaricoId() != null) {\r\n" +
-		"                specification = specification.and(buildSpecification(criteria.getIncaricoId(),\r\n" +
-		"                    root -> root.join(Cliente_.incaricos, JoinType.LEFT).get(Incarico_.id)));\r\n" +
-		"            }\r\n";*/
+		//BUILD RELATIONS
+		body += buildRelations(conf);
 		
 		body+=
 		"        }\r\n" +
@@ -146,24 +139,66 @@ public class TemplateQueryService extends AbstractTemplate{
 		return body;
 	}
 
-	private String buildOneToOne(ConfigCreateProject conf) {
+	/**
+	 * Build Relation Criteria
+	 * @param conf
+	 * @return body
+	 */
+	private String buildRelations(ConfigCreateProject conf) {
 		String result = "";
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& relationType.equals(Utils.OneToOne) 
-						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-						result += 
-						"		    if (criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id() != null) {\r\n" +
-						"                specification = specification.and(buildSpecification(criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id(),\r\n" +
-						"                    root -> root.join("+Utils.getFirstUpperCase(nomeTabellaSx)+"_."+Utils.getFirstLowerCase(nomeRelazioneSx)+", JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaDx)+"_.id)));\r\n" +
-						"            }\r\n";
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
+					if(relationType.equals(Utils.OneToOne)) {
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							result+=
+							"		    if (criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id() != null) {\r\n" +
+							"                specification = specification.and(buildSpecification(criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id(),\r\n" +
+							"                    root -> root.join("+Utils.getFirstUpperCase(nomeTabellaSx)+"_."+Utils.getFirstLowerCase(nomeRelazioneSx)+", JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaDx)+"_.id)));\r\n" +
+							"            }\r\n";
+						}
+						
+					}else if(relationType.equals(Utils.ManyToMany)) {
+						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							result+=
+							"		    if (criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id() != null) {\n"+
+							"		        specification = specification.and(buildSpecification(criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id(),\n"+
+							"		            root -> root.join("+Utils.getFirstUpperCase(nomeTabella)+"_."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s, JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaDx)+"_.id)));\n"+
+							"		    }\n";
+						}
+						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							result+=
+							"		    if (criteria.get"+Utils.getFirstUpperCase(nomeRelazioneDx)+"Id() != null) {\n"+
+							"		        specification = specification.and(buildSpecification(criteria.get"+Utils.getFirstUpperCase(nomeRelazioneDx)+"Id(),\n"+
+							"		            root -> root.join("+Utils.getFirstUpperCase(nomeTabella)+"_."+Utils.getFirstLowerCase(nomeRelazioneDx)+"s, JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaSx)+"_.id)));\n"+
+							"		    }\n";
+						}
+						
+					}else if(relationType.equals(Utils.OneToMany)) {
+						//TODO DEVELOP THIS!!!!!!!!!!
+						
+					}else if(relationType.equals(Utils.ManyToOne)) {
+						//TODO DEVELOP THIS!!!!!!!!!!
+						
+						/*body +=	
+						"            if (criteria.getListaContattiId() != null) {\r\n" +
+						"                specification = specification.and(buildSpecification(criteria.getListaContattiId(),\r\n" +
+						"                    root -> root.join(Cliente_.listaContattis, JoinType.LEFT).get(ListaContatti_.id)));\r\n" +
+						"            }\r\n" +
+						"            if (criteria.getIncaricoId() != null) {\r\n" +
+						"                specification = specification.and(buildSpecification(criteria.getIncaricoId(),\r\n" +
+						"                    root -> root.join(Cliente_.incaricos, JoinType.LEFT).get(Incarico_.id)));\r\n" +
+						"            }\r\n";*/
+						
+					}
 				}
 			}
 		}
