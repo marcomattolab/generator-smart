@@ -42,11 +42,13 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 		List<Enumeration> enumList = Utils.getEnumerationsByDbAndTable(database, tabella);
 		
 		String body = 
-		"import { Moment } from 'moment';\r\n\n";
+		"import { Moment } from 'moment';\r\n";
 		
-		//TODO RELATION IMPORT
+		//RELATION IMPORT
 		//"import { IIncarico } from 'app/shared/model/incarico.model';\r\n" +
+		body += writeImportRelations(conf); 
 
+		
 		//DONE Enumerations
 		for(Enumeration enumeration : enumList) {
 			body += "export const enum "+enumeration.getNomeEnumeration()+" {\r\n";
@@ -90,15 +92,16 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 						
 					} else if (relationType.equals(Utils.ManyToMany)) {
 						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
+						
 						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-							//import { ICompanyKeyword } from 'app/shared/model//company-keyword.model'; 
+							//import { ICompanyKeyword } from 'app/shared/model/company-keyword.model'; 
 							Column columnRel = new Column();
 							columnRel.setName(nomeRelazioneSx+"s");
 							columnRel.setTypeColumnRelation("I"+Utils.getFirstUpperCase(nomeTabellaDx));
 							extendedList.add(columnRel);
 						}
 						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-							//import { ICompany } from 'app/shared/model//company.model';
+							//import { ICompany } from 'app/shared/model/company.model';
 							Column columnRel = new Column();
 							columnRel.setName(nomeRelazioneDx+"s");
 							columnRel.setTypeColumnRelation("I"+Utils.getFirstUpperCase(nomeTabellaSx));
@@ -126,6 +129,40 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 		return body;
 	}
 	
+	/**
+	 * @param conf
+	 * @return body with import 
+	 */
+	private String writeImportRelations(ConfigCreateProject conf) {
+		// body += "import { IIncarico } from 'app/shared/model/incarico.model';\r\n" 
+		String res = "";
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null  ) {
+					if (relationType.equals(Utils.ManyToMany)) {
+						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
+						
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							//import { ICompanyKeyword } from 'app/shared/model/company-keyword.model'; 
+							res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+nomeTabellaDx.toLowerCase()+".model';\n"; 
+						}
+						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							//import { ICompany } from 'app/shared/model/company.model';
+							res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+nomeTabellaSx.toLowerCase()+".model';\n";
+						}
+					} 
+				} 
+			}
+		}
+		res+="\n";
+		return res;
+	}
+
 	public String getClassName(){
 		return Utils.getClassNameLowerCase(tabella)+".model";
 	}

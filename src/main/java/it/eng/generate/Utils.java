@@ -247,7 +247,7 @@ public class Utils {
 				}
 			}
 		}
-		body += "}\r\n";
+		body += "}\r\n\n";
 		return body;
 	}
 	
