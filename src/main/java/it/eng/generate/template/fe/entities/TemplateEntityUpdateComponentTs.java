@@ -29,6 +29,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 
 	public String getBody(){
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+	
 		// https://www.buildmystring.com/
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
@@ -54,16 +55,16 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"    "+nometabella+": "+INometabella+";\r\n\n" +
 		"    isSaving: boolean;\r\n";
 		
-		//TODO MANAGE RELATIONS AND DATES
+		//MANAGE RELATIONS AND DATES
   		//"    incaricos: IIncarico[];\r\n" +
   		//"    dataNascitaDp: any;\r\n" +
 		body += printRelations(conf, INIT_SECTION);
 
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = tabella.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
-			Class filterType = column.getTypeColumn();
+			//Class filterType = column.getTypeColumn();
 			String nomeColonna = Utils.getFieldName(column);
 			if ( Utils.isDateField(column) ) {
 				String dateType = Utils.isLocalDate(column) ? "any" : "string" ;
@@ -88,11 +89,11 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"        this.activatedRoute.data.subscribe(({ "+nometabella+" }) => {\r\n" +
 		"            this."+nometabella+" = "+nometabella+";\r\n";
 		
-		Set cset = tabella.getColumnNames();
-		for (Iterator iter = cset.iterator(); iter.hasNext();) {
+		Set<?> cset = tabella.getColumnNames();
+		for (Iterator<?> iter = cset.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
-			Class filterType = column.getTypeColumn();
+			//Class filterType = column.getTypeColumn();
 			String nomeColonna = Utils.getFieldName(column);
 			if ( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
 				body += "            this."+nomeColonna+" = this."+Utils.getClassNameLowerCase(tabella)+"."+nomeColonna+" != null ? this."+Utils.getClassNameLowerCase(tabella)+"."+nomeColonna+".format(DATE_TIME_FORMAT) : null;\r\n";
@@ -121,8 +122,8 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"    save() {\r\n" +
 		"        this.isSaving = true;\r\n" ;
 		
-		Set fset = tabella.getColumnNames();
-		for (Iterator iter = cset.iterator(); iter.hasNext();) {
+		//Set fset = tabella.getColumnNames();
+		for (Iterator<?> iter = cset.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			String nomeColonna = Utils.getFieldName(column);
@@ -278,9 +279,34 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 					}
 				}
 				
-				
-				//TODO Relations ManyToMany
-				
+
+				// DONE Relations ManyToMany
+				// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.ManyToMany)
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+					if(IMPORT_SECTION.equals(section)) {
+						res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+nomeTabellaDx.toLowerCase()+".model';\n";
+						res += "import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+nomeTabellaDx.toLowerCase()+"';\n";
+					}else if(INIT_SECTION.equals(section)) {
+						res += "    "+Utils.getFirstLowerCase(nomeTabellaDx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n";
+					}else if(CONSTRUCTOR_SECTION.equals(section)) {
+						res += "        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n";
+					}else if(TRACKBY_SECTION.equals(section)) {
+						res += 
+						"    track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaDx)+") {\r\n" +
+						"        return item.id;\r\n" +
+						"    }\r\n\n";
+					}else if(NG_ONINIT_SECTION.equals(section)) {
+						res +=  "\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
+					            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
+					            "            this."+Utils.getFirstLowerCase(nomeTabellaDx)+"s = res.body;\n"+
+					            "        },\n"+
+					            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
+					            "        );\n\n";
+						
+					}
+				}
 				
 				
 			}
