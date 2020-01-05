@@ -46,11 +46,22 @@
   			{"fname":"type", "ftype":"TipoCliente", "frequired":false, "fsize":500}, 
   			{"fname":"email", "ftype":"String", "frequired":false, "fsize":500}, 
   			{"fname":"address", "ftype":"String", "frequired":false, "fsize":600}
-  	]}
+  	]},
+  	{"name":"Azienda", "fields": [
+  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
+  			{"fname":"codice", "ftype":"String", "frequired":true, "fsize":500},
+  			{"fname":"nominativo", "ftype":"String", "frequired":true, "fsize":1000},
+  			{"fname":"canale", "ftype":"CanaleTrasmissione", "frequired":true, "fsize":500}
+  	]},
+  	{"name":"Settore", "fields": [
+  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
+  			{"fname":"code", "ftype":"String", "frequired":true, "fsize":100},
+  			{"fname":"name", "ftype":"String", "frequired":true, "fsize":100}
+	]}
   ],
  "relations" : [
 	{"type":"OneToOne", "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"},
-	{"type":"ManyToMany", "sxTable":null, "sxName":null, "sxSelect":null , "dxTable":null, "dxName":null, "dxSelect":null},
+	{"type":"ManyToMany", "sxTable":"Azienda", "sxName":"mySector", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myAzienda", "dxSelect":"nominativo"},
 	{"type":"OneToMany", "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito", "dxSelect":"nome"},
 	{"type":"ManyToOne", "sxTable":"Libro", "sxName":"collana", "sxSelect":"nome" , "dxTable":"Collana"}
   ]  
