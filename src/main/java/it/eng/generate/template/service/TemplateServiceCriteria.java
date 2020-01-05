@@ -2,7 +2,6 @@ package it.eng.generate.template.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -87,21 +86,36 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
-					Column columnId = new Column();
-					columnId.setName(nomeRelazioneSx+"Id");
-					columnId.setTypeColumn(Column.corvertModelType("Long"));
-					extendedList.add(columnId);
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							Column columnId = new Column();
+							columnId.setName(nomeRelazioneSx+"Id");
+							columnId.setTypeColumn(Column.corvertModelType("Long"));
+							extendedList.add(columnId);
+						}
+					}else if (relationType.equals(Utils.ManyToMany)) {
+						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							Column columnId = new Column();
+							columnId.setName(nomeRelazioneSx+"Id");
+							columnId.setTypeColumn(Column.corvertModelType("Long"));
+							extendedList.add(columnId);
+						}
+						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							Column columnId = new Column();
+							columnId.setName(nomeRelazioneDx+"Id");
+							columnId.setTypeColumn(Column.corvertModelType("Long"));
+							extendedList.add(columnId);
+						}
+					} else if (relationType.equals(Utils.OneToMany)) {
+						//TODO DEVELOP THIS!
 					}
-				
-				} else if (relationType.equals(Utils.OneToMany) || relationType.equals(Utils.ManyToMany)) {
-					//TODO DEVELOP THIS!
-				}
+				} 
 			}
 		}
 		//[/Manage Relations]
