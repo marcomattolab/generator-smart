@@ -26,7 +26,8 @@
 	- LOW - Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout PDF stampato
   	- MED - Creare scheletro IONIC 4
   	- LOW - Develop wizard per creare JSON progetto (vedi https://www.cc28tech.com/angular-multi-step-wizard-part-1/ )
-  			
+  	- LOW - Inserire controllo Pattern MinSize e MaxSize via BE/H8
+  	
 ## Punti Aperti
 	- HA singleton e scalabilità
 	- JMS e code asincrone
