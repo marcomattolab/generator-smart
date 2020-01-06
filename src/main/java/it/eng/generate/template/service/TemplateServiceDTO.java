@@ -30,6 +30,7 @@ public class TemplateServiceDTO extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+		
 		String body = 
 		"package "+ conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder()+";\r\n\n" +
 		"import java.time.Instant;\r\n" +
@@ -103,7 +104,8 @@ public class TemplateServiceDTO extends AbstractTemplate{
 						
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						//Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
-						if( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
+					    //private Set<CompanyKeywordDTO> myKeywords = new HashSet<>();
+						if( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 							body += "\n\tprivate Set<"+Utils.getFirstUpperCase(nomeTabellaDx)+"DTO> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = new HashSet<>();\n\n";
 							body += "    public Set<"+Utils.getFirstUpperCase(nomeTabellaDx)+"DTO> get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"s() {\r\n" +
 									"        return "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\r\n" +
