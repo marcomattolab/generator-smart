@@ -26,6 +26,7 @@
 	- HIG - @Relations => Test/Fix relazioni su medesima tabella con naming differente! ( ? ==> OneToMany e)
 	- LOW - Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout PDF stampato
   	- MED - Creare scheletro IONIC 4
+  	- LOW - Develop wizard per creare JSON progetto (vedi https://www.cc28tech.com/angular-multi-step-wizard-part-1/ )
   			
 ## Punti Aperti
 	- HA singleton e scalabilità
