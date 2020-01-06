@@ -522,6 +522,32 @@ public class Utils {
 		String nomeColonna = Utils.getFieldName(column);
 		String NomeColonna = Utils.getFieldNameForMethod(column);
 		
+		//Validation: Pattern
+		boolean hasPattern = column.getPattern()!=null ? true : false;
+		String htmlPattern = hasPattern ? " pattern=\""+column.getPattern()+"\" " : "";
+		String htmlPatternVal = hasPattern
+							 ?"\t\t\t\t\t\t<small class=\"form-text text-danger\"\n"+
+							  "\t\t\t\t\t\t[hidden]=\"!editForm.controls."+nomeColonna+"?.errors?.pattern\" jhiTranslate=\"entity.validation.pattern\" translateValues=\"{ pattern: '"+NomeColonna+"' }\">\n"+
+							  "\t\t\t\t\t\tThis field should follow pattern for \""+NomeColonna+"\".\n"+
+							  "\t\t\t\t\t\t</small>\n"
+							 :""; 
+		
+		//Validation: Minlen
+		boolean hasMinsize = column.getColumnMinSize()!=null ? true : false;
+		String htmlMinsize = hasMinsize ? " minlength=\""+column.getColumnMinSize()+"\" " : "";
+		String htmlMinsizeVal = hasMinsize ? "" : "";
+				
+		//Validation: Maxlen
+		boolean hasMaxsize = column.getColumnMaxSize()!=null ? true : false;
+		String htmlMaxsize = hasMaxsize ? " maxlength=\""+column.getColumnMaxSize()+"\" " : "";
+		String htmlMaxsizeVal = hasMaxsize ? "" : "";
+//		<div [hidden]="!(editForm.controls.cap?.dirty && editForm.controls.cap?.invalid)">
+//	        <small class="form-text text-danger"
+//	        [hidden]="!editForm.controls.cap?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
+//	        This field cannot be longer than 20 characters.
+//	        </small>
+//	    </div>
+		
 		boolean isNullable = column.isNullable();
 		
 		if( isPrimaryKeyID(column) ) {
@@ -538,12 +564,13 @@ public class Utils {
 			"                <div class=\"form-group\">\r\n" +
 			"                    <label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+nomeColonna+"\" for=\"field_"+nomeColonna+"\">"+NomeColonna+"</label>\r\n" +
 			"                    <input type=\"text\" class=\"form-control\" name=\""+nomeColonna+"\" id=\"field_"+nomeColonna+"\"\r\n" +
-			"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" "+ (!isNullable?"required":"")  +"/>\r\n" +
+			"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" "+ (!isNullable?"required":"")+ htmlPattern  +"/>\r\n" +
 			"                    <div [hidden]=\"!(editForm.controls."+nomeColonna+"?.dirty && editForm.controls."+nomeColonna+"?.invalid)\">\r\n" +
 			"                        <small class=\"form-text text-danger\"\r\n" +
 			"                        [hidden]=\"!editForm.controls."+nomeColonna+"?.errors?.required\" jhiTranslate=\"entity.validation.required\">\r\n" +
 			"                        This field is required.\r\n" +
 			"                        </small>\r\n" +
+									 htmlPatternVal +
 			"                    </div>\r\n" +
 			"                </div>\r\n\n";
 		
@@ -572,7 +599,7 @@ public class Utils {
 					"                <div class=\"form-group\">\r\n" +
 					"                    <label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+nomeColonna+"\" for=\"field_"+nomeColonna+"\">"+NomeColonna+"</label>\r\n" +
 					"                    <input type=\"number\" class=\"form-control\" name=\""+nomeColonna+"\" id=\"field_"+nomeColonna+"\"\r\n" +
-					"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" "+ (!isNullable?"required":"") +"/>\r\n" +
+					"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" "+ (!isNullable?"required":"") + htmlPattern + "/>\r\n" +
 					"                    <div [hidden]=\"!(editForm.controls."+nomeColonna+"?.dirty && editForm.controls."+nomeColonna+"?.invalid)\">\r\n" +
 					"                        <small class=\"form-text text-danger\"\r\n" +
 					"                        [hidden]=\"!editForm.controls."+nomeColonna+"?.errors?.required\" jhiTranslate=\"entity.validation.required\">\r\n" +

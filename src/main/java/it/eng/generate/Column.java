@@ -12,8 +12,8 @@ public class Column {
 	private String typeColumnRelation; 	//
 	private boolean key = false;
 	private int columnSize;
-	private int columnMinSize;			//
-	private int columnMaxSize;			//
+	private Integer columnMinSize;		//
+	private Integer columnMaxSize;		//
 	private String pattern; 				//
 	
 	private boolean nullable = false;
@@ -228,28 +228,28 @@ public class Column {
 		this.typeColumnRelation = typeColumnRelation;
 	}
 
-	public int getColumnMinSize() {
-		return columnMinSize;
-	}
-
-	public void setColumnMinSize(int columnMinSize) {
-		this.columnMinSize = columnMinSize;
-	}
-
-	public int getColumnMaxSize() {
-		return columnMaxSize;
-	}
-
-	public void setColumnMaxSize(int columnMaxSize) {
-		this.columnMaxSize = columnMaxSize;
-	}
-
 	public String getPattern() {
 		return pattern;
 	}
 
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
+	}
+
+	public Integer getColumnMinSize() {
+		return columnMinSize;
+	}
+
+	public void setColumnMinSize(Integer columnMinSize) {
+		this.columnMinSize = columnMinSize;
+	}
+
+	public Integer getColumnMaxSize() {
+		return columnMaxSize;
+	}
+
+	public void setColumnMaxSize(Integer columnMaxSize) {
+		this.columnMaxSize = columnMaxSize;
 	}
 	
 }

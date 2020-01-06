@@ -26,8 +26,8 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 	}
 
 	public String getBody(){
-		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
+		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
