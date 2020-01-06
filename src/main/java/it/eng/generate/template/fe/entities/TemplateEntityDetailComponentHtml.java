@@ -1,8 +1,5 @@
 package it.eng.generate.template.fe.entities;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import org.springframework.util.CollectionUtils;
 
 import it.eng.generate.Column;
@@ -98,7 +95,15 @@ public class TemplateEntityDetailComponentHtml extends AbstractResourceTemplate 
 									"                </dd>\r\n";
 						}
 					} else if(relationType.equals(Utils.ManyToMany)) {
-						//TODO DEVELOP THIS! 
+						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+							body += "\n                <!-- Add Relation: ManyToMany -->\n";
+							body += "                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span></dt>\r\n" +
+									"                <dd>\r\n" + 
+									"                    <span *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+" of "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s; let last = last\">\n"+
+									"                        <a [routerLink]=\"['/"+Utils.getFirstLowerCase(nomeTabellaDx)+"', "+Utils.getFirstLowerCase(nomeRelazioneSx)+"?.id, 'view']\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>{{last ? '' : ', '}}\n"+
+									"                    </span>\r\n"+
+									"                </dd>\r\n";
+						}
 					}
 				}
 			}
