@@ -3,7 +3,10 @@
 ## Sezione FE
 	- LOW - Completare generazione automatica classi di TEST
 	- MED - Inserire logica di navigazione (ROUTING) di imprendocasa!! (si sfruttano interfaccie presenti)
+	- MED - @Inserire FE componente tabella come imprendocasa...
 	- LOW - Generare filtri di ricerca da file di configurazione (ricerca per testo, range date, enumeration, range valori numerici)
+	- LOW - Generare profili da file di configurazione ed abilitarli alle voci menu
+	
 	
 ## Migliorie / Plugin
 	- MED - Inserire motore di workflow (Activity BPS, Spring workflow ....)
@@ -19,7 +22,7 @@
 ## BUG e/o Altre Migliorie
 	- HIG - @Gestire i campi BLOB / CLOB - Aggiungere altri tipologie: ImageBlob, Blob, BigDecimal, Double etc
 	- HIG - @Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri numerici non vengono inviati dal FE!!
-	- HIG - @Relations => Test/Fix relazioni su medesima tabella con naming differente! ( ? ==> OneToMany e)
+	- HIG - @@Relations => Test/Fix relazioni su medesima tabella con naming differente! ( ? ==> OneToMany e)
 	- LOW - Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout PDF stampato
   	- MED - Creare scheletro IONIC 4
   	- LOW - Develop wizard per creare JSON progetto (vedi https://www.cc28tech.com/angular-multi-step-wizard-part-1/ )
