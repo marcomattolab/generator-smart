@@ -7,7 +7,6 @@
 	- LOW - Generare filtri di ricerca da file di configurazione (ricerca per testo, range date, enumeration, range valori numerici)
 	- LOW - Generare profili da file di configurazione ed abilitarli alle voci menu
 	
-	
 ## Migliorie / Plugin
 	- MED - Inserire motore di workflow (Activity BPS, Spring workflow ....)
 	- MED - Inserire vari tipi DB => Oracle!, Mysql, nosql Mongodb
@@ -24,7 +23,7 @@
 	- HIG - @Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri numerici non vengono inviati dal FE!!
 	- HIG - @@Relations => Test/Fix relazioni su medesima tabella con naming differente! ( ? ==> OneToMany e)
 	- LOW - Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout PDF stampato
-  	- MED - Creare scheletro IONIC 4
+  	- HIG - ==> Creare scheletro IONIC 4
   	- LOW - Develop wizard per creare JSON progetto (vedi https://www.cc28tech.com/angular-multi-step-wizard-part-1/ )
   	- LOW - Inserire controllo Pattern MinSize e MaxSize via BE/H8
   	
