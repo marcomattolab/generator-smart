@@ -535,18 +535,22 @@ public class Utils {
 		//Validation: Minlen
 		boolean hasMinsize = column.getColumnMinSize()!=null ? true : false;
 		String htmlMinsize = hasMinsize ? " minlength=\""+column.getColumnMinSize()+"\" " : "";
-		String htmlMinsizeVal = hasMinsize ? "" : "";
+		String htmlMinsizeVal = hasMinsize 
+				? "\t\t\t\t\t\t<small class=\"form-text text-danger\"\n"+
+				  "\t\t\t\t\t\t[hidden]=\"!editForm.controls."+nomeColonna+"?.errors?.minlength\" jhiTranslate=\"entity.validation.minlength\" translateValues=\"{ min: "+column.getColumnMinSize()+" }\">\n"+
+				  "\t\t\t\t\t\tThis field cannot be shorter than "+column.getColumnMinSize()+" characters.\n"+
+				  "\t\t\t\t\t\t</small>\n" 
+				: "";
 				
 		//Validation: Maxlen
 		boolean hasMaxsize = column.getColumnMaxSize()!=null ? true : false;
 		String htmlMaxsize = hasMaxsize ? " maxlength=\""+column.getColumnMaxSize()+"\" " : "";
-		String htmlMaxsizeVal = hasMaxsize ? "" : "";
-//		<div [hidden]="!(editForm.controls.cap?.dirty && editForm.controls.cap?.invalid)">
-//	        <small class="form-text text-danger"
-//	        [hidden]="!editForm.controls.cap?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 20 }">
-//	        This field cannot be longer than 20 characters.
-//	        </small>
-//	    </div>
+		String htmlMaxsizeVal = hasMaxsize 
+				? "\t\t\t\t\t\t<small class=\"form-text text-danger\"\n"+
+				  "\t\t\t\t\t\t[hidden]=\"!editForm.controls."+nomeColonna+"?.errors?.maxlength\" jhiTranslate=\"entity.validation.maxlength\" translateValues=\"{ max: "+column.getColumnMaxSize()+" }\">\n"+
+				  "\t\t\t\t\t\tThis field cannot be longer than "+column.getColumnMaxSize()+" characters.\n"+
+				  "\t\t\t\t\t\t</small>\n" 
+				: "";
 		
 		boolean isNullable = column.isNullable();
 		
@@ -564,13 +568,18 @@ public class Utils {
 			"                <div class=\"form-group\">\r\n" +
 			"                    <label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+nomeColonna+"\" for=\"field_"+nomeColonna+"\">"+NomeColonna+"</label>\r\n" +
 			"                    <input type=\"text\" class=\"form-control\" name=\""+nomeColonna+"\" id=\"field_"+nomeColonna+"\"\r\n" +
-			"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" "+ (!isNullable?"required":"")+ htmlPattern  +"/>\r\n" +
+			"                        [(ngModel)]=\""+nometabella+"."+nomeColonna+"\" "+ (!isNullable?"required":"") 
+										+ htmlPattern 
+										+ htmlMinsize 
+										+ htmlMaxsize +"/>\r\n" +
 			"                    <div [hidden]=\"!(editForm.controls."+nomeColonna+"?.dirty && editForm.controls."+nomeColonna+"?.invalid)\">\r\n" +
 			"                        <small class=\"form-text text-danger\"\r\n" +
 			"                        [hidden]=\"!editForm.controls."+nomeColonna+"?.errors?.required\" jhiTranslate=\"entity.validation.required\">\r\n" +
 			"                        This field is required.\r\n" +
 			"                        </small>\r\n" +
 									 htmlPatternVal +
+									 htmlMinsizeVal +
+									 htmlMaxsizeVal +
 			"                    </div>\r\n" +
 			"                </div>\r\n\n";
 		
