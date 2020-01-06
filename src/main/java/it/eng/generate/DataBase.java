@@ -288,12 +288,17 @@ public class DataBase {
 					table.setNomeTabella(tableName);
 					this.addTable(tableName, table);
 					
-					int sortColumn = 1;
+					int sortColumn = 0;
 					for(Field field : entity.getFields()) {
 						String columnName = field.getFname();
 						String mTypeColumn = field.getFtype();
 						boolean isRequired = field.isFrequired();
 						Integer columnSize = field.getFsize()!=null ? field.getFsize() : null;
+						
+						//MinLenght, MaxLenght, Pattern
+						Integer columnMinSize = field.getFminlength()!=null ? field.getFminlength() : null;
+						Integer columnMaxSize = field.getFmaxlength()!=null ? field.getFmaxlength() : null;
+						String pattern = field.getFpattern();
 						
 						Column column = new Column();
 						column.setName(columnName);
@@ -301,7 +306,7 @@ public class DataBase {
 						
 						int iTypeColmn = Column.corvertModelType(mTypeColumn);
 						column.setTypeColumn(iTypeColmn);
-						System.out.println("  - Column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn + " sortColumn: "+sortColumn);
+						//System.out.println("  - Column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn + " sortColumn: "+sortColumn);
 						
 						if (!isRequired) {
 							column.setNullable();
@@ -309,9 +314,28 @@ public class DataBase {
 						if(columnSize!=null) {
 							column.setColumnSize(columnSize.intValue());
 						}
+						if(columnMinSize!=null) {
+							column.setColumnMinSize(columnMinSize.intValue());
+						}
+						if(columnMaxSize!=null) {
+							column.setColumnMaxSize(columnMaxSize.intValue());
+						}
+						if(pattern!=null) {
+							column.setPattern(pattern);
+						}
+						
 						table.addColumn(column);
 						
-						System.out.println("  - Column: "+columnName+" ==> Type: "+column.getTypeColumn()+"  Size: "+columnSize+"  Required: "+isRequired);
+						System.out.println("  - Column: " + columnName + 
+								"  => mType:" + mTypeColumn +
+								"   iType:" + iTypeColmn + 
+								"   Sort:" + sortColumn +
+								"   Type:" + column.getTypeColumn() +
+								"   Size:" + columnSize +
+								"   Minsize:" + columnMinSize +
+								"   Maxsize:" + columnMaxSize +
+								"   Pattern:" + pattern +
+								"   Required:" + isRequired);
 						
 						//Set Primary KEY - TODO DEVELOP THIS!
 						String key = "id";

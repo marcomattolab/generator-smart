@@ -49,8 +49,9 @@
   	]},
   	{"name":"Azienda", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
-  			{"fname":"codice", "ftype":"String", "frequired":true, "fsize":500},
+  			{"fname":"codice", "ftype":"String", "frequired":true, "fsize":10, "fminlength": 3, "fmaxlength": 10},
   			{"fname":"nominativo", "ftype":"String", "frequired":true, "fsize":1000},
+  			{"fname":"mail", "ftype":"String", "frequired":true, "fsize":1000, "fpattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"},
   			{"fname":"canale", "ftype":"CanaleTrasmissione", "frequired":true, "fsize":500}
   	]},
   	{"name":"Settore", "fields": [

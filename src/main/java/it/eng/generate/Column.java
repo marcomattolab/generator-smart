@@ -9,10 +9,14 @@ import java.util.Date;
 public class Column {
 	private String name;
 	private Class<?> typeColumn;
-	private String typeColumnRelation; //
+	private String typeColumnRelation; 	//
 	private boolean key = false;
 	private int columnSize;
-	private boolean nullable =false;
+	private int columnMinSize;			//
+	private int columnMaxSize;			//
+	private String pattern; 				//
+	
+	private boolean nullable = false;
 	private String enumeration;
 	private int sortColumn;
 	
@@ -222,6 +226,30 @@ public class Column {
 
 	public void setTypeColumnRelation(String typeColumnRelation) {
 		this.typeColumnRelation = typeColumnRelation;
+	}
+
+	public int getColumnMinSize() {
+		return columnMinSize;
+	}
+
+	public void setColumnMinSize(int columnMinSize) {
+		this.columnMinSize = columnMinSize;
+	}
+
+	public int getColumnMaxSize() {
+		return columnMaxSize;
+	}
+
+	public void setColumnMaxSize(int columnMaxSize) {
+		this.columnMaxSize = columnMaxSize;
+	}
+
+	public String getPattern() {
+		return pattern;
+	}
+
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
 	}
 	
 }
