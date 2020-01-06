@@ -100,7 +100,7 @@ public class TemplateEntityDetailComponentHtml extends AbstractResourceTemplate 
 							body += "                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span></dt>\r\n" +
 									"                <dd>\r\n" + 
 									"                    <span *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+" of "+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s; let last = last\">\n"+
-									"                        <a [routerLink]=\"['/"+Utils.getFirstLowerCase(nomeTabellaDx)+"', "+Utils.getFirstLowerCase(nomeRelazioneSx)+"?.id, 'view']\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstUpperCase(nomeSelectSx)+"}}</a>{{last ? '' : ', '}}\n"+
+									"                        <a [routerLink]=\"['/"+Utils.getFirstLowerCase(nomeTabellaDx)+"', "+Utils.getFirstLowerCase(nomeRelazioneSx)+"?.id, 'view']\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</a>{{last ? '' : ', '}}\n"+
 									"                    </span>\r\n"+
 									"                </dd>\r\n";
 						}
