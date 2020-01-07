@@ -195,7 +195,7 @@ public class TemplateQueryService extends AbstractTemplate{
 							result+=
 							"		    if (criteria.get"+Utils.getFirstUpperCase(nomeRelazioneDx)+"Id() != null) {\n"+
 							"		        specification = specification.and(buildSpecification(criteria.get"+Utils.getFirstUpperCase(nomeRelazioneDx)+"Id(),\n"+
-							"		            root -> root.join("+Utils.getFirstUpperCase(nomeTabella)+"_."+Utils.getFirstLowerCase(nomeRelazioneDx)+"s, JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaSx)+"_.id)));\n"+
+							"		            root -> root.join("+Utils.getFirstUpperCase(nomeTabella)+"_."+Utils.getFirstLowerCase(nomeRelazioneDx)+", JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaSx)+"_.id)));\n"+
 							"		    }\n";
 						}
 						
@@ -205,7 +205,7 @@ public class TemplateQueryService extends AbstractTemplate{
 							result+=
 							"		    if (criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id() != null) {\n"+
 							"		        specification = specification.and(buildSpecification(criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id(),\n"+
-							"		            root -> root.join("+Utils.getFirstUpperCase(nomeTabella)+"_."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s, JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaDx)+"_.id)));\n"+
+							"		            root -> root.join("+Utils.getFirstUpperCase(nomeTabella)+"_."+Utils.getFirstLowerCase(nomeRelazioneSx)+", JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaDx)+"_.id)));\n"+
 							"		    }\n";
 						}
 						
