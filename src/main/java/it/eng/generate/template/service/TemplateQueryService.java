@@ -200,17 +200,14 @@ public class TemplateQueryService extends AbstractTemplate{
 						}
 						
 					}else if(relationType.equals(Utils.ManyToOne)) {
-						//TODO DEVELOP THIS!!!!!!!!!!
-						
-						/*body +=	
-						"            if (criteria.getListaContattiId() != null) {\r\n" +
-						"                specification = specification.and(buildSpecification(criteria.getListaContattiId(),\r\n" +
-						"                    root -> root.join(Cliente_.listaContattis, JoinType.LEFT).get(ListaContatti_.id)));\r\n" +
-						"            }\r\n" +
-						"            if (criteria.getIncaricoId() != null) {\r\n" +
-						"                specification = specification.and(buildSpecification(criteria.getIncaricoId(),\r\n" +
-						"                    root -> root.join(Cliente_.incaricos, JoinType.LEFT).get(Incarico_.id)));\r\n" +
-						"            }\r\n";*/
+						// ManyToOne  =>  Partner{professione(denominazione)} to Professione 
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							result+=
+							"		    if (criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id() != null) {\n"+
+							"		        specification = specification.and(buildSpecification(criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id(),\n"+
+							"		            root -> root.join("+Utils.getFirstUpperCase(nomeTabella)+"_."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s, JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaDx)+"_.id)));\n"+
+							"		    }\n";
+						}
 						
 					}
 				}
