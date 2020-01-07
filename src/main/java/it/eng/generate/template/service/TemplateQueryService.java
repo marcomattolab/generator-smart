@@ -183,7 +183,21 @@ public class TemplateQueryService extends AbstractTemplate{
 						}
 						
 					}else if(relationType.equals(Utils.OneToMany)) {
-						//TODO DEVELOP THIS!!!!!!!!!!
+						// OneToMany  ==> Project{currentjobOffer(name)} to JobOffer{projectName(name)}
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							result+=
+							"		    if (criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id() != null) {\n"+
+							"		        specification = specification.and(buildSpecification(criteria.get"+Utils.getFirstUpperCase(nomeRelazioneSx)+"Id(),\n"+
+							"		            root -> root.join("+Utils.getFirstUpperCase(nomeTabella)+"_."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s, JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaDx)+"_.id)));\n"+
+							"		    }\n";
+						}
+						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							result+=
+							"		    if (criteria.get"+Utils.getFirstUpperCase(nomeRelazioneDx)+"Id() != null) {\n"+
+							"		        specification = specification.and(buildSpecification(criteria.get"+Utils.getFirstUpperCase(nomeRelazioneDx)+"Id(),\n"+
+							"		            root -> root.join("+Utils.getFirstUpperCase(nomeTabella)+"_."+Utils.getFirstLowerCase(nomeRelazioneDx)+"s, JoinType.LEFT).get("+Utils.getFirstUpperCase(nomeTabellaSx)+"_.id)));\n"+
+							"		    }\n";
+						}
 						
 					}else if(relationType.equals(Utils.ManyToOne)) {
 						//TODO DEVELOP THIS!!!!!!!!!!
