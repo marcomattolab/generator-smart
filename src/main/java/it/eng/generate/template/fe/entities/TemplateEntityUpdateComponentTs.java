@@ -219,14 +219,14 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
-								 "        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
+								"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
 
 					}else if(TRACKBY_SECTION.equals(section)) {
 						if (relationType.equals(Utils.OneToOne)) {
 							relMap.put(relationType+nomeTabellaSx+TRACKBY_SECTION, 
-									"    track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaDx)+") {\r\n" +
-									"        return item.id;\r\n" +
-									"    }\r\n\n");
+								"    track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaDx)+") {\r\n" +
+								"        return item.id;\r\n" +
+								"    }\r\n\n");
 						}
 						
 					}else if(NG_ONINIT_SECTION.equals(section)) {
@@ -315,9 +315,9 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 							"import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+nomeTabellaDx.toLowerCase()+"';\n");
 					
 					}else if(INIT_SECTION.equals(section)) {
-						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
-									"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 						// FIX 		settores ==> mysectors		 / 		nomeTabellaDx ==> nomeRelazioneSx
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
+							"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 

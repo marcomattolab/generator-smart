@@ -20,7 +20,7 @@
 ## BUG e/o Altre Migliorie
 	- HIG - @Gestire i campi BLOB / CLOB - Aggiungere altri tipologie: ImageBlob, Blob, BigDecimal, Double etc
 	- HIG - @Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri numerici non vengono inviati dal FE!!
-	- HIG - @@Relations => Test/Fix relazioni su medesima tabella con naming differente! ( OneToMany ==> Done (ClienteCriteria...),  ManyToOne ==> ToDo  )
+	- HIG - @@Relations => Test/Fix relazioni su medesima tabella con naming differente! ( OneToMany ==> Done ...ClienteCriteria|cliente.component.html...,  ManyToOne ==> ToDo  )
 	- LOW - Stampa PDF/XLS inserire criteria come filtri ricerca e migliorare layout PDF stampato
   	- HIG - ==> Creare scheletro IONIC 4
   	- LOW - Develop wizard per creare JSON progetto (vedi https://www.cc28tech.com/angular-multi-step-wizard-part-1/ )
