@@ -282,8 +282,9 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 						
 					}else if(INIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+INIT_SECTION, 
-								// DONE settores ==> mysectors / nomeTabellaDx ==> nomeRelazioneSx
-								"    "+Utils.getFirstLowerCase(nomeTabellaSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+								// TODO TEST autoreS ==> clientiS / nomeTabellaSx ==> nomeRelazioneSx
+							  //"    "+Utils.getFirstLowerCase(nomeTabellaSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+								"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
@@ -299,7 +300,8 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+INIT_SECTION, 
 								"\n        this."+Utils.getFirstLowerCase(nomeTabellaSx)+"Service.query().subscribe(\n"+
 					            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaSx)+"[]>) => {\n"+
-					            "            this."+Utils.getFirstLowerCase(nomeTabellaSx)+"s = res.body;\n"+
+					          //"            this."+Utils.getFirstLowerCase(nomeTabellaSx)+"s = res.body;\n"+
+					            "            this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
 					            "        },\n"+
 					            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
 					            "        );\n");
