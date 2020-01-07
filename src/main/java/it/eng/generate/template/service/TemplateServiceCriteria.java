@@ -38,6 +38,7 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+		
 		String body = 
 		"package "+ conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder()+";\r\n\n" +
 		"import java.io.Serializable;\r\n" +
@@ -98,6 +99,7 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 							columnId.setTypeColumn(Column.corvertModelType("Long"));
 							extendedList.add(columnId);
 						}
+						
 					}else if (relationType.equals(Utils.ManyToMany)) {
 						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
 						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
@@ -112,8 +114,10 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 							columnId.setTypeColumn(Column.corvertModelType("Long"));
 							extendedList.add(columnId);
 						}
+						
 					} else if (relationType.equals(Utils.OneToMany)) {
 						//TODO DEVELOP THIS!
+						
 					}
 				} 
 			}
@@ -124,7 +128,6 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 		body+=
 		"    private static final long serialVersionUID = 1L;\r\n";
 		for (Column column : extendedList) {
-			//body += Utils.generaFieldFilter(column)+"\n";
 			body += Utils.generaFieldFilter(column, false)+"\n";
 		}	
 		

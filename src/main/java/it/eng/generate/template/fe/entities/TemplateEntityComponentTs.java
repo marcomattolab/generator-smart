@@ -107,8 +107,8 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"        this.myGroup = new FormGroup({\r\n";
 		
 		body += printRelations(conf, SEARCH);
-		Set set = tabella.getColumnNames();
-		for (Iterator iter = set.iterator(); iter.hasNext();) {
+		Set<?> set = tabella.getColumnNames();
+		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			boolean hasNext = iter != null ? iter.hasNext() : false;
@@ -233,8 +233,8 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 
 		// [PARAMETRY_QUERY]
 		"        console.log('Cerca "+Nometabella+" ');\r\n\n";
-		Set qset = tabella.getColumnNames();
-		for (Iterator iter = qset.iterator(); iter.hasNext();) {
+		Set<?> qset = tabella.getColumnNames();
+		for (Iterator<?> iter = qset.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			String columnname = Utils.getFieldName(column);
@@ -296,8 +296,8 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"                sort: this.sort(),\r\n";
 		
 		//[DINAMIC_QUERY]
-		Set cset = tabella.getColumnNames();
-		for (Iterator iter = cset.iterator(); iter.hasNext();) {
+		Set<?> cset = tabella.getColumnNames();
+		for (Iterator<?> iter = cset.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			String columnname = Utils.getFieldName(column);
@@ -369,8 +369,8 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
 				String nomeTabellaDx = rel.getDxTable();
-				String nomeRelazioneDx = rel.getDxName();
-				String nomeSelectDx = rel.getDxSelect();
+				//String nomeRelazioneDx = rel.getDxName();
+				//String nomeSelectDx = rel.getDxSelect();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
