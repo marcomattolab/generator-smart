@@ -101,7 +101,6 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 						}
 						
 					}else if (relationType.equals(Utils.ManyToMany)) {
-						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
 						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 							Column columnId = new Column();
 							columnId.setName(nomeRelazioneSx+"Id");
@@ -116,8 +115,18 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 						}
 						
 					} else if (relationType.equals(Utils.OneToMany)) {
-						//TODO DEVELOP THIS!
-						
+						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							Column columnId = new Column();
+							columnId.setName(nomeRelazioneSx+"Id");
+							columnId.setTypeColumn(Column.corvertModelType("Long"));
+							extendedList.add(columnId);
+						}
+						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							Column columnId = new Column();
+							columnId.setName(nomeRelazioneDx+"Id");
+							columnId.setTypeColumn(Column.corvertModelType("Long"));
+							extendedList.add(columnId);
+						}
 					}
 				} 
 			}
