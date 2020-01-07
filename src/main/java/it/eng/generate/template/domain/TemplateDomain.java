@@ -57,7 +57,7 @@ public class TemplateDomain extends AbstractTemplate{
 		"@ApiModel(description = \"Entity "+getClassName()+"\")\r\n" +
 		"@Entity\r\n" +
 		"@Table(name = \""+getClassName()+"\")\r\n" +
-	    "@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\r\n" +  //TODO Added Cache
+	    "@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\r\n" +
 		"public class "+getClassName()+" extends AbstractAuditingEntity implements Serializable  {\r\n" +
 		"\tprivate static final long serialVersionUID = 1L;\r\n";
 		
@@ -189,8 +189,12 @@ public class TemplateDomain extends AbstractTemplate{
 
 					} else if (Utils.OneToMany.equals(relationType) ) {
 						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							// TODO TEST:  autore ==> preferito   /   nomeTabellaSx  ==> nomeRelazioneDx
 							String relationSX =  Utils.getFirstLowerCase( Utils.getClassNameCamelCase(nomeRelazioneSx) );
-							body += "\n	@OneToMany(mappedBy = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"\")\n";
+							String RelDxUp = Utils.getFirstUpperCase(nomeRelazioneDx);
+							String relDxUp = Utils.getFirstLowerCase(nomeRelazioneDx);
+							
+							body += "\n	@OneToMany(mappedBy = \""+relDxUp+"\")\n";
 							body += "	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\n";
 							body += "	private Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = new HashSet<>();\n\n";
 							body += "	public Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> get"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"s() {\n";
@@ -202,38 +206,41 @@ public class TemplateDomain extends AbstractTemplate{
 							body += "	}\n\n";
 							body += "	public "+Utils.getFirstUpperCase(nomeTabella)+" add"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+relationSX+") {\n";
 							body += "	   this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s.add("+relationSX+");\n";
-							body += "	   "+relationSX+".set"+Utils.getFirstUpperCase(nomeTabella)+"(this);\n";
+							body += "	   "+relationSX+".set"+RelDxUp+"(this);\n";
 							body += "	   return this;\n";
 							body += "	}\n\n";
 							body += "	public "+Utils.getFirstUpperCase(nomeTabella)+" remove"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"("+Utils.getClassNameCamelCase(nomeTabellaDx)+" "+relationSX+") {\n";
 							body += "	    this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s.remove("+relationSX+");\n";
-							body += "	    "+relationSX+".set"+Utils.getFirstUpperCase(nomeTabella)+"(null);\n";
+							body += "	    "+relationSX+".set"+RelDxUp+"(null);\n";
 							body += "	    return this;\n";
 							body += "	}\n\n";
 							body += "	public void set"+Utils.getClassNameCamelCase(nomeRelazioneSx)+"s(Set<"+Utils.getClassNameCamelCase(nomeTabellaDx)+"> "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s) {\n";
 							body += "	    this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\n";
 							body += "	}\n\n";
-						}
-						else if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+						
+						} else if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							// TODO TEST:  autore ==> preferito2   /   nomeTabellaSx  ==> nomeRelazioneDx
 							String TblSxUp = Utils.getFirstUpperCase(nomeTabellaSx);
+							String RelDxUp = Utils.getFirstUpperCase(nomeRelazioneDx);
+							String relDxLw = Utils.getFirstLowerCase(nomeRelazioneDx);
 							String TblDxUp = Utils.getFirstUpperCase(nomeTabellaDx);
-							String tblSxLw = Utils.getFirstLowerCase(nomeTabellaSx);
 							
 							body +="\n	@ManyToOne\n";
-							body +="	@JsonIgnoreProperties(\""+Utils.getFirstLowerCase(nomeTabellaDx)+"s\")\n";
-							body +="	private "+TblSxUp+" "+tblSxLw+";\n\n";
+							//TODO TEST:   clientes  ==> clienti2s   /    nomeTabellaDx ==> nomeRelazioneSx 
+							body +="	@JsonIgnoreProperties(\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"s\")\n";
+							body +="	private "+TblSxUp+" "+relDxLw+";\n\n";
 							
-							body +="	public "+TblSxUp+" get"+TblSxUp+"() {\n";
-							body +="	    return "+tblSxLw+";\n";
+							body +="	public "+TblSxUp+" get"+RelDxUp+"() {\n";
+							body +="	    return "+relDxLw+";\n";
 							body +="	}\n\n";
 							
-							body +="	public "+TblDxUp+" "+tblSxLw+"("+TblSxUp+" "+tblSxLw+") {\n";
-							body +="	    this."+tblSxLw+" = "+tblSxLw+";\n";
+							body +="	public "+TblDxUp+" "+relDxLw+"("+TblSxUp+" "+relDxLw+") {\n";
+							body +="	    this."+relDxLw+" = "+relDxLw+";\n";
 							body +="	    return this;\n";
 							body +="	}\n\n";
 							
-							body +="	public void set"+TblSxUp+"("+TblSxUp+" "+tblSxLw+") {\n";
-							body +="	    this."+tblSxLw+" = "+tblSxLw+";\n";
+							body +="	public void set"+RelDxUp+"("+TblSxUp+" "+relDxLw+") {\n";
+							body +="	    this."+relDxLw+" = "+relDxLw+";\n";
 							body +="	}\n\n";
 						}
 					    

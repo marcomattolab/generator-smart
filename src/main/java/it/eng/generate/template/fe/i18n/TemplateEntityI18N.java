@@ -63,6 +63,7 @@ public class TemplateEntityI18N extends AbstractResourceTemplate{
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
@@ -77,17 +78,17 @@ public class TemplateEntityI18N extends AbstractResourceTemplate{
 					} else if (relationType.equals(Utils.OneToMany) ) {
 						if (nomeTabellaDx.toLowerCase().equals(nomeTabella.toLowerCase()) ) {
 							Column column = new Column();
-							column.setName(nomeTabellaSx);
-							String json = Utils.generateJson(column)+",\n";
-							body += json;
+							//DONE    nomeTabellaSx ==> nomeRelazioneDx    /   autore ==> preferito2
+							//column.setName(nomeTabellaSx);
+							column.setName(nomeRelazioneDx);
+							body += Utils.generateJson(column)+",\n";
 						}
 						
 					} else if (relationType.equals(Utils.ManyToMany) ) {
 						if (nomeTabellaSx.toLowerCase().equals(nomeTabella.toLowerCase()) ) {
 							Column column = new Column();
 							column.setName(nomeRelazioneSx);
-							String json = Utils.generateJson(column)+",\n";
-							body += json;
+							body +=  Utils.generateJson(column)+",\n";
 						}
 						
 					}

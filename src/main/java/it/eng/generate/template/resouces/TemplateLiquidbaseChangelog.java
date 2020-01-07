@@ -64,10 +64,9 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 			//boolean isPrimaryKey = column.isKey();
 			
 			//String nomeColonna = Utils.getFieldName(column);  	// dataNascita
-			String nomeColonna = column.getName();				// data_nascita
+			String nomeColonna = column.getName();					// data_nascita
 			int sizeColumn = column.getColumnSize();
 			
-			//TODO MOVE INTO UTILS
 			if( Utils.isPrimaryKeyID(column) ) {
 				//Primary Key - FIXME retrieve from db
 				body += "            <column name=\"id\" type=\"bigint\" autoIncrement=\"${autoIncrement}\">\r\n" +
@@ -141,30 +140,31 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if ( relationType.equals(Utils.OneToOne) ) {
 						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-						body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +
-								"                <constraints unique=\"true\" nullable=\"true\" uniqueConstraintName=\"ux_"+nomeTabellaDx.toLowerCase()+"_"+nomeRelazioneSx+"_id\" />\n"+
-								"            </column>\n";
+							body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +
+									"                <constraints unique=\"true\" nullable=\"true\" uniqueConstraintName=\"ux_"+nomeTabellaDx.toLowerCase()+"_"+nomeRelazioneSx+"_id\" />\n"+
+									"            </column>\n";
 						}
 						
 					} else if (relationType.equals(Utils.OneToMany)) {
 						if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-							//FIXME nomeTabellaSx==>nomeRelazione ??
-			                body += "            <column name=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"_id\" type=\"bigint\">\n" +
+							//DONE    nomeTabellaSx ==> nomeRelazioneDx    /   autore_id ==> preferito2_id
+			                body += "            <column name=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"_id\" type=\"bigint\">\n" +
 									"                <constraints nullable=\"true\" />\n"+
 									"            </column>\n";
 						}
 						
 					} else if (relationType.equals(Utils.ManyToOne)) {
 						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-						body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +
-								"                <constraints nullable=\"true\" />\n"+
-								"            </column>\n";
+							body += "            <column name=\""+nomeRelazioneSx+"_id\" type=\"bigint\">\n" +
+									"                <constraints nullable=\"true\" />\n"+
+									"            </column>\n";
 						}
 					}
 				}
@@ -233,7 +233,6 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 		
 		//Audit - BuildMyString.com generated code. Please enjoy your string responsibly.
 		"    <!-- Added the entity audit columns -->\r\n" +
-		//"    <changeSet id=\"20181108170542-audit-1\" author=\"jhipster-entity-audit\">\r\n" +
 		"    <changeSet id=\""+Utils.getCurrentDate(tabella.getSort())+"-audit-1\" author=\"jhipster-entity-audit\">\r\n" +
 		"        <addColumn tableName=\""+entityname+"\">\r\n" +
 		"            <column name=\"created_by\" type=\"varchar(50)\">\r\n" +

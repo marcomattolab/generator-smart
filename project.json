@@ -65,6 +65,7 @@
 	{"type":"ManyToMany", "sxTable":"Azienda", "sxName":"mysector", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myazienda", "dxSelect":"nominativo"},
 	{"type":"ManyToMany", "sxTable":"Azienda", "sxName":"mysector2", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myazienda2", "dxSelect":"nominativo"},
 	{"type":"OneToMany", "sxTable":"Autore", "sxName":"clienti2", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito2", "dxSelect":"nome"},
+	{"type":"OneToMany", "sxTable":"Autore", "sxName":"clienti3", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito3", "dxSelect":"nome"},
 	{"type":"ManyToOne", "sxTable":"Libro", "sxName":"collana", "sxSelect":"nome" , "dxTable":"Collana"}
   ]  
 }

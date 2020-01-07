@@ -60,6 +60,7 @@ public class TemplateServiceDTO extends AbstractTemplate{
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
 				String nomeSelectSx = rel.getSxSelect();
 				String nomeSelectDx = rel.getDxSelect();
 				String nomeTabellaDx = rel.getDxTable();
@@ -86,12 +87,13 @@ public class TemplateServiceDTO extends AbstractTemplate{
 						
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
+							//DONE  autore ==> preferito2    /    nomeTabellaSx => nomeRelazioneDx
 							Column columnId = new Column();
-							columnId.setName(Utils.getFirstLowerCase(nomeTabellaSx)+"Id");
+							columnId.setName(Utils.getFirstLowerCase(nomeRelazioneDx)+"Id");
 							columnId.setTypeColumn(Column.corvertModelType("Long"));
 							
 							Column columnSelect = new Column();
-							columnSelect.setName(Utils.getFirstLowerCase(nomeTabellaSx)+Utils.getFirstUpperCase(nomeSelectDx));
+							columnSelect.setName(Utils.getFirstLowerCase(nomeRelazioneDx)+Utils.getFirstUpperCase(nomeSelectDx));
 							columnSelect.setTypeColumn(Utils.getTypeColumnFromRelation(conf, nomeSelectDx, nomeTabellaSx));
 		
 							body += Utils.generaField(columnId, false)+"\n";

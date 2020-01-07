@@ -26,7 +26,6 @@ public class TemplateLiquidbaseChangelogConstraint extends AbstractResourceTempl
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		//String entityname = Utils.getClassNameLowerCase(tabella);
 		
 		String body = 
 				"<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n" +
@@ -45,13 +44,14 @@ public class TemplateLiquidbaseChangelogConstraint extends AbstractResourceTempl
 						String relationType = rel.getType();
 						String nomeTabellaSx = rel.getSxTable();
 						String nomeRelazioneSx = rel.getSxName();
-						//String nomeRelazioneDx = rel.getDxName();
+						String nomeRelazioneDx = rel.getDxName();
 						String nomeTabellaDx = rel.getDxTable();
 						String nomeTabella = tabella.getNomeTabella().toLowerCase();
 						
 						if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 							if ( relationType.equals(Utils.OneToOne) ) {
 								//TODO DEVELOP THIS
+						
 							} else if (relationType.equals(Utils.ManyToMany)) {
 								// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
 								if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
@@ -70,15 +70,18 @@ public class TemplateLiquidbaseChangelogConstraint extends AbstractResourceTempl
 								
 							} else if (relationType.equals(Utils.OneToMany)) {
 								if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+									//DONE    nomeTabellaSx ==> nomeRelazioneDx    /   autore_id ==> preferito2_id
 					                body += 
-					                	"        <addForeignKeyConstraint baseColumnNames=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"_id\"\r\n" +
+				                	"        <addForeignKeyConstraint baseColumnNames=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"_id\"\r\n" +
 									"                                 baseTableName=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"\"\r\n" +
-									"                                 constraintName=\"fk_"+Utils.getFirstLowerCase(nomeTabellaDx)+"_"+Utils.getFirstLowerCase(nomeTabellaSx)+"_id\"\r\n" +
+									"                                 constraintName=\"fk_"+Utils.getFirstLowerCase(nomeTabellaDx)+"_"+Utils.getFirstLowerCase(nomeRelazioneDx)+"_id\"\r\n" +
 									"                                 referencedColumnNames=\"id\"\r\n" +
 									"                                 referencedTableName=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"\"/>\r\n";
 								}
+								
 							} else if (relationType.equals(Utils.ManyToOne)) {
 								//TODO DEVELOP THIS
+								
 							}
 						}
 		            

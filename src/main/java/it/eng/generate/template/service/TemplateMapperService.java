@@ -93,12 +93,12 @@ public class TemplateMapperService extends AbstractTemplate{
 							toDTO += "    @Mapping(source = \""+nomeRelazioneSx+".id\", target = \""+nomeRelazioneSx+"Id\")\n"+
 								     "    @Mapping(source = \""+nomeRelazioneSx+"."+nomeSelectSx+"\", target = \""+nomeRelazioneSx+""+Utils.getFirstUpperCase(nomeSelectSx)+"\")\n";
 							
-							toDTOS+=	 "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabellaSx)+");\n\n";
+							toDTOS =	 "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabellaSx)+");\n\n";
 
 							toEntity +="    @Mapping(source = \""+nomeRelazioneSx+"Id\", target = \""+nomeRelazioneSx+"\")\n";
 							
 						} else if (nomeTabellaDx.toLowerCase().equals(nomeTabella) && relationType.equals(Utils.OneToOne)) {
-							//FIXME TODO decomment and test!
+							//TODO Decomment and test!
 							toEntity += "    //@Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\", ignore = true)\n"; 
 						}
 						
@@ -108,12 +108,12 @@ public class TemplateMapperService extends AbstractTemplate{
 							toEntity += "    @Mapping(target = \""+Utils.getFirstLowerCase(nomeRelazioneSx)+"s\", ignore = true)\n"; 
 					
 						} else if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-							toDTO += "    @Mapping(source = \""+Utils.getFirstLowerCase(nomeTabellaSx)+".id\", target = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\")\n"+
-							 		 "    @Mapping(source = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeSelectDx+"\", target = \""+Utils.getFirstLowerCase(nomeTabellaSx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"\")\n";
-						    
-							toDTOS+= "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabella)+");\n\n";
-									
-							toEntity+="    @Mapping(source = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\", target = \""+Utils.getFirstLowerCase(nomeTabellaSx)+"\")\n";
+							//DONE  autore ==> preferito2    /    nomeTabellaSx => nomeRelazioneDx
+							toDTO += "    @Mapping(source = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+".id\", target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id\")\n"+
+							 		 "    @Mapping(source = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"."+nomeSelectDx+"\", target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"\")\n";
+							toDTOS = "    "+Utils.getEntityName(tabella)+"DTO toDto("+Utils.getEntityName(tabella)+" "+Utils.getFirstLowerCase(nomeTabella)+");\n\n";
+
+							toEntity+="    @Mapping(source = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id\", target = \""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\")\n";
 						}
 						
 					} else if ( relationType.equals(Utils.ManyToMany) ) {

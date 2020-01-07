@@ -50,6 +50,7 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeSelectSx = rel.getSxSelect();
 				String nomeSelectDx = rel.getDxSelect();
@@ -68,24 +69,26 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 								"             		</select>\r\n" +
 								"                </div>\r\n\n";
 						}
+						
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n               <!-- Add Relation  Name: "+nomeRelazioneSx+" Type: OneToMany -->";
+							body += "\n               <!-- Add Relation  Name: "+nomeRelazioneDx+" Type: OneToMany -->";
 							String track = "; trackBy: track"+Utils.getFirstUpperCase(nomeTabellaSx)+"ById";
-							// TODO TEST autoreS ==> clientiS / nomeTabellaSx ==> nomeRelazioneSx
-							//String selectName = Utils.getFirstLowerCase(nomeTabellaSx)+"s";
+							// TODO TEST  "selectName"   autoreS ==> clientiS     /      nomeTabellaSx ==> nomeRelazioneSx
+							// TODO TEST   "relations"   autore  ==> preferito2   /      nomeTabellaSx ==> nomeRelazioneDx
 							String selectName = Utils.getFirstLowerCase(nomeRelazioneSx)+"s";
 							
 							body += "\n                <div class=\"form-group\">\r\n" +
-									"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"\" for=\"field_"+Utils.getFirstLowerCase(nomeTabellaSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaSx)+"</label>\r\n" +
-									"             		<select class=\"form-control\" id=\"field_"+Utils.getFirstLowerCase(nomeTabellaSx)+"\" name=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\">\r\n" +
+									"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" for=\"field_"+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</label>\r\n" +
+									"             		<select class=\"form-control\" id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" name=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id\">\r\n" +
 									"                 		<option [ngValue]=\"null\"></option>\r\n" +
-									"                 		<option [ngValue]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeTabellaSx)+"Option of "+selectName+track+"\">{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"Option."+nomeSelectDx+"}}</option>\r\n" +
+									"                 		<option [ngValue]=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option of "+selectName+track+"\">{{"+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option."+nomeSelectDx+"}}</option>\r\n" +
 									"             		</select>\r\n" +
 									"                </div>\r\n\n";
 							
 							
 							}
+						
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 							//Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
