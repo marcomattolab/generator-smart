@@ -337,22 +337,22 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 						//Relations OneToMany	
 						if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
 							if(TH.equals(type)){
-								//TODO ADD getOrderByIcon** into TS
-								result += "			<!-- TH - OneToMany -->\n";
+								// DONE TEST   "relations"   autore  ==> preferito2   /      nomeTabellaSx ==> nomeRelazioneDx
+								result += "			<!-- TH    Name :  "+nomeRelazioneDx+"  - Type: OneToMany -->\n";
 								result += 
-									  "			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeTabellaDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"\">\n"
-									//DONE    nomeTabellaSx ==> nomeRelazioneDx    /   autore ==> preferito2
+									  "			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"\">\n"
 									+ "			  <span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</span>\n"
 									+ "			  <fa-icon [icon]=\"'sort'\"></fa-icon>\n"
-								   //+ "			  <span class=\"fa\" [ngClass]=\"getOrderByIcon('"+Utils.getFirstLowerCase(nomeTabellaDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"')\"></span>\n"
 									+ "			</th>\r\n";
+								
+								
 							}
 							if(TD.equals(type)) {
-								result += "			<!-- TD - OneToMany -->\n";
+								result += "			<!-- TD    Name :  "+nomeRelazioneDx+"  - Type: OneToMany -->\n";
 								result += 
 										"			<td>\r\n" +
-										"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\">\r\n" +
-										"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeTabellaSx)+"', "+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</a>\r\n" +
+										"			   <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id\">\r\n" +
+										"                  <a [routerLink]=\"['../"+Utils.getFirstLowerCase(nomeTabellaSx)+"', "+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id , 'view' ]\" >{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</a>\r\n" +
 										"			   </div>\r\n" +
 										"			</td>\r\n";
 							}
