@@ -32,19 +32,3 @@
 	- JMS e code asincrone
 	- Big Data , ML / AI	
 	
-
-	1 ClienteCriteria  TODO
-	
-	
-	2 cliente.component.html : clienteNome ====> preferitoNome
-	<th jhiSortBy="clienteNome">
-	  <span jhiTranslate="demogeneratedApp.cliente.preferito">Preferito</span>
-	  <fa-icon [icon]="'sort'"></fa-icon>
-	</th>
-			
-	<!-- TD - OneToMany -->  autore ==> preferito 
-	<td>
-	   <div *ngIf="cliente.autoreId">
-          <a [routerLink]="['../autore', cliente.autoreId , 'view' ]" >{{cliente.autoreNome}}</a>
-	   </div>
-	</td>
