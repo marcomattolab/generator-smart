@@ -369,6 +369,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 				String nomeSelectDx = rel.getDxSelect();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
+				//TODO MANAGE T H I S !!!!!! MAPPA
 				if(nomeTabellaSx!=null && nomeTabellaDx != null && nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 					boolean isOne2OneOrMany2One = relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne);
 					
@@ -377,7 +378,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 						res += "import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n";
 					
 					}else if(SEARCH.equals(section) && isOne2OneOrMany2One) {
-						res += "            "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id: new FormControl('')";
+						res += "            "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id: new FormControl(''),\n";
 						
 					}else if(INIT_SECTION.equals(section) && isOne2OneOrMany2One) {
 						res += "    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n";
@@ -396,23 +397,6 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 							"    }\r\n\n";
 						}
 					}else if(NG_ONINIT_SECTION.equals(section) && isOne2OneOrMany2One) {
-//						if (relationType.equals(Utils.OneToOne)) {
-//							res += 	"\n       this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe(\n"+
-//									"         (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
-//						             "         if (!this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id) {\n"+
-//						             "             this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
-//						             "         } else {\n"+
-//						             "                  this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.find(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id).subscribe(\n"+
-//						             "                  (subRes: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+">) => {\n"+
-//						             "                           this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = [subRes.body].concat(res.body);\n"+
-//						             "                  },\n"+
-//						             "                  (subRes: HttpErrorResponse) => this.onError(subRes.message)\n"+
-//						             "                  );\n"+
-//						             "               }\n"+
-//						             "         },\n"+
-//						             "         (res: HttpErrorResponse) => this.onError(res.message)\n"+
-//						             "         );\n\n";
-//						}
 						if (relationType.equals(Utils.ManyToOne)) {
 							
 							res +=  "\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+

@@ -5,7 +5,6 @@
 	- MED - Inserire logica di navigazione (ROUTING) di imprendocasa!! (si sfruttano interfaccie presenti)
 	- MED - @Inserire FE componente tabella come imprendocasa...
 	- LOW - Generare filtri di ricerca da file di configurazione (ricerca per testo, range date, enumeration, range valori numerici)
-	- LOW - Generare profili da file di configurazione ed abilitarli alle voci menu
 	
 ## Migliorie / Plugin
 	- MED - Inserire motore di workflow (Activity BPS, Spring workflow ....)
@@ -16,7 +15,7 @@
 ## Sezione Modello JSON
 	- LOW - Modello JSON => Se metto un campo CamelCase "firstName" non funge! (Deve essere tutto minuscolo "firstname")
 	- LOW - Modello JSON => Colonna "id" deve essere sempre presente! (ToDo: Add automatically)
-	- LOW - COMPLETARE MODELLO JSON: Aggiungere Costanti nel JSON (SIZE_MAX=189, SIZE_DEFAULT=100) => minlength(SIZE_MAX) 
+	- LOW - Modello JSON => Generare profili da file di configurazione ed abilitarli alle voci menu
 
 ## BUG e/o Altre Migliorie
 	- HIG - @Gestire i campi BLOB / CLOB - Aggiungere altri tipologie: ImageBlob, Blob, BigDecimal, Double etc
