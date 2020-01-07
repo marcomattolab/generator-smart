@@ -32,4 +32,4 @@
 	- JMS e code asincrone
 	- Big Data , ML / AI	
 	
-	
+

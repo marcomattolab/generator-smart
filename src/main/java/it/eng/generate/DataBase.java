@@ -180,7 +180,7 @@ import it.eng.generate.template.web.vm.TemplateManagedUserVM;
 
 public class DataBase {
 	public Map<String, Table> tabelle;
-	public HashMap<String, List<String>> enumeration;
+	public Map<String, List<String>> enumeration;
 	private static DataBase conf;
 
 	private DataBase(){
@@ -195,9 +195,7 @@ public class DataBase {
 				System.out.println("Loading database...");
 				conf.init();
 				System.out.println("\nDatabase has been succesfully loaded...\n\n");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -208,7 +206,7 @@ public class DataBase {
 		return (Table) tabelle.get(tabellaName);
 	}
 
-	public HashMap<String, List<String>> getEnumeration() {
+	public Map<String, List<String>> getEnumeration() {
 		return enumeration;
 	}
 
@@ -306,7 +304,6 @@ public class DataBase {
 						
 						int iTypeColmn = Column.corvertModelType(mTypeColumn);
 						column.setTypeColumn(iTypeColmn);
-						//System.out.println("  - Column: " + columnName + " ==> mTypeColumn: "+mTypeColumn+" iTypeColmn: "+iTypeColmn + " sortColumn: "+sortColumn);
 						
 						if (!isRequired) {
 							column.setNullable();
@@ -524,10 +521,10 @@ public class DataBase {
 			new TemplateAdminEntityAuditModule(this).generateTemplate(); 			//Audit Module TS
 			new TemplateDashboardModule(this).generateTemplate();  					//Chart Dashboard
 			new TemplateDashboardBarchartModule(this).generateTemplate();  			//Barchart Dashboard
-			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  		//Doughnutchart Dashboard
-			new TemplateDashboardLinechartModule(this).generateTemplate();  			//Linechart Dashboard
+			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  	//Doughnutchart Dashboard
+			new TemplateDashboardLinechartModule(this).generateTemplate();  		//Linechart Dashboard
 			new TemplateDashboardPiechartModule(this).generateTemplate();  			//Piechart Dashboard
-			new TemplateDashboardPolarareachartModule(this).generateTemplate(); 		//Polarareachart Dashboard
+			new TemplateDashboardPolarareachartModule(this).generateTemplate(); 	//Polarareachart Dashboard
 			new TemplateDashboardRadarchartModule(this).generateTemplate();  		//Radarchart Dashboard
 			new TemplateConfigurationService(this).generateTemplate(); 
 			new TemplateErrorehandlerInterceptor(this).generateTemplate(); 
@@ -566,7 +563,7 @@ public class DataBase {
 
 			//Building Data of All Enumerations - CHECK OR REMOVE THIS FIXME!
 			List<Enumeration> enumList = new ArrayList<>();
-			HashMap<String, List<String>> map = this.getEnumeration();
+			Map<String, List<String>> map = this.getEnumeration();
 			for(String enumName: map.keySet()) {
 				enumList.add( new Enumeration(enumName, map.get(enumName)) );
 			}
@@ -596,7 +593,7 @@ public class DataBase {
 				}
 
 				new TemplateEntityIndex(tabella).generateTemplate(); 
-				new TemplateEntityService(tabella).generateTemplate();  						//DONE MANAGE DATES
+				new TemplateEntityService(tabella).generateTemplate();  					//DONE MANAGE DATES
 				new TemplateEntityRoute(tabella).generateTemplate(); 
 				new TemplateEntityModule(tabella).generateTemplate(); 
 				new TemplateEntityComponentTs(this, tabella).generateTemplate(); 
@@ -621,8 +618,8 @@ public class DataBase {
 			}
 
 			System.out.println("\nGenerating Project Files Succesfully Completed. Try It!");
-			System.out.println("-------------------------------------------------------");
-		} catch (IOException e) {
+			System.out.println("--------------------------------------------------------");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}catch(Throwable t){
 			t.printStackTrace();
@@ -683,7 +680,6 @@ public class DataBase {
 	            enumerationName = key;
 	        }
 		}
-		//System.out.println(" TABLE ============> " + tabellaName + "  ENUM =======> " + enumerationName);
 		return enumerationName;
 	}
 	

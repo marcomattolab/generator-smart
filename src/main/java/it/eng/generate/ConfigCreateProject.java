@@ -101,8 +101,8 @@ public class ConfigCreateProject {
         ObjectMapper mapper = new ObjectMapper();
         try {
             // JSON file to Java object - TODO CHANGE ME!!!
-	        String PATH = "/Users/marco/git/generator-smart/project.json";
-	        //String PATH = "C:\\Users\\Martorana\\git\\generator-smart\\project.json";
+	        //String PATH = "/Users/marco/git/generator-smart/project.json";
+	        String PATH = "C:\\Users\\Martorana\\git\\generator-smart\\project.json";
 	        ProjectConfig jsonConf = mapper.readValue(new File(PATH), ProjectConfig.class);
 	        String prettyJsonConf = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonConf);
 	        System.out.println("# Test - Project Configuration JSON => " + prettyJsonConf);
@@ -200,20 +200,6 @@ public class ConfigCreateProject {
 
 	public void setApp(String app) {
 		this.app = app;
-	}
-
-	public String toString() {
-		String ret = "";
-		ret+="\nURL CONNECTION:"+urlConnection;
-		ret+="\nUSERNAME:"+username;
-		ret+="\nPASSWORD:"+password;
-		ret+="\nOWNER:"+owner;
-		ret+="\nPATHNAME:"+pathname;
-		ret+="\nPACKAGE CLASS:"+packageclass;
-		ret+="\nDRIVER:"+driver;
-		ret+="\nDATABASE NAME"+dataBaseName;
-		ret+="\nTABLE PART NAME"+tablePartName;
-		return ret;
 	}
 
 	public String getSrcAopLoggingFolder() {
@@ -504,4 +490,17 @@ public class ConfigCreateProject {
 		this.isMysql = isMysql;
 	}
 
+	public String toString() {
+		String ret = "";
+		ret+="\nURL CONNECTION:"+urlConnection;
+		ret+="\nUSERNAME:"+username;
+		ret+="\nPASSWORD:"+password;
+		ret+="\nOWNER:"+owner;
+		ret+="\nPATHNAME:"+pathname;
+		ret+="\nPACKAGE CLASS:"+packageclass;
+		ret+="\nDRIVER:"+driver;
+		ret+="\nDATABASE NAME"+dataBaseName;
+		ret+="\nTABLE PART NAME"+tablePartName;
+		return ret;
+	}
 }

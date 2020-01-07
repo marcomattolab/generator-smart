@@ -70,7 +70,7 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 						}
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n               <!-- Add Relation: OneToMany -->";
+							body += "\n               <!-- Add Relation Type: OneToMany -->";
 							String track = "; trackBy: track"+Utils.getFirstUpperCase(nomeTabellaSx)+"ById";
 							body += "\n                <div class=\"form-group\">\r\n" +
 									"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"\" for=\"field_"+Utils.getFirstLowerCase(nomeTabellaSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaSx)+"</label>\r\n" +
@@ -83,11 +83,12 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 							//Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
-							body += "\n                <!-- Add Relation: ManyToMany -->";
+							// FIX settores ==> mysectors / nomeTabellaDx ==> nomeRelazioneSx
+							body += "\n                <!-- Add Relation   Name: "+nomeRelazioneSx+"   Type: ManyToMany   -->";
 							body += "\n                <div class=\"form-group\">\r\n" +
 									"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx.toLowerCase()+"\" for=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
 									"             		<select class=\"form-control\" id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" multiple name=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s\">\r\n" +
-									"                 		<option [ngValue]=\"getSelected("+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s, "+Utils.getFirstLowerCase(nomeTabellaDx)+"Option)\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeTabellaDx)+"Option of "+Utils.getFirstLowerCase(nomeTabellaDx)+"s"+" trackBy: track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById\">{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"Option."+nomeSelectSx+"}}</option>\r\n" +
+									"                 		<option [ngValue]=\"getSelected("+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s, "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option)\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s"+" trackBy: track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+nomeSelectSx+"}}</option>\r\n" +
 									"             		</select>\r\n" +
 									"                </div>\r\n\n";
 							}

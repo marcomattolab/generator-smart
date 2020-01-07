@@ -1,6 +1,8 @@
 package it.eng.generate.template.fe.entities;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.util.CollectionUtils;
@@ -55,7 +57,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"    "+nometabella+": "+INometabella+";\r\n\n" +
 		"    isSaving: boolean;\r\n";
 		
-		//MANAGE RELATIONS AND DATES
+		//MANAGE RELATIONS(DONE) AND DATES(TODO)
   		//"    incaricos: IIncarico[];\r\n" +
   		//"    dataNascitaDp: any;\r\n" +
 		body += printRelations(conf, INIT_SECTION);
@@ -64,7 +66,6 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
-			//Class filterType = column.getTypeColumn();
 			String nomeColonna = Utils.getFieldName(column);
 			if ( Utils.isDateField(column) ) {
 				String dateType = Utils.isLocalDate(column) ? "any" : "string" ;
@@ -93,7 +94,6 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		for (Iterator<?> iter = cset.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
-			//Class filterType = column.getTypeColumn();
 			String nomeColonna = Utils.getFieldName(column);
 			if ( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
 				body += "            this."+nomeColonna+" = this."+Utils.getClassNameLowerCase(tabella)+"."+nomeColonna+" != null ? this."+Utils.getClassNameLowerCase(tabella)+"."+nomeColonna+".format(DATE_TIME_FORMAT) : null;\r\n";
@@ -101,6 +101,8 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		}
 		body +=
 		"        });\r\n";
+		
+		
 		//Relations
 		body += printRelations(conf, NG_ONINIT_SECTION);
 		body +="    }\r\n\n" +
@@ -122,7 +124,6 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"    save() {\r\n" +
 		"        this.isSaving = true;\r\n" ;
 		
-		//Set fset = tabella.getColumnNames();
 		for (Iterator<?> iter = cset.iterator(); iter.hasNext();) {
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
@@ -186,7 +187,9 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 	}
 
 	private String printRelations(ConfigCreateProject conf, String section) {
+		Map<String, String> relMap = new HashMap<>();
 		String res = "";
+		
 		//Relations management
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
@@ -203,28 +206,35 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 						&& (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne))
 						&& nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 					if(IMPORT_SECTION.equals(section)) {
-						res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaDx)+".model';\n";
-						res += "import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n";
-					
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Interface", 
+								"import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaDx)+".model';\n");
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Model", 
+								"import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n");
+						
 					}else if(INIT_SECTION.equals(section)) {
-						res += "    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n";
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, "    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 						if (relationType.equals(Utils.OneToOne)) {
-							res += "    id"+Utils.getFirstUpperCase(nomeRelazioneSx)+": any;\n";
+							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION+"ANY", "    id"+Utils.getFirstUpperCase(nomeRelazioneSx)+": any;\n");
 						}
 						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
-						res += "        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n";
+						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
+								 "        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
 
 					}else if(TRACKBY_SECTION.equals(section)) {
 						if (relationType.equals(Utils.OneToOne)) {
-							res += 
-							"    track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaDx)+") {\r\n" +
-							"        return item.id;\r\n" +
-							"    }\r\n\n";
+							relMap.put(relationType+nomeTabellaSx+TRACKBY_SECTION, 
+									"    track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaDx)+") {\r\n" +
+									"        return item.id;\r\n" +
+									"    }\r\n\n");
 						}
+						
 					}else if(NG_ONINIT_SECTION.equals(section)) {
 						if (relationType.equals(Utils.OneToOne)) {
-							res += 	"\n       this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe(\n"+
+							
+							//KEY => relMap.put(relationType+nomeTabellaSx/*+nomeRelazioneSx*/+NG_ONINIT_SECTION, 
+							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+NG_ONINIT_SECTION, 
+									"\n       this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe(\n"+
 									"         (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
 						             "         if (!this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id) {\n"+
 						             "             this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
@@ -239,78 +249,113 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 						             "         },\n"+
 						             "         (res: HttpErrorResponse) => this.onError(res.message)\n"+
 						             "         );\n\n"+
-						             "         console.log(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id);\n\n";
-						} else if (relationType.equals(Utils.ManyToOne)) {
+						             "         console.log(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id);\n");
 							
-							res +=  "\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
+						} else if (relationType.equals(Utils.ManyToOne)) {
+//							res +=  "\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
+//						            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
+//						            "            this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
+//						            "        },\n"+
+//						            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
+//						            "        );\n\n";
+							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+NG_ONINIT_SECTION, 
+									"\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
 						            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
 						            "            this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
 						            "        },\n"+
 						            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
-						            "        );\n\n";
+						            "        );\n");
 						}
 					}
 				}
 				
 				
 				//Relations OneToMany
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& relationType.equals(Utils.OneToMany)
+				if(nomeTabellaSx!=null && nomeTabellaDx != null  && relationType.equals(Utils.OneToMany)
 						&& nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+					
 					if(IMPORT_SECTION.equals(section)) {
-						res += "import { I"+Utils.getFirstUpperCase(nomeTabellaSx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaSx)+".model';\n";
-						res += "import { "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaSx)+"';\n";
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Interface", 
+								"import { I"+Utils.getFirstUpperCase(nomeTabellaSx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaSx)+".model';\n");
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Model", 
+								"import { "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaSx)+"';\n");
+						
 					}else if(INIT_SECTION.equals(section)) {
-						res += "    "+Utils.getFirstLowerCase(nomeTabellaSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaSx)+"[];\n";
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
+								// TODO settores ==> mysectors / nomeTabellaDx ==> nomeRelazioneSx
+								//"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+								"    "+Utils.getFirstLowerCase(nomeTabellaSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
-						res += "        private "+Utils.getFirstLowerCase(nomeTabellaSx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service,\r\n";
+						//res += "        private "+Utils.getFirstLowerCase(nomeTabellaSx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service,\r\n";
+						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
+								"        private "+Utils.getFirstLowerCase(nomeTabellaSx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service,\r\n");
+						
 					}else if(TRACKBY_SECTION.equals(section)) {
-						res += 
-						"    track"+Utils.getFirstUpperCase(nomeTabellaSx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaSx)+") {\r\n" +
-						"        return item.id;\r\n" +
-						"    }\r\n\n";
+						relMap.put(relationType+nomeTabellaSx+TRACKBY_SECTION, 
+								"    track"+Utils.getFirstUpperCase(nomeTabellaSx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaSx)+") {\r\n" +
+								"        return item.id;\r\n" +
+								"    }\r\n\n");
+						
 					}else if(NG_ONINIT_SECTION.equals(section)) {
-						res +=  "\n        this."+Utils.getFirstLowerCase(nomeTabellaSx)+"Service.query().subscribe(\n"+
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
+								"\n        this."+Utils.getFirstLowerCase(nomeTabellaSx)+"Service.query().subscribe(\n"+
 					            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaSx)+"[]>) => {\n"+
 					            "            this."+Utils.getFirstLowerCase(nomeTabellaSx)+"s = res.body;\n"+
 					            "        },\n"+
 					            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
-					            "        );\n\n";
-					}
-				}
-				
-
-				// DONE Relations ManyToMany
-				// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
-				if(nomeTabellaSx!=null && nomeTabellaDx != null 
-						&& relationType.equals(Utils.ManyToMany)
-						&& nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-					if(IMPORT_SECTION.equals(section)) {
-						res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+nomeTabellaDx.toLowerCase()+".model';\n";
-						res += "import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+nomeTabellaDx.toLowerCase()+"';\n";
-					}else if(INIT_SECTION.equals(section)) {
-						res += "    "+Utils.getFirstLowerCase(nomeTabellaDx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n";
-					}else if(CONSTRUCTOR_SECTION.equals(section)) {
-						res += "        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n";
-					}else if(TRACKBY_SECTION.equals(section)) {
-						res += 
-						"    track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaDx)+") {\r\n" +
-						"        return item.id;\r\n" +
-						"    }\r\n\n";
-					}else if(NG_ONINIT_SECTION.equals(section)) {
-						res +=  "\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
-					            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
-					            "            this."+Utils.getFirstLowerCase(nomeTabellaDx)+"s = res.body;\n"+
-					            "        },\n"+
-					            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
-					            "        );\n\n";
+					            "        );\n");
+						
 						
 					}
 				}
 				
+
+				// DONE Relations ManyToMany ===> ex.  Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.ManyToMany)
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+					if(IMPORT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Interface", 
+							"import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+nomeTabellaDx.toLowerCase()+".model';\n");
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Model", 
+							"import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+nomeTabellaDx.toLowerCase()+"';\n");
+					
+					}else if(INIT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
+									"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+						// FIX settores ==> mysectors / nomeTabellaDx ==> nomeRelazioneSx
+						
+					}else if(CONSTRUCTOR_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
+							"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
+					
+					}else if(TRACKBY_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+TRACKBY_SECTION, 
+							"    track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById(index: number, item: I"+Utils.getFirstUpperCase(nomeTabellaDx)+") {\r\n" +
+							"        return item.id;\r\n" +
+							"    }\r\n\n");
+					
+					}else if(NG_ONINIT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
+							"\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
+				            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
+				            "            this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
+				            "        },\n"+
+				            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
+				            "        );\n");
+						
+					}
+				}
+				//
+				
 				
 			}
 		}
+		
+		//Print Relation Map
+		res += Utils.printRelationMap(res, relMap);
+				
 		return res;
 	}
 	

@@ -1,8 +1,10 @@
 package it.eng.generate.template.fe.shared;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.util.CollectionUtils;
 
@@ -31,14 +33,9 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 	}
 
 	public String getBody(){
-		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
-		String Nometabella = Utils.getEntityName(tabella);
-		String nometabella = Utils.getClassNameLowerCase(tabella);
-		String INometabella = Utils.getIName(tabella);
-		String NometabellaService = Utils.getEntityName(tabella);
-		
-		//Done MOVED THIS INTO UTILS
+		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+
 		List<Enumeration> enumList = Utils.getEnumerationsByDbAndTable(database, tabella);
 		
 		String body = 
@@ -120,6 +117,7 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 		//Generate IInetrface
 		body += Utils.generateIInterface(tabella, extendedList);
 		
+		
 		//Generate Class
 		body += Utils.generateIClass(tabella, extendedList);
 		
@@ -136,6 +134,7 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 	private String writeImportRelations(ConfigCreateProject conf) {
 		// body += "import { IIncarico } from 'app/shared/model/incarico.model';\r\n" 
 		String res = "";
+		Map<String, String> resMap = new HashMap<>();
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
@@ -148,20 +147,23 @@ public class TemplateEntitySharedModel extends AbstractResourceTemplate {
 						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
 						
 						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-							//import { ICompanyKeyword } from 'app/shared/model/company-keyword.model'; 
-							res += "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+nomeTabellaDx.toLowerCase()+".model';\n"; 
+							String impStr = "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+nomeTabellaDx.toLowerCase()+".model';\n"; 
+							resMap.put(nomeTabellaSx, impStr);
 						}
 						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-							//import { ICompany } from 'app/shared/model/company.model';
-							res += "import { I"+Utils.getFirstUpperCase(nomeTabellaSx)+" } from 'app/shared/model/"+nomeTabellaSx.toLowerCase()+".model';\n";
+							String impStr = "import { I"+Utils.getFirstUpperCase(nomeTabellaSx)+" } from 'app/shared/model/"+nomeTabellaSx.toLowerCase()+".model';\n";
+							resMap.put(nomeTabellaDx, impStr);
 						}
 					} 
 				} 
 			}
 		}
+		//Print Relation Map
+		res += Utils.printRelationMap(res, resMap);
 		res+="\n";
 		return res;
 	}
+
 
 	public String getClassName(){
 		return Utils.getClassNameLowerCase(tabella)+".model";

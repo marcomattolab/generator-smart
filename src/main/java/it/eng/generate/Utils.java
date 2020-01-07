@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -1183,6 +1184,24 @@ public class Utils {
 			}
 		}
 		return havingConstrains;
+	}
+	
+	
+	/**
+	 * Print body interpolating the Map with relations
+	 * 
+	 * @param res
+	 * @param relMap
+	 * @return res
+	 */
+	public static  String printRelationMap(String res, Map<String, String> relMap) {
+		if(relMap!= null && !relMap.isEmpty()) {
+			for (Map.Entry<String,String> entry : relMap.entrySet())  {
+				res +=  entry.getValue();
+				//System.out.println("#Map ManyToMany : Key = " + entry.getKey() +  ", Value = " + entry.getValue()); 
+			} 
+		}
+		return res;
 	}
 	
 }
