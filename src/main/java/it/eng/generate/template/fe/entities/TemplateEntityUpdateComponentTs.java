@@ -281,13 +281,11 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 								"import { "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaSx)+"';\n");
 						
 					}else if(INIT_SECTION.equals(section)) {
-						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
-								// TODO settores ==> mysectors / nomeTabellaDx ==> nomeRelazioneSx
-								//"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
-								"    "+Utils.getFirstLowerCase(nomeTabellaSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+INIT_SECTION, 
+								// DONE settores ==> mysectors / nomeTabellaDx ==> nomeRelazioneSx
+								"    "+Utils.getFirstLowerCase(nomeRelazioneDx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
-						//res += "        private "+Utils.getFirstLowerCase(nomeTabellaSx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service,\r\n";
 						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
 								"        private "+Utils.getFirstLowerCase(nomeTabellaSx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service,\r\n");
 						
@@ -298,10 +296,10 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 								"    }\r\n\n");
 						
 					}else if(NG_ONINIT_SECTION.equals(section)) {
-						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+INIT_SECTION, 
 								"\n        this."+Utils.getFirstLowerCase(nomeTabellaSx)+"Service.query().subscribe(\n"+
 					            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaSx)+"[]>) => {\n"+
-					            "            this."+Utils.getFirstLowerCase(nomeTabellaSx)+"s = res.body;\n"+
+					            "            this."+Utils.getFirstLowerCase(nomeRelazioneDx)+"s = res.body;\n"+
 					            "        },\n"+
 					            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
 					            "        );\n");

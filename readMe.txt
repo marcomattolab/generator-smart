@@ -32,4 +32,10 @@
 	- JMS e code asincrone
 	- Big Data , ML / AI	
 	
+	
+	cliente-update.component.ts => Duplicate identifier 'autores'
 
+	{"type":"OneToMany", "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito", "dxSelect":"nome"},
+	{"type":"OneToMany", "sxTable":"Autore", "sxName":"clienti2", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito2", "dxSelect":"nome"},
+	
+	
