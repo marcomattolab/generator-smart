@@ -1,0 +1,85 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Trasferta
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label position="fixed">Codice</ion-label>
+            <div item-content>
+                <span>{{trasferta.codice}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Descrizione</ion-label>
+            <div item-content>
+                <span>{{trasferta.descrizione}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Data Inizio</ion-label>
+            <div item-content>
+                <span>{{trasferta.dataInizio | date:'mediumDate'}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Data Fine</ion-label>
+            <div item-content>
+                <span>{{trasferta.dataFine | date:'mediumDate'}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Stato Trasferta</ion-label>
+            <div item-content>
+                <span>{{trasferta.statoTrasferta}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Note</ion-label>
+            <div item-content>
+                <span>{{trasferta.note}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Sede</ion-label>
+            <div item-content *ngIf="trasferta.sedeId">
+                <a>{{trasferta.sedeId}}</a>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Dipendente</ion-label>
+            <div item-content *ngIf="trasferta.dipendenteId">
+                <a>{{trasferta.dipendenteId}}</a>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Respondabile</ion-label>
+            <div item-content *ngIf="trasferta.respondabileId">
+                <a>{{trasferta.respondabileId}}</a>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Rif Commessa</ion-label>
+            <div item-content *ngIf="trasferta.rifCommessaId">
+                <a>{{trasferta.rifCommessaId}}</a>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Commessa</ion-label>
+            <div item-content *ngIf="trasferta.commessaId">
+                <a>{{trasferta.commessaId}}</a>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" color="primary" (click)="open(trasferta)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+    <ion-button expand="block" color="danger" (click)="deleteModal(trasferta)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+
+</ion-content>

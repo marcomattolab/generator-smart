@@ -1,0 +1,72 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Feedback
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label position="fixed">Categoria</ion-label>
+            <div item-content>
+                <span>{{feedback.categoria}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Descrizione</ion-label>
+            <div item-content>
+                <span>{{feedback.descrizione}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Valutazione</ion-label>
+            <div item-content>
+                <span>{{feedback.valutazione}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Data Valutazione</ion-label>
+            <div item-content>
+                <span>{{feedback.dataValutazione | date:'mediumDate'}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Allegato</ion-label>
+            <div item-content>
+                <div *ngIf="feedback.allegato">
+                    <a (click)="openFile(feedback.allegatoContentType, feedback.allegato)">
+                        <img [src]="'data:' + feedback.allegatoContentType + ';base64,' + feedback.allegato" style="max-width: 100%;" alt="feedback image"/>
+                    </a>
+                    {{feedback.allegatoContentType}}, {{byteSize(feedback.allegato)}}
+                </div>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Created By</ion-label>
+            <div item-content>
+                <span>{{feedback.createdBy}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Ai Note</ion-label>
+            <div item-content>
+                <span>{{feedback.aiNote}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Struttura</ion-label>
+            <div item-content *ngIf="feedback.strutturaId">
+                <a>{{feedback.strutturaId}}</a>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" color="primary" (click)="open(feedback)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+    <ion-button expand="block" color="danger" (click)="deleteModal(feedback)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+
+</ion-content>

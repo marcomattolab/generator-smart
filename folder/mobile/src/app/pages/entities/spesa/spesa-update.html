@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Spesa
+        </ion-title>
+
+        <ion-buttons slot="end">
+            <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+              <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+              <ion-icon name="md-checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+    <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+        <ion-list>
+            <ion-item [hidden]="!form.id">
+                <ion-label>ID</ion-label>
+                <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Categoria</ion-label>
+                <ion-select formControlName="categoria" id="field_categoria" >
+                        <ion-select-option value="VITTO">VITTO</ion-select-option>
+                        <ion-select-option value="ALLOGGIO">ALLOGGIO</ion-select-option>
+                        <ion-select-option value="TRASPORTO">TRASPORTO</ion-select-option>
+                        <ion-select-option value="RAPPRESENTANZA">RAPPRESENTANZA</ion-select-option>
+                        <ion-select-option value="ALTRO">ALTRO</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Sottocategoria</ion-label>
+                <ion-select formControlName="sottocategoria" id="field_sottocategoria" >
+                        <ion-select-option value="PRANZO">PRANZO</ion-select-option>
+                        <ion-select-option value="CENA">CENA</ion-select-option>
+                        <ion-select-option value="TAXI">TAXI</ion-select-option>
+                        <ion-select-option value="TRENO">TRENO</ion-select-option>
+                        <ion-select-option value="BUS">BUS</ion-select-option>
+                        <ion-select-option value="AEREO">AEREO</ion-select-option>
+                        <ion-select-option value="NOLEGGIO">NOLEGGIO</ion-select-option>
+                        <ion-select-option value="ALTRO">ALTRO</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Importo Spesa</ion-label>
+                <ion-input type="number" name="importoSpesa" formControlName="importoSpesa"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Data Spesa</ion-label>
+                <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dataSpesa" id="field_dataSpesa"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label>Stato</ion-label>
+                <ion-select formControlName="stato" id="field_stato" >
+                        <ion-select-option value="BOZZA">BOZZA</ion-select-option>
+                        <ion-select-option value="SOTTOPOSTA">SOTTOPOSTA</ion-select-option>
+                        <ion-select-option value="VALIDATA">VALIDATA</ion-select-option>
+                        <ion-select-option value="RIFIUTATA">RIFIUTATA</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Approved Date</ion-label>
+                <ion-datetime displayFormat="MM/DD/YYYY" formControlName="approvedDate" id="field_approvedDate"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label>Trasferta</ion-label>
+                <ion-select id="field_trasferta" formControlName="trasferta" [compareWith]="compareTrasferta">
+                    <ion-select-option [value]="null"></ion-select-option>
+                    <ion-select-option [value]="trasfertaOption.id" *ngFor="let trasfertaOption of trasfertas; trackBy: trackTrasfertaById">{{trasfertaOption.id}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Structure</ion-label>
+                <ion-select id="field_structure" formControlName="structure" [compareWith]="compareStruttura">
+                    <ion-select-option [value]="null"></ion-select-option>
+                    <ion-select-option [value]="strutturaOption.id" *ngFor="let strutturaOption of strutturas; trackBy: trackStrutturaById">{{strutturaOption.id}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>

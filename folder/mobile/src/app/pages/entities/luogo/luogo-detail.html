@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Luogo
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label position="fixed">Indirizzo</ion-label>
+            <div item-content>
+                <span>{{luogo.indirizzo}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Citta</ion-label>
+            <div item-content>
+                <span>{{luogo.citta}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Cap</ion-label>
+            <div item-content>
+                <span>{{luogo.cap}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Nazione</ion-label>
+            <div item-content>
+                <span>{{luogo.nazione}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Latitudine</ion-label>
+            <div item-content>
+                <span>{{luogo.latitudine}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Longitudine</ion-label>
+            <div item-content>
+                <span>{{luogo.longitudine}}</span>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" color="primary" (click)="open(luogo)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+    <ion-button expand="block" color="danger" (click)="deleteModal(luogo)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+
+</ion-content>

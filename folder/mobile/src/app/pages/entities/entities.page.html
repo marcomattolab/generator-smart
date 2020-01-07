@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{ 'TAB2_TITLE' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+      <ion-item *ngFor="let entity of allentities" (click)="openPage(entity)">
+        <h2>{{entity.name}}</h2>
+      </ion-item>
+  </ion-list>
+
+  <!-- 
+  <ion-list *ngIf="account.authorities.includes('ROLE_ADMIN')">
+      <ion-item *ngFor="let entity of allentities" (click)="openPage(entity)">
+        <h2>{{entity.name}}</h2>
+      </ion-item>
+  </ion-list>
+  <ion-list *ngIf="account.authorities.includes('ROLE_USER')">
+      <ion-item *ngFor="let centity of entities" (click)="openPage(centity)">
+        <h2>{{centity.name}}</h2>
+      </ion-item>
+  </ion-list>
+  -->
+ 
+  <div *ngIf="allentities.length === 0">
+    {{ 'EMPTY_ENTITIES_MESSAGE' | translate }}
+  </div>
+</ion-content>

@@ -1,0 +1,92 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Trasferta
+        </ion-title>
+
+        <ion-buttons slot="end">
+            <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+              <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+              <ion-icon name="md-checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+    <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+        <ion-list>
+            <ion-item [hidden]="!form.id">
+                <ion-label>ID</ion-label>
+                <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Codice</ion-label>
+                <ion-input type="text" name="codice" formControlName="codice"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Descrizione</ion-label>
+                <ion-input type="text" name="descrizione" formControlName="descrizione"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Data Inizio</ion-label>
+                <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dataInizio" id="field_dataInizio"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label>Data Fine</ion-label>
+                <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dataFine" id="field_dataFine"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label>Stato Trasferta</ion-label>
+                <ion-select formControlName="statoTrasferta" id="field_statoTrasferta"  required>
+                        <ion-select-option value="BOZZA">BOZZA</ion-select-option>
+                        <ion-select-option value="SOTTOPOSTA">SOTTOPOSTA</ion-select-option>
+                        <ion-select-option value="VALIDATA">VALIDATA</ion-select-option>
+                        <ion-select-option value="RIFIUTATA">RIFIUTATA</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-textarea placeholder="Note" formControlName="note" id="field_note"></ion-textarea>
+            </ion-item>
+            <ion-item>
+                <ion-label>Sede</ion-label>
+                <ion-select id="field_sede" formControlName="sede" [compareWith]="compareLuogo">
+                    <ion-select-option [value]="null"></ion-select-option>
+                    <ion-select-option [value]="luogoOption.id" *ngFor="let luogoOption of sedes; trackBy: trackLuogoById">{{luogoOption.id}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Dipendente</ion-label>
+                <ion-select id="field_dipendente" formControlName="dipendente" [compareWith]="comparePersona">
+                    <ion-select-option [value]="null"></ion-select-option>
+                    <ion-select-option [value]="personaOption.id" *ngFor="let personaOption of personas; trackBy: trackPersonaById">{{personaOption.id}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Respondabile</ion-label>
+                <ion-select id="field_respondabile" formControlName="respondabile" [compareWith]="comparePersona">
+                    <ion-select-option [value]="null"></ion-select-option>
+                    <ion-select-option [value]="personaOption.id" *ngFor="let personaOption of personas; trackBy: trackPersonaById">{{personaOption.id}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Rif Commessa</ion-label>
+                <ion-select id="field_rifCommessa" formControlName="rifCommessa" [compareWith]="compareCommessa">
+                    <ion-select-option [value]="null"></ion-select-option>
+                    <ion-select-option [value]="commessaOption.id" *ngFor="let commessaOption of commessas; trackBy: trackCommessaById">{{commessaOption.id}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Commessa</ion-label>
+                <ion-select id="field_commessa" formControlName="commessa" [compareWith]="compareCommessa">
+                    <ion-select-option [value]="null"></ion-select-option>
+                    <ion-select-option [value]="commessaOption.id" *ngFor="let commessaOption of commessas; trackBy: trackCommessaById">{{commessaOption.id}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>

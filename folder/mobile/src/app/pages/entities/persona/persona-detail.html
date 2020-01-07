@@ -1,0 +1,73 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Persona
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label position="fixed">Nome</ion-label>
+            <div item-content>
+                <span>{{persona.nome}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Cognome</ion-label>
+            <div item-content>
+                <span>{{persona.cognome}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Data Nascita</ion-label>
+            <div item-content>
+                <span>{{persona.dataNascita}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Codice Fiscale</ion-label>
+            <div item-content>
+                <span>{{persona.codiceFiscale}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Cid</ion-label>
+            <div item-content>
+                <span>{{persona.cid}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Sede</ion-label>
+            <div item-content>
+                <span>{{persona.sede}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Profilo</ion-label>
+            <div item-content>
+                <span>{{persona.profilo}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Email</ion-label>
+            <div item-content>
+                <span>{{persona.email}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="fixed">Telefono</ion-label>
+            <div item-content>
+                <span>{{persona.telefono}}</span>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" color="primary" (click)="open(persona)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+    <ion-button expand="block" color="danger" (click)="deleteModal(persona)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+
+</ion-content>

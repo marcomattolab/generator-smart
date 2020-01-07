@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Giustificativo
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label position="fixed">Allegato</ion-label>
+            <div item-content>
+                <div *ngIf="giustificativo.allegato">
+                    <a (click)="openFile(giustificativo.allegatoContentType, giustificativo.allegato)">
+                        <img [src]="'data:' + giustificativo.allegatoContentType + ';base64,' + giustificativo.allegato" style="max-width: 100%;" alt="giustificativo image"/>
+                    </a>
+                    {{giustificativo.allegatoContentType}}, {{byteSize(giustificativo.allegato)}}
+                </div>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Spesa</ion-label>
+            <div item-content *ngIf="giustificativo.spesaId">
+                <a>{{giustificativo.spesaId}}</a>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" color="primary" (click)="open(giustificativo)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+    <ion-button expand="block" color="danger" (click)="deleteModal(giustificativo)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+
+</ion-content>
