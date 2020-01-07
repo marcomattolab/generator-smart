@@ -79,7 +79,6 @@ public class TemplateEntityI18N extends AbstractResourceTemplate{
 						if (nomeTabellaDx.toLowerCase().equals(nomeTabella.toLowerCase()) ) {
 							Column column = new Column();
 							//DONE    nomeTabellaSx ==> nomeRelazioneDx    /   autore ==> preferito2
-							//column.setName(nomeTabellaSx);
 							column.setName(nomeRelazioneDx);
 							body += Utils.generateJson(column)+",\n";
 						}

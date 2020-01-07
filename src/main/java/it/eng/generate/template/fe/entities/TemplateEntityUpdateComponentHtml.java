@@ -74,9 +74,8 @@ public class TemplateEntityUpdateComponentHtml extends AbstractResourceTemplate 
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
 							body += "\n               <!-- Add Relation  Name: "+nomeRelazioneDx+" Type: OneToMany -->";
 							String track = "; trackBy: track"+Utils.getFirstUpperCase(nomeTabellaSx)+"ById";
-							// TODO TEST  "selectName"   autoreS ==> clientiS     /      nomeTabellaSx ==> nomeRelazioneSx
-							// TODO TEST   "relations"   autore  ==> preferito2   /      nomeTabellaSx ==> nomeRelazioneDx
-							String selectName = Utils.getFirstLowerCase(nomeRelazioneSx)+"s";
+							// DONE TEST   "relations"   autore  ==> preferito2   /      nomeTabellaSx ==> nomeRelazioneDx
+							String selectName = Utils.getFirstLowerCase(nomeRelazioneDx)+"s";
 							
 							body += "\n                <div class=\"form-group\">\r\n" +
 									"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" for=\"field_"+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</label>\r\n" +

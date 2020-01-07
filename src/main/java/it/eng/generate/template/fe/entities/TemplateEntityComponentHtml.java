@@ -303,6 +303,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeSelectSx = rel.getSxSelect();
 				String nomeSelectDx = rel.getDxSelect();
@@ -340,7 +341,9 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 								result += "			<!-- TH - OneToMany -->\n";
 								result += 
 									  "			<th jhiSortBy=\""+Utils.getFirstLowerCase(nomeTabellaDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"\">\n"
-									+ "			  <span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaSx)+"</span>\n"
+									//DONE    nomeTabellaSx ==> nomeRelazioneDx    /   autore ==> preferito2
+								  //+ "			  <span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</span>\n"
+									+ "			  <span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</span>\n"
 									+ "			  <fa-icon [icon]=\"'sort'\"></fa-icon>\n"
 								//+ "			  <span class=\"fa\" [ngClass]=\"getOrderByIcon('"+Utils.getFirstLowerCase(nomeTabellaDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"')\"></span>\n"
 									+ "			</th>\r\n";
