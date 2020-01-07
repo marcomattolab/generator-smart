@@ -67,6 +67,7 @@ public class TemplateEntityDetailComponentHtml extends AbstractResourceTemplate 
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
 				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
 				String nomeSelectSx = rel.getSxSelect();
 				String nomeSelectDx = rel.getDxSelect();
@@ -84,16 +85,19 @@ public class TemplateEntityDetailComponentHtml extends AbstractResourceTemplate 
 									"                </dd>\r\n";
 							
 						}
+						
 					} else if(relationType.equals(Utils.OneToMany)) {
+						//DONE    nomeTabellaSx ==> nomeRelazioneDx    /   autore ==> preferito2
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n                <!-- Add Relation: OneToMany -->\n";
-							body += "                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"\">"+Utils.getFirstUpperCase(nomeTabellaSx)+"</span></dt>\r\n" +
+							body += "\n                <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany -->\n";
+							body += "                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</span></dt>\r\n" +
 									"                <dd>\r\n" + 
-									"                    <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id\">\r\n"+
-									"                        <a [routerLink]=\"['/"+Utils.getFirstLowerCase(nomeTabellaSx)+"', "+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+"Id, 'view']\">{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeTabellaSx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</a>\r\n"+
+									"                    <div *ngIf=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id\">\r\n"+
+									"                        <a [routerLink]=\"['/"+Utils.getFirstLowerCase(nomeTabellaSx)+"', "+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id, 'view']\">{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</a>\r\n"+
 									"                    </div>\r\n"+
 									"                </dd>\r\n";
 						}
+						
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 							body += "\n                <!-- Add Relation: ManyToMany -->\n";
@@ -104,6 +108,7 @@ public class TemplateEntityDetailComponentHtml extends AbstractResourceTemplate 
 									"                    </span>\r\n"+
 									"                </dd>\r\n";
 						}
+						
 					}
 				}
 			}
