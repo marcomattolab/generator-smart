@@ -14,9 +14,12 @@ import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
+	private static final boolean GENERATE_SEARCH_FILTER = false;
+
 	private static final String TH = "TH";
 	private static final String TD = "TD";
 	private static final String printButtonSizeMedium = "16px";
+	
 	// FILTER_COLUMN_SIZE (12/4)   ==>   3 filtri di ricerca per riga 
 	private static int FILTER_COLUMN_SIZE = 4; 
 	
@@ -146,9 +149,11 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			
 			}
 		}
+
 		//DEVELOP RELATIONS (SEARCH FILTERS)
-		body += printRelationSearchFilter(conf);
-		
+		if(GENERATE_SEARCH_FILTER){
+			body += printRelationSearchFilter(conf);
+		}
 		
 		//Campi di ricerca
 		body +=
@@ -302,6 +307,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
+				String nomeSelectSx = rel.getSxSelect();
 				String nomeRelazioneSx = rel.getSxName();
 				String nomeRelazioneDx = rel.getDxName();
 				String nomeTabellaDx = rel.getDxTable();
@@ -311,26 +317,22 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 					//Relations OneToOne / ManyToOne
 					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-							result += "\n               <!-- SearchFilter Add Relation: OneToOne / ManyToOne -->";
-							result += //TODO CHANGE TEXT => SELECT
-									"                        <div class=\"col-md-"+FILTER_COLUMN_SIZE+"\">\r\n" +
-									"                            <div class=\"form-group\">\r\n" +
-									"                                <label jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstLowerCase(nomeRelazioneSx)+"</label>\r\n" +
-									"                                <input formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" type=\"text\" class=\"form-control\" />\r\n" +
-									"                            </div>\r\n" +
-									"                        </div>\r\n";	
-							
-//							body += "             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"\" for=\"field_"+nomeRelazioneSx+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
-//									"             		<select class=\"form-control\" id=\"field_"+nomeRelazioneSx+"\" name=\""+nomeRelazioneSx+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"Id\">\r\n" +
-//									"                 		<option [ngValue]=\"null\"></option>\r\n" +
-//									"                 		<option [ngValue]=\""+nomeRelazioneSx+"Option.id\" *ngFor=\"let "+nomeRelazioneSx+"Option of "+nomeRelazioneSx+"s"+track+"\">{{"+nomeRelazioneSx+"Option."+nomeSelectSx+"}}</option>\r\n" +
-//									"             		</select>\r\n" +
+							result += "\n                    <!-- SearchFilter Add Relation: OneToOne / ManyToOne -->\n"+
+									"                    <div class=\"col-md-"+FILTER_COLUMN_SIZE+"\">\r\n" +
+									"                          <div class=\"form-group\">\r\n" +
+									"                             <label jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
+									"                                <select class=\"form-control\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" >\r\n"+
+									"                 					<option [ngValue]=\"null\"></option>\r\n" +
+									"                 					<option [ngValue]=\""+nomeRelazioneSx+"Option.id\" *ngFor=\"let "+nomeRelazioneSx+"Option of "+nomeRelazioneSx+"s"+"\">{{"+nomeRelazioneSx+"Option."+nomeSelectSx+"}}</option>\r\n" +
+									"                                </select>\r\n" +
+									"                          </div>\r\n\n" +
+									"			          </div>\r\n" ;
 						}
 						
 					} else if (relationType.equals(Utils.OneToMany)) {
 						//Relations OneToMany	
 						if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-							result += "\n               <!-- SearchFilter Add Relation: OneToMany -->";
+							result += "\n               <!-- SearchFilter Add Relation: OneToMany -->\n";
 							result += //TODO CHANGE TEXT => SELECT
 									"                        <div class=\"col-md-"+FILTER_COLUMN_SIZE+"\">\r\n" +
 									"                            <div class=\"form-group\">\r\n" +

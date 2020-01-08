@@ -12,8 +12,7 @@
   	- LOW - Modello JSON => Develop wizard to create JSON project (see https://www.cc28tech.com/angular-multi-step-wizard-part-1/ )
 
 ## FILTRI RICERCA@
-	1. Generare filtri di ricerca da file di JSON in ordine !! (txt, range date, enumeration, range valori numerici)
-	2. @Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri numerici non vengono inviati dal FE!!
+	2. @Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri numerici non vengonoelaborati da BE (id.greatherThan non funge)
 	3. Add filtri rierca relazioni OneToMany,.. etc
 	4. Stampa PDF/XLS inserire criteria come filtri ricerca 
 			
@@ -31,3 +30,16 @@
 	- JMS e code asincrone
 	- Big Data , ML / AI	
 	
+
+	
+	ONE TO ONE FILTER
+               			<!-- SearchFilter Add Relation: OneToOne / ManyToOne XXX -->                        
+               			<div class="col-md-4">
+                        	<div class="form-group">
+                                <label jhiTranslate="demogeneratedApp.autore.bestseller">bestseller</label>
+                                 <select class="form-control" formControlName="bestsellerId" >
+               						<option [ngValue]="null"></option>
+               						<option [ngValue]="autore.bestsellerId">{{autore.bestsellerIsbn}}</option>
+                                  </select>
+                           </div>
+			             </div>
