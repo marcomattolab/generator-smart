@@ -17,6 +17,7 @@ public class ProjectConfig {
     private String username;
     private String password;
     private String pathname;
+    private String pathnameEnvB;
     private String projectName;
     private String urlConnection;
     private List<String> languages;
@@ -134,6 +135,12 @@ public class ProjectConfig {
 	}
 	public void setRelations(List<ProjectRelation> relations) {
 		this.relations = relations;
+	}
+	public String getPathnameEnvB() {
+		return pathnameEnvB;
+	}
+	public void setPathnameEnvB(String pathnameEnvB) {
+		this.pathnameEnvB = pathnameEnvB;
 	}
 	
 }

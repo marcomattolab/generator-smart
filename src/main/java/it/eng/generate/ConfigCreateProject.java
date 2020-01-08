@@ -1,12 +1,14 @@
 package it.eng.generate;
 
 import java.io.File;
-import java.net.URL;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConfigCreateProject {
+	//TODO CHANGE_ME to modify Destination Path !!!
+	private static final boolean USE_PATHNAME_ENV_B = false;
+	
 	private boolean isOracle;
 	private boolean isMysql;
 	private boolean generateTest;
@@ -84,7 +86,7 @@ public class ConfigCreateProject {
 		this.setPassword(jsonConf.getPassword());
 		this.setUsername(jsonConf.getUsername());
 		this.setTablePartName(jsonConf.getTablePartName());
-		this.setPathname(jsonConf.getPathname());
+		this.setPathname(USE_PATHNAME_ENV_B ? jsonConf.getPathnameEnvB() : jsonConf.getPathname());
 		this.setProjectName(jsonConf.getProjectName());
 		this.setUrlConnection(jsonConf.getUrlConnection());
 		this.setEnumerations(jsonConf.getEnumerations());
@@ -101,11 +103,6 @@ public class ConfigCreateProject {
 	public ProjectConfig readProjectJson() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-        	// JSON file to Java object - TODO CHANGE ME!!!   
-        	// 		See file called "project.json" and property called "pathname" 
-        	//destination pathname Apple   => "/Users/marco/eclipse-workspace/",
-        	//destination pathname Windows => "C:\\eclipse-workspace\\"
-	        
 	        String projectParentPath = System.getProperty("user.dir");
 	        System.out.println("# Parent Directory Path : "+ projectParentPath);
 	        String PATH = projectParentPath + File.separator + "project.json";
