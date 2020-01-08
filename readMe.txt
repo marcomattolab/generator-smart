@@ -72,7 +72,37 @@
                                                [tag]="tagEnum.COMMITTENTE"
                                                [completeClienteList]="committenti"
                                                [incaricoClienteList]="incarico.committentes"></jhi-selezione-cliente>
-                                               
+              ...............
+              
+              
+              
+              FILTER 
+              <div class="col-md-4">
+                            <div class="form-group">
+                                <label jhiTranslate="imprendocasaApp.listaContatti.incarico">Incarico</label>
+                                <input formControlName="incarico" id="typeahead-template-incarico" type="text"
+                                       class="form-control" [ngbTypeahead]="searchIncarico"
+                                       [inputFormatter]="incaricoFormatter" [resultFormatter]="incaricoFormatter"/>
+                            </div>
+                        </div>
+                        
+                       ......
+        searchIncarico = (text$: Observable<string>) =>
+        text$.pipe(
+            debounceTime(200),
+            map(term => term === '' ? []
+                : this.incaricos.filter(v => v.riferimento.toLowerCase().indexOf(term.toLowerCase()) > -1
+                    || v.tipo.toLowerCase().indexOf(term.toLowerCase()) > -1 || v.id > -1).slice(0, 10))
+        );
+
+    // clienteFormatter = (x: Cliente) => x ? (x.cognome + ' ' + x.nome + ' (' + x.codiceFiscale + ')') : '';
+    clienteFormatter = (x: Cliente) => x ? (x.cognome + ' ' + x.nome) : '';
+    incaricoFormatter = (x: Incarico) => x ? (x.riferimento + ' ' + x.tipo + ' (' + x.id + ') ') : '';
+                       
+                        
+                        
+                        
+                                                         
                                                
         
         
