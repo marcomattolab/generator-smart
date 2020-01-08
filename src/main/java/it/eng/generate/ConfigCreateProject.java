@@ -1,6 +1,7 @@
 package it.eng.generate;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -97,15 +98,22 @@ public class ConfigCreateProject {
 	/**
 	 * Read Project configuration JSON
 	 */
-	public static ProjectConfig readProjectJson() {
+	public ProjectConfig readProjectJson() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            // JSON file to Java object - TODO CHANGE ME!!!
-	        String PATH = "/Users/marco/git/generator-smart/project.json";
-	        //String PATH = "C:\\Users\\Martorana\\git\\generator-smart\\project.json";
+        	// JSON file to Java object - TODO CHANGE ME!!!   
+        	// 		See file called "project.json" and property called "pathname" 
+        	//destination pathname Apple   => "/Users/marco/eclipse-workspace/",
+        	//destination pathname Windows => "C:\\eclipse-workspace\\"
+	        
+	        String projectParentPath = System.getProperty("user.dir");
+	        System.out.println("# Parent Directory Path : "+ projectParentPath);
+	        String PATH = projectParentPath + File.separator + "project.json";
+	        System.out.println("## Project File Path : "+ PATH);
+	        		
 	        ProjectConfig jsonConf = mapper.readValue(new File(PATH), ProjectConfig.class);
 	        String prettyJsonConf = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonConf);
-	        System.out.println("# Test - Project Configuration JSON => " + prettyJsonConf);
+	        System.out.println("### Test - Project Configuration JSON => " + prettyJsonConf);
             	
             return jsonConf;
         } catch (Exception e) {
