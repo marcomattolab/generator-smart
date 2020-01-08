@@ -1,8 +1,6 @@
 package it.eng.generate.template.fe.entities;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.util.CollectionUtils;
 
@@ -16,11 +14,12 @@ import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
-
 	private static final String TH = "TH";
 	private static final String TD = "TD";
 	private static final String printButtonSizeMedium = "16px";
-
+	// FILTER_COLUMN_SIZE (12/4)   ==>   3 filtri di ricerca per riga 
+	private static int FILTER_COLUMN_SIZE = 4; 
+	
 	public TemplateEntityComponentHtml(DataBase database, Table tabella) {
 		super(database);
 		this.tabella = tabella;
@@ -64,11 +63,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		"                    <div class=\"row\" [formGroup]=\"myGroup\">\r\n";
 		
 		
-		int COLUMN_SIZE = 4;
-		Set<?> set = tabella.getColumnNames();
-		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for (Column column : tabella.getSortedColumns()) {
 			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
 			String Splitted = Utils.splitCamelCase(ColumnName);
@@ -77,7 +72,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			
 			if (filterType.getName().equals("java.lang.String") && !isEnumeration) {
 				body += //TEXT
-				"                        <div class=\"col-md-"+COLUMN_SIZE+"\">\r\n" +
+				"                        <div class=\"col-md-"+FILTER_COLUMN_SIZE+"\">\r\n" +
 				"                            <div class=\"form-group\">\r\n" +
 				"                                <label jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+Splitted+"</label>\r\n" +
 				"                                <input formControlName=\""+columnname+"\" type=\"text\" class=\"form-control\" />\r\n" +
@@ -86,7 +81,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 				
 			} else if(filterType.getName().equals("java.lang.String") && isEnumeration) {
 				body += //ENUMERATION
-				"                        <div class=\"col-md-"+COLUMN_SIZE+"\">\r\n" +
+				"                        <div class=\"col-md-"+FILTER_COLUMN_SIZE+"\">\r\n" +
 				"                              <div class=\"form-group\">\r\n" +
 				"                                   <label jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+ColumnName+"</label>\r\n" +
 				"                                   <select class=\"form-control\" formControlName=\""+columnname+"\" >\r\n";
@@ -107,7 +102,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 				
 			} else if(Utils.isDateField(column)) { 
 				body +=
-				"                        <div class=\"col-md-"+COLUMN_SIZE+"\">\r\n" +
+				"                        <div class=\"col-md-"+FILTER_COLUMN_SIZE+"\">\r\n" +
 				"                            <div class=\"form-group\">\r\n" +
 				"                                <label jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+Splitted+"(Da / A)</label>\r\n" +
 				"                                <div class=\"row\">\r\n" +
@@ -128,7 +123,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			} else if(Utils.isNumericField(column)) { 
 				//NUMERICS
 				body +=
-				"                        <div class=\"col-md-"+COLUMN_SIZE+"\">\r\n" +
+				"                        <div class=\"col-md-"+FILTER_COLUMN_SIZE+"\">\r\n" +
 				"                            <div class=\"form-group\">\r\n" +
 				"                                <label jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+Splitted+" (Da / A)</label>\r\n" +
 				"                                <div class=\"row\">\r\n" +
@@ -148,11 +143,13 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			
 			} else {
 				// TODO DEVELOP THESE CLOB/BLOBS ...
+			
 			}
-			
-			//TODO DEVELOP RELATIONS (SEARCH FILTERS)
-			
 		}
+		//TODO DEVELOP RELATIONS (SEARCH FILTERS)
+
+		
+		
 		
 		//Campi di ricerca
 		body +=
@@ -231,6 +228,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			String columnname = Utils.getFieldName(column);
 			if(Utils.isPrimaryKeyID(column) ) {
 				//System.out.println("#Skip generation for Primary Key ID..");
+				
 			} else if(Utils.isDateField(column)) {
 				/**
 				 * LocalDate ==> | date:'mediumDate'"
@@ -363,7 +361,6 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 						//Relations ManyToMany - DEVELOP THIS!
 					}
 				}
-				
 				
 				
 			}

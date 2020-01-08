@@ -53,9 +53,9 @@ public class TemplateEntityDetailComponentHtml extends AbstractResourceTemplate 
 				
 				body += 
 						"                <dt><span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+splitted+"</span></dt>\r\n" +
-								"                <dd>\r\n" + 
-								spanField + 
-								"                </dd>\r\n";
+						"                <dd>\r\n" + 
+						spanField + 
+						"                </dd>\r\n";
 			}
 			
 		}
