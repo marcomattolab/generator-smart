@@ -1,0 +1,42 @@
+<div class="cliente-selection">
+    <div class="form-group">
+        <label for="{{inputControlId}}">{{label}}</label>
+
+        <button class="btn btn-outline-primary btn-sm mb-md-2 float-right" type="button"
+                (click)="nuovoCliente()">
+            <fa-icon [icon]="'plus'"></fa-icon> {{buttonLabel}}
+        </button>
+
+        <input id="{{inputControlId}}" type="text" class="form-control"
+               name="{{inputControlId}}" [ngbTypeahead]="search"
+               (selectItem)="onSelectCliente($event)"
+               #typeahead="ngbTypeahead"
+               (focus)="focus$.next($event.target.value)"
+               (click)="click$.next($event.target.value)"/>
+    </div>
+    <div class="table-responsive table-light" *ngIf="isClientiSelezionati()">
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th jhiTranslate="imprendocasaApp.cliente.nome">Nome</th>
+                <th jhiTranslate="imprendocasaApp.cliente.cognome">Cognome</th>
+                <th jhiTranslate="imprendocasaApp.cliente.codiceFiscale">Codice Fiscale</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let cliente of incaricoClienteList">
+                <td>{{cliente.nome}}</td>
+                <td>{{cliente.cognome}}</td>
+                <td>{{cliente.codiceFiscale}}</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm rounded-circle"
+                            title="{{'entity.action.remove' | translate}}" (click)="rimuoviCliente(cliente)">
+                        <span class="fa fa-close"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

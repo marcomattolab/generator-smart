@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConfigCreateProject {
 	//TODO CHANGE_ME to modify Destination Path !!!
-	//private static final boolean USE_PATHNAME_ENV_B = true;	//MACHINE APPLE
-	private static final boolean USE_PATHNAME_ENV_B = false;  	//MACHINE WINDOWS
+	private static final boolean USE_PATHNAME_ENV_B = true;	//MACHINE APPLE
+	//private static final boolean USE_PATHNAME_ENV_B = false;  	//MACHINE WINDOWS
 	
 	private boolean isOracle;
 	private boolean isMysql;

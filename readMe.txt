@@ -32,14 +32,48 @@
 	
 
 	
-	ONE TO ONE FILTER
-               			<!-- SearchFilter Add Relation: OneToOne / ManyToOne XXX -->                        
-               			<div class="col-md-4">
-                        	<div class="form-group">
-                                <label jhiTranslate="demogeneratedApp.autore.bestseller">bestseller</label>
-                                 <select class="form-control" formControlName="bestsellerId" >
-               						<option [ngValue]="null"></option>
-               						<option [ngValue]="autore.bestsellerId">{{autore.bestsellerIsbn}}</option>
-                                  </select>
-                           </div>
-			             </div>
+	@ ONE TO ONE FILTER
+	<!-- SearchFilter Add Relation: OneToOne / ManyToOne  -->                        
+	<div class="col-md-4">
+        <label jhiTranslate="demogeneratedApp.autore.bestseller">bestseller</label>
+        <select class="form-control" id="field_proponente"
+                formControlName="proponenteId" name="committente">
+            <option *ngFor="let proponente of proponenti" ngDefaultControl
+                    [value]="proponente.id">
+                {{proponente.nome}} {{proponente.cognome}}
+            </option>
+        </select>
+    </div>
+    
+    
+    import {
+    checkAndCompileSearchBetween,
+    checkAndCompileSearchFilterContains, checkAndCompileSearchFilterEquals,
+    checkAndCompileSearchFilterGt,
+    checkAndCompileSearchFilterLt,
+    ITEMS_PER_PAGE
+} from 'app/shared'
+
+
+ 		// filtro agente
+        searchFilter = checkAndCompileSearchFilterContains(formClienteControls, searchFilter, 'agente');
+        // filtro partner
+        searchFilter = checkAndCompileSearchFilterEquals(formClienteControls, searchFilter, 'partnerId');
+        // filtroPrezzo
+		searchFilter = checkAndCompileSearchBetween(formClienteControls, searchFilter, 'prezzoAcquistoD', 'prezzoAcquistoA', 'prezzoAcquisto');
+        
+        
+        
+        
+        <jhi-selezione-cliente (clienteListChanges)="onCommittentiChanges($event)"
+                                               label="{{'imprendocasaApp.incarico.committente' | translate}}"
+                                               buttonLabel="{{'imprendocasaApp.incarico.committenteNuovo' | translate}}"
+                                               [incaricoId]="getIncaricoId()"
+                                               [tag]="tagEnum.COMMITTENTE"
+                                               [completeClienteList]="committenti"
+                                               [incaricoClienteList]="incarico.committentes"></jhi-selezione-cliente>
+                                               
+                                               
+        
+        
+                            
