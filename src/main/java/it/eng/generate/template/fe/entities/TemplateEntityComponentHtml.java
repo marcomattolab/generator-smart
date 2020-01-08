@@ -146,9 +146,8 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			
 			}
 		}
-		//TODO DEVELOP RELATIONS (SEARCH FILTERS)
-
-		
+		//DEVELOP RELATIONS (SEARCH FILTERS)
+		body += printRelationSearchFilter(conf);
 		
 		
 		//Campi di ricerca
@@ -203,6 +202,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 			String Splitted = Utils.splitCamelCase(ColumnName);
 			if(Utils.isPrimaryKeyID(column) ) {
 				//System.out.println("#Skip generation for Primary Key ID..");
+				
 			} else {
 				body += "\t\t\t<th jhiSortBy=\""+columnname+"\"><span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+"."+columnname+"\">"+Splitted+"</span><fa-icon [icon]=\"'sort'\"></fa-icon></th>\r\n";
 			}
@@ -294,6 +294,80 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 		return body;
 	}
 
+	
+	
+	private String printRelationSearchFilter(ConfigCreateProject conf) {
+		String result = "";
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
+					//Relations OneToOne / ManyToOne
+					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
+						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							result += "\n               <!-- SearchFilter Add Relation: OneToOne / ManyToOne -->";
+							result += //TODO CHANGE TEXT => SELECT
+									"                        <div class=\"col-md-"+FILTER_COLUMN_SIZE+"\">\r\n" +
+									"                            <div class=\"form-group\">\r\n" +
+									"                                <label jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstLowerCase(nomeRelazioneSx)+"</label>\r\n" +
+									"                                <input formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" type=\"text\" class=\"form-control\" />\r\n" +
+									"                            </div>\r\n" +
+									"                        </div>\r\n";	
+							
+//							body += "             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"\" for=\"field_"+nomeRelazioneSx+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
+//									"             		<select class=\"form-control\" id=\"field_"+nomeRelazioneSx+"\" name=\""+nomeRelazioneSx+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx+"Id\">\r\n" +
+//									"                 		<option [ngValue]=\"null\"></option>\r\n" +
+//									"                 		<option [ngValue]=\""+nomeRelazioneSx+"Option.id\" *ngFor=\"let "+nomeRelazioneSx+"Option of "+nomeRelazioneSx+"s"+track+"\">{{"+nomeRelazioneSx+"Option."+nomeSelectSx+"}}</option>\r\n" +
+//									"             		</select>\r\n" +
+						}
+						
+					} else if (relationType.equals(Utils.OneToMany)) {
+						//Relations OneToMany	
+						if (nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							result += "\n               <!-- SearchFilter Add Relation: OneToMany -->";
+							result += //TODO CHANGE TEXT => SELECT
+									"                        <div class=\"col-md-"+FILTER_COLUMN_SIZE+"\">\r\n" +
+									"                            <div class=\"form-group\">\r\n" +
+									"                                <label jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</label>\r\n" +
+									"                                <input formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" type=\"text\" class=\"form-control\" />\r\n" +
+									"                            </div>\r\n" +
+									"                        </div>\r\n";	
+
+//							body += "\n                <div class=\"form-group\">\r\n" +
+//									"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" for=\"field_"+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</label>\r\n" +
+//									"             		<select class=\"form-control\" id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" name=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id\">\r\n" +
+//									"                 		<option [ngValue]=\"null\"></option>\r\n" +
+//									"                 		<option [ngValue]=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option of "+selectName+track+"\">{{"+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option."+nomeSelectDx+"}}</option>\r\n" +
+//									"             		</select>\r\n" +
+//									"                </div>\r\n\n";
+						}
+						
+					} else if (relationType.equals(Utils.ManyToMany)) {
+						//Relations ManyToMany  (TODO DEVELOP THIS)
+						
+//						//TODO CHANGE TEXT => SELECT
+//						body += "\n                <!-- Add Relation   Name: "+nomeRelazioneSx+"   Type: ManyToMany   -->";
+//						body += "\n                <div class=\"form-group\">\r\n" +
+//								"             		<label class=\"form-control-label\" jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+nomeRelazioneSx.toLowerCase()+"\" for=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
+//								"             		<select class=\"form-control\" id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" multiple name=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [(ngModel)]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s\">\r\n" +
+//								"                 		<option [ngValue]=\"getSelected("+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s, "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option)\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s"+" trackBy: track"+Utils.getFirstUpperCase(nomeTabellaDx)+"ById\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+nomeSelectSx+"}}</option>\r\n" +
+//								"             		</select>\r\n" +
+//								"                </div>\r\n\n";
+						
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	
 	private String buildRelations(ConfigCreateProject conf, String type) {
 		String result = "";
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
@@ -358,10 +432,9 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 						
 						
 					} else if (relationType.equals(Utils.ManyToMany)) {
-						//Relations ManyToMany - DEVELOP THIS!
+						//Relations ManyToMany - TODO DEVELOP THIS!
 					}
 				}
-				
 				
 			}
 		}
