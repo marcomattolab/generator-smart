@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h4 class="modal-title" jhiTranslate="imprendocasaApp.incarico.cambiaStato">Cambia stato</h4>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+        <span aria-hidden="true" class="fa fa-times"></span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="form-control-label" jhiTranslate="imprendocasaApp.incarico.stato"
+                       for="field_stato">Stato</label>
+                <select class="mdl-textfield__input" name="stato"
+                        [(ngModel)]="selectedState" id="field_stato">
+                    <option *ngFor="let stato of statiIncarico" [value]="stato">
+                        {{('imprendocasaApp.StatoIncarico.' + stato) | translate}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" (click)="activeModal.dismiss()" class="btn btn-outline-dark float-left"
+            jhiTranslate="entity.action.cancel">Cancel
+    </button>
+    <button type="button" (click)="save()" class="btn btn-success float-right"
+            jhiTranslate="entity.action.save">Save
+    </button>
+</div>
