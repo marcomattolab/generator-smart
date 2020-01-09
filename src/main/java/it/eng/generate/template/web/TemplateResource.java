@@ -2,6 +2,9 @@ package it.eng.generate.template.web;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.Table;
@@ -35,21 +38,19 @@ public class TemplateResource extends AbstractTemplate{
 				
 		String body = 
 		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestFolder()+";\r\n\n" +
-		"import java.io.ByteArrayOutputStream;\r\n" +
 		"import java.net.URI;\r\n" +
 		"import java.net.URISyntaxException;\r\n" +
 		"import java.util.Date;\r\n" +
 		"import java.util.List;\r\n" +
 		"import java.util.Optional;\r\n" +
 		"import javax.validation.Valid;\r\n" +
-		"import org.apache.commons.lang.StringUtils;\r\n" +
+		"import org.apache.commons.collections.CollectionUtils;\r\n" +
 		"import org.slf4j.Logger;\r\n" +
 		"import org.slf4j.LoggerFactory;\r\n" +
 		"import org.springframework.data.domain.Page;\r\n" +
 		"import org.springframework.data.domain.Pageable;\r\n" +
 		"import org.springframework.http.HttpHeaders;\r\n" +
 		"import org.springframework.http.HttpStatus;\r\n" +
-		"import org.springframework.http.MediaType;\r\n" +
 		"import org.springframework.http.ResponseEntity;\r\n" +
 		"import org.springframework.web.bind.annotation.DeleteMapping;\r\n" +
 		"import org.springframework.web.bind.annotation.GetMapping;\r\n" +
@@ -67,9 +68,7 @@ public class TemplateResource extends AbstractTemplate{
 		"import " + conf.getPackageclass() + "." + conf.getSrcServiceFolder()+ ".*;\r\n" +
 		"import " + conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder()+ ".*;\r\n" +
 		"import " + conf.getPackageclass() + "." + conf.getSrcWebRestErrorsFolder()+ ".*;\r\n" +
-		"import " + conf.getPackageclass() + "." + conf.getSrcWebRestUtilFolder()+ ".*;\r\n" +
-		"import net.sf.jasperreports.engine.JRDataSource;\r\n" +
-		"import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;\r\n\n" + 
+		"import " + conf.getPackageclass() + "." + conf.getSrcWebRestUtilFolder()+ ".*;\r\n\n" +
 		"/**\r\n" +
 		" * REST controller for managing "+Utils.getEntityName(tabella)+".\r\n" +
 		" */\r\n" +
@@ -183,43 +182,17 @@ public class TemplateResource extends AbstractTemplate{
 		 "	@GetMapping(\"/"+entita+"sExport\")\r\n" +
 		"	@Timed\r\n" +
 		 "	public ResponseEntity<byte[]> export"+Entita+"("+Entita+"Criteria criteria, FileType fileType) throws Exception {\r\n" +
-		"		byte[] report = null;\r\n" +
 		"		HttpHeaders httpHeaders = new HttpHeaders();\r\n" +
 		"		try {\r\n" +
-		"			ByteArrayOutputStream baos = new ByteArrayOutputStream();\r\n" +
-		"			generateReport();\r\n" +
-		"			if( fileType == null || (fileType != null && StringUtils.isEmpty(fileType.toString())) ) {\r\n" +
-		"				log.warn(\"Parameter fileType is blank. Set fileType=PDF\");\r\n" +
-		"				fileType = FileType.PDF;\r\n" +
-		"			}\r\n" +
-		"			switch (fileType) {\r\n" +
-		"			case PDF:\r\n" +
-		"				exportPdf(getJasperPrint(), baos);\r\n" +
-		"				httpHeaders.setContentType(MediaType.valueOf(\"application/pdf\"));\r\n" +
-		"				httpHeaders.setContentDispositionFormData(\"inline\", \"report"+Entita+".pdf\");\r\n" +
-		"				break;\r\n" +
-		"			case XLS:\r\n" +
-		"				exportXls(getJasperPrint(), baos);\r\n" +
-		"				httpHeaders.setContentType(MediaType.valueOf(\"application/vnd.ms-excel\"));\r\n" +
-		"				httpHeaders.setContentDispositionFormData(\"inline\", \"report"+Entita+".xls\");\r\n" +
-		"				break;\r\n" +
-		"			case CSV:\r\n" +
-		"				exportCsv(getJasperPrint(), baos);\r\n" +
-		"				httpHeaders.setContentType(MediaType.valueOf(\"text/csv\"));\r\n" +
-		"				httpHeaders.setContentDispositionFormData(\"inline\", \"report"+Entita+".csv\");\r\n" +
-		"				break;\r\n" +
-		"			case DOC:\r\n" +
-		"				exportRtf(getJasperPrint(), baos);\r\n" +
-		"				httpHeaders.setContentType(MediaType.valueOf(\"application/rtf\"));\r\n" +
-		"				httpHeaders.setContentDispositionFormData(\"inline\", \"report"+Entita+".rtf\");\r\n" +
-		"				break;\r\n" +
-		"			default:\r\n" +
-		"				break;\r\n" +
-		"			}\r\n" +
-		"			\r\n" +
-		"			report = baos.toByteArray();\r\n" +
-		"			httpHeaders.setContentLength(report.length);\r\n" +
-		"			return new ResponseEntity<byte[]>(report, httpHeaders, HttpStatus.OK);\r\n" +
+		"			//Find collection by criteria.\n"+
+		"			List<"+Entita+"DTO> listToPrint = "+entita+"QueryService.findByCriteria(criteria);\r\n" +
+		"			if (CollectionUtils.isEmpty(listToPrint)) {\n"+
+		"				log.warn(\"Warning: "+Entita+" collection is Empty!!\");\n"+
+		"			}\n"+
+		"			//Generate report.\n"+
+		"			generateReport(listToPrint);\n" +
+		"			byte[] contentReport = buildContentReport(fileType, httpHeaders, \"report"+Entita+"\");\n" +
+		"			return new ResponseEntity<byte[]>(contentReport, httpHeaders, HttpStatus.OK);\n" +
 		"		} catch (Exception ex) {\r\n" +
 		"			log.error(\"Errore in fase di generazione export "+entita+"\", ex);\r\n" +
 		"			throw ex;\r\n" +
@@ -249,10 +222,6 @@ public class TemplateResource extends AbstractTemplate{
 		 "		builder.setTemplateFile(\""+templateJRXML+"\");\r\n" +
 		 "		return builder.build();\r\n" +
 		 "	}\r\n\n" +
-		"	@Override\r\n" +
-		"	public JRDataSource getDataSource() {\r\n" +
-		"		return new JRBeanCollectionDataSource( "+entita+"QueryService.findByCriteria(new "+Entita+"Criteria()) );\r\n" +
-		"	}\r\n\n"+
 		//END REPORTISTICA
 		
 		"}\r\n";

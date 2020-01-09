@@ -5,9 +5,9 @@ export const createRequestOption = (req?: any): HttpParams => {
     if (req) {
         Object.keys(req).forEach(key => {
             if (key !== 'sort') {
-            		if (req[key].length > 0 || (req[key] !== null && req[key] !== '') || key === 'page' ||  key === 'size') {
+                if (req[key].length > 0 || (req[key] !== null && req[key] !== '') || key === 'page' ||  key === 'size') {
                     options = options.set(key, req[key]);
-                 }
+                }
             }
         });
         if (req.sort) {
@@ -30,7 +30,7 @@ export const checkAndCompileSearchFilterEquals = (formControls, searchFilter, fi
 
 export const checkAndCompileSearchFilterContains = (formControls, searchFilter, field: string) => {
     const value = formControls[field].value;
-
+    console.log(value);
     if (value !== '') {
         searchFilter[`${field}.contains`] = value;
     }
@@ -40,6 +40,8 @@ export const checkAndCompileSearchFilterContains = (formControls, searchFilter, 
 export const checkAndCompileSearchBetween = (formControls, searchFilter, fieldDa: string, fieldA: string, fieldName: string) => {
     const valueDa = formControls[fieldDa].value;
     const valueA = formControls[fieldA].value;
+    console.log(valueA);
+    console.log(valueDa);
     if (valueDa !== '') {
         searchFilter[`${fieldName}.greaterOrEqualThan`] = valueDa;
     }
