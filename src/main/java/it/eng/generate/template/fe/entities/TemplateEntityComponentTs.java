@@ -14,9 +14,13 @@ import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityComponentTs extends AbstractResourceTemplate {
+	private static final String A = "A";
+	private static final String DA = "Da";
+	
 	private String IMPORT_SECTION = "IMPORT_SECTION";
 	private String INIT_SECTION = "INIT_SECTION";
 	private String SEARCH = "SEARCH";
+	private String SEARCH_FILTER = "SEARCH_FILTER";
 	private String CONSTRUCTOR_SECTION = "CONSTRUCTOR_SECTION";
 	private String TRACKBY_SECTION = "TRACKBY_SECTION";
 	private String NG_ONINIT_SECTION = "NG_ONINIT_SECTION";
@@ -75,11 +79,11 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"    predicate: any;\r\n" +
 		"    previousPage: any;\r\n" +
 		"    reverse: any;\r\n" +
-		"    myGroup: FormGroup;\r\n\n";
+		"    myGroup: FormGroup;\r\n";
 		body += printRelations(conf, INIT_SECTION);
 		
 		body += 
-		"    constructor(\r\n" +
+		"\n    constructor(\r\n" +
 		"        private "+nometabella+"Service: "+Nometabella+"Service,\r\n" +
 		"        private parseLinks: JhiParseLinks,\r\n" +
 		"        private jhiAlertService: JhiAlertService,\r\n" +
@@ -109,23 +113,25 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		
 		int cSize =  1;
 		for(Column column: tabella.getSortedColumns()) {
-			boolean hasNext = cSize < tabella.getSortedColumns().size() ? true : false;
-			
+			boolean hasNext = cSize < tabella.getSortedColumns().size();
 			if(Utils.isDateField(column)) {
 				//DATES
-				body += "            "+Utils.getFieldName(column)+"Da: new FormControl(''),\r\n";
-				body += "            "+Utils.getFieldName(column)+"A: new FormControl('')"+(hasNext ? ",\r\n" : "\r\n");
+				body += "            "+Utils.getFieldName(column)+DA+": new FormControl(''),\r\n";
+				body += "            "+Utils.getFieldName(column)+A+": new FormControl('')"+(hasNext ? ",\r\n" : "\r\n");
 				
 			} else if(Utils.isNumericField(column)) {
 				//NUMERICS
-				body += "            "+Utils.getFieldName(column)+"Da: new FormControl(''),\r\n";
-				body += "            "+Utils.getFieldName(column)+"A: new FormControl('')"+(hasNext ? ",\r\n" : "\r\n");
+				body += "            "+Utils.getFieldName(column)+DA+": new FormControl(''),\r\n";
+				body += "            "+Utils.getFieldName(column)+A+": new FormControl('')"+(hasNext ? ",\r\n" : "\r\n");
 
-			} else {
+			} else if(Utils.isTextField(column)) {
 				//STRING
 				body += "            "+Utils.getFieldName(column)+": new FormControl('')"+(hasNext ? ",\r\n" : "\r\n");
+			
+			} else if(Utils.isBlob(column) || Utils.isClob(column)) {
+				// TODO DEVELOP BLOB/CLOB
+				
 			}
-			// TODO DEVELOP BLOB/CLOB
 			
 			cSize++;
 		}
@@ -177,7 +183,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"        this.loadAll();\r\n" +
 		"    }\r\n\n" +
 		"    ngOnInit() {\r\n" +
-		"        this.loadAll();\r\n" +
+		"        this.loadAll();\r\n\n" +
 		"        this.principal.identity().then(account => {\r\n" +
 		"            this.currentAccount = account;\r\n" +
 		"        });\r\n" +
@@ -222,26 +228,36 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"        let searchFilter = {\n" +
 		"            'fileType': fileType\n" +
         "        };\n\n";
+		
+		//EXP_FILE.1 Print FilterSearch of Relations / SEARCH_FILTER
+		body += printFilterRelations(conf);
+		
+		//EXP_FILE.2 Print FilterSearch of Columns  / Column
 		for(Column column: tabella.getSortedColumns()) {
-				boolean isEnumeration = column.getEnumeration()!=null ? true : false;
+				boolean isEnumeration = column.getEnumeration()!=null;
+				
 				if(Utils.isDateField(column)) {
 					//DATES
 					String param = Utils.getFieldName(column);
-					String paramDa = param+"Da";
-					String paramA =param+ "A";
+					String paramDa = param + DA;
+					String paramA =param + A;
 					body += "        searchFilter = checkAndCompileSearchBetween(myGroupControls, searchFilter, '"+paramDa+"', '"+paramA+"', '"+param+"');\n";
+				
 				} else if(Utils.isNumericField(column)) {
 					//NUMERICS
 					String param = Utils.getFieldName(column);
-					String paramDa = param+"Da";
-					String paramA =param+ "A";
+					String paramDa = param + DA;
+					String paramA =param + A;
 					body += "        searchFilter = checkAndCompileSearchBetween(myGroupControls, searchFilter, '"+paramDa+"', '"+paramA+"', '"+param+"');\n";
+				
 				} else if(Utils.isTextField(column) && isEnumeration){
 					//STRING EQUALS
 				    body += "        searchFilter = checkAndCompileSearchFilterEquals(myGroupControls, searchFilter, '"+Utils.getFieldName(column)+"');\n";
+				
 				} else if(Utils.isTextField(column) && !isEnumeration){
 					//STRING CONTAINS
 					body += "        searchFilter = checkAndCompileSearchFilterContains(myGroupControls, searchFilter, '"+Utils.getFieldName(column)+"');\n";
+				
 				} else if(Utils.isBlob(column) || Utils.isClob(column)) {
 					// TODO DEVELOP BLOB/CLOB
 					
@@ -253,12 +269,12 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"\n        return window.location.href = this." + nometabella + "Service.resourceExportUrl + this.buildFilterParams(searchFilter);\r\n" +
 		"    }\r\n\n"+
 		
-		// Build filter params for Print
+		// Build filter Params for Print
 		"    buildFilterParams(searchFilter) {\n"+
 		"       let res = '';\n"+
 		"       let isFirst = true;\n"+
 		"       for (const filter in searchFilter) {\n"+
-		"          if (searchFilter.hasOwnProperty(filter)) {"+
+		"          if (searchFilter.hasOwnProperty(filter)) {\n"+
 		"             res += (isFirst ? '?' : '&') + filter + '=' + searchFilter[filter];\n"+
 		"             isFirst = false;\n"+
 		"          }\n"+
@@ -266,7 +282,7 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"       return res;\n"+
 		"    }\n\n"+
 		
-		// Reset Filtri di RICERCA
+		// Reset Filtri di Ricerca
 		"    resetFiltri() {\r\n" +
 		"        this.initFormRicerca();\r\n" +
 		"    }\r\n\n"+
@@ -274,102 +290,54 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		
 		// Implementazione Logica di RICERCA
 		"    cerca() {\r\n" +
-
-		// [PARAMETRY_QUERY]
-		"        console.log('Cerca "+Nometabella+" ');\r\n\n";
+		"        console.log('Cerca "+Nometabella+" ');\r\n"+
+		"        const myGroupControls = this.myGroup.controls;\n" +
+		"        let searchFilter = {\n" +
+		"            'page': this.page - 1,\n"+
+		"            'size': this.itemsPerPage,\n"+
+		"            'sort': this.sort()\n"+
+	    "        };\n\n";
+	
+		//RICERCA.1 - Print FilterSearch of Relations / SEARCH_FILTER
+		body += printFilterRelations(conf);
+		
+		//RICERCA.2 - Print FilterSearch of Columns  / Column
 		for(Column column: tabella.getSortedColumns()) {
-			String columnname = Utils.getFieldName(column);
-			boolean isEnumeration = column.getEnumeration()!=null ? true : false;
-			if ( Utils.isDateField(column) ) {
-				body += 
-				"        let "+columnname+"Inizio: moment.Moment;\r\n" +
-				"        const "+columnname+"Da = this.myGroup.controls['"+columnname+"Da'].value;\r\n" +
-				"        if ("+columnname+"Da) {\r\n" +
-				"            "+columnname+"Inizio = toTimestampInizio(moment("+columnname+"Da));\r\n" +
-				"        }\r\n" +
-				"        let "+columnname+"Fine: moment.Moment;\r\n" +
-				"        const "+columnname+"A = this.myGroup.controls['"+columnname+"A'].value;\r\n\n" +
-				"        if ("+columnname+"A) {\r\n" +
-				"            "+columnname+"Fine = toTimestampFine(moment("+columnname+"A));\r\n" +
-				"        }\r\n";
+			boolean isEnumeration = column.getEnumeration()!=null;
+			if(Utils.isDateField(column)) {
+				//DATES
+				String param = Utils.getFieldName(column);
+				String paramDa = param + DA;
+				String paramA =param + A;
+				body += "        searchFilter = checkAndCompileSearchBetween(myGroupControls, searchFilter, '"+paramDa+"', '"+paramA+"', '"+param+"');\n";
 			
-			} else if ( Utils.isTextField(column) && !isEnumeration ) {
-				body +=
-				"        const "+columnname+": String = this.myGroup.controls['"+columnname+"'].value;\r\n";
-
-			} else if ( Utils.isTextField(column) && isEnumeration ) {
-				body +=
-						"        const "+columnname+": String = this.myGroup.controls['"+columnname+"'].value;\r\n";
+			} else if(Utils.isNumericField(column)) {
+				//NUMERICS
+				String param = Utils.getFieldName(column);
+				String paramDa = param + DA;
+				String paramA =param + A;
+				body += "        searchFilter = checkAndCompileSearchBetween(myGroupControls, searchFilter, '"+paramDa+"', '"+paramA+"', '"+param+"');\n";
 			
-			} else if ( Utils.isNumericField(column) ) {
-				body += 
-				"        let "+columnname+"Inizio: String;\r\n" +
-				"        const "+columnname+"Da = this.myGroup.controls['"+columnname+"Da'].value;\r\n" +
-				"        if ("+columnname+"Da) {\r\n" +
-				"            "+columnname+"Inizio = "+columnname+"Da;\r\n" +
-				"        }\r\n" +
-				"        let "+columnname+"Fine: String;\r\n" +
-				"        const "+columnname+"A = this.myGroup.controls['"+columnname+"A'].value;\r\n\n" +
-				"        if ("+columnname+"A) {\r\n" +
-				"            "+columnname+"Fine = "+columnname+"A;\r\n" +
-				"        }\r\n";
+			} else if(Utils.isTextField(column) && isEnumeration){
+				//STRING EQUALS
+			    body += "        searchFilter = checkAndCompileSearchFilterEquals(myGroupControls, searchFilter, '"+Utils.getFieldName(column)+"');\n";
+			
+			} else if(Utils.isTextField(column) && !isEnumeration){
+				//STRING CONTAINS
+				body += "        searchFilter = checkAndCompileSearchFilterContains(myGroupControls, searchFilter, '"+Utils.getFieldName(column)+"');\n";
+			
+			} else if(Utils.isBlob(column) || Utils.isClob(column)) {
+				// TODO DEVELOP BLOB/CLOB
 				
-			} else  if ( Utils.isClob(column) || Utils.isBlob(column)) {
-				//TODO DEVELOP THIS!!   CLOB / BLOB |  SELECT with Id(s)
-//				"        // filtro autista\r\n" +
-//				"        let idAutista = '';\r\n" +
-//				"        const autista = this.myGroup.controls['autista'].value;\r\n" +
-//				"        if (autista) {\r\n" +
-//				"            idAutista = autista.id.toString();\r\n" +
-//				"        }\r\n" +
 			}
 		}
-		// [/PARAMETRY_QUERY]
-		
-		//Servizio di Ricerca TS
-		body += 
-		"\n        this."+nometabella+"Service\r\n" +
-		"            .query({\r\n" +
-		"                page: this.page - 1,\r\n" +
-		"                size: this.itemsPerPage,\r\n" +
-		"                sort: this.sort(),\r\n";
-		
-		//[DINAMIC_QUERY]
-		int ccSize = 1;
-		for(Column column: tabella.getSortedColumns()) {
-			String columnname = Utils.getFieldName(column);
-			boolean isEnumeration = column.getEnumeration()!=null ? true : false;
-			boolean hasNext = ccSize < tabella.getSortedColumns().size() ? true : false;
-			
-			if ( Utils.isDateField(column) ) {
-				body += "                '"+columnname+".greaterOrEqualThan': "+columnname+"Inizio && "+columnname+"Inizio.isValid() ? "+columnname+"Inizio.toJSON() : '',\r\n";
-				body += "                '"+columnname+".lessOrEqualThan': "+columnname+"Fine && "+columnname+"Fine.isValid() ? "+columnname+"Fine.toJSON() : ''"  + (hasNext ? ",\r\n" : "\r\n");
-			
-			} else if ( Utils.isNumericField(column) ) {
-				body += "                '"+columnname+".greaterOrEqualThan': "+columnname+"Inizio ? "+columnname+"Inizio : '',\r\n";
-				body += "                '"+columnname+".lessOrEqualThan': "+columnname+"Fine ? "+columnname+"Fine : ''"  + (hasNext ? ",\r\n" : "\r\n");
-					
-			} else if ( Utils.isTextField(column) && !isEnumeration) {
-				body += "                '"+columnname+".contains': "+columnname+" ? "+columnname+" : ''" + (hasNext ? ",\r\n" : "\r\n");
-			
-			} else if ( Utils.isTextField(column) && isEnumeration) {
-				body += "                '"+columnname+".equals': "+columnname+" ? "+columnname+" : ''" + (hasNext ? ",\r\n" : "\r\n");
-				
-			} else {
-				//TODO DEVELOP THIS!!  CLOB/BLOB |  SELECT with id(s)
-				//"                'autistaId.equals': idAutista,\r\n" +
-			}
-		}
-		//[/DINAMIC_QUERY]
-		
-		body += 
-		"            })\r\n" +
-		"            .subscribe(\r\n" +
-		"                (res: HttpResponse<"+INometabella+"[]>) => this.paginate"+Nometabella+"s(res.body, res.headers),\r\n" +
-		"                (res: HttpErrorResponse) => this.onError(res.message)\r\n" +
-		"            );\r\n" +
+		body +=
+		"\n        this."+nometabella+"Service.query(searchFilter).subscribe(\r\n" +
+		"             (res: HttpResponse<"+INometabella+"[]>) => this.paginate"+Nometabella+"s(res.body, res.headers),\r\n" +
+		"             (res: HttpErrorResponse) => this.onError(res.message)\r\n" +
+		"        );\r\n" +
 		"    }\r\n\n"+
-		//FINE servizio di RICERCA
+		//FINE Servizio di RICERCA
 		
 		
 		
@@ -395,6 +363,36 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		return "src/main/webapp/app/entities/"+Utils.getClassNameLowerCase(tabella);
 	}
 	
+	
+	private String printFilterRelations(ConfigCreateProject conf) {
+		Map<String, String> relMap = new HashMap<>();
+		String res = "";
+		//Relations management
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+
+				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
+					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
+						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+SEARCH_FILTER, 
+							"        searchFilter = checkAndCompileSearchFilterEquals(myGroupControls, searchFilter, '"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id');\n");
+						}
+					}
+
+				}
+			}
+		}
+		
+		//Print Relation Map
+		res += Utils.printRelationMap(res, relMap);
+		return res;
+	}
+	
 	private String printRelations(ConfigCreateProject conf, String section) {
 		Map<String, String> relMap = new HashMap<>();
 		String res = "";
@@ -418,16 +416,12 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 								"import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n");
 						
 					}else if(SEARCH.equals(section) && isOne2OneOrMany2One) {
-						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+SEARCH, 
 								"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id: new FormControl(''),\n");
 						
 					}else if(INIT_SECTION.equals(section) && isOne2OneOrMany2One) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
 								"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
-						if (relationType.equals(Utils.OneToOne)) {
-							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION+"ANY",
-								"    id"+Utils.getFirstUpperCase(nomeRelazioneSx)+": any;\n");
-						}
 						
 					}else if(CONSTRUCTOR_SECTION.equals(section) && isOne2OneOrMany2One) {
 						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
@@ -441,8 +435,8 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 								"    }\r\n");
 						}
 					}else if(NG_ONINIT_SECTION.equals(section) && isOne2OneOrMany2One) {
-						if (relationType.equals(Utils.ManyToOne)) {
-							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
+						if (relationType.equals(Utils.ManyToOne) || relationType.equals(Utils.OneToOne)) {
+							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+NG_ONINIT_SECTION, 
 								"\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
 					            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
 					            "            this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+

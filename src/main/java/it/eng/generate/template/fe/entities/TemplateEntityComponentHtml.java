@@ -14,7 +14,7 @@ import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
-	private static final boolean GENERATE_SEARCH_FILTER = false;
+	private static final boolean GENERATE_SEARCH_FILTER = true;
 
 	private static final String TH = "TH";
 	private static final String TD = "TD";
@@ -241,6 +241,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 				 */
 				String filterDate = Utils.isLocalDate(column) ? " date:'mediumDate'" : " date:'medium'";
 				body += "\t\t\t<td>{{"+nometabella+"." + columnname + " | " + filterDate + "}}</td>\r\n";
+				
 			} else if(Utils.isBlob(column)) {
 				/**
 				 * Blob management
@@ -252,6 +253,7 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 
 			} else {
 				body += "\t\t\t<td>{{"+nometabella+"."+columnname+"}}</td>\r\n";
+				
 			}
 		}
 		
@@ -317,16 +319,19 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 					//Relations OneToOne / ManyToOne
 					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-							result += "\n                    <!-- SearchFilter Add Relation: OneToOne / ManyToOne -->\n"+
+							
+							//FIRST_MODEL
+							result += "\n                    <!-- SearchFilter Add Relation: "+relationType+" -->\n"+
 									"                    <div class=\"col-md-"+FILTER_COLUMN_SIZE+"\">\r\n" +
 									"                          <div class=\"form-group\">\r\n" +
-									"                             <label jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\r\n" +
-									"                                <select class=\"form-control\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" >\r\n"+
-									"                 					<option [ngValue]=\"null\"></option>\r\n" +
-									"                 					<option [ngValue]=\""+nomeRelazioneSx+"Option.id\" *ngFor=\"let "+nomeRelazioneSx+"Option of "+nomeRelazioneSx+"s"+"\">{{"+nomeRelazioneSx+"Option."+nomeSelectSx+"}}</option>\r\n" +
+									"                             <label jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</label>\n" +
+									"                                <select class=\"form-control\" id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\"  name=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\">\n"+
+									"                 					<option [value]=\"null\"></option>\r\n" +
+									"                 					<option [value]=\""+nomeRelazioneSx+"Option.id\" *ngFor=\"let "+nomeRelazioneSx+"Option of "+nomeRelazioneSx+"s"+"\">{{"+nomeRelazioneSx+"Option."+nomeSelectSx+"}}</option>\n" +
 									"                                </select>\r\n" +
 									"                          </div>\r\n\n" +
 									"			          </div>\r\n" ;
+							
 						}
 						
 					} else if (relationType.equals(Utils.OneToMany)) {
@@ -384,7 +389,6 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
-					
 					//Relations OneToOne / ManyToOne
 					if (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {

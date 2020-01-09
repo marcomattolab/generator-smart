@@ -29,4 +29,16 @@
 	- JMS e code asincrone
 	- Big Data , ML / AI	
 	
-                    
+         
+         
+                    <!-- SearchFilter Add Relation: OneToOne / ManyToOne -->
+                    <div class="col-md-4">
+                          <div class="form-group">
+                             <label jhiTranslate="demogeneratedApp.autore.bestseller">Bestseller</label>
+                                 <select class="form-control" id="field_bestseller" formControlName="bestsellerId" name="bestsellerId" >
+                                    <option *ngFor="let bestsellerOption of bestsellers" ngDefaultControl [value]="bestsellerOption.id"> {{bestsellerOption.isbn}} </option>
+                                </select>
+                          </div>
+			          </div>
+			          
+			                  
