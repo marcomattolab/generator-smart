@@ -30,6 +30,9 @@
 	- JMS e code asincrone
 	- Big Data , ML / AI	
 	
-         
+
+## Documentation Ideas         
+	- See https://www.jaxio.com/en/celerio.html
+	- See https://www.slideshare.net/agoncal/custom-and-generated-code-side-by-side-with-jhipster
 			          
 			                  
