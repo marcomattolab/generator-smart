@@ -3,7 +3,7 @@
 ## Sezione FE
 	- LOW - Completare generazione automatica classi di TEST
 	- MED - Inserire logica di navigazione (ROUTING) di imprendocasa!! (si sfruttano interfaccie presenti)
-	- MED - @Inserire FE componente tabella come imprendocasa...
+	- MED - @Inserire FE componente/direttiva per tabella relazione ManyToMany (come imprendocasa) ...
 
 ## Sezione Modello JSON
 	- LOW - Modello JSON => Se metto un campo CamelCase "firstName" non funge! (Deve essere tutto minuscolo "firstname")
@@ -11,14 +11,15 @@
 	- LOW - Modello JSON => @@ Generare profili da file di configurazione ed abilitarli alle voci menu e menu veloce(debug)
   	- LOW - Modello JSON => Develop wizard to create JSON project (see https://www.cc28tech.com/angular-multi-step-wizard-part-1/ )
 
-## FILTRI RICERCA@
-	2. @Bug filtri Ricerca => Non funzionano i filtri RANGE su DATE, ed i filtri Numerici non vengono elaborati da BE (id.greatherThan non funge!)
-	3. Add filtri rierca relazioni OneToMany,.. etc
+## FILTRI RICERCA
+	- LOW - Bug filtri Ricerca => Non funzionano i filtri RANGE sui Numerici, non vengono elaborati da BE (id.greatherThan non funge!)
+	- LOW - Add filtri rierca relazioni ManyToMany
+	- LOW - Ottimizzazione: Implementare filtro di ricerca come imprendocasa (select dinamiche)
 			
 ## BUG e/o Altre Migliorie
 	- HIG - @Gestire i campi BLOB / CLOB - Add altri tipologie: ImageBlob, Blob, BigDecimal, Double etc
   	- HIG - @Creare scheletro IONIC 4
-  	- LOW - Inserire controllo Pattern | MinSize | MaxSize via BE/Hibernate
+  	- LOW - Inserire controllo Pattern | MinSize | MaxSize lato backend / Hibernate
 
 ## Migliorie / Plugin / OpenPoint
 	- MED - Inserire motore di workflow (Activity BPS, Spring workflow ....)
@@ -30,15 +31,5 @@
 	- Big Data , ML / AI	
 	
          
-         
-                    <!-- SearchFilter Add Relation: OneToOne / ManyToOne -->
-                    <div class="col-md-4">
-                          <div class="form-group">
-                             <label jhiTranslate="demogeneratedApp.autore.bestseller">Bestseller</label>
-                                 <select class="form-control" id="field_bestseller" formControlName="bestsellerId" name="bestsellerId" >
-                                    <option *ngFor="let bestsellerOption of bestsellers" ngDefaultControl [value]="bestsellerOption.id"> {{bestsellerOption.isbn}} </option>
-                                </select>
-                          </div>
-			          </div>
 			          
 			                  
