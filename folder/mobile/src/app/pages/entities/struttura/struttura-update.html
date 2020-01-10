@@ -1,72 +1,74 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-        </ion-buttons>
-        <ion-title>
-            Struttura
-        </ion-title>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Struttura
+    </ion-title>
 
-        <ion-buttons slot="end">
-            <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
-              <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
-              <ion-icon name="md-checkmark" *ngIf="!platform.is('ios')"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="md-checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 
-<ion-content padding>
-    <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
-        <ion-list>
-            <ion-item [hidden]="!form.id">
-                <ion-label>ID</ion-label>
-                <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label>Categoria</ion-label>
-                <ion-select formControlName="categoria" id="field_categoria"  required>
-                        <ion-select-option value="Vitto">Vitto</ion-select-option>
-                        <ion-select-option value="Alloggio">Alloggio</ion-select-option>
-                        <ion-select-option value="Altro">Altro</ion-select-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Codice</ion-label>
-                <ion-input type="text" name="codice" formControlName="codice"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Nome</ion-label>
-                <ion-input type="text" name="nome" formControlName="nome"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Telefono</ion-label>
-                <ion-input type="text" name="telefono" formControlName="telefono"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Email</ion-label>
-                <ion-input type="text" name="email" formControlName="email"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Media Valutazione</ion-label>
-                <ion-input type="number" name="mediaValutazione" formControlName="mediaValutazione"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Numero Valutazioni</ion-label>
-                <ion-input type="number" name="numeroValutazioni" formControlName="numeroValutazioni"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label>Is Active</ion-label>
-                <ion-checkbox formControlName="isActive"></ion-checkbox>
-            </ion-item>
-            <ion-item>
-                <ion-label>Sede</ion-label>
-                <ion-select id="field_sede" formControlName="sede" [compareWith]="compareLuogo">
-                    <ion-select-option [value]="null"></ion-select-option>
-                    <ion-select-option [value]="luogoOption.id" *ngFor="let luogoOption of sedes; trackBy: trackLuogoById">{{luogoOption.id}}</ion-select-option>
-                </ion-select>
-            </ion-item>
-        </ion-list>
-    </form>
+<ion-content class="ion-padding">
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.controls.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Categoria</ion-label>
+        <ion-select formControlName="categoria" id="field_categoria" required>
+          <ion-select-option value="Vitto">Vitto</ion-select-option>
+          <ion-select-option value="Alloggio">Alloggio</ion-select-option>
+          <ion-select-option value="Altro">Altro</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Codice</ion-label>
+        <ion-input type="text" name="codice" formControlName="codice"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input type="text" name="nome" formControlName="nome"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Telefono</ion-label>
+        <ion-input type="text" name="telefono" formControlName="telefono"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="text" name="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Media Valutazione</ion-label>
+        <ion-input type="number" name="mediaValutazione" formControlName="mediaValutazione"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Numero Valutazioni</ion-label>
+        <ion-input type="number" name="numeroValutazioni" formControlName="numeroValutazioni"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Is Active</ion-label>
+        <ion-checkbox formControlName="isActive"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Sede</ion-label>
+        <ion-select id="field_sede" formControlName="sede" [compareWith]="compareLuogo">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option [value]="luogoOption.id" *ngFor="let luogoOption of luogos">
+            {{luogoOption.indirizzo}} ({{luogoOption.citta}})
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
 </ion-content>

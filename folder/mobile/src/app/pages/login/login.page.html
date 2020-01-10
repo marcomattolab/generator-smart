@@ -28,6 +28,28 @@
           <ion-button expand="block" type="submit" color="primary" id="login">{{ 'LOGIN_BUTTON' | translate }}</ion-button>
         </ion-col>
       </ion-row>
+
+      <!--   direct accesses TODO: remove before production deploy  -->
+      <ion-row class="ion-padding">
+        <ion-col>
+          <ion-button expand="block" type="button" color="success"
+                      (click)="account.username = 'admin'; account.password = 'admin'; doLogin()">
+            admin / admin
+          </ion-button>
+          <ion-button expand="block" type="button" color="light"
+                      (click)="account.username = 'user'; account.password = 'user'; doLogin()">
+            user / user
+          </ion-button>
+          <ion-button expand="block" type="button" color="medium"
+                      (click)="account.username = 'pm'; account.password = 'user'; doLogin()">
+            pm / user
+          </ion-button>
+          <ion-button expand="block" type="button" color="dark"
+                      (click)="account.username = 'officer'; account.password = 'user'; doLogin()">
+            officer / user
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-list>
   </form>
 

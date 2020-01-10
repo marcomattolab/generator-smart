@@ -10,7 +10,7 @@
 </ion-header>
 
 <!-- todo: add elasticsearch support -->
-<ion-content padding>
+<ion-content class="ion-padding">
     <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -18,7 +18,7 @@
     <ion-list>
         <ion-item-sliding *ngFor="let feedback of feedbacks; trackBy: trackId" #slidingItem>
             <ion-item (click)="view(feedback)">
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
                 <!-- todo: special handling for translating enum - {{'Category.' + feedback.categoria}}" -->
                 <p>{{feedback.categoria}}</p>
                 <p>{{feedback.descrizione}}</p>

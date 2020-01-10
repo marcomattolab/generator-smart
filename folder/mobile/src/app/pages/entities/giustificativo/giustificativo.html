@@ -10,7 +10,7 @@
 </ion-header>
 
 <!-- todo: add elasticsearch support -->
-<ion-content padding>
+<ion-content class="ion-padding">
     <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -18,7 +18,7 @@
     <ion-list>
         <ion-item-sliding *ngFor="let giustificativo of giustificativos; trackBy: trackId" #slidingItem>
             <ion-item (click)="view(giustificativo)">
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
                 <ion-avatar *ngIf="giustificativo.allegato">
                     <img [src]="'data:' + giustificativo.allegatoContentType + ';base64,' + giustificativo.allegato" />
                     <p *ngIf="giustificativo.allegato">{{giustificativo.allegatoContentType}}, {{byteSize(giustificativo.allegato)}}</p>

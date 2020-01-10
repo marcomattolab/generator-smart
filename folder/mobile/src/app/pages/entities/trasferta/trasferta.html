@@ -10,7 +10,7 @@
 </ion-header>
 
 <!-- todo: add elasticsearch support -->
-<ion-content padding>
+<ion-content class="ion-padding">
     <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -18,7 +18,7 @@
     <ion-list>
         <ion-item-sliding *ngFor="let trasferta of trasfertas; trackBy: trackId" #slidingItem>
             <ion-item (click)="view(trasferta)">
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
                 <p>{{trasferta.codice}}</p>
                 <p>{{trasferta.descrizione}}</p>
                 <p>{{trasferta.dataInizio | date:'mediumDate'}}</p>

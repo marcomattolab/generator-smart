@@ -28,11 +28,7 @@ export class LuogoPage {
     }
 
     async loadAll(refresher?) {
-        this.luogoService.query().pipe(
-            filter((res: HttpResponse<Luogo[]>) => res.ok),
-            map((res: HttpResponse<Luogo[]>) => res.body)
-        )
-        .subscribe(
+        this.luogoService.query().subscribe(
             (response: Luogo[]) => {
                 this.luogos = response;
                 if (typeof(refresher) !== 'undefined') {

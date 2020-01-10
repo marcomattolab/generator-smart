@@ -1,4 +1,5 @@
 import { BaseEntity } from 'src/model/base-entity';
+import {Moment} from 'moment';
 
 export const enum Stato {
     'BOZZA',
@@ -12,13 +13,13 @@ export class Trasferta implements BaseEntity {
         public id?: number,
         public codice?: string,
         public descrizione?: string,
-        public dataInizio?: any,
-        public dataFine?: any,
+        public dataInizio?: Moment,
+        public dataFine?: Moment,
         public statoTrasferta?: Stato,
         public note?: any,
         public sedeId?: number,
         public dipendenteId?: number,
-        public respondabileId?: number,
+        public responsabileId?: number,
         public rifCommessaId?: number,
         public commessaId?: number,
     ) {

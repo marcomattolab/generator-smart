@@ -1,80 +1,84 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-        </ion-buttons>
-        <ion-title>
-            Feedback
-        </ion-title>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Feedback
+    </ion-title>
 
-        <ion-buttons slot="end">
-            <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
-              <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
-              <ion-icon name="md-checkmark" *ngIf="!platform.is('ios')"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="md-checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 
-<ion-content padding>
-    <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
-        <ion-list>
-            <ion-item [hidden]="!form.id">
-                <ion-label>ID</ion-label>
-                <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label>Categoria</ion-label>
-                <ion-select formControlName="categoria" id="field_categoria"  required>
-                        <ion-select-option value="Vitto">Vitto</ion-select-option>
-                        <ion-select-option value="Alloggio">Alloggio</ion-select-option>
-                        <ion-select-option value="Altro">Altro</ion-select-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Descrizione</ion-label>
-                <ion-input type="text" name="descrizione" formControlName="descrizione"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Valutazione</ion-label>
-                <ion-input type="number" name="valutazione" formControlName="valutazione"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label>Data Valutazione</ion-label>
-                <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dataValutazione" id="field_dataValutazione"></ion-datetime>
-            </ion-item>
-            <ion-item>
-                <div>
-                    <img [src]="'data:' + feedback.allegatoContentType + ';base64,' + feedback.allegato" style="max-height: 100px;" *ngIf="feedback?.allegato" alt="feedback image"/>
-                    <div *ngIf="feedback.allegato">
-                        <p>{{feedback.allegatoContentType}}, {{byteSize(feedback.allegato)}}</p>
-                        <ion-button color="danger" (click)="clearInputImage('allegato', 'allegatoContentType', 'fileImage')">
-                            <ion-icon name="trash" slot="icon-only"></ion-icon>
-                        </ion-button>
-                    </div>
-                    <input type="file" #fileInput style="display: none" (change)="setFileData($event, feedback, 'allegato', true)" accept="image/*"/>
-                    <ion-button *ngIf="!feedback?.allegato" (click)="getPicture('allegato')">
-                        <ion-icon name="add-circle" slot="start"></ion-icon>
-                        {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}
-                    </ion-button>
-                </div>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Created By</ion-label>
-                <ion-input type="text" name="createdBy" formControlName="createdBy"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Ai Note</ion-label>
-                <ion-input type="text" name="aiNote" formControlName="aiNote"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label>Struttura</ion-label>
-                <ion-select id="field_struttura" formControlName="struttura" [compareWith]="compareStruttura">
-                    <ion-select-option [value]="null"></ion-select-option>
-                    <ion-select-option [value]="strutturaOption.id" *ngFor="let strutturaOption of strutturas; trackBy: trackStrutturaById">{{strutturaOption.id}}</ion-select-option>
-                </ion-select>
-            </ion-item>
-        </ion-list>
-    </form>
+<ion-content class="ion-padding">
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.controls.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Categoria</ion-label>
+        <ion-select formControlName="categoria" id="field_categoria" required>
+          <ion-select-option value="Vitto">Vitto</ion-select-option>
+          <ion-select-option value="Alloggio">Alloggio</ion-select-option>
+          <ion-select-option value="Altro">Altro</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Descrizione</ion-label>
+        <ion-input type="text" name="descrizione" formControlName="descrizione"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Valutazione</ion-label>
+        <ion-input type="number" name="valutazione" formControlName="valutazione"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Data Valutazione</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataValutazione"
+                      id="field_dataValutazione"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <div>
+          <img [src]="'data:' + feedback.allegatoContentType + ';base64,' + feedback.allegato"
+               style="max-height: 100px;" *ngIf="feedback?.allegato" alt="feedback image"/>
+          <div *ngIf="feedback.allegato">
+            <p>{{feedback.allegatoContentType}}, {{byteSize(feedback.allegato)}}</p>
+            <ion-button color="danger" (click)="clearInputImage('allegato', 'allegatoContentType', 'fileImage')">
+              <ion-icon name="trash" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
+          <input type="file" #fileInput style="display: none" (change)="setFileData($event, feedback, 'allegato', true)"
+                 accept="image/*"/>
+          <ion-button *ngIf="!feedback?.allegato" (click)="getPicture('allegato')">
+            <ion-icon name="add-circle" slot="start"></ion-icon>
+            {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}
+          </ion-button>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Created By</ion-label>
+        <ion-input type="text" name="createdBy" formControlName="createdBy"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Ai Note</ion-label>
+        <ion-input type="text" name="aiNote" formControlName="aiNote"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Struttura</ion-label>
+        <ion-select id="field_struttura" formControlName="struttura" [compareWith]="compareStruttura">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option [value]="strutturaOption.id" *ngFor="let strutturaOption of strutturas;
+          trackBy: trackStrutturaById">{{strutturaOption.nome}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
 </ion-content>

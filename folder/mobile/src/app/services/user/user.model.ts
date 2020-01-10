@@ -1,32 +1,42 @@
-export class User {
-    public id?: any;
-    public login?: string;
-    public firstName?: string;
-    public lastName?: string;
-    public email?: string;
-    public activated?: Boolean;
-    public langKey?: string;
-    public authorities?: any[];
-    public createdBy?: string;
-    public createdDate?: Date;
-    public lastModifiedBy?: string;
-    public lastModifiedDate?: Date;
-    public password?: string;
+import {BaseEntity} from '../../../model/base-entity';
 
+export const enum UserRole {
+  ROLE_ADMIN = 'ROLE_ADMIN',
+  ROLE_USER = 'ROLE_USER',
+  ROLE_OFFICER = 'ROLE_OFFICER',
+  ROLE_PM = 'ROLE_PM'
+}
+
+export const enum Profilo {
+  'Employee',
+  'AccountingOfficer',
+  'ProjectManager',
+  'Administrator'
+}
+
+export class User implements BaseEntity {
     constructor(
-        id?: any,
-        login?: string,
-        firstName?: string,
-        lastName?: string,
-        email?: string,
-        activated?: Boolean,
-        langKey?: string,
-        authorities?: any[],
-        createdBy?: string,
-        createdDate?: Date,
-        lastModifiedBy?: string,
-        lastModifiedDate?: Date,
-        password?: string
+        public id?: any,
+        public login?: string,
+        public firstName?: string,
+        public lastName?: string,
+        public email?: string,
+        public activated?: boolean,
+        public langKey?: string,
+        public authorities?: UserRole[],
+        public createdBy?: string,
+        public createdDate?: Date,
+        public lastModifiedBy?: string,
+        public lastModifiedDate?: Date,
+        public password?: string,
+        public nome?: string,
+        public cognome?: string,
+        public dataNascita?: string,
+        public codiceFiscale?: string,
+        public cid?: string,
+        public sede?: string,
+        public profilo?: Profilo,
+        public telefono?: string,
     ) {
         this.id = id ? id : null;
         this.login = login ? login : null;

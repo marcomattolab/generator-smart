@@ -1,5 +1,6 @@
 import { BaseEntity } from 'src/model/base-entity';
 import { Giustificativo } from '../giustificativo/giustificativo.model';
+import {Moment} from 'moment';
 
 export const enum CategoriaSpesa {
     'VITTO',
@@ -33,9 +34,9 @@ export class Spesa implements BaseEntity {
         public categoria?: CategoriaSpesa,
         public sottocategoria?: SottocategoriaSpesa,
         public importoSpesa?: number,
-        public dataSpesa?: any,
+        public dataSpesa?: Moment,
         public stato?: Stato,
-        public approvedDate?: any,
+        public approvedDate?: Moment,
         public giustificativoSpesas?: Giustificativo[],
         public trasfertaId?: number,
         public structureId?: number,

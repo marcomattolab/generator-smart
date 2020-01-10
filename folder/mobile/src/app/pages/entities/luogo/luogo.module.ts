@@ -1,17 +1,15 @@
-import { NgModule, Injectable } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { IonicModule } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
-import { Routes, RouterModule, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { UserRouteAccessService } from '../../../services/auth/user-route-access.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
-import { filter, map } from 'rxjs/operators';
+import {Injectable, NgModule} from '@angular/core';
+import {TranslateModule} from '@ngx-translate/core';
+import {IonicModule} from '@ionic/angular';
+import {CommonModule} from '@angular/common';
+import {ActivatedRouteSnapshot, Resolve, RouterModule, RouterStateSnapshot, Routes} from '@angular/router';
+import {UserRouteAccessService} from '../../../services/auth/user-route-access.service';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Observable, of} from 'rxjs';
 
-import { LuogoPage } from './luogo';
-import { LuogoUpdatePage } from './luogo-update';
-import { Luogo, LuogoService, LuogoDetailPage } from '.';
+import {LuogoPage} from './luogo';
+import {LuogoUpdatePage} from './luogo-update';
+import {Luogo, LuogoDetailPage, LuogoService} from '.';
 
 @Injectable({ providedIn: 'root' })
 export class LuogoResolve implements Resolve<Luogo> {
@@ -20,10 +18,7 @@ export class LuogoResolve implements Resolve<Luogo> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Luogo> {
     const id = route.params.id ? route.params.id : null;
     if (id) {
-      return this.service.find(id).pipe(
-        filter((response: HttpResponse<Luogo>) => response.ok),
-        map((luogo: HttpResponse<Luogo>) => luogo.body)
-      );
+      return this.service.find(id);
     }
     return of(new Luogo());
   }

@@ -1,4 +1,5 @@
 import { BaseEntity } from 'src/model/base-entity';
+import {Moment} from 'moment';
 
 export const enum Category {
     'Vitto',
@@ -12,7 +13,7 @@ export class Feedback implements BaseEntity {
         public categoria?: Category,
         public descrizione?: string,
         public valutazione?: number,
-        public dataValutazione?: any,
+        public dataValutazione?: Moment,
         public allegatoContentType?: string,
         public allegato?: any,
         public createdBy?: string,

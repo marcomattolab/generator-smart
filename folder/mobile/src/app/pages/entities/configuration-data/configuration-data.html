@@ -10,7 +10,7 @@
 </ion-header>
 
 <!-- todo: add elasticsearch support -->
-<ion-content padding>
+<ion-content class="ion-padding">
     <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -18,7 +18,7 @@
     <ion-list>
         <ion-item-sliding *ngFor="let configurationData of configurationData; trackBy: trackId" #slidingItem>
             <ion-item (click)="view(configurationData)">
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
                 <p>{{configurationData.key}}</p>
                 <!-- todo: special handling for translating enum - {{'Configtype.' + configurationData.type}}" -->
                 <p>{{configurationData.type}}</p>

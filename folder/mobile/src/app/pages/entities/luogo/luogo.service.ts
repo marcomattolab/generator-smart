@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
 import { createRequestOption } from 'src/app/shared';
 import { Luogo } from './luogo.model';
+import {map} from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root'})
 export class LuogoService {
@@ -19,13 +20,17 @@ export class LuogoService {
         return this.http.put(this.resourceUrl, luogo, { observe: 'response'});
     }
 
-    find(id: number): Observable<HttpResponse<Luogo>> {
-        return this.http.get(`${this.resourceUrl}/${id}`, { observe: 'response'});
+    find(id: number): Observable<Luogo> {
+        return this.http.get(`${this.resourceUrl}/${id}`, { observe: 'response'}).pipe(
+          map(data => data.body)
+        );
     }
 
-    query(req?: any): Observable<HttpResponse<Luogo[]>> {
+    query(req?: any): Observable<Luogo[]> {
         const options = createRequestOption(req);
-        return this.http.get<Luogo[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http.get<Luogo[]>(this.resourceUrl, { params: options, observe: 'response' }).pipe(
+          map(data => data.body)
+        );
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

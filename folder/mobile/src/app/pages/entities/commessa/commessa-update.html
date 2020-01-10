@@ -8,7 +8,7 @@
         </ion-title>
 
         <ion-buttons slot="end">
-            <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+            <ion-button [disabled]="!isReadyToSave" (click)="save()">
               <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
               <ion-icon name="md-checkmark" *ngIf="!platform.is('ios')"></ion-icon>
             </ion-button>
@@ -17,10 +17,10 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="ion-padding">
     <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
         <ion-list>
-            <ion-item [hidden]="!form.id">
+            <ion-item [hidden]="!form.controls.id">
                 <ion-label>ID</ion-label>
                 <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
             </ion-item>
@@ -34,11 +34,11 @@
             </ion-item>
             <ion-item>
                 <ion-label>Data Inizio</ion-label>
-                <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dataInizio" id="field_dataInizio"></ion-datetime>
+                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataInizio" id="field_dataInizio"></ion-datetime>
             </ion-item>
             <ion-item>
                 <ion-label>Data Fine</ion-label>
-                <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dataFine" id="field_dataFine"></ion-datetime>
+                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataFine" id="field_dataFine"></ion-datetime>
             </ion-item>
             <ion-item>
                 <ion-textarea placeholder="Note" formControlName="note" id="field_note"></ion-textarea>
