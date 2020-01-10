@@ -20,26 +20,11 @@ public class TemplateCopyAll {
 	
 	public void generateTemplate() throws IOException{
 		ConfigCreateProject cc = ConfigCreateProject.getIstance();
-		String pathOut = cc.getPathname()+"/"+cc.getProjectName();
-		copyDir(new File(FOLDER_SRC),new File(pathOut));
+		String pathOut = cc.getPathname() + cc.getProjectName();
+		copyDir(new File(FOLDER_SRC), new File(pathOut));
 	}
 	
-	public String getTypeFile() {
-		return "properties";
-	}
-
-
-	public String getBody(){
-		return "";
-	}
-
-	
-	public String getClassName(){
-		return ".classpath";
-	}
-	
-	
-	static void copyDir(File baseIn,File baseOut) throws IOException{
+	static void copyDir(File baseIn, File baseOut) throws IOException{
 		if(!baseOut.exists()) {
 			baseOut.mkdirs();
 		}
@@ -55,7 +40,6 @@ public class TemplateCopyAll {
 		}
 	}
 
-
 	static void copy(File src, File dst) throws IOException {
 		InputStream in = new FileInputStream(src);
 		OutputStream out = new FileOutputStream(dst);
@@ -69,8 +53,20 @@ public class TemplateCopyAll {
 		out.close();
 	}
 	
+	public String getTypeFile() {
+		return "properties";
+	}
+
+	public String getBody(){
+		return "";
+	}
+
+	public String getClassName(){
+		return ".classpath";
+	}
 	
 	public static void main(String[] args) throws IOException {
-		copyDir(new File("C:\\test\\temp"),new File("C:\\test\\tempcloned"));
+		copyDir(new File("C:\\test\\ResumeCV"), new File("C:\\test\\ResumeCVcloned"));
 	}
+	
 }

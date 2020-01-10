@@ -155,6 +155,7 @@ import it.eng.generate.template.test.TemplateUserServiceIntTest;
 import it.eng.generate.template.test.TemplateWebConfigurerTest;
 import it.eng.generate.template.test.TemplateWebConfigurerTestController;
 import it.eng.generate.template.util.TemplateCopyAll;
+import it.eng.generate.template.util.TemplateDeleteTest;
 import it.eng.generate.template.web.TemplateAccountResource;
 import it.eng.generate.template.web.TemplateAuditResource;
 import it.eng.generate.template.web.TemplateEntityAuditResource;
@@ -509,6 +510,7 @@ public class DataBase {
 
 			//Copy All Template
 			new TemplateCopyAll(this).generateTemplate();
+			
 
 			//Frontend
 			new TemplateManifest(this).generateTemplate(); 
@@ -615,6 +617,12 @@ public class DataBase {
 				for(Enumeration e : enumList) {
 					new TemplateEnumerationsI18N(e, languageCode).generateTemplate();  
 				}
+			}
+			
+			
+			//DELETE TEST FOLDER
+			if ( !config.isGenerateTest() ) {
+				new TemplateDeleteTest(this).generateTemplate();
 			}
 
 			System.out.println("\nGenerating Project Files Succesfully Completed. Try It!");
