@@ -22,17 +22,17 @@
   	- LOW - Inserire controllo Pattern | MinSize | MaxSize lato backend / Hibernate
 
 ## Migliorie / Plugin / OpenPoint
-	- MED - Inserire motore di workflow (Activity BPS, Spring workflow ....)
+	- LOW - Inserire motore di workflow (Activity BPS, Spring workflow ....)
 	- MED - Inserire vari tipi DB => Oracle!, Mysql, nosql Mongodb
 	- LOW - Inserire componenti utili ==> Login Social, IFTT, Editor Mail ...
 	- LOW - Inserire Google MAPS
-	- HA singleton e scalabilità
-	- JMS e code asincrone
-	- Big Data , ML / AI	
+	- LOW - HA singleton e scalabilità
+	- LOW - JMS e code asincrone
+	- LOW - Big Data , ML / AI	
 	
 
 ## Documentation Ideas         
 	- See https://www.jaxio.com/en/celerio.html
 	- See https://www.slideshare.net/agoncal/custom-and-generated-code-side-by-side-with-jhipster
 			          
-			                  
+

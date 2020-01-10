@@ -37,6 +37,7 @@ public class ConfigCreateProject {
 	private String srcRepositoryFolder = "repository";
 	private String srcRepositoryTimezoneFolder = "repository.timezone";
 	private String srcSecurityFolder = "security";
+	private String srcSecurityJWTFolder = "security.jwt";
 	private String srcServiceFolder = "service";
 	private String srcReportUtilFolder = "report.util";
 	private String srcServiceDtoFolder = "service.dto";
@@ -478,6 +479,14 @@ public class ConfigCreateProject {
 	
 	public void setProjectRelations(List<ProjectRelation> projectRelations) {
 		this.projectRelations = projectRelations;
+	}
+
+	public String getSrcSecurityJWTFolder() {
+		return srcSecurityJWTFolder;
+	}
+
+	public void setSrcSecurityJWTFolder(String srcSecurityJWTFolder) {
+		this.srcSecurityJWTFolder = srcSecurityJWTFolder;
 	}
 
 	public boolean isOracle() {

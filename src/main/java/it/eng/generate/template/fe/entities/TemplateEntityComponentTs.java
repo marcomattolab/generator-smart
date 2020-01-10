@@ -48,7 +48,8 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"import { ActivatedRoute, Router } from '@angular/router';\r\n" +
 		"import { Subscription } from 'rxjs';\r\n" +
 		"import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';\r\n" +
-		"import { Principal } from 'app/core';\r\n" +
+		//"import { Principal } from 'app/core';\r\n" +
+		"import { AccountService } from 'app/core';\r\n" +
 		"import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';\r\n" +
 		"import { Observable } from 'rxjs';\r\n" +
 		"import * as moment from 'moment';\r\n" +
@@ -87,7 +88,8 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"        private "+nometabella+"Service: "+Nometabella+"Service,\r\n" +
 		"        private parseLinks: JhiParseLinks,\r\n" +
 		"        private jhiAlertService: JhiAlertService,\r\n" +
-		"        private principal: Principal,\r\n" +
+		//"        private principal: Principal,\r\n" +
+		"        private accountService: AccountService,\r\n" +
 		"        private activatedRoute: ActivatedRoute,\r\n" +
 		"        private dataUtils: JhiDataUtils,\r\n" +
 		"        private router: Router,\r\n";
@@ -184,7 +186,8 @@ public class TemplateEntityComponentTs extends AbstractResourceTemplate {
 		"    }\r\n\n" +
 		"    ngOnInit() {\r\n" +
 		"        this.loadAll();\r\n\n" +
-		"        this.principal.identity().then(account => {\r\n" +
+		//"        this.principal.identity().then(account => {\r\n" +
+		"        this.accountService.identity().then(account => {\r\n" +
 		"            this.currentAccount = account;\r\n" +
 		"        });\r\n" +
 		"        this.registerChangeIn"+Nometabella+"s();\r\n";

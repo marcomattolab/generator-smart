@@ -111,10 +111,20 @@ public class TemplateApplicationProd extends AbstractResourceTemplate{
 				"        version: V_1_1 # To use HTTP/2 you will need SSL support (see above the \"server.ssl\" configuration)\r\n" +
 				"        cache: # Used by the CachingHttpHeadersFilter\r\n" +
 				"            timeToLiveInDays: 1461\r\n" +
+				
+//				"    security:\r\n" +
+//				"        remember-me:\r\n" +
+//				"            # security key (this key should be unique for your application, and kept secret)\r\n" +
+//				"            key: b00e7c2b52803fb2a2cebcde07e02db45f1c50baf36a4f9d0847463554741a4f1f87bca18547760efff6d5061e3f79ce0886\r\n" +
 				"    security:\r\n" +
-				"        remember-me:\r\n" +
-				"            # security key (this key should be unique for your application, and kept secret)\r\n" +
-				"            key: b00e7c2b52803fb2a2cebcde07e02db45f1c50baf36a4f9d0847463554741a4f1f87bca18547760efff6d5061e3f79ce0886\r\n" +
+				"       authentication:\r\n" +
+				"         jwt:\r\n" +
+				"            # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)\r\n" +
+				"            base64-secret: YmMwZjkwYjIxYWU0ZGUyZWJmOGVhOTk1NTI3MTJhNWNjZDk0NWFiODdlNzU3M2RhMWI2Nzk5Njg5ZWRlNjczOTg1ZWY5OTllMzU5YWRlNmQ5MjlmMzlkNzFhMDllY2QwMDI0ZTY0MzQyYzBhOGY4Mjc2MjMxY2Y5OTgyZGJjZTg=\r\n" +
+				"            # Token is valid 24 hours\r\n" +
+				"            token-validity-in-seconds: 86400\r\n" +
+				"            token-validity-in-seconds-for-remember-me: 2592000\r\n"+
+				
 				"    mail: # specific mail property, for standard properties see MailProperties\r\n" +
 				"        from: "+conf.getProjectName()+"@localhost\r\n" +
 				"        base-url: http://my-server-url-to-change # Modify according to your server's URL\r\n" +

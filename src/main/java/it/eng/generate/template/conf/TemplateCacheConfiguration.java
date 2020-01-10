@@ -21,6 +21,7 @@ public class TemplateCacheConfiguration extends AbstractTemplate {
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		
 		// https://www.buildmystring.com/
+		
 		String body = 
 		"package "+ conf.getPackageclass() + "." + conf.getSrcConfigFolder() + ";\r\n\n" +
 		"import java.time.Duration;\r\n" +
@@ -38,13 +39,13 @@ public class TemplateCacheConfiguration extends AbstractTemplate {
 		"    public CacheConfiguration(JHipsterProperties jHipsterProperties) {\r\n" +
 		"        BeanClassLoaderAwareJCacheRegionFactory.setBeanClassLoader(this.getClass().getClassLoader());\r\n" +
 		"        JHipsterProperties.Cache.Ehcache ehcache =\r\n" +
-		"            jHipsterProperties.getCache().getEhcache();\r\n" +
+		"            jHipsterProperties.getCache().getEhcache();\r\n\n" +
 		"        jcacheConfiguration = Eh107Configuration.fromEhcacheCacheConfiguration(\r\n" +
 		"            CacheConfigurationBuilder.newCacheConfigurationBuilder(Object.class, Object.class,\r\n" +
 		"                ResourcePoolsBuilder.heap(ehcache.getMaxEntries()))\r\n" +
 		"                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(ehcache.getTimeToLiveSeconds())))\r\n" +
 		"                .build());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Bean\r\n" +
 		"    public JCacheManagerCustomizer cacheManagerCustomizer() {\r\n" +
 		"        return cm -> {\r\n";
@@ -55,9 +56,9 @@ public class TemplateCacheConfiguration extends AbstractTemplate {
 				"\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcRepositoryFolder()+".UserRepository.USERS_BY_EMAIL_CACHE, jcacheConfiguration);\r\n" +
 				"\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".User.class.getName(), jcacheConfiguration);\r\n" +
 				"\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".Authority.class.getName(), jcacheConfiguration);\r\n" +
-				"\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".User.class.getName() + \".authorities\", jcacheConfiguration);\r\n" +
-				"\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".PersistentToken.class.getName(), jcacheConfiguration);\r\n" +
-				"\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".User.class.getName() + \".persistentTokens\", jcacheConfiguration);\r\n";
+				"\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".User.class.getName() + \".authorities\", jcacheConfiguration);\r\n";
+				//"\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".PersistentToken.class.getName(), jcacheConfiguration);\r\n" +
+				//"\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".User.class.getName() + \".persistentTokens\", jcacheConfiguration);\r\n";
 		
 		//Cerco tutte le tabelle tranne quelle di sistema (JHI ed Liquibase)
 		List<Table> tabelle = Utils.getTables(database);
@@ -66,9 +67,9 @@ public class TemplateCacheConfiguration extends AbstractTemplate {
 			String nometabella = Utils.getClassNameLowerCase(tabella); 
 			System.out.println("CACHE nometabella : "+nometabella + "  NomeTabella: " + NomeTabella);
 			body += "\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcDomainFolder()+"."+NomeTabella+".class.getName(), jcacheConfiguration);\r\n";
-			//TODO MANAGE CACHE AND RELATIONS !!
 		}
 		
+//		TODO ADD RELATIONS !!
 //		"            cm.createCache(it.arancia.domain.Cliente.class.getName(), jcacheConfiguration);\r\n" +
 //		"            cm.createCache(it.arancia.domain.Cliente.class.getName() + \".listaContattis\", jcacheConfiguration);\r\n" +
 //		"            cm.createCache(it.arancia.domain.Cliente.class.getName() + \".tags\", jcacheConfiguration);\r\n" +
@@ -96,8 +97,6 @@ public class TemplateCacheConfiguration extends AbstractTemplate {
 //		"            cm.createCache(it.arancia.domain.MailTemplate.class.getName(), jcacheConfiguration);\r\n" +
 //		"            cm.createCache(it.arancia.domain.AppSettings.class.getName(), jcacheConfiguration);\r\n" +
 //		"            cm.createCache(it.arancia.domain.Professione.class.getName(), jcacheConfiguration);\r\n" +
-		
-		body +="\t\t// needle-ehcache-add-entry\r\n\n";
 		
 		body +=
 		"        };\r\n" +

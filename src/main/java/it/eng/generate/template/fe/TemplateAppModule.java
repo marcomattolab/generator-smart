@@ -26,6 +26,7 @@ public class TemplateAppModule extends AbstractResourceTemplate {
 		"import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';\r\n" +
 		"import { Ng2Webstorage } from 'ngx-webstorage';\r\n" +
 		"import { NgJhipsterModule } from 'ng-jhipster';\r\n" +
+		"import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';\r\n" +
 		"import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';\r\n" +
 		"import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';\r\n" +
 		"import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';\r\n" +
@@ -37,8 +38,7 @@ public class TemplateAppModule extends AbstractResourceTemplate {
 		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"EntityModule } from './entities/entity.module';\r\n" +
 		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"DashboardModule } from './dashboard/dashboard.module';\r\n" +
 		"import * as moment from 'moment';\r\n" +
-		"// jhipster-needle-angular-add-module-import JH will add new module here\r\n" +
-		"import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';\r\n" +
+		"import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';\r\n\n" +
 		"@NgModule({\r\n" +
 		"    imports: [\r\n" +
 		"        BrowserModule,\r\n" +
@@ -61,6 +61,11 @@ public class TemplateAppModule extends AbstractResourceTemplate {
 		"    ],\r\n" +
 		"    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],\r\n" +
 		"    providers: [\r\n" +
+		"        {\r\n" +
+		"            provide: HTTP_INTERCEPTORS,\r\n" +
+		"            useClass: AuthInterceptor,\r\n" +
+		"            multi: true\r\n" +
+		"        },\r\n" +
 		"        {\r\n" +
 		"            provide: HTTP_INTERCEPTORS,\r\n" +
 		"            useClass: AuthExpiredInterceptor,\r\n" +

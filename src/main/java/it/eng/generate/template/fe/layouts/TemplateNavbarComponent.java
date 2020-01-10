@@ -224,12 +224,12 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 		"                            <span jhiTranslate=\"global.menu.account.password\">Password</span>\r\n" +
 		"                        </a>\r\n" +
 		"                    </li>\r\n" +
-		"                    <li *ngSwitchCase=\"true\">\r\n" +
-		"                        <a class=\"dropdown-item\" routerLink=\"sessions\" routerLinkActive=\"active\" (click)=\"collapseNavbar()\">\r\n" +
-		"                            <fa-icon icon=\"cloud\" fixedWidth=\"true\"></fa-icon>\r\n" +
-		"                            <span jhiTranslate=\"global.menu.account.sessions\">Sessions</span>\r\n" +
-		"                        </a>\r\n" +
-		"                    </li>\r\n" +
+//		"                    <li *ngSwitchCase=\"true\">\r\n" +
+//		"                        <a class=\"dropdown-item\" routerLink=\"sessions\" routerLinkActive=\"active\" (click)=\"collapseNavbar()\">\r\n" +
+//		"                            <fa-icon icon=\"cloud\" fixedWidth=\"true\"></fa-icon>\r\n" +
+//		"                            <span jhiTranslate=\"global.menu.account.sessions\">Sessions</span>\r\n" +
+//		"                        </a>\r\n" +
+//		"                    </li>\r\n" +
 		"                    <li *ngSwitchCase=\"true\">\r\n" +
 		"                        <a class=\"dropdown-item\" (click)=\"logout()\" id=\"logout\">\r\n" +
 		"                            <fa-icon icon=\"sign-out-alt\" fixedWidth=\"true\"></fa-icon>\r\n" +

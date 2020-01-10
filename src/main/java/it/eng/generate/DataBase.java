@@ -52,7 +52,6 @@ import it.eng.generate.template.domain.TemplateDomain;
 import it.eng.generate.template.domain.TemplateDomainEnumeration;
 import it.eng.generate.template.domain.TemplateEntityAuditEvent;
 import it.eng.generate.template.domain.TemplatePersistentAudit;
-import it.eng.generate.template.domain.TemplatePersistentToken;
 import it.eng.generate.template.domain.TemplateUser;
 import it.eng.generate.template.fe.TemplateAppMain;
 import it.eng.generate.template.fe.TemplateAppModule;
@@ -102,7 +101,6 @@ import it.eng.generate.template.repository.TemplateAuthorityRepository;
 import it.eng.generate.template.repository.TemplateCustomAuditEventRepository;
 import it.eng.generate.template.repository.TemplateEntityAuditEventRepository;
 import it.eng.generate.template.repository.TemplatePersistenceAuditEventRepository;
-import it.eng.generate.template.repository.TemplatePersistenceTokenRepository;
 import it.eng.generate.template.repository.TemplateRepository;
 import it.eng.generate.template.repository.TemplateUserRepository;
 import it.eng.generate.template.resouces.TemplateApplication;
@@ -117,7 +115,9 @@ import it.eng.generate.template.resouces.TemplateLiquidbaseMasterInitialSchema;
 import it.eng.generate.template.resouces.TemplateMessage;
 import it.eng.generate.template.security.TemplateAuthoritiesConstants;
 import it.eng.generate.template.security.TemplateDomainUserDetailsService;
-import it.eng.generate.template.security.TemplatePersistentTokenRememberMeServices;
+import it.eng.generate.template.security.TemplateSecurityJWTConfigurer;
+import it.eng.generate.template.security.TemplateSecurityJWTFilter;
+import it.eng.generate.template.security.TemplateSecurityTokenProvider;
 import it.eng.generate.template.security.TemplateSecurityUtils;
 import it.eng.generate.template.security.TemplateSpringSecurityAuditorAware;
 import it.eng.generate.template.security.TemplateUserNotActivatedException;
@@ -162,6 +162,7 @@ import it.eng.generate.template.web.TemplateEntityAuditResource;
 import it.eng.generate.template.web.TemplateLogsResource;
 import it.eng.generate.template.web.TemplateReportBase;
 import it.eng.generate.template.web.TemplateResource;
+import it.eng.generate.template.web.TemplateUserJWTController;
 import it.eng.generate.template.web.TemplateUserResource;
 import it.eng.generate.template.web.errors.TemplateBadRequestAlertException;
 import it.eng.generate.template.web.errors.TemplateCustomParameterizedException;
@@ -177,6 +178,7 @@ import it.eng.generate.template.web.util.TemplateHeaderUtil;
 import it.eng.generate.template.web.util.TemplatePaginationUtil;
 import it.eng.generate.template.web.vm.TemplateKeyAndPasswordVM;
 import it.eng.generate.template.web.vm.TemplateLoggerVM;
+import it.eng.generate.template.web.vm.TemplateLoginVM;
 import it.eng.generate.template.web.vm.TemplateManagedUserVM;
 
 public class DataBase {
@@ -431,7 +433,7 @@ public class DataBase {
 			new TemplateEntityAuditEvent(this).generateTemplate(); 	
 			new TemplateAbstractAuditingEntity(this).generateTemplate();
 			new TemplatePersistentAudit(this).generateTemplate();
-			new TemplatePersistentToken(this).generateTemplate();
+			//new TemplatePersistentToken(this).generateTemplate(); //removed for JWT
 			new TemplateAuthority(this).generateTemplate();
 			new TemplateUser(this).generateTemplate();
 
@@ -440,7 +442,7 @@ public class DataBase {
 			new TemplateAuthorityRepository(this).generateTemplate();
 			new TemplateCustomAuditEventRepository(this).generateTemplate();
 			new TemplatePersistenceAuditEventRepository(this).generateTemplate();
-			new TemplatePersistenceTokenRepository(this).generateTemplate();
+			//new TemplatePersistenceTokenRepository(this).generateTemplate(); //removed for JWT
 			new TemplateUserRepository(this).generateTemplate();
 
 			//RETRIEVE BY JDL/DB/PROPERTY DYNAMIC
@@ -453,10 +455,14 @@ public class DataBase {
 			new TemplateAuthoritiesConstants(this).generateTemplate();
 			new TemplateDomainUserDetailsService(this).generateTemplate();
 			new TemplateSecurityUtils(this).generateTemplate();
-			new TemplatePersistentTokenRememberMeServices(this).generateTemplate();
+			//new TemplatePersistentTokenRememberMeServices(this).generateTemplate(); //removed for JWT
 			new TemplateSpringSecurityAuditorAware(this).generateTemplate();
 			new TemplateUserNotActivatedException(this).generateTemplate();
-
+			//Add Security JWT
+			new TemplateSecurityJWTConfigurer(this).generateTemplate();
+			new TemplateSecurityJWTFilter(this).generateTemplate();
+			new TemplateSecurityTokenProvider(this).generateTemplate();
+			
 			//Service (statics)
 			new TemplateRandomUtil(this).generateTemplate();
 			new TemplateMailService(this).generateTemplate();
@@ -475,6 +481,7 @@ public class DataBase {
 			new TemplateAccountResource(this).generateTemplate();
 			new TemplateAuditResource(this).generateTemplate();
 			new TemplateUserResource(this).generateTemplate();
+			new TemplateUserJWTController(this).generateTemplate();
 			new TemplateLogsResource(this).generateTemplate();
 			new TemplateReportBase(this).generateTemplate();				//Dynamic Jasper	
 
@@ -484,6 +491,7 @@ public class DataBase {
 
 			//WEB.REST.VM (statics)
 			new TemplateKeyAndPasswordVM(this).generateTemplate();
+			new TemplateLoginVM(this).generateTemplate();
 			new TemplateLoggerVM(this).generateTemplate();
 			new TemplateManagedUserVM(this).generateTemplate();
 

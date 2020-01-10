@@ -44,10 +44,11 @@ public class TemplateUserRepository extends AbstractTemplate{
 		"    String USERS_BY_LOGIN_CACHE = \"usersByLogin\";\r\n" +
 		"    String USERS_BY_EMAIL_CACHE = \"usersByEmail\";\r\n\n" +
 		"    Optional<User> findOneByActivationKey(String activationKey);\r\n" +
-		"    List<User> findAllByActivatedIsFalseAndCreatedDateBefore(Instant dateTime);\r\n" +
 		"    Optional<User> findOneByResetKey(String resetKey);\r\n" +
 		"    Optional<User> findOneByEmailIgnoreCase(String email);\r\n" +
 		"    Optional<User> findOneByLogin(String login);\r\n" +
+	  //"    List<User> findAllByActivatedIsFalseAndCreatedDateBefore(Instant dateTime);\r\n" +
+		"    List<User> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant dateTime);\r\n" +
 		"    @EntityGraph(attributePaths = \"authorities\")\r\n" +
 		"    Optional<User> findOneWithAuthoritiesById(Long id);\r\n" +
 		"    @EntityGraph(attributePaths = \"authorities\")\r\n" +

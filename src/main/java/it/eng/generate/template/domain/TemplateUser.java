@@ -18,7 +18,9 @@ public class TemplateUser extends AbstractTemplate {
 	public String getBody(){
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder() +";\r\n\n" +
+		
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder() +";\r\n\n" +
 		"import "+conf.getPackageclass() + "." + conf.getSrcConfigFolder()+".Constants;\r\n" +
 		"import com.fasterxml.jackson.annotation.JsonIgnore;\r\n" +
 		"import org.apache.commons.lang3.StringUtils;\r\n" +
@@ -95,10 +97,10 @@ public class TemplateUser extends AbstractTemplate {
 		"    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\r\n" +
 		"    @BatchSize(size = 20)\r\n" +
 		"    private Set<Authority> authorities = new HashSet<>();\r\n\n" +
-		"    @JsonIgnore\r\n" +
-		"    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = \"user\")\r\n" +
-		"    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\r\n" +
-		"    private Set<PersistentToken> persistentTokens = new HashSet<>();\r\n\n" +
+//		"    @JsonIgnore\r\n" +
+//		"    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = \"user\")\r\n" +
+//		"    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)\r\n" +
+//		"    private Set<PersistentToken> persistentTokens = new HashSet<>();\r\n\n" +
 		"    public Long getId() {\r\n\n" +
 		"        return id;\r\n" +
 		"    }\r\n\n" +
@@ -178,12 +180,12 @@ public class TemplateUser extends AbstractTemplate {
 		"    public void setAuthorities(Set<Authority> authorities) {\r\n" +
 		"        this.authorities = authorities;\r\n" +
 		"    }\r\n\n" +
-		"    public Set<PersistentToken> getPersistentTokens() {\r\n" +
-		"        return persistentTokens;\r\n" +
-		"    }\r\n\n" +
-		"    public void setPersistentTokens(Set<PersistentToken> persistentTokens) {\r\n" +
-		"        this.persistentTokens = persistentTokens;\r\n" +
-		"    }\r\n\n" +
+//		"    public Set<PersistentToken> getPersistentTokens() {\r\n" +
+//		"        return persistentTokens;\r\n" +
+//		"    }\r\n\n" +
+//		"    public void setPersistentTokens(Set<PersistentToken> persistentTokens) {\r\n" +
+//		"        this.persistentTokens = persistentTokens;\r\n" +
+//		"    }\r\n\n" +
 		"    @Override\r\n" +
 		"    public boolean equals(Object o) {\r\n" +
 		"        if (this == o) {\r\n" +

@@ -36,7 +36,6 @@ public class TemplatePom {
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		boolean IS_ORACLE = conf.isOracle();
 		String body = 
-		//"\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
 		"\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">" +
 		"\n    <modelVersion>4.0.0</modelVersion>" +
 		"\n    <groupId>"+conf.getPackageclass()+"</groupId>" +
@@ -402,6 +401,25 @@ public class TemplatePom {
 		"\n            <groupId>org.zalando</groupId>" +
 		"\n            <artifactId>problem-spring-web</artifactId>" +
 		"\n        </dependency>" +
+		
+		// Security JWT 
+		"\n        <!-- Spring Security JWT -->" +
+		"\n        <dependency>\r\n" +
+		"\n            <groupId>io.jsonwebtoken</groupId>\r\n" +
+		"\n            <artifactId>jjwt-api</artifactId>\r\n" +
+		"\n        </dependency>\r\n" +
+		"\n        <dependency>\r\n" +
+		"\n            <groupId>io.jsonwebtoken</groupId>\r\n" +
+		"\n            <artifactId>jjwt-impl</artifactId>\r\n" +
+		"\n            <scope>runtime</scope>\r\n" +
+		"\n        </dependency>\r\n" +
+		"\n        <dependency>\r\n" +
+		"\n            <groupId>io.jsonwebtoken</groupId>\r\n" +
+		"\n            <artifactId>jjwt-jackson</artifactId>\r\n" +
+		"\n            <scope>runtime</scope>\r\n" +
+		"\n        </dependency>\r\n"+
+		
+		
 		"\n        <!-- Spring Cloud -->" +
 		"\n        <dependency>" +
 		"\n            <groupId>org.springframework.boot</groupId>" +
