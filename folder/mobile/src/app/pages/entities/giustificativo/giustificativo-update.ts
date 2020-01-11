@@ -182,8 +182,4 @@ export class GiustificativoUpdatePage implements OnInit {
   compareSpesa(first: Spesa, second: Spesa): boolean {
     return first && second ? first.id === second.id : first === second;
   }
-
-  trackSpesaById(index: number, item: Spesa) {
-    return item.id;
-  }
 }

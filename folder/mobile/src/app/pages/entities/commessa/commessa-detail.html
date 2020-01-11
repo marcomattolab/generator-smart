@@ -4,7 +4,7 @@
             <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>
-            Commessa
+            {{'JOB_ORDER.TITLE' | translate}}
         </ion-title>
     </ion-toolbar>
 </ion-header>
@@ -12,37 +12,37 @@
 <ion-content class="ion-padding">
     <ion-list>
         <ion-item>
-            <ion-label position="fixed">Codice Commessa</ion-label>
+            <ion-label position="fixed">{{'JOB_ORDER.ORDER_CODE' | translate}}</ion-label>
             <div item-content>
                 <span>{{commessa.codiceCommessa}}</span>
             </div>
         </ion-item>
         <ion-item>
-            <ion-label position="fixed">Nome Progetto</ion-label>
+            <ion-label position="fixed">{{'JOB_ORDER.PROJECT_NAME' | translate}}</ion-label>
             <div item-content>
                 <span>{{commessa.nomeProgetto}}</span>
             </div>
         </ion-item>
         <ion-item>
-            <ion-label position="fixed">Data Inizio</ion-label>
+            <ion-label position="fixed">{{'JOB_ORDER.DATE_START' | translate}}</ion-label>
             <div item-content>
                 <span>{{commessa.dataInizio | date:'mediumDate'}}</span>
             </div>
         </ion-item>
         <ion-item>
-            <ion-label position="fixed">Data Fine</ion-label>
+            <ion-label position="fixed">{{'JOB_ORDER.DATE_END' | translate}}</ion-label>
             <div item-content>
                 <span>{{commessa.dataFine | date:'mediumDate'}}</span>
             </div>
         </ion-item>
         <ion-item>
-            <ion-label position="fixed">Note</ion-label>
+            <ion-label position="fixed">{{'JOB_ORDER.NOTES' | translate}}</ion-label>
             <div item-content>
                 <span>{{commessa.note}}</span>
             </div>
         </ion-item>
         <ion-item>
-            <ion-label position="fixed">Is Active</ion-label>
+            <ion-label position="fixed">{{'JOB_ORDER.IS_ACTIVE' | translate}}</ion-label>
             <div item-content>
                 <span>{{commessa.isActive}}</span>
             </div>

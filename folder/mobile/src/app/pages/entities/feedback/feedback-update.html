@@ -75,8 +75,8 @@
         <ion-label>Struttura</ion-label>
         <ion-select id="field_struttura" formControlName="struttura" [compareWith]="compareStruttura">
           <ion-select-option [value]="null"></ion-select-option>
-          <ion-select-option [value]="strutturaOption.id" *ngFor="let strutturaOption of strutturas;
-          trackBy: trackStrutturaById">{{strutturaOption.nome}}</ion-select-option>
+          <ion-select-option [value]="strutturaOption.id" *ngFor="let strutturaOption of strutturas">
+            {{strutturaOption.nome}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>

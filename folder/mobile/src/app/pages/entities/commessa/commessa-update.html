@@ -1,52 +1,53 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-        </ion-buttons>
-        <ion-title>
-            Commessa
-        </ion-title>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Commessa
+    </ion-title>
 
-        <ion-buttons slot="end">
-            <ion-button [disabled]="!isReadyToSave" (click)="save()">
-              <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
-              <ion-icon name="md-checkmark" *ngIf="!platform.is('ios')"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()">
+        <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
+        <ion-icon name="md-checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content class="ion-padding">
-    <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
-        <ion-list>
-            <ion-item [hidden]="!form.controls.id">
-                <ion-label>ID</ion-label>
-                <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Codice Commessa</ion-label>
-                <ion-input type="text" name="codiceCommessa" formControlName="codiceCommessa"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="floating">Nome Progetto</ion-label>
-                <ion-input type="text" name="nomeProgetto" formControlName="nomeProgetto"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label>Data Inizio</ion-label>
-                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataInizio" id="field_dataInizio"></ion-datetime>
-            </ion-item>
-            <ion-item>
-                <ion-label>Data Fine</ion-label>
-                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataFine" id="field_dataFine"></ion-datetime>
-            </ion-item>
-            <ion-item>
-                <ion-textarea placeholder="Note" formControlName="note" id="field_note"></ion-textarea>
-            </ion-item>
-            <ion-item>
-                <ion-label>Is Active</ion-label>
-                <ion-checkbox formControlName="isActive"></ion-checkbox>
-            </ion-item>
-        </ion-list>
-    </form>
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.controls.id">
+        <ion-label>{{'ID' | translate}}</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">{{'JOB_ORDER.ORDER_CODE' | translate}} *</ion-label>
+        <ion-input type="text" name="codiceCommessa" formControlName="codiceCommessa"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">{{'JOB_ORDER.PROJECT_NAME' | translate}}</ion-label>
+        <ion-input type="text" name="nomeProgetto" formControlName="nomeProgetto"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'JOB_ORDER.DATE_START' | translate}} *</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataInizio" id="field_dataInizio"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'JOB_ORDER.DATE_END' | translate}}</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="dataFine" id="field_dataFine"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'JOB_ORDER.NOTES' | translate}}</ion-label>
+        <ion-textarea placeholder="Note" formControlName="note" id="field_note"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'JOB_ORDER.IS_ACTIVE' | translate}}</ion-label>
+        <ion-checkbox formControlName="isActive"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+  </form>
 </ion-content>

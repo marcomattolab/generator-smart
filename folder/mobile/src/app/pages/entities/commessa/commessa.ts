@@ -50,10 +50,6 @@ export class CommessaPage {
             });
     }
 
-    trackId(index: number, item: Commessa) {
-        return item.id;
-    }
-
     byteSize(field) {
         return this.dataUtils.byteSize(field);
     }

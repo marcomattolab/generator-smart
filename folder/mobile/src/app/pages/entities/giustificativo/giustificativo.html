@@ -16,7 +16,7 @@
     </ion-refresher>
 
     <ion-list>
-        <ion-item-sliding *ngFor="let giustificativo of giustificativos; trackBy: trackId" #slidingItem>
+        <ion-item-sliding *ngFor="let giustificativo of giustificativos" #slidingItem>
             <ion-item (click)="view(giustificativo)">
               <ion-label class="ion-text-wrap">
                 <ion-avatar *ngIf="giustificativo.allegato">

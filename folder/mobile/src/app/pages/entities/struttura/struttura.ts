@@ -48,10 +48,6 @@ export class StrutturaPage {
             });
     }
 
-    trackId(index: number, item: Struttura) {
-        return item.id;
-    }
-
     new() {
         this.navController.navigateForward('/tabs/entities/struttura/new');
     }

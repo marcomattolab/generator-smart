@@ -1,15 +1,15 @@
-import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {JhiDataUtils} from 'ng-jhipster';
 import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NavController, Platform, ToastController} from '@ionic/angular';
-import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Feedback} from './feedback.model';
 import {FeedbackService} from './feedback.service';
 import {Struttura, StrutturaService} from '../struttura';
-import * as moment from 'moment';
+import {getMomentDateNoTZ} from '../../../shared/util/moment-util';
 
 @Component({
   selector: 'page-feedback-update',
@@ -136,7 +136,7 @@ export class FeedbackUpdatePage implements OnInit {
 
   private createFromForm(): Feedback {
     const dataValutazione = this.form.get(['dataValutazione']).value;
-    const dataValutazioneValue = dataValutazione ? moment(dataValutazione) : null;
+    const dataValutazioneValue = dataValutazione ? getMomentDateNoTZ(dataValutazione) : null;
 
     return {
       ...new Feedback(),
@@ -203,9 +203,5 @@ export class FeedbackUpdatePage implements OnInit {
 
   compareStruttura(first: Struttura, second: Struttura): boolean {
     return first && second ? first.id === second.id : first === second;
-  }
-
-  trackStrutturaById(index: number, item: Struttura) {
-    return item.id;
   }
 }

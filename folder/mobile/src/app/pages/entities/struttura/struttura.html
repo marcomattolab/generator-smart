@@ -16,7 +16,7 @@
     </ion-refresher>
 
     <ion-list>
-        <ion-item-sliding *ngFor="let struttura of strutturas; trackBy: trackId" #slidingItem>
+        <ion-item-sliding *ngFor="let struttura of strutturas" #slidingItem>
             <ion-item (click)="view(struttura)">
               <ion-label class="ion-text-wrap">
                 <!-- todo: special handling for translating enum - {{'Category.' + struttura.categoria}}" -->

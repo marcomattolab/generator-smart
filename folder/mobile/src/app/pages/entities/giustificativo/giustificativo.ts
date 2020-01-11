@@ -50,10 +50,6 @@ export class GiustificativoPage {
             });
     }
 
-    trackId(index: number, item: Giustificativo) {
-        return item.id;
-    }
-
     byteSize(field) {
         return this.dataUtils.byteSize(field);
     }

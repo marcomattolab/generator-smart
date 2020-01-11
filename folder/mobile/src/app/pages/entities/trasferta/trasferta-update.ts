@@ -13,6 +13,7 @@ import {Commessa, CommessaService} from '../commessa';
 import {User} from '../../../services/user/user.model';
 import {UserService} from '../../../services/user/user.service';
 import * as moment from 'moment';
+import {getMomentDateNoTZ} from '../../../shared/util/moment-util';
 
 @Component({
   selector: 'page-trasferta-update',
@@ -152,9 +153,9 @@ export class TrasfertaUpdatePage implements OnInit {
   }
 
   private createFromForm(): Trasferta {
-    const dataInizioValue = moment(this.form.get(['dataInizio']).value);
+    const dataInizioValue = getMomentDateNoTZ(this.form.get(['dataInizio']).value);
     const dataFine = this.form.get(['dataFine']).value;
-    const dataFineValue = dataFine ? moment(dataFine) : null;
+    const dataFineValue = dataFine ? getMomentDateNoTZ(dataFine) : null;
     return {
       ...new Trasferta(),
       id: this.form.get(['id']).value,

@@ -50,10 +50,6 @@ export class TrasfertaPage {
             });
     }
 
-    trackId(index: number, item: Trasferta) {
-        return item.id;
-    }
-
     byteSize(field) {
         return this.dataUtils.byteSize(field);
     }

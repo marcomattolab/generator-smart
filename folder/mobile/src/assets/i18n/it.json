@@ -19,6 +19,7 @@
   "FEEDBACK": {
     "TITLE": "Feedback"
   },
+  "ID": "Id",
   "FIRST_NAME": "First Name",
   "INVALID_PASSWORD_ERROR": "Invalid password, please try again.",
   "ITEM_ABOUT_PLACEHOLDER": "Informazioni",
@@ -26,6 +27,12 @@
   "ITEM_CREATE_TITLE": "Nuovo elemento",
   "ITEM_NAME_PLACEHOLDER": "Nome",
   "JOB_ORDER": {
+    "DATE_END": "Data fine",
+    "DATE_START": "Data inizio",
+    "IS_ACTIVE": "Attivo",
+    "NOTES": "Note",
+    "ORDER_CODE": "Codice commessa",
+    "PROJECT_NAME": "Nome progetto",
     "TITLE": "Commessa"
   },
   "JUSTIFICATIVE": {

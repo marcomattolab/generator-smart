@@ -16,7 +16,7 @@
     </ion-refresher>
 
     <ion-list>
-        <ion-item-sliding *ngFor="let commessa of commessas; trackBy: trackId" #slidingItem>
+        <ion-item-sliding *ngFor="let commessa of commessas" #slidingItem>
             <ion-item (click)="view(commessa)">
               <ion-label class="ion-text-wrap">
                 <p>{{commessa.codiceCommessa}}</p>

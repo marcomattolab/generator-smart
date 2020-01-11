@@ -48,10 +48,6 @@ export class ConfigurationDataPage {
             });
     }
 
-    trackId(index: number, item: ConfigurationData) {
-        return item.id;
-    }
-
     new() {
         this.navController.navigateForward('/tabs/entities/configuration-data/new');
     }

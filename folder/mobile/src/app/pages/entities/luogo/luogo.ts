@@ -44,10 +44,6 @@ export class LuogoPage {
             });
     }
 
-    trackId(index: number, item: Luogo) {
-        return item.id;
-    }
-
     new() {
         this.navController.navigateForward('/tabs/entities/luogo/new');
     }

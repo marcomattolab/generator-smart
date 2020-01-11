@@ -16,7 +16,7 @@
     </ion-refresher>
 
     <ion-list>
-        <ion-item-sliding *ngFor="let luogo of luogos; trackBy: trackId" #slidingItem>
+        <ion-item-sliding *ngFor="let luogo of luogos" #slidingItem>
             <ion-item (click)="view(luogo)">
               <ion-label class="ion-text-wrap">
                 <p>{{luogo.indirizzo}}</p>

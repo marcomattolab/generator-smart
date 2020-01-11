@@ -16,7 +16,7 @@
     </ion-refresher>
 
     <ion-list>
-        <ion-item-sliding *ngFor="let configurationData of configurationData; trackBy: trackId" #slidingItem>
+        <ion-item-sliding *ngFor="let configurationData of configurationData" #slidingItem>
             <ion-item (click)="view(configurationData)">
               <ion-label class="ion-text-wrap">
                 <p>{{configurationData.key}}</p>

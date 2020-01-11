@@ -48,10 +48,6 @@ export class SpesaPage {
             });
     }
 
-    trackId(index: number, item: Spesa) {
-        return item.id;
-    }
-
     new() {
         this.navController.navigateForward('/tabs/entities/spesa/new');
     }

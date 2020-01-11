@@ -9,6 +9,7 @@ import {SpesaService} from './spesa.service';
 import {Trasferta, TrasfertaService} from '../trasferta';
 import {Struttura, StrutturaService} from '../struttura';
 import * as moment from 'moment';
+import {getMomentDateNoTZ} from '../../../shared/util/moment-util';
 
 @Component({
   selector: 'page-spesa-update',
@@ -123,10 +124,10 @@ export class SpesaUpdatePage implements OnInit {
 
   private createFromForm(): Spesa {
     const dataSpesa = this.form.get(['dataSpesa']).value;
-    const dataSpesaValue = dataSpesa ? moment(dataSpesa) : null;
+    const dataSpesaValue = dataSpesa ? getMomentDateNoTZ(dataSpesa) : null;
 
     const approvedDate = this.form.get(['approvedDate']).value;
-    const approvedDateValue = approvedDate ? moment(approvedDate) : null;
+    const approvedDateValue = approvedDate ? getMomentDateNoTZ(approvedDate) : null;
 
     return {
       ...new Spesa(),
@@ -146,15 +147,7 @@ export class SpesaUpdatePage implements OnInit {
     return first && second ? first.id === second.id : first === second;
   }
 
-  trackTrasfertaById(index: number, item: Trasferta) {
-    return item.id;
-  }
-
   compareStruttura(first: Struttura, second: Struttura): boolean {
     return first && second ? first.id === second.id : first === second;
-  }
-
-  trackStrutturaById(index: number, item: Struttura) {
-    return item.id;
   }
 }
