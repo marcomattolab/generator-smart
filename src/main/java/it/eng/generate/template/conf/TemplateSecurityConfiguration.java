@@ -28,6 +28,7 @@ public class TemplateSecurityConfiguration extends AbstractTemplate {
 		"import org.springframework.security.config.annotation.web.builders.HttpSecurity;\r\n" +
 		"import org.springframework.security.config.annotation.web.builders.WebSecurity;\r\n" +
 		"import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;\r\n" +
+		"import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;\r\n" +
 		"import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;\r\n" +
 		"import org.springframework.security.config.http.SessionCreationPolicy;\r\n" +
 		"import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;\r\n" +
@@ -36,6 +37,8 @@ public class TemplateSecurityConfiguration extends AbstractTemplate {
 		"import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;\r\n" +
 		"import org.springframework.web.filter.CorsFilter;\r\n" +
 		"import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;\r\n" +
+		"import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;\n"+
+		"import org.springframework.security.config.http.SessionCreationPolicy;\n"+
 //		"import it.exprivia.security.AuthoritiesConstants;\r\n" +
 //		"import it.exprivia.security.jwt.JWTConfigurer;\r\n" +
 //		"import it.exprivia.security.jwt.TokenProvider;\r\n\n" +
@@ -43,7 +46,7 @@ public class TemplateSecurityConfiguration extends AbstractTemplate {
 		"import "+ conf.getPackageclass() + "." + conf.getSrcSecurityJWTFolder() +".*;\r\n\n" +
 		"@Configuration\r\n" +
 		"@EnableWebSecurity\r\n" +
-		"@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)" +
+		"@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)\n" +
 		"@Import(SecurityProblemSupport.class)\r\n" +
 		"public class SecurityConfiguration extends WebSecurityConfigurerAdapter {\r\n" +
 		"    private final CorsFilter corsFilter;\r\n" +
@@ -70,7 +73,7 @@ public class TemplateSecurityConfiguration extends AbstractTemplate {
 		"            .antMatchers(\"/test/**\");\r\n" +
 		"    }\r\n\n" +
 		"    @Override\r\n" +
-		"    public void configure(HttpSecurity http) throws Exception {\r\n\n"+
+		"    public void configure(HttpSecurity http) throws Exception {\r\n"+
 		"        http\r\n" + 
 		"        .csrf()\r\n" + 
 		"        .disable()\r\n" + 
@@ -97,9 +100,7 @@ public class TemplateSecurityConfiguration extends AbstractTemplate {
 		"        .antMatchers(\"/management/info\").permitAll()\r\n" + 
 		"        .antMatchers(\"/management/**\").hasAuthority(AuthoritiesConstants.ADMIN)\r\n" + 
 		"    .and()\r\n" + 
-		"        .apply(securityConfigurerAdapter());\n\n" +
-		
-		
+		"        .apply(securityConfigurerAdapter());\n" +
 //		"        // @formatter:off\r\n" +
 //		"        http\r\n" +
 //		"            .csrf()\r\n" +
@@ -138,8 +139,7 @@ public class TemplateSecurityConfiguration extends AbstractTemplate {
 //		"        .and()\r\n" +
 //		"            .apply(securityConfigurerAdapter());\r\n" +
 //		"        // @formatter:on\r\n" +
-//		"    }\r\n\n" +
-
+		"    }\r\n\n" +
 		"    private JWTConfigurer securityConfigurerAdapter() {\r\n" +
 		"        return new JWTConfigurer(tokenProvider);\r\n" +
 		"    }\r\n" +
