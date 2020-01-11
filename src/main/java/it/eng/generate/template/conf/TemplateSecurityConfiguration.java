@@ -43,6 +43,7 @@ public class TemplateSecurityConfiguration extends AbstractTemplate {
 		"import "+ conf.getPackageclass() + "." + conf.getSrcSecurityJWTFolder() +".*;\r\n\n" +
 		"@Configuration\r\n" +
 		"@EnableWebSecurity\r\n" +
+		"@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)" +
 		"@Import(SecurityProblemSupport.class)\r\n" +
 		"public class SecurityConfiguration extends WebSecurityConfigurerAdapter {\r\n" +
 		"    private final CorsFilter corsFilter;\r\n" +
@@ -69,46 +70,76 @@ public class TemplateSecurityConfiguration extends AbstractTemplate {
 		"            .antMatchers(\"/test/**\");\r\n" +
 		"    }\r\n\n" +
 		"    @Override\r\n" +
-		"    public void configure(HttpSecurity http) throws Exception {\r\n" +
-		"        // @formatter:off\r\n" +
-		"        http\r\n" +
-		"            .csrf()\r\n" +
-		"            .disable()\r\n" +
-		"            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)\r\n" +
-		"            .exceptionHandling()\r\n" +
-		"            .authenticationEntryPoint(problemSupport)\r\n" +
-		"            .accessDeniedHandler(problemSupport)\r\n" +
-		"        .and()\r\n" +
-		"            .headers()\r\n" +
-		"            .contentSecurityPolicy(\"default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:\")\r\n" +
-		"        .and()\r\n" +
-		"            .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)\r\n" +
-		"//        .and()\r\n" +
-		"//            .featurePolicy(\"geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'\")\r\n" +
-		"        .and()\r\n" +
-		"            .frameOptions()\r\n" +
-		"            .deny()\r\n" +
-		"        .and()\r\n" +
-		"            .sessionManagement()\r\n" +
-		"            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)\r\n" +
-		"        .and()\r\n" +
-		"            .authorizeRequests()\r\n" +
-		"            .antMatchers(\"/api/authenticate\").permitAll()\r\n" +
-		"            .antMatchers(\"/api/register\").permitAll()\r\n" +
-		"            .antMatchers(\"/api/activate\").permitAll()\r\n" +
-		"            .antMatchers(\"/api/account/reset-password/init\").permitAll()\r\n" +
-		"            .antMatchers(\"/api/account/reset-password/finish\").permitAll()\r\n" +
-		"            .antMatchers(\"/api/**\").authenticated()\r\n" +
-		"            .antMatchers(\"/management/health\").permitAll()\r\n" +
-		"            .antMatchers(\"/management/info\").permitAll()\r\n" +
-		"            .antMatchers(\"/management/prometheus\").permitAll()\r\n" +
-		"            .antMatchers(\"/management/**\").hasAuthority(AuthoritiesConstants.ADMIN)\r\n" +
-		"        .and()\r\n" +
-		"            .httpBasic()\r\n" +
-		"        .and()\r\n" +
-		"            .apply(securityConfigurerAdapter());\r\n" +
-		"        // @formatter:on\r\n" +
-		"    }\r\n\n" +
+		"    public void configure(HttpSecurity http) throws Exception {\r\n\n"+
+		"        http\r\n" + 
+		"        .csrf()\r\n" + 
+		"        .disable()\r\n" + 
+		"        .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)\r\n" + 
+		"        .exceptionHandling()\r\n" + 
+		"        .authenticationEntryPoint(problemSupport)\r\n" + 
+		"        .accessDeniedHandler(problemSupport)\r\n" + 
+		"    .and()\r\n" + 
+		"        .headers()\r\n" + 
+		"        .frameOptions()\r\n" + 
+		"        .disable()\r\n" + 
+		"    .and()\r\n" + 
+		"        .sessionManagement()\r\n" + 
+		"        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)\r\n" + 
+		"    .and()\r\n" + 
+		"        .authorizeRequests()\r\n" + 
+		"        .antMatchers(\"/api/register\").permitAll()\r\n" + 
+		"        .antMatchers(\"/api/activate\").permitAll()\r\n" + 
+		"        .antMatchers(\"/api/authenticate\").permitAll()\r\n" + 
+		"        .antMatchers(\"/api/account/reset-password/init\").permitAll()\r\n" + 
+		"        .antMatchers(\"/api/account/reset-password/finish\").permitAll()\r\n" + 
+		"        .antMatchers(\"/api/**\").authenticated()\r\n" + 
+		"        .antMatchers(\"/management/health\").permitAll()\r\n" + 
+		"        .antMatchers(\"/management/info\").permitAll()\r\n" + 
+		"        .antMatchers(\"/management/**\").hasAuthority(AuthoritiesConstants.ADMIN)\r\n" + 
+		"    .and()\r\n" + 
+		"        .apply(securityConfigurerAdapter());\n\n" +
+		
+		
+//		"        // @formatter:off\r\n" +
+//		"        http\r\n" +
+//		"            .csrf()\r\n" +
+//		"            .disable()\r\n" +
+//		"            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)\r\n" +
+//		"            .exceptionHandling()\r\n" +
+//		"            .authenticationEntryPoint(problemSupport)\r\n" +
+//		"            .accessDeniedHandler(problemSupport)\r\n" +
+//		"        .and()\r\n" +
+//		"            .headers()\r\n" +
+//		"            .contentSecurityPolicy(\"default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:\")\r\n" +
+//		"        .and()\r\n" +
+//		"            .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)\r\n" +
+//		"//        .and()\r\n" +
+//		"//            .featurePolicy(\"geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'\")\r\n" +
+//		"        .and()\r\n" +
+//		"            .frameOptions()\r\n" +
+//		"            .deny()\r\n" +
+//		"        .and()\r\n" +
+//		"            .sessionManagement()\r\n" +
+//		"            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)\r\n" +
+//		"        .and()\r\n" +
+//		"            .authorizeRequests()\r\n" +
+//		"            .antMatchers(\"/api/authenticate\").permitAll()\r\n" +
+//		"            .antMatchers(\"/api/register\").permitAll()\r\n" +
+//		"            .antMatchers(\"/api/activate\").permitAll()\r\n" +
+//		"            .antMatchers(\"/api/account/reset-password/init\").permitAll()\r\n" +
+//		"            .antMatchers(\"/api/account/reset-password/finish\").permitAll()\r\n" +
+//		"            .antMatchers(\"/api/**\").authenticated()\r\n" +
+//		"            .antMatchers(\"/management/health\").permitAll()\r\n" +
+//		"            .antMatchers(\"/management/info\").permitAll()\r\n" +
+//		"            .antMatchers(\"/management/prometheus\").permitAll()\r\n" +
+//		"            .antMatchers(\"/management/**\").hasAuthority(AuthoritiesConstants.ADMIN)\r\n" +
+//		"        .and()\r\n" +
+//		"            .httpBasic()\r\n" +
+//		"        .and()\r\n" +
+//		"            .apply(securityConfigurerAdapter());\r\n" +
+//		"        // @formatter:on\r\n" +
+//		"    }\r\n\n" +
+
 		"    private JWTConfigurer securityConfigurerAdapter() {\r\n" +
 		"        return new JWTConfigurer(tokenProvider);\r\n" +
 		"    }\r\n" +
