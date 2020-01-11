@@ -25,7 +25,19 @@ export class AuthServerProvider {
     return this.http.post(ApiService.API_URL + '/authenticate', data, { observe: 'response' }).pipe(map(authenticateSuccess.bind(this)));
 
     function authenticateSuccess(resp) {
-      const bearerToken = resp.headers.get('Authorization');
+    	  // FIX START
+      // const bearerToken = resp.headers.get('Authorization');
+      let bearerToken = resp.headers.get('Authorization');
+      let fixed = false;
+      if (!fixed) {
+    		  if(bearerToken === null || bearerToken === '') {
+    			console.log("Fix for bearerToken, token is null => " + bearerToken);
+    			bearerToken = 'Bearer '+resp.body.id_token
+    			console.log("Fix for bearerToken, set token => " + bearerToken);
+    		  }
+      }
+      // FIX END
+
       if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
         const jwt = bearerToken.slice(7, bearerToken.length);
         this.storeAuthenticationToken(jwt, credentials.rememberMe);
