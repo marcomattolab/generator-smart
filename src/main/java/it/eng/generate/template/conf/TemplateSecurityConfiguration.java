@@ -34,11 +34,11 @@ public class TemplateSecurityConfiguration extends AbstractTemplate {
 		"import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;\r\n" +
 		"import org.springframework.security.crypto.password.PasswordEncoder;\r\n" +
 		"import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;\r\n" +
-		"import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;\r\n" +
+		//"import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;\r\n" +
 		"import org.springframework.web.filter.CorsFilter;\r\n" +
 		"import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;\r\n" +
-		"import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;\n"+
-		"import org.springframework.security.config.http.SessionCreationPolicy;\n"+
+		//"import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;\n"+
+		//"import org.springframework.security.config.http.SessionCreationPolicy;\n"+
 //		"import it.exprivia.security.AuthoritiesConstants;\r\n" +
 //		"import it.exprivia.security.jwt.JWTConfigurer;\r\n" +
 //		"import it.exprivia.security.jwt.TokenProvider;\r\n\n" +
