@@ -19,10 +19,10 @@ public class TemplateEntityIndexIonic extends AbstractResourceTemplate {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String body = 
-		"export * from './"+Utils.getClassNameLowerCase(tabella)+".model';\r\n" +
-		"export * from './"+Utils.getClassNameLowerCase(tabella)+".service';\r\n" +
-		"export * from './"+Utils.getClassNameLowerCase(tabella)+"-detail';\r\n" +
-		"export * from './"+Utils.getClassNameLowerCase(tabella)+";\r\n";
+		"export * from './"+Utils.getClassNameLowerCase(tabella)+".model';\n"+
+		"export * from './"+Utils.getClassNameLowerCase(tabella)+".service';\n"+
+		"export * from './"+Utils.getClassNameLowerCase(tabella)+"-detail';\n"+
+		"export * from './"+Utils.getClassNameLowerCase(tabella)+"';\n\n";
 		return body;
 	}
 	
