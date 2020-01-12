@@ -23,7 +23,9 @@ public class TemplateManagedUserVM extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcWebRestVmFolder()+";\r\n\n" +
+		
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestVmFolder()+";\r\n\n" +
 		"import " + conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder() + ".UserDTO;\r\n" +
 		"import javax.validation.constraints.Size;\r\n\n" +
 		"/**\r\n" +

@@ -23,7 +23,8 @@ public class TemplateCustomParameterizedException extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcWebRestErrorsFolder()+";\r\n\n" +
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestErrorsFolder()+";\r\n\n" +
 		"import org.zalando.problem.AbstractThrowableProblem;\r\n" +
 		"import java.util.HashMap;\r\n" +
 		"import java.util.Map;\r\n" +

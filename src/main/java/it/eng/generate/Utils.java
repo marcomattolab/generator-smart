@@ -237,7 +237,6 @@ public class Utils {
 			String typeColumnRel = column.getTypeColumnRelation();
 			
 			if (typeColumnRel != null && typeColumnRel.length()>0) {
-				// TODO TEST ME ==> myKeywords?: ICompanyKeyword[];
 				body += "      "+columnname+"?: "+typeColumnRel+"[];\n";
 			} else {
 				if( filterType.getName().equals("java.sql.Blob") ) {
@@ -644,7 +643,6 @@ public class Utils {
 			"                </div>\r\n\n";
 		
 		} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
-			//TODO FIXME - This code is not reached!!!
 			boolean isZDT = false; //TODO FIX THIS!!
 			if ( isZDT ) {
 				result += //DATE ==> ZonedDateTimelocal
@@ -812,9 +810,6 @@ public class Utils {
 	public static boolean isLocalDate(Column column) {
 		boolean isLocalDate = false;
 		Class<?> filterType = column.getTypeColumn();
-//		if (column.getName().equals("datanascita")) {
-//			System.out.println("----------------- filterType.getName() =>>>> "+filterType.getName());
-//		}
 		if(	filterType.getName().equals("java.time.LocalDate") ) {
 			isLocalDate = true;
 		} 

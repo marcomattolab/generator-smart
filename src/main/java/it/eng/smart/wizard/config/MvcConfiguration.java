@@ -10,8 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@ComponentScan(basePackages="smart.generator")
 @EnableWebMvc
+@ComponentScan(basePackages="smart.generator")
 public class MvcConfiguration extends WebMvcConfigurerAdapter{
 
 	@Bean
@@ -26,6 +26,5 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
-
 	
 }

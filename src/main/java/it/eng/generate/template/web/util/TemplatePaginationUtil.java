@@ -23,7 +23,9 @@ public class TemplatePaginationUtil extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcWebRestUtilFolder()+";\r\n\n" +
+		
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestUtilFolder()+";\r\n\n" +
 		"import org.springframework.data.domain.Page;\r\n" +
 		"import org.springframework.http.HttpHeaders;\r\n" +
 		"import org.springframework.web.util.UriComponentsBuilder;\r\n\n" +

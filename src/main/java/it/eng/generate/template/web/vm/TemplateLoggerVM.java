@@ -23,7 +23,9 @@ public class TemplateLoggerVM extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcWebRestVmFolder()+";\r\n\n" +
+		
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestVmFolder()+";\r\n\n" +
 		"import ch.qos.logback.classic.Logger;\r\n\n" +
 		"/**\r\n" +
 		" * View Model object for storing a Logback logger.\r\n" +

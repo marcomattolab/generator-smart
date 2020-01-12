@@ -23,7 +23,8 @@ public class TemplateHeaderUtil extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcWebRestUtilFolder()+";\r\n\n" +
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestUtilFolder()+";\r\n\n" +
 		"import org.slf4j.Logger;\r\n" +
 		"import org.slf4j.LoggerFactory;\r\n" +
 		"import org.springframework.http.HttpHeaders;\r\n\n" +

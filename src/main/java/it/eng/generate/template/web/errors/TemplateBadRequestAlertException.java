@@ -23,7 +23,9 @@ public class TemplateBadRequestAlertException extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcWebRestErrorsFolder()+";\r\n\n" +
+		
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestErrorsFolder()+";\r\n\n" +
 		"import org.zalando.problem.AbstractThrowableProblem;\r\n" +
 		"import org.zalando.problem.Status;\r\n" +
 		"import java.net.URI;\r\n" +

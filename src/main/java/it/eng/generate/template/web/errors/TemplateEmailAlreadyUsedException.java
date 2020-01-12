@@ -23,7 +23,9 @@ public class TemplateEmailAlreadyUsedException extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcWebRestErrorsFolder()+";\r\n\n\n" +
+		
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestErrorsFolder()+";\r\n\n\n" +
 		"public class EmailAlreadyUsedException extends BadRequestAlertException {\r\n\n" +
 		"    private static final long serialVersionUID = 1L;\r\n\n" +
 		"    public EmailAlreadyUsedException() {\r\n" +
