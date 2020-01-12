@@ -14,7 +14,7 @@ import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
-	private static final boolean PRINT_RELATIONS = false; //TODO TEST IT!
+	private static final boolean PRINT_RELATIONS = false; 	 //TODO TEST IT!
 	private static final String DATE_PATTERN = "DD/MM/YYYY"; //TODO MOVE INTO PROPERTY
 
 	public TemplateEntityUpdateHtmlIonic(DataBase database, Table tabella) {
@@ -96,27 +96,28 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 			} else if(filterType.getName().equals("java.lang.Long") || filterType.getName().equals("java.lang.Integer") || filterType.getName().equals("java.lang.Float") || filterType.getName().equals("java.math.BigDecimal")) {
 				body += "            <ion-item>\n"+
-						"                <ion-label position=\"floating\">Importo Spesa</ion-label>\n"+
-						"                <ion-input type=\"number\" name=\"importoSpesa\" formControlName=\"importoSpesa\"></ion-input>\n"+
+						"                <ion-label position=\"floating\">"+ColumnName+"</ion-label>\n"+
+						"                <ion-input type=\"number\" name=\""+columnname+"\" formControlName=\""+columnname+"\"></ion-input>\n"+
 						"            </ion-item>\n";
-			
-			} else if(filterType.getName().equals("java.lang.Boolean")) {
-				//TODO DEVELOP THIS!
-
-			} else if( filterType.getName().equals("java.sql.Blob") ) {
-				//TODO DEVELOP THIS!
-				
-			} else if( filterType.getName().equals("java.sql.Clob") ) {
-				//TODO DEVELOP THIS!
-				
-			} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
-				//TODO DEVELOP THIS!
 				
 			} else if( Utils.isDateField(column) && Utils.isLocalDate(column) ) {
 				body += "            <ion-item>\n"+
 						"                <ion-label>"+ColumnName+"</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
 						"            </ion-item>\n";
+			} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
+				//TODO DEVELOP THIS!
+
+			} else if(filterType.getName().equals("java.lang.Boolean")) {
+				body += "            <ion-item>\n"+
+						"                <ion-label>"+ColumnName+"</ion-label>\n"+
+						"                <ion-checkbox formControlName=\""+columnname+"\"></ion-checkbox>\n"+
+						"            </ion-item>\n";
+			} else if( filterType.getName().equals("java.sql.Blob") ) {
+				//TODO DEVELOP THIS!
+				
+			} else if( filterType.getName().equals("java.sql.Clob") ) {
+				//TODO DEVELOP THIS!
 				
 			}
 			

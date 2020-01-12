@@ -1,5 +1,6 @@
 package it.eng.generate.template.ionic;
 
+import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
@@ -18,14 +19,13 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 	public String getBody(){
 		// https://www.buildmystring.com/
-		//TODO DEVELOP JHI TRANSLATE
+		// TODO DEVELOP JHI TRANSLATE
 		// String jhiTranslate = "<span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+".detail.title\">"+Nometabella+"</span>\r\n";
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
 		
-		
-
+		//TODO ADD RELATIONS !!
 		String body = 
 		"import { Component, OnInit } from '@angular/core';\r\n" +
 		"import { FormBuilder, Validators } from '@angular/forms';\r\n" +
@@ -44,18 +44,24 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"    isSaving = false;\r\n" +
 		"    isNew = true;\r\n" +
 		"    isReadyToSave: boolean;\r\n\n" +
-		"    form = this.formBuilder.group({\r\n" +
-		"        id: [],\r\n" +
-		"        nome: [null, [Validators.required]],\r\n" +
-		"        cognome: [null, [Validators.required]],\r\n" +
-		"        dataNascita: [null, [Validators.required]],\r\n" +
-		"        codiceFiscale: [null, []],\r\n" +
-		"        cid: [null, []],\r\n" +
-		"        sede: [null, []],\r\n" +
-		"        profilo: [null, []],\r\n" +
-		"        email: [null, []],\r\n" +
-		"        telefono: [null, []],\r\n" +
-		"    });\r\n\n" +
+		
+		"    form = this.formBuilder.group({\r\n";
+		for (Column column : tabella.getSortedColumns()) {
+			String ColumnName = Utils.getFieldNameForMethod(column);
+			String columnname = Utils.getFieldName(column);
+			boolean isNullable = column.isNullable();
+			if(Utils.isPrimaryKeyID(column) ) {
+				//System.out.println("#Skip generation for Primary Key ID..");
+				body +="        id: [],\r\n";
+			} else {
+				body +="        "+columnname+": [null, ["+( isNullable?"":"Validators.required")+"]],\r\n";
+			}
+		}
+		
+		body +=	
+		"    });\r\n\n"+
+		
+		
 		"    constructor(\r\n" +
 		"        protected activatedRoute: ActivatedRoute,\r\n" +
 		"        protected navController: NavController,\r\n" +
@@ -64,7 +70,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"        protected toastCtrl: ToastController,\r\n" +
 		"        private "+nometabella+"Service: "+Nometabella+"Service\r\n" +
 		"    ) {\r\n\n" +
-		"        // Watch the form for changes, and\r\n" +
+		"        // Watch the form for changes\r\n" +
 		"        this.form.valueChanges.subscribe((v) => {\r\n" +
 		"            this.isReadyToSave = this.form.valid;\r\n" +
 		"        });\r\n" +
@@ -77,19 +83,23 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"        });\r\n" +
 		"    }\r\n\n" +
 		"    updateForm("+nometabella+": "+Nometabella+") {\r\n" +
-		"        this.form.patchValue({\r\n" +
-		"            id: "+nometabella+".id,\r\n" +
-		"            nome: "+nometabella+".nome,\r\n" +
-//		"            cognome: persona.cognome,\r\n" +
-//		"            dataNascita: persona.dataNascita,\r\n" +
-//		"            codiceFiscale: persona.codiceFiscale,\r\n" +
-//		"            cid: persona.cid,\r\n" +
-//		"            sede: persona.sede,\r\n" +
-//		"            profilo: persona.profilo,\r\n" +
-//		"            email: persona.email,\r\n" +
-//		"            telefono: persona.telefono,\r\n" +
+		"        this.form.patchValue({\r\n";
+		for (Column column : tabella.getSortedColumns()) {
+			String ColumnName = Utils.getFieldNameForMethod(column);
+			String columnname = Utils.getFieldName(column);
+			boolean isNullable = column.isNullable();
+			if(Utils.isPrimaryKeyID(column) ) {
+				//System.out.println("#Skip generation for Primary Key ID..");
+				body +="            "+columnname+": "+nometabella+"."+columnname+",\r\n";
+			} else {
+				body +="            "+columnname+": "+nometabella+"."+columnname+",\r\n";
+			}
+		}
+		body +=
 		"        });\r\n" +
 		"    }\r\n\n" +
+
+		
 		"    save() {\r\n" +
 		"        this.isSaving = true;\r\n" +
 		"        const "+nometabella+" = this.createFromForm();\r\n" +
@@ -138,116 +148,6 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"    }\r\n\n" +
 		"}\r\n";
 
-		
-		
-		
-		
-		
-//		
-//		
-//		String body = 
-//		"<ion-header>\r\n" +
-//		"    <ion-toolbar>\r\n" +
-//		"        <ion-buttons slot=\"start\">\r\n" +
-//		"            <ion-back-button></ion-back-button>\r\n" +
-//		"        </ion-buttons>\r\n" +
-//		"        <ion-title>\r\n" +
-//		"            "+Nometabella+"\r\n" +
-//		"        </ion-title>\r\n" +
-//		"    </ion-toolbar>\r\n" +
-//		"</ion-header>\r\n\n" +
-//		"<ion-content padding>\r\n" +
-//		"    <ion-list>\r\n";
-//	
-//		// Columns
-//		for (Column column : tabella.getSortedColumns()) {
-//			String ColumnName = Utils.getFieldNameForMethod(column);
-//			String columnname = Utils.getFieldName(column);
-//			if(Utils.isPrimaryKeyID(column) ) {
-//				//System.out.println("#Skip generation for Primary Key ID..");
-//				body +=
-//				"        <ion-item>\r\n" +
-//				"            <ion-label position=\"fixed\">"+ColumnName+"</ion-label>\r\n" +
-//				"            <div item-content>\r\n" +
-//				"                <span>{{"+nometabella+"."+columnname+"}}</span>\r\n" +
-//				"            </div>\r\n" +
-//				"        </ion-item>\r\n";
-//			} else {
-//				body +=
-//				"        <ion-item>\r\n" +
-//				"            <ion-label position=\"fixed\">"+ColumnName+"</ion-label>\r\n" +
-//				"            <div item-content>\r\n" +
-//				"                <span>{{"+nometabella+"."+columnname+"}}</span>\r\n" +
-//				"            </div>\r\n" +
-//				"        </ion-item>\r\n";
-//			}
-//		}
-//		
-//		//Relations
-//		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && PRINT_RELATIONS) {
-//			for(ProjectRelation rel: conf.getProjectRelations()) {
-//				String relationType = rel.getType();
-//				String nomeTabellaSx = rel.getSxTable();
-//				String nomeRelazioneSx = rel.getSxName();
-//				String nomeRelazioneDx = rel.getDxName();
-//				String nomeTabellaDx = rel.getDxTable();
-//				String nomeSelectSx = rel.getSxSelect();
-//				String nomeSelectDx = rel.getDxSelect();
-//				String nomeTabella = tabella.getNomeTabella().toLowerCase();
-//				
-//				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
-//					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
-//						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-//							body += "\n         <!-- Add Relation: OneToOne / ManyToOne -->\n";
-//							//String jhiTR = "<span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n";
-//							String label = Utils.getFirstUpperCase(nomeRelazioneSx);
-//							body += "        <ion-item>\r\n" +
-//									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
-//									"            <div item-content>\r\n" +
-//									"                <span>{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</span>\r\n" +
-//									"            </div>\r\n" +
-//									"        </ion-item>\r\n";
-//						}
-//						
-//					} else if(relationType.equals(Utils.OneToMany)) {
-//						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-//							body += "\n        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany -->\n";
-//							//String jhiTR = "<span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</span>\n";
-//							String label = Utils.getFirstUpperCase(nomeRelazioneDx);	
-//							body += "        <ion-item>\r\n" +
-//									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
-//									"            <div item-content>\r\n" +
-//									"                <span>{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</span>\r\n" +
-//									"            </div>\r\n" +
-//									"        </ion-item>\r\n";
-//						}
-//						
-//					} else if(relationType.equals(Utils.ManyToMany)) {
-//						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-//							body += "\n        <!-- Add Relation: ManyToMany -->\n";
-//							//String jhiTR = body += "<span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n";
-//							String label = 	Utils.getFirstUpperCase(nomeRelazioneSx);
-//							body += "        <ion-item>\r\n" +
-//									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
-//									"            <div item-content>\r\n" +
-//									"                <span>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</span>\r\n" +
-//									"            </div>\r\n" +
-//									"        </ion-item>\r\n";
-//						}
-//						
-//					}
-//				}
-//			}
-//		}
-//		//Relations
-//		
-//		
-//		body +=
-//		"    </ion-list>\r\n\n" +
-//		"    <ion-button expand=\"block\" color=\"primary\" (click)=\"open("+nometabella+")\">{{ 'EDIT_BUTTON' | translate }}</ion-button>\r\n" +
-//		"    <ion-button expand=\"block\" color=\"danger\" (click)=\"deleteModal("+nometabella+")\">{{ 'DELETE_BUTTON' | translate }}</ion-button>\r\n\n" +
-//		"</ion-content>\r\n";
-//		
 		return body;
 	}
 	
