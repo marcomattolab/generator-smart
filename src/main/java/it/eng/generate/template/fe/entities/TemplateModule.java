@@ -37,7 +37,6 @@ public class TemplateModule extends AbstractResourceTemplate {
 			body += "        "+Utils.getClassNameCamelCase(conf.getProjectName()) +Tablename+"Module,\r\n" ;
 		}
 		body +=
-		"        \r\n" +
 		"    ],\r\n" +
 		"    declarations: [],\r\n" +
 		"    entryComponents: [],\r\n" +

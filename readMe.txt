@@ -29,7 +29,6 @@
 	- LOW - HA singleton e scalabilità
 	- LOW - JMS e code asincrone
 	- LOW - Big Data , ML / AI	
-	
 
 ## Documentation Ideas         
 	- See https://www.jaxio.com/en/celerio.html
