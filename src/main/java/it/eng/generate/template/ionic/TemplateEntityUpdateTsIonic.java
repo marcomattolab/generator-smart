@@ -19,13 +19,10 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 	public String getBody(){
 		// https://www.buildmystring.com/
-		// TODO DEVELOP JHI TRANSLATE
-		// String jhiTranslate = "<span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+".detail.title\">"+Nometabella+"</span>\r\n";
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
 		
-		//TODO ADD RELATIONS !!
 		String body = 
 		"import { Component, OnInit } from '@angular/core';\r\n" +
 		"import { FormBuilder, Validators } from '@angular/forms';\r\n" +
@@ -46,12 +43,17 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"    isReadyToSave: boolean;\r\n\n" +
 		
 		"    form = this.formBuilder.group({\r\n";
+		//RELATIONS - TODO DEVELOP
+//		body +=
+//		"        trasferta: [null, []],\n"+
+//		"        structure: [null, []],\n";
+		
+		
+		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
-			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
 			boolean isNullable = column.isNullable();
 			if(Utils.isPrimaryKeyID(column) ) {
-				//System.out.println("#Skip generation for Primary Key ID..");
 				body +="        id: [],\r\n";
 			} else {
 				body +="        "+columnname+": [null, ["+( isNullable?"":"Validators.required")+"]],\r\n";
@@ -63,12 +65,16 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		
 		
 		"    constructor(\r\n" +
+		//RELATIONS - TODO DEVELOP
+		//"        private trasfertaService: TrasfertaService,\n"+
+		//"        private strutturaService: StrutturaService,\n"+
+		
 		"        protected activatedRoute: ActivatedRoute,\r\n" +
 		"        protected navController: NavController,\r\n" +
 		"        protected formBuilder: FormBuilder,\r\n" +
 		"        protected platform: Platform,\r\n" +
 		"        protected toastCtrl: ToastController,\r\n" +
-		"        private "+nometabella+"Service: "+Nometabella+"Service\r\n" +
+		"        private "+nometabella+"Service: "+Nometabella+"Service\r\n"+
 		"    ) {\r\n\n" +
 		"        // Watch the form for changes\r\n" +
 		"        this.form.valueChanges.subscribe((v) => {\r\n" +
@@ -84,17 +90,19 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"    }\r\n\n" +
 		"    updateForm("+nometabella+": "+Nometabella+") {\r\n" +
 		"        this.form.patchValue({\r\n";
+		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
-			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
-			boolean isNullable = column.isNullable();
 			if(Utils.isPrimaryKeyID(column) ) {
-				//System.out.println("#Skip generation for Primary Key ID..");
 				body +="            "+columnname+": "+nometabella+"."+columnname+",\r\n";
 			} else {
 				body +="            "+columnname+": "+nometabella+"."+columnname+",\r\n";
 			}
 		}
+		//RELATIONS - TODO DEVELOP
+		//body +="            trasferta: spesa.trasfertaId,\n";
+		//body +="            structure: spesa.structureId,\n";
+	      
 		body +=
 		"        });\r\n" +
 		"    }\r\n\n" +
@@ -132,20 +140,39 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"        toast.present();\r\n" +
 		"    }\r\n\n" +
 		"    private createFromForm(): "+Nometabella+" {\r\n" +
+		
+		//RELATIONS - TODO DEVELOP THIS TYPE DATE!
+		//"          const dataSpesa = this.form.get(['dataSpesa']).value;\n"+
+		//"          const dataSpesaValue = dataSpesa ? getMomentDateNoTZ(dataSpesa) : null;\n\n"+
+		
+		
 		"        return {\r\n" +
-		"            ...new "+Nometabella+"(),\r\n" +
-		"            id: this.form.get(['id']).value,\r\n" +
-		"            nome: this.form.get(['nome']).value,\r\n" +
-		"            cognome: this.form.get(['cognome']).value,\r\n" +
-		"            dataNascita: this.form.get(['dataNascita']).value,\r\n" +
-		"            codiceFiscale: this.form.get(['codiceFiscale']).value,\r\n" +
-		"            cid: this.form.get(['cid']).value,\r\n" +
-		"            sede: this.form.get(['sede']).value,\r\n" +
-		"            profilo: this.form.get(['profilo']).value,\r\n" +
-		"            email: this.form.get(['email']).value,\r\n" +
-		"            telefono: this.form.get(['telefono']).value,\r\n" +
+		"            ...new "+Nometabella+"(),\r\n";
+		
+		//COLUMNS
+		for (Column column : tabella.getSortedColumns()) {
+			String ColumnName = Utils.getFieldNameForMethod(column);
+			String columnname = Utils.getFieldName(column);
+			if(Utils.isPrimaryKeyID(column) ) {
+				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
+			} else {
+				body +="            "+columnname+": "+columnname+"Value,\r\n";
+			}
+		}
+		
+		body +=
 		"        };\r\n" +
 		"    }\r\n\n" +
+		
+		//RELATIONS - TODO DEVELOP
+		//		body +=
+		//		"    compareTrasferta(first: Trasferta, second: Trasferta): boolean {\n"+
+		//		"       return first && second ? first.id === second.id : first === second;\n"+
+		//		"    }\n\n"+
+		//		"    compareStruttura(first: Struttura, second: Struttura): boolean {\n"+
+		//		"       return first && second ? first.id === second.id : first === second;\n"+
+		//		"    }\n\n"+
+		
 		"}\r\n";
 
 		return body;

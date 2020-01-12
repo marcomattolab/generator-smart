@@ -28,11 +28,9 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 	public String getBody(){
 		// https://www.buildmystring.com/
-		// TODO DEVELOP JHI TRANSLATE
 		// TODO MANAGE CLOB BLOB BOOLEAN AND DATES
 		// TODO MANAGE PATTERN AND REQUIRED
 		
-		// String jhiTranslate = "<span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+".detail.title\">"+Nometabella+"</span>\r\n";
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
@@ -57,7 +55,6 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 						"<ion-content padding>\r\n" +
 						"    <form *ngIf=\"form\" name=\"form\" [formGroup]=\"form\" (ngSubmit)=\"save()\">\r\n" +
 						"        <ion-list>\r\n";
-
 
 		//Columns
 		for (Column column : tabella.getSortedColumns()) {
@@ -105,6 +102,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 						"                <ion-label>"+ColumnName+"</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
 						"            </ion-item>\n";
+		
 			} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
 				//TODO DEVELOP THIS!
 
@@ -113,6 +111,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 						"                <ion-label>"+ColumnName+"</ion-label>\n"+
 						"                <ion-checkbox formControlName=\""+columnname+"\"></ion-checkbox>\n"+
 						"            </ion-item>\n";
+		
 			} else if( filterType.getName().equals("java.sql.Blob") ) {
 				//TODO DEVELOP THIS!
 				
@@ -120,21 +119,9 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 				//TODO DEVELOP THIS!
 				
 			}
-			
 		}
-		//
 		
-		//Enumerations - TODO DEVELOP THIS
-		//	    <ion-item>
-		//      <ion-label>Stato</ion-label>
-		//      <ion-select formControlName="stato" id="field_stato">
-		//        <ion-select-option value="BOZZA">BOZZA</ion-select-option>
-		//        <ion-select-option value="SOTTOPOSTA">SOTTOPOSTA</ion-select-option>
-		//        <ion-select-option value="VALIDATA">VALIDATA</ion-select-option>
-		//        <ion-select-option value="RIFIUTATA">RIFIUTATA</ion-select-option>
-		//      </ion-select>
-		//    </ion-item>
-
+		
 		//Relations - TODO DEVELOP THIS!
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && PRINT_RELATIONS) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
@@ -167,6 +154,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 							//          {{trasfertaOption.descrizione}}</ion-select-option>
 							//      </ion-select>
 							//    </ion-item>
+							
 						}
 
 					} else if(relationType.equals(Utils.OneToMany)) {
@@ -199,15 +187,10 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 				}
 			}
 		}
-		//
-
-
 
 		body += "        </ion-list>\r\n" +
 				"    </form>\r\n" +
 				"</ion-content>\r\n";
-
-
 		return body;
 	}
 
