@@ -98,6 +98,7 @@ import it.eng.generate.template.fe.shared.TemplateSharedLibsModule;
 import it.eng.generate.template.fe.shared.TemplateSharedModule;
 import it.eng.generate.template.ionic.TemplateEntitiesModule;
 import it.eng.generate.template.ionic.TemplateEntitiesPage;
+import it.eng.generate.template.ionic.TemplateEntityIndexIonic;
 import it.eng.generate.template.report.TemplateReportUtils;
 import it.eng.generate.template.repository.TemplateAuthorityRepository;
 import it.eng.generate.template.repository.TemplateCustomAuditEventRepository;
@@ -629,8 +630,9 @@ public class DataBase {
 				
 				
 				//Mobile Ionic (Dynamics)
-				//TO DO DEVELOP 11 files plus folder
-				
+				new TemplateEntityIndexIonic(tabella).generateTemplate(); 
+				//TO DO DEVELOP 11 files
+
 			}
 
 			//MultiLanguages 
