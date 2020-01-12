@@ -265,7 +265,6 @@ public class Utils {
 			String typeColumnRel = column.getTypeColumnRelation();
 			
 			if (typeColumnRel != null && typeColumnRel.length()>0) {
-				// TODO TEST ME ==>  public myKeywords?: ICompanyKeyword[]
 				body += "     public "+columnname+"?: "+typeColumnRel+"[]"+(!isLast?",":"")+"\r\n";
 			} else {
 				if( filterType.getName().equals("java.sql.Blob") ) {

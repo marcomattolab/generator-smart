@@ -17,13 +17,13 @@ import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
-public class TemplateEntityModel extends AbstractResourceTemplate {
+public class TemplateEntityModelIonic extends AbstractResourceTemplate {
 
-	public TemplateEntityModel(Table tabella) {
+	public TemplateEntityModelIonic(Table tabella) {
 		super(tabella);
 	}
 	
-	public TemplateEntityModel(DataBase database, Table tabella) {
+	public TemplateEntityModelIonic(DataBase database, Table tabella) {
 		super(database);
 		this.tabella = tabella;
 	}
@@ -45,7 +45,6 @@ public class TemplateEntityModel extends AbstractResourceTemplate {
 		
 		//RELATION IMPORT
 		//"import { Giustificativo } from '../giustificativo/giustificativo.model';\n"+
-		//"import { IIncarico } from 'app/shared/model/incarico.model';\r\n" +
 		body += writeImportRelations(conf); 
 
 		
@@ -91,20 +90,18 @@ public class TemplateEntityModel extends AbstractResourceTemplate {
 						}
 						
 					} else if (relationType.equals(Utils.ManyToMany)) {
-						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
-						
 						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-							//import { ICompanyKeyword } from 'app/shared/model/company-keyword.model'; 
+							//import { CompanyKeyword } from 'app/shared/model/company-keyword.model'; 
 							Column columnRel = new Column();
 							columnRel.setName(nomeRelazioneSx+"s");
-							columnRel.setTypeColumnRelation("I"+Utils.getFirstUpperCase(nomeTabellaDx));
+							columnRel.setTypeColumnRelation(""+Utils.getFirstUpperCase(nomeTabellaDx));
 							extendedList.add(columnRel);
 						}
 						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-							//import { ICompany } from 'app/shared/model/company.model';
+							//import { Company } from 'app/shared/model/company.model';
 							Column columnRel = new Column();
 							columnRel.setName(nomeRelazioneDx+"s");
-							columnRel.setTypeColumnRelation("I"+Utils.getFirstUpperCase(nomeTabellaSx));
+							columnRel.setTypeColumnRelation(""+Utils.getFirstUpperCase(nomeTabellaSx));
 							extendedList.add(columnRel);
 						}
 						
@@ -116,9 +113,6 @@ public class TemplateEntityModel extends AbstractResourceTemplate {
 		}
 		//[/Manage Relations]
       
-		//Generate IInetrface
-		//body += Utils.generateIInterface(tabella, extendedList);
-		
 		//Generate Class
 		body += Utils.generateIClass(tabella, extendedList, "BaseEntity");
 				
@@ -132,7 +126,7 @@ public class TemplateEntityModel extends AbstractResourceTemplate {
 	 * @return body with import 
 	 */
 	private String writeImportRelations(ConfigCreateProject conf) {
-		// body += "import { IIncarico } from 'app/shared/model/incarico.model';\r\n" 
+		//"import { Giustificativo } from '../giustificativo/giustificativo.model';\n"+
 		String res = "";
 		Map<String, String> resMap = new HashMap<>();
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
@@ -144,14 +138,12 @@ public class TemplateEntityModel extends AbstractResourceTemplate {
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null  ) {
 					if (relationType.equals(Utils.ManyToMany)) {
-						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
-						
 						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-							String impStr = "import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+nomeTabellaDx.toLowerCase()+".model';\n"; 
+							String impStr = "import { "+Utils.getFirstUpperCase(nomeTabellaDx)+" } from '../"+nomeTabellaDx.toLowerCase()+"/"+nomeTabellaDx.toLowerCase()+".model';\n"; 
 							resMap.put(nomeTabellaSx, impStr);
 						}
 						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-							String impStr = "import { I"+Utils.getFirstUpperCase(nomeTabellaSx)+" } from 'app/shared/model/"+nomeTabellaSx.toLowerCase()+".model';\n";
+							String impStr = "import { "+Utils.getFirstUpperCase(nomeTabellaSx)+" } from '../"+nomeTabellaSx.toLowerCase()+"/"+nomeTabellaSx.toLowerCase()+".model';\n";
 							resMap.put(nomeTabellaDx, impStr);
 						}
 					} 

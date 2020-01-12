@@ -6,9 +6,9 @@ import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
-public class TemplateEntitiesPage extends AbstractResourceTemplate {
+public class TemplateEntitiesPageIonic extends AbstractResourceTemplate {
 
-	public TemplateEntitiesPage(DataBase database) {
+	public TemplateEntitiesPageIonic(DataBase database) {
 		super(database);
 	}
 

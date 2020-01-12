@@ -96,15 +96,15 @@ import it.eng.generate.template.fe.shared.TemplateEntitySharedModel;
 import it.eng.generate.template.fe.shared.TemplateSharedCommonModule;
 import it.eng.generate.template.fe.shared.TemplateSharedLibsModule;
 import it.eng.generate.template.fe.shared.TemplateSharedModule;
-import it.eng.generate.template.ionic.TemplateEntitiesModule;
-import it.eng.generate.template.ionic.TemplateEntitiesPage;
+import it.eng.generate.template.ionic.TemplateEntitiesModuleIonic;
+import it.eng.generate.template.ionic.TemplateEntitiesPageIonic;
 import it.eng.generate.template.ionic.TemplateEntityDetailHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityDetailIonic;
 import it.eng.generate.template.ionic.TemplateEntityDetailModuleIonic;
 import it.eng.generate.template.ionic.TemplateEntityHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityIndexIonic;
 import it.eng.generate.template.ionic.TemplateEntityIonic;
-import it.eng.generate.template.ionic.TemplateEntityModel;
+import it.eng.generate.template.ionic.TemplateEntityModelIonic;
 import it.eng.generate.template.ionic.TemplateEntityModuleIonic;
 import it.eng.generate.template.ionic.TemplateEntityServiceIonic;
 import it.eng.generate.template.ionic.TemplateEntityUpdateHtmlIonic;
@@ -563,8 +563,8 @@ public class DataBase {
 			new TemplateModule(this).generateTemplate(); 							//Cicle Entities Done
 
 			//Mobile Ionic (Statics)
-			new TemplateEntitiesModule(this).generateTemplate(); 			
-			new TemplateEntitiesPage(this).generateTemplate(); 	
+			new TemplateEntitiesModuleIonic(this).generateTemplate(); 			
+			new TemplateEntitiesPageIonic(this).generateTemplate(); 	
 			
 			//TEST Classes - TODO DEVELOP THIS!!
 			if (config.isGenerateTest()) {
@@ -636,7 +636,7 @@ public class DataBase {
 				
 				//Mobile Ionic (Dynamics)
 				new TemplateEntityIndexIonic(tabella).generateTemplate(); 
-				new TemplateEntityModel(this, tabella).generateTemplate(); 	
+				new TemplateEntityModelIonic(this, tabella).generateTemplate(); 	
 				new TemplateEntityModuleIonic(tabella).generateTemplate(); 
 				new TemplateEntityServiceIonic(tabella).generateTemplate();  			
 				new TemplateEntityIonic(tabella).generateTemplate();  		
