@@ -39,7 +39,7 @@ public class TemplateEntitiesModule extends AbstractResourceTemplate {
 		"      authorities: ["+authorities+"]\r\n" +
 		"    },\r\n" +
 		"    canActivate: [UserRouteAccessService]\r\n" +
-		"  }\r\n" ;
+		"  }\n" ;
 		for(Table table: Utils.getTables(database) ) {
 			String Tablename = Utils.getEntityName(table);
 			String tablename = Utils.getFieldName(table);
@@ -50,7 +50,7 @@ public class TemplateEntitiesModule extends AbstractResourceTemplate {
 			"  }\r\n";
 		}
 		body +=
-		"];\r\n\n" +
+		"];\r\n" +
 		"@NgModule({\r\n" +
 		"  imports: [\r\n" +
 		"    IonicModule,\r\n" +
