@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
+import it.eng.generate.DataBase;
 import it.eng.generate.Enumeration;
 import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
@@ -16,8 +17,9 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 	private static final boolean PRINT_RELATIONS = false; //TODO TEST IT!
 	private static final String DATE_PATTERN = "DD/MM/YYYY"; //TODO MOVE INTO PROPERTY
 
-	public TemplateEntityUpdateHtmlIonic(Table tabella) {
-		super(tabella);
+	public TemplateEntityUpdateHtmlIonic(DataBase database, Table tabella) {
+		super(database);
+		this.tabella = tabella;
 	}
 
 	public String getTypeFile() {
@@ -85,7 +87,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 				for(Enumeration e : enumList) {
 					if ( column.getEnumeration()!=null && column.getEnumeration().equals(e.getNomeEnumeration()) ) { 
 						for(String vEnum : e.getValoriEnumeration()) {
-							body += "                <ion-select-option value=\""+vEnum+"\">"+vEnum+"</ion-select-option>\r\n";
+							body += "                   <ion-select-option value=\""+vEnum+"\">"+vEnum+"</ion-select-option>\r\n";
 						}
 					}
 				}

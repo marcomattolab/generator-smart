@@ -650,8 +650,9 @@ public class DataBase {
 				new TemplateEntityHtmlIonic(tabella).generateTemplate(); 
 				new TemplateEntityDetailHtmlIonic(tabella).generateTemplate(); 
 				new TemplateEntityUpdateTsIonic(tabella).generateTemplate(); 
-				new TemplateEntityUpdateHtmlIonic(tabella).generateTemplate(); 
-			
+				new TemplateEntityUpdateHtmlIonic(this, tabella).generateTemplate(); 
+			    
+				
 			
 			}
 
