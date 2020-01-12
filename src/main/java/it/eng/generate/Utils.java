@@ -813,6 +813,9 @@ public class Utils {
 	public static boolean isLocalDate(Column column) {
 		boolean isLocalDate = false;
 		Class<?> filterType = column.getTypeColumn();
+//		if (column.getName().equals("datanascita")) {
+//			System.out.println("----------------- filterType.getName() =>>>> "+filterType.getName());
+//		}
 		if(	filterType.getName().equals("java.time.LocalDate") ) {
 			isLocalDate = true;
 		} 
