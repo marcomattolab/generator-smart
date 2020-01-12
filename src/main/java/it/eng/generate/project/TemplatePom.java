@@ -61,11 +61,11 @@ public class TemplatePom {
 		"\n        </repository>";
 		}
 		body +=
-		"\n    <!-- jhipster-needle-maven-repository -->" +
+		//"\n    <!-- jh-needle-maven-repository -->" +
 		"\n    </repositories>" ;
 		
 		body +=
-		"\n    <!-- jhipster-needle-distribution-management -->" +
+		//"\n    <!-- jh-needle-distribution-management -->" +
 		"\n    <properties>" +
 		"\n        <!-- Build properties -->" +
 		"\n        <maven.version>3.0.0</maven.version>" +
@@ -141,7 +141,7 @@ public class TemplatePom {
 		"\n        <sonar.sources>${project.basedir}/src/main/</sonar.sources>" +
 		"\n        <sonar.surefire.reportsPath>${project.testresult.directory}/surefire-reports</sonar.surefire.reportsPath>" +
 		"\n        <sonar.tests>${project.basedir}/src/test/</sonar.tests>" +
-		"\n        <!-- jhipster-needle-maven-property -->" +
+		//"\n        <!-- jh-needle-maven-property -->" +
 		"\n    </properties>" +
 		"\n    <dependencyManagement>" +
 		"\n        <dependencies>" +
@@ -152,7 +152,7 @@ public class TemplatePom {
 		"\n                <type>pom</type>" +
 		"\n                <scope>import</scope>" +
 		"\n            </dependency>" +
-		"\n          <!-- jhipster-needle-maven-add-dependency-management -->" +
+		//"\n          <!-- jhipster-needle-maven-add-dependency-management -->" +
 		"\n        </dependencies>" +
 		"\n    </dependencyManagement>" +
 		"\n    <dependencies>" +
@@ -462,7 +462,7 @@ public class TemplatePom {
 		
 		
 		
-		"\n        <!-- jhipster-needle-maven-add-dependency -->" +
+		"\n        <!-- jh-needle-maven-add-dependency -->" +
 		"\n    </dependencies>" +
 		"\n    <build>" +
 		"\n        <defaultGoal>spring-boot:run</defaultGoal>" +
@@ -538,7 +538,7 @@ public class TemplatePom {
 		"\n                <groupId>com.google.cloud.tools</groupId>" +
 		"\n                <artifactId>jib-maven-plugin</artifactId>" +
 		"\n            </plugin>" +
-		"\n            <!-- jhipster-needle-maven-add-plugin -->" +
+		"\n            <!-- jh-needle-maven-add-plugin -->" +
 		"\n        </plugins>" +
 		"\n        <pluginManagement>" +
 		"\n            <plugins>" +
@@ -766,12 +766,12 @@ public class TemplatePom {
 		"\n                    <configuration>" +
 		"\n                        <rules>" +
 		"\n                            <requireMavenVersion>" +
-		"\n                                <message>You are running an older version of Maven. JHipster requires at least Maven ${maven.version}</message>" +
+		"\n                                <message>You are running an older version of Maven. JH requires at least Maven ${maven.version}</message>" +
 		"\n                                <version>[${maven.version},)</version>" +
 		"\n                            </requireMavenVersion>" +
 		"\n                            <requireJavaVersion>" +
-		"\n                                <!-- Until JHipster supports JDK 9 -->" +
-		"\n                                <message>You are running an incompatible version of Java. JHipster requires JDK ${java.version}</message>" +
+		"\n                                <!-- Until JH supports JDK 9 -->" +
+		"\n                                <message>You are running an incompatible version of Java. JH requires JDK ${java.version}</message>" +
 		"\n                                <version>[1.8,1.9)</version>" +
 		"\n                            </requireJavaVersion>" +
 		"\n                        </rules>" +
@@ -1222,7 +1222,7 @@ public class TemplatePom {
 		"\n                </dependency>" +
 		"\n            </dependencies>" +
 		"\n        </profile>" +
-		"\n        <!-- jhipster-needle-maven-add-profile -->" +
+		"\n        <!-- jh-needle-maven-add-profile -->" +
 		"\n    </profiles>" +
 		"\n</project>";
 		return body;

@@ -11,7 +11,7 @@
   "DELETE_BUTTON": "Elimina",
   "DONE_BUTTON": "Fatto",
   "EMAIL": "Email",
-  "EMPTY_ENTITIES_MESSAGE": "You haven't generated entities yet. Run `yo jhipster-ionic:entity <name>`",
+  "EMPTY_ENTITIES_MESSAGE": "You haven't generated entities yet.",
   "EXISTING_USER_ERROR": "Email is already in use! Please choose another one.",
   "EXPENDITURE": {
     "TITLE": "Spesa"

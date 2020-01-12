@@ -55,7 +55,7 @@ public class ApplicationApp extends AbstractTemplate {
 		"     * <p>\r\n" +
 		"     * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile\r\n" +
 		"     * <p>\r\n" +
-		"     * You can find more information on how profiles work with JHipster on <a href=\"https://www.jhipster.tech/profiles/\">https://www.jhipster.tech/profiles/</a>.\r\n" +
+		//"     * You can find more information on how profiles work with JHipster on <a href=\"https://www.jhipster.tech/profiles/\">https://www.jhipster.tech/profiles/</a>.\r\n" +
 		"     */\r\n\n" +
 		"    @PostConstruct\r\n" +
 		"    public void initApplication() {\r\n\n" +

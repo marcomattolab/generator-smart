@@ -24,7 +24,7 @@ public class TemplateApplicationProperties extends AbstractTemplate {
 		" * Properties specific to "+conf.getProjectName()+"\n" +
 		" * <p>\n" +
 		" * Properties are configured in the application.yml file.\n" +
-		" * See {@link io.github.jhipster.config.JHipsterProperties} for a good example.\n" +
+		//" * See {@link io.github.jhipster.config.JHipsterProperties} for a good example.\n" +
 		" */\n" +
 		"@ConfigurationProperties(prefix = \"application\", ignoreUnknownFields = false)\n" +
 		"public class " + getClassName() + " {\n" +
