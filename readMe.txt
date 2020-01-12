@@ -18,7 +18,7 @@
 			
 ## BUG e/o Altre Migliorie
 	- HIG - @Gestire i campi BLOB / CLOB - Add altri tipologie: ImageBlob, Blob, BigDecimal, Double etc
-  	- HIG - @Creare scheletro IONIC 4
+  	- HIG - @IONIC 4 - Gestire Relazioni (OneToMany etc) e gestire pulsanti (Edit Save Back non visibili)
   	- LOW - Inserire controllo Pattern | MinSize | MaxSize lato backend / Hibernate
 
 ## Migliorie / Plugin / OpenPoint
@@ -33,5 +33,3 @@
 ## Documentation Ideas         
 	- See https://www.jaxio.com/en/celerio.html
 	- See https://www.slideshare.net/agoncal/custom-and-generated-code-side-by-side-with-jhipster
-			          
-
