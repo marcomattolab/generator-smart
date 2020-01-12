@@ -28,7 +28,7 @@ public class TemplateModule extends AbstractResourceTemplate {
 			String tablename = Utils.getFieldName(table);
 			body += "import { "+Utils.getClassNameCamelCase(conf.getProjectName()) + Tablename+"Module } from './"+tablename+"/"+tablename+".module';\r\n" ;
 		}
-		body += "/* jh-needle-add-entity-module-import - JH will add entity modules imports here */\r\n" +
+		body += "\r\n" +
 		"@NgModule({\r\n" +
 		"    // prettier-ignore\r\n" +
 		"    imports: [\r\n" ;
@@ -37,7 +37,7 @@ public class TemplateModule extends AbstractResourceTemplate {
 			body += "        "+Utils.getClassNameCamelCase(conf.getProjectName()) +Tablename+"Module,\r\n" ;
 		}
 		body +=
-		"        /* jh-needle-add-entity-module - JH will add entity modules here */\r\n" +
+		"        \r\n" +
 		"    ],\r\n" +
 		"    declarations: [],\r\n" +
 		"    entryComponents: [],\r\n" +

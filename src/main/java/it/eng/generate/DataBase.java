@@ -96,6 +96,8 @@ import it.eng.generate.template.fe.shared.TemplateEntitySharedModel;
 import it.eng.generate.template.fe.shared.TemplateSharedCommonModule;
 import it.eng.generate.template.fe.shared.TemplateSharedLibsModule;
 import it.eng.generate.template.fe.shared.TemplateSharedModule;
+import it.eng.generate.template.ionic.TemplateEntitiesModule;
+import it.eng.generate.template.ionic.TemplateEntitiesPage;
 import it.eng.generate.template.report.TemplateReportUtils;
 import it.eng.generate.template.repository.TemplateAuthorityRepository;
 import it.eng.generate.template.repository.TemplateCustomAuditEventRepository;
@@ -549,6 +551,15 @@ public class DataBase {
 			new TemplateAlertErrorComponent(this).generateTemplate(); 
 			new TemplateModule(this).generateTemplate(); 							//Cicle Entities Done
 
+			
+			//Mobile Ionic (Statics)
+			new TemplateEntitiesModule(this).generateTemplate(); 			
+			new TemplateEntitiesPage(this).generateTemplate(); 	
+			
+			
+			
+			
+			
 			//TEST Classes - TODO DEVELOP THIS!!
 			if (config.isGenerateTest()) {
 				new TemplateWebConfigurerTest(this).generateTemplate();
@@ -615,6 +626,11 @@ public class DataBase {
 				new TemplateEntityDeleteComponentTs(tabella).generateTemplate(); 		
 				new TemplateEntityDeleteComponentHtml(tabella).generateTemplate(); 	
 				new TemplateEntitySharedModel(this, tabella).generateTemplate(); 			//DONE COMPLETE ENUM
+				
+				
+				//Mobile Ionic (Dynamics)
+				//TO DO DEVELOP 11 files plus folder
+				
 			}
 
 			//MultiLanguages 
