@@ -153,10 +153,17 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		for (Column column : tabella.getSortedColumns()) {
 			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
+			Class<?> filterType = column.getTypeColumn();
+			boolean isEnumeration = column.getEnumeration()!=null;
+			
 			if(Utils.isPrimaryKeyID(column) ) {
 				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
+			} else if( Utils.isDateField(column) ) {
+				//RELATIONS - TODO DECOMMENT DATE
+				//body +="            "+columnname+": "+columnname+"Value,\r\n";
+				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
 			} else {
-				body +="            "+columnname+": "+columnname+"Value,\r\n";
+				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
 			}
 		}
 		

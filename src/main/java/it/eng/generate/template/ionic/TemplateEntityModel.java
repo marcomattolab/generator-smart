@@ -39,9 +39,12 @@ public class TemplateEntityModel extends AbstractResourceTemplate {
 		List<Enumeration> enumList = Utils.getEnumerationsByDbAndTable(database, tabella);
 		
 		String body = 
-		"import { BaseEntity } from 'src/model/base-entity';\n";
+		"import { BaseEntity } from 'src/model/base-entity';\n"+
+		"import { Moment } from 'moment';\n";
+
 		
 		//RELATION IMPORT
+		//"import { Giustificativo } from '../giustificativo/giustificativo.model';\n"+
 		//"import { IIncarico } from 'app/shared/model/incarico.model';\r\n" +
 		body += writeImportRelations(conf); 
 

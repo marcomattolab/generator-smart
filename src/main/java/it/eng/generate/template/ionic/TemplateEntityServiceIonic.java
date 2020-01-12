@@ -1,9 +1,5 @@
 package it.eng.generate.template.ionic;
 
-import java.util.Iterator;
-import java.util.Set;
-
-import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;

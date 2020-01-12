@@ -562,14 +562,9 @@ public class DataBase {
 			new TemplateAlertErrorComponent(this).generateTemplate(); 
 			new TemplateModule(this).generateTemplate(); 							//Cicle Entities Done
 
-			
 			//Mobile Ionic (Statics)
 			new TemplateEntitiesModule(this).generateTemplate(); 			
 			new TemplateEntitiesPage(this).generateTemplate(); 	
-			
-			
-			
-			
 			
 			//TEST Classes - TODO DEVELOP THIS!!
 			if (config.isGenerateTest()) {
@@ -651,9 +646,6 @@ public class DataBase {
 				new TemplateEntityDetailHtmlIonic(tabella).generateTemplate(); 
 				new TemplateEntityUpdateTsIonic(tabella).generateTemplate(); 
 				new TemplateEntityUpdateHtmlIonic(this, tabella).generateTemplate(); 
-			    
-				
-			
 			}
 
 			//MultiLanguages 
