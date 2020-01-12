@@ -522,7 +522,7 @@ public class Utils {
 	
 	public static String getTemplateHtmlByType(DataBase database, Column column, Table tabella, ConfigCreateProject conf) {
 		String result = "";
-		boolean isEnumeration = column.getEnumeration()!=null ? true : false;
+		boolean isEnumeration = column.getEnumeration()!=null;
 		String nometabella = Utils.getClassNameLowerCase(tabella);
 		Class<?> filterType = column.getTypeColumn();
 		String nomeColonna = Utils.getFieldName(column);
@@ -645,6 +645,7 @@ public class Utils {
 			"                </div>\r\n\n";
 		
 		} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
+			//TODO FIXME - This code is not reached!!!
 			boolean isZDT = false; //TODO FIX THIS!!
 			if ( isZDT ) {
 				result += //DATE ==> ZonedDateTimelocal
@@ -709,9 +710,11 @@ public class Utils {
 	public static List<Enumeration> getEnumerationsByDbAndTable(DataBase database, Table tabella) {
 		List<Enumeration> enumList = new ArrayList<>();
 		HashMap<String, List<String>> enums = Utils.filterEnumeration(tabella.getNomeTabella(), null);
-		for(String key: database.getEnumeration().keySet()) {
-			if( enums.keySet().contains(key) ) {
-				enumList.add( new Enumeration(key, database.getEnumeration().get(key)) );
+		if(database != null && database.getEnumeration()!=null) {
+			for(String key: database.getEnumeration().keySet()) {
+				if( enums.keySet().contains(key) ) {
+					enumList.add( new Enumeration(key, database.getEnumeration().get(key)) );
+				}
 			}
 		}
 		if (enumList.size()>0) {
