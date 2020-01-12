@@ -401,15 +401,12 @@ public class DataBase {
 			buildEnumerationsNameInColumn(this); 
 			
 			//Project (statics)
-			//new TemplateProject(this).generateTemplate();
 			new TemplateClassPath(this).generateTemplate();
 			new TemplateFactoryPath(this).generateTemplate();
 			new TemplatePom(this).generateTemplate();
 			new TemplateAngular(this).generateTemplate();
 			new TemplatePackageLock(this).generateTemplate();
 			new TemplatePackage(this).generateTemplate();
-
-			//new TemplateJHipsterCostants(this).generateTemplate();
 			new TemplateLoggingAspect(this).generateTemplate();
 			new TemplateApplicationWebXml(this).generateTemplate();
 			new ApplicationApp(this).generateTemplate();
@@ -446,7 +443,6 @@ public class DataBase {
 			new TemplateEntityAuditEvent(this).generateTemplate(); 	
 			new TemplateAbstractAuditingEntity(this).generateTemplate();
 			new TemplatePersistentAudit(this).generateTemplate();
-			//new TemplatePersistentToken(this).generateTemplate(); //removed for JWT
 			new TemplateAuthority(this).generateTemplate();
 			new TemplateUser(this).generateTemplate();
 
@@ -455,7 +451,6 @@ public class DataBase {
 			new TemplateAuthorityRepository(this).generateTemplate();
 			new TemplateCustomAuditEventRepository(this).generateTemplate();
 			new TemplatePersistenceAuditEventRepository(this).generateTemplate();
-			//new TemplatePersistenceTokenRepository(this).generateTemplate(); //removed for JWT
 			new TemplateUserRepository(this).generateTemplate();
 
 			//RETRIEVE BY JDL/DB/PROPERTY DYNAMIC
@@ -468,7 +463,6 @@ public class DataBase {
 			new TemplateAuthoritiesConstants(this).generateTemplate();
 			new TemplateDomainUserDetailsService(this).generateTemplate();
 			new TemplateSecurityUtils(this).generateTemplate();
-			//new TemplatePersistentTokenRememberMeServices(this).generateTemplate(); //removed for JWT
 			new TemplateSpringSecurityAuditorAware(this).generateTemplate();
 			new TemplateUserNotActivatedException(this).generateTemplate();
 			//Add Security JWT
@@ -612,7 +606,7 @@ public class DataBase {
 				if (Utils.havingConstraints(config, tabella)) {
 					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate();	//TODO COMPLETE THIS  !!
 				}
-				//new TemplateIntTest(tabella).generateTemplate(); 							//TODO COMPLETE THIS  !!
+				//new TemplateIntTest(tabella).generateTemplate(); 	//TODO FIXME TEST						//TODO COMPLETE THIS  !!
 				
 				//MultiLanguages
 				for(String languageCode: config.getLanguages()) {

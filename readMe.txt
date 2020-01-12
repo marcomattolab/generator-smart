@@ -19,6 +19,7 @@
 ## BUG e/o Altre Migliorie
 	- HIG - @Gestire i campi BLOB / CLOB - Add altri tipologie: ImageBlob, Blob, BigDecimal, Double etc
   	- HIG - @IONIC 4 - Gestire Relazioni (OneToMany etc) e gestire pulsanti (Edit Save Back non visibili)
+	- LOW - BUG in IONIC (autenticazione FE JWT see Bearer not found!)
   	- LOW - Inserire controllo Pattern | MinSize | MaxSize lato backend / Hibernate
 
 ## Migliorie / Plugin / OpenPoint
