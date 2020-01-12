@@ -99,6 +99,10 @@ import it.eng.generate.template.fe.shared.TemplateSharedModule;
 import it.eng.generate.template.ionic.TemplateEntitiesModule;
 import it.eng.generate.template.ionic.TemplateEntitiesPage;
 import it.eng.generate.template.ionic.TemplateEntityIndexIonic;
+import it.eng.generate.template.ionic.TemplateEntityIonic;
+import it.eng.generate.template.ionic.TemplateEntityModel;
+import it.eng.generate.template.ionic.TemplateEntityModuleIonic;
+import it.eng.generate.template.ionic.TemplateEntityServiceIonic;
 import it.eng.generate.template.report.TemplateReportUtils;
 import it.eng.generate.template.repository.TemplateAuthorityRepository;
 import it.eng.generate.template.repository.TemplateCustomAuditEventRepository;
@@ -629,10 +633,15 @@ public class DataBase {
 				new TemplateEntitySharedModel(this, tabella).generateTemplate(); 			//DONE COMPLETE ENUM
 				
 				
-				//Mobile Ionic (Dynamics)
+				//Mobile Ionic (Dynamics) - TODO DEVELOP 6/11 files
 				new TemplateEntityIndexIonic(tabella).generateTemplate(); 
-				//TO DO DEVELOP 11 files
-
+				new TemplateEntityModel(this, tabella).generateTemplate(); 	
+				new TemplateEntityModuleIonic(tabella).generateTemplate(); 
+				new TemplateEntityServiceIonic(tabella).generateTemplate();  			
+				new TemplateEntityIonic(tabella).generateTemplate();  		
+			
+			
+			
 			}
 
 			//MultiLanguages 

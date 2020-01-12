@@ -252,9 +252,9 @@ public class Utils {
 		return body;
 	}
 	
-	public static String generateIClass(Table tabella, List<Column> extendedList){
+	public static String generateIClass(Table tabella, List<Column> extendedList, String classImplemented){
 		String body = 
-		"export class "+Utils.getEntityName(tabella)+" implements "+Utils.getIName(tabella)+" {\r\n" +
+		"export class "+Utils.getEntityName(tabella)+" implements "+classImplemented+" {\r\n" +
 		"    constructor(\r\n" ;
 		
 		int i = 1;
@@ -284,6 +284,11 @@ public class Utils {
 		"    }\r\n";
 		
 		return body;
+	}
+	
+	public static String generateIClass(Table tabella, List<Column> extendedList){
+		String classImplemented = Utils.getIName(tabella);
+		return generateIClass(tabella, extendedList, classImplemented);
 	}
 	
 	public static String createFileds(Table tabella){
