@@ -42,7 +42,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 						"            "+Nometabella+"\r\n" +
 						"        </ion-title>\r\n" +
 						"        <ion-buttons slot=\"end\">\r\n" +
-						"            <ion-button [disabled]=\"!isReadyToSave\" (click)=\"save()\" color=\"primary\">\r\n" +
+						"            <ion-button [disabled]=\"!isReadyToSave\" (click)=\"save()\" color=\"white\">\r\n" +
 						"              <span *ngIf=\"platform.is('ios')\">{{'DONE_BUTTON' | translate}}</span>\r\n" +
 						"              <ion-icon name=\"md-checkmark\" *ngIf=\"!platform.is('ios')\"></ion-icon>\r\n" +
 						"            </ion-button>\r\n" +
