@@ -14,7 +14,6 @@ import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
-	private static final boolean PRINT_RELATIONS = false; 	 //TODO TEST IT!
 	private static final String DATE_PATTERN = "DD/MM/YYYY"; //TODO MOVE INTO PROPERTY
 
 	public TemplateEntityUpdateHtmlIonic(DataBase database, Table tabella) {
@@ -145,7 +144,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 		
 		
 		//Relations - TODO DEVELOP THIS!
-		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && PRINT_RELATIONS) {
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && conf.isPrintRelation()) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();

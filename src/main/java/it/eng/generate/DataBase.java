@@ -393,9 +393,10 @@ public class DataBase {
 		System.out.println("-------------------------------------------------------");
 		System.out.println("Generating Project and project Files for BE and FE ...");
 
+		
 		try {
 			ConfigCreateProject config = ConfigCreateProject.getIstance();
-
+			
 			//Build Enumerations for Application
 			buildEnumerationsNameInColumn(this); 
 			

@@ -18,6 +18,7 @@ public class TemplateEntityIndexIonic extends AbstractResourceTemplate {
 	public String getBody(){
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+		
 		String body = 
 		"export * from './"+Utils.getClassNameLowerCase(tabella)+".model';\n"+
 		"export * from './"+Utils.getClassNameLowerCase(tabella)+".service';\n"+

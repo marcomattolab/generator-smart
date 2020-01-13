@@ -10,7 +10,6 @@ import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
-	private static final boolean PRINT_RELATIONS = false; //TODO TEST IT!
 
 	public TemplateEntityHtmlIonic(Table tabella) {
 		super(tabella);
@@ -63,7 +62,7 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		}
 		
 		//Relations
-		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && PRINT_RELATIONS) {
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && conf.isPrintRelation()) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();

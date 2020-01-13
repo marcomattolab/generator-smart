@@ -19,7 +19,7 @@ public class Table {
 	}
 	
 	public List<Column> getColumns(){
-		List<Column> list = new ArrayList<Column>(colonne.values());
+		List<Column> list = new ArrayList<>(colonne.values());
 		return list;
 	}
 

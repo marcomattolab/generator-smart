@@ -17,8 +17,8 @@ public class TemplateEntitiesPageIonic extends AbstractResourceTemplate {
 	}
 
 	public String getBody(){
-		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
+		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		
 		//TODO ADD IN PROPERTIES
 		String authorities = "UserRole.ROLE_ADMIN, UserRole.ROLE_USER"; 

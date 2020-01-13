@@ -10,7 +10,6 @@ import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
-	private static final boolean PRINT_RELATIONS = false; //TODO TEST IT!
 
 	public TemplateEntityDetailHtmlIonic(Table tabella) {
 		super(tabella);
@@ -22,8 +21,9 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 
 	public String getBody(){
 		// https://www.buildmystring.com/
-		//TODO DEVELOP JHI TRANSLATE
+		// TODO DEVELOP JHI TRANSLATE
 		// String jhiTranslate = "<span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+".detail.title\">"+Nometabella+"</span>\r\n";
+		
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
@@ -67,7 +67,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 		}
 		
 		//Relations
-		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && PRINT_RELATIONS) {
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && conf.isPrintRelation()) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();

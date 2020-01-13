@@ -91,14 +91,12 @@ public class TemplateEntityModelIonic extends AbstractResourceTemplate {
 						
 					} else if (relationType.equals(Utils.ManyToMany)) {
 						if(nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-							//import { CompanyKeyword } from 'app/shared/model/company-keyword.model'; 
 							Column columnRel = new Column();
 							columnRel.setName(nomeRelazioneSx+"s");
 							columnRel.setTypeColumnRelation(""+Utils.getFirstUpperCase(nomeTabellaDx));
 							extendedList.add(columnRel);
 						}
 						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-							//import { Company } from 'app/shared/model/company.model';
 							Column columnRel = new Column();
 							columnRel.setName(nomeRelazioneDx+"s");
 							columnRel.setTypeColumnRelation(""+Utils.getFirstUpperCase(nomeTabellaSx));

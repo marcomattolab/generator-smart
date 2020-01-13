@@ -16,8 +16,8 @@ public class TemplateEntityIonic extends AbstractResourceTemplate {
 	}
 
 	public String getBody(){
-		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
+		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String nometabella = Utils.getClassNameLowerCase(tabella);
 		String Nometabella = Utils.getEntityName(tabella);
 		

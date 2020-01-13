@@ -7,8 +7,7 @@ import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
-	private static final boolean PRINT_RELATIONS = false; //TODO TEST IT!
-
+	
 	public TemplateEntityUpdateTsIonic(Table tabella) {
 		super(tabella);
 	}
@@ -20,6 +19,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 	public String getBody(){
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
+		boolean printRelation = conf.isPrintRelation();
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
 		
@@ -28,8 +28,12 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"import { FormBuilder, Validators } from '@angular/forms';\r\n" +
 		"import { NavController, Platform, ToastController } from '@ionic/angular';\r\n" +
 		"import { HttpResponse, HttpErrorResponse } from '@angular/common/http';\r\n" +
-		"import { ActivatedRoute } from '@angular/router';\r\n" +
-		"import {Camera, CameraOptions} from '@ionic-native/camera/ngx';\r\n" + //Type: Blob / Clob
+		"import { ActivatedRoute } from '@angular/router';\r\n";
+		//Type: Allegato - Clob/Blob
+		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) {
+			body+= "import {Camera, CameraOptions} from '@ionic-native/camera/ngx';\r\n";
+		}
+		body+=
 		"import { Observable } from 'rxjs';\r\n" +
 		"import { "+Nometabella+" } from './"+nometabella+".model';\r\n" +
 		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n" +
@@ -51,11 +55,14 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 				body +="    "+columnname+"Dp: any;\r\n";
 			}
 		}
-		body+=
 		
-		"    @ViewChild('fileInput', {static: true}) fileInput;\n"+ // Type: Allegato - Clob/Blob
-		"    cameraOptions: CameraOptions;\n"+ 						// Type: Allegato - Clob/Blob
+		// Type: Allegato - Clob/Blob
+		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) {
+			body+=  "    @ViewChild('fileInput', {static: true}) fileInput;\n"+ 
+					"    cameraOptions: CameraOptions;\n";
+		}
 				
+		body+=
 		"    isSaving = false;\r\n" +
 		"    isNew = true;\r\n" +
 		"    isReadyToSave: boolean;\r\n\n" +
@@ -71,15 +78,17 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		for (Column column : tabella.getSortedColumns()) {
 			String columnname = Utils.getFieldName(column);
 			boolean isNullable = column.isNullable();
+			
 			if(Utils.isPrimaryKeyID(column) ) {
 				body +="        id: [],\r\n";
+			
+			} else if( Utils.isBlob(column) || Utils.isClob(column) ) {
+				body +="        "+columnname+": [null, ["+(column.isNullable() ? "" : "Validators.required")+"]],\n";
+				body +="        "+columnname+"ContentType: [null, []],\n";
+				
 			} else {
 				body +="        "+columnname+": [null, ["+( isNullable?"":"Validators.required")+"]],\r\n";
 			}
-			
-			//IF BLOB / CLOB 
-			//"        allegato: [null, [Validators.required]],\n"+
-			//"        allegatoContentType: [null, []],\n"+
 			
 		}
 		
@@ -102,23 +111,27 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"        // Watch the form for changes\r\n" +
 		"        this.form.valueChanges.subscribe((v) => {\r\n" +
 		"            this.isReadyToSave = this.form.valid;\r\n" +
-		"        });\r\n\n" +
+		"        });\r\n\n" ;
+	
+		
 		
 		//IF BLOB / CLOB 
-		"//Set the Camera options\n"+
-		"this.cameraOptions = {\n"+
-		"  quality: 100,\n"+
-		"  targetWidth: 900,\n"+
-		"  targetHeight: 600,\n"+
-		"  destinationType: this.camera.DestinationType.DATA_URL,\n"+
-		"  encodingType: this.camera.EncodingType.JPEG,\n"+
-		"  mediaType: this.camera.MediaType.PICTURE,\n"+
-		"  saveToPhotoAlbum: false,\n"+
-		"  allowEdit: true,\n"+
-		"  sourceType: 1\n"+
-		"};\n\n"+
-		//
+		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) {
+			body +=	"//Set the Camera options\n"+
+					"this.cameraOptions = {\n"+
+					"  quality: 100,\n"+
+					"  targetWidth: 900,\n"+
+					"  targetHeight: 600,\n"+
+					"  destinationType: this.camera.DestinationType.DATA_URL,\n"+
+					"  encodingType: this.camera.EncodingType.JPEG,\n"+
+					"  mediaType: this.camera.MediaType.PICTURE,\n"+
+					"  saveToPhotoAlbum: false,\n"+
+					"  allowEdit: true,\n"+
+					"  sourceType: 1\n"+
+					"};\n\n";
+		}
 		
+		body +=	
 		"    }\r\n\n" +
 		"    ngOnInit() {\r\n" +
 		"        this.activatedRoute.data.subscribe((response) => {\r\n" +
@@ -212,37 +225,37 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		
 		
 		//IF BLOB / CLOB SECTION
-		body += 
-		"  getPicture(fieldName) {\r\n" +
-		"    if (Camera.installed()) {\r\n" +
-		"      this.camera.getPicture(this.cameraOptions).then((data) => {\r\n" +
-		"        this.giustificativo[fieldName] = data;\r\n" +
-		"        this.giustificativo[fieldName + 'ContentType'] = 'image/jpeg';\r\n" +
-		"        this.form.patchValue({[fieldName]: data});\r\n" +
-		"        this.form.patchValue({[fieldName + 'ContentType']: 'image/jpeg'});\r\n" +
-		"      }, (err) => {\r\n" +
-		"        alert('Unable to take photo');\r\n" +
-		"      });\r\n" +
-		"    } else {\r\n" +
-		"      this.fileInput.nativeElement.click();\r\n" +
-		"    }\r\n" +
-		"  }\r\n\n" +
-		"  processWebImage(event, fieldName) {\r\n" +
-		"    const reader = new FileReader();\r\n" +
-		"    reader.onload = (readerEvent) => {\r\n" +
-		"      let imageData = (readerEvent.target as any).result;\r\n" +
-		"      const imageType = event.target.files[0].type;\r\n" +
-		"      imageData = imageData.substring(imageData.indexOf(',') + 1);\r\n" +
-		"      this.form.patchValue({[fieldName]: imageData});\r\n" +
-		"      this.form.patchValue({[fieldName + 'ContentType']: imageType});\r\n" +
-		"    };\r\n" +
-		"    reader.readAsDataURL(event.target.files[0]);\r\n" +
-		"  }\r\n\n" +
-		"  clearInputImage(field: string, fieldContentType: string, idInput: string) {\r\n" +
-		"    this.dataUtils.clearInputImage(this.giustificativo, this.elementRef, field, fieldContentType, idInput);\r\n" +
-		"    this.form.patchValue({[field]: ''});\r\n" +
-		"  }\r\n\n";
-
+		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) {
+			body += "  getPicture(fieldName) {\r\n" +
+					"    if (Camera.installed()) {\r\n" +
+					"      this.camera.getPicture(this.cameraOptions).then((data) => {\r\n" +
+					"        this.giustificativo[fieldName] = data;\r\n" +
+					"        this.giustificativo[fieldName + 'ContentType'] = 'image/jpeg';\r\n" +
+					"        this.form.patchValue({[fieldName]: data});\r\n" +
+					"        this.form.patchValue({[fieldName + 'ContentType']: 'image/jpeg'});\r\n" +
+					"      }, (err) => {\r\n" +
+					"        alert('Unable to take photo');\r\n" +
+					"      });\r\n" +
+					"    } else {\r\n" +
+					"      this.fileInput.nativeElement.click();\r\n" +
+					"    }\r\n" +
+					"  }\r\n\n" +
+					"  processWebImage(event, fieldName) {\r\n" +
+					"    const reader = new FileReader();\r\n" +
+					"    reader.onload = (readerEvent) => {\r\n" +
+					"      let imageData = (readerEvent.target as any).result;\r\n" +
+					"      const imageType = event.target.files[0].type;\r\n" +
+					"      imageData = imageData.substring(imageData.indexOf(',') + 1);\r\n" +
+					"      this.form.patchValue({[fieldName]: imageData});\r\n" +
+					"      this.form.patchValue({[fieldName + 'ContentType']: imageType});\r\n" +
+					"    };\r\n" +
+					"    reader.readAsDataURL(event.target.files[0]);\r\n" +
+					"  }\r\n\n" +
+					"  clearInputImage(field: string, fieldContentType: string, idInput: string) {\r\n" +
+					"    this.dataUtils.clearInputImage(this.giustificativo, this.elementRef, field, fieldContentType, idInput);\r\n" +
+					"    this.form.patchValue({[field]: ''});\r\n" +
+					"  }\r\n\n";
+		}
 		
 		
 		//RELATIONS - TODO DEVELOP  

@@ -1209,4 +1209,19 @@ public class Utils {
 		return res;
 	}
 	
+	/**
+	 * @param colonne List<Column>
+	 * @return TRUE if Table contains a column of type BLOB | CLOB
+	 */
+	public static boolean hasColumnAttachment(List<Column> colonne) {
+		boolean hasColumnAttachment = false;
+		for (Column column : colonne) {
+			hasColumnAttachment =  Utils.isClob(column) || Utils.isBlob(column);
+			if(hasColumnAttachment) {
+				break;
+			}
+		}
+		return hasColumnAttachment;
+	}
+	
 }
