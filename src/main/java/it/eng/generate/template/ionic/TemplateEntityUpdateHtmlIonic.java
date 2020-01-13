@@ -59,6 +59,8 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 			String columnname = Utils.getFieldName(column);
 			Class<?> filterType = column.getTypeColumn();
 			boolean isEnumeration = column.getEnumeration()!=null;
+			boolean isNullable = column.isNullable();
+			String mandatory = isNullable ? "" : "*";
 			
 			if(Utils.isPrimaryKeyID(column) ) {
 				body += "            <ion-item [hidden]=\"!form.id\">\r\n" +
@@ -68,14 +70,14 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 			
 			} else if (filterType.getName().equals("java.lang.String") && !isEnumeration) {
 				body += "            <ion-item>\r\n" +
-						"                <ion-label position=\"floating\">"+ColumnName+"</ion-label>\r\n" +
+						"                <ion-label position=\"floating\">"+ColumnName+mandatory+"</ion-label>\r\n" +
 						"                <ion-input type=\"text\" name=\""+columnname+"\" formControlName=\""+columnname+"\"></ion-input>\r\n" +
 						"            </ion-item>\r\n";
 		
 			} else if(filterType.getName().equals("java.lang.String") && isEnumeration) {
 				//ENUMERATION
 				body += "            <ion-item>\r\n" +
-						"                <ion-label>"+ColumnName+"</ion-label>\r\n" +
+						"                <ion-label>"+ColumnName+mandatory+"</ion-label>\r\n" +
 						"                <ion-select formControlName=\""+columnname+"\" id=\"field_"+columnname+"\">\r\n";
 				List<Enumeration> enumList = Utils.getEnumerationsByDbAndTable(database, tabella);
 				for(Enumeration e : enumList) {
@@ -90,26 +92,26 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 			} else if(filterType.getName().equals("java.lang.Long") || filterType.getName().equals("java.lang.Integer") || filterType.getName().equals("java.lang.Float") || filterType.getName().equals("java.math.BigDecimal")) {
 				body += "            <ion-item>\n"+
-						"                <ion-label position=\"floating\">"+ColumnName+"</ion-label>\n"+
+						"                <ion-label position=\"floating\">"+ColumnName+mandatory+"</ion-label>\n"+
 						"                <ion-input type=\"number\" name=\""+columnname+"\" formControlName=\""+columnname+"\"></ion-input>\n"+
 						"            </ion-item>\n";
 				
 			} else if( Utils.isDateField(column) && Utils.isLocalDate(column) ) {
 				body += "            <ion-item>\n"+
-						"                <ion-label>"+ColumnName+"</ion-label>\n"+
+						"                <ion-label>"+ColumnName+mandatory+"</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
 						"            </ion-item>\n";
 		
 			} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
 				//TODO DEVELOP THIS!
 				body += "            <ion-item>\n"+
-						"                <ion-label>"+ColumnName+"</ion-label>\n"+
+						"                <ion-label>"+ColumnName+mandatory+"</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
 						"            </ion-item>\n";
 				
 			} else if(filterType.getName().equals("java.lang.Boolean")) {
 				body += "            <ion-item>\n"+
-						"                <ion-label>"+ColumnName+"</ion-label>\n"+
+						"                <ion-label>"+ColumnName+mandatory+"</ion-label>\n"+
 						"                <ion-checkbox formControlName=\""+columnname+"\"></ion-checkbox>\n"+
 						"            </ion-item>\n";
 		
