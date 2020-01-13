@@ -19,6 +19,8 @@ public class Utils {
 	public static String OneToMany = "OneToMany";
 	public static String ManyToOne = "ManyToOne";
 	
+	public static String DATE_PATTERN = "DD/MM/YYYY"; //TODO MOVE INTO PROPERTY
+	
 	public static String getServiceClassName(Table table){
 		return getEntityName(table)+"Service"; 
 	}

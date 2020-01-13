@@ -14,7 +14,6 @@ import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
-	private static final String DATE_PATTERN = "DD/MM/YYYY"; //TODO MOVE INTO PROPERTY
 
 	public TemplateEntityUpdateHtmlIonic(DataBase database, Table tabella) {
 		super(database);
@@ -27,12 +26,11 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 	public String getBody(){
 		// https://www.buildmystring.com/
-		// TODO MANAGE CLOB BLOB BOOLEAN AND DATES
-		// TODO MANAGE PATTERN AND REQUIRED
-		
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
+
+		// TODO MANAGE PATTERN AND REQUIRED
 
 		String body = 
 				"<ion-header>\r\n" +
@@ -99,12 +97,16 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 			} else if( Utils.isDateField(column) && Utils.isLocalDate(column) ) {
 				body += "            <ion-item>\n"+
 						"                <ion-label>"+ColumnName+"</ion-label>\n"+
-						"                <ion-datetime displayFormat=\""+DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
+						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
 						"            </ion-item>\n";
 		
 			} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
 				//TODO DEVELOP THIS!
-
+				body += "            <ion-item>\n"+
+						"                <ion-label>"+ColumnName+"</ion-label>\n"+
+						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
+						"            </ion-item>\n";
+				
 			} else if(filterType.getName().equals("java.lang.Boolean")) {
 				body += "            <ion-item>\n"+
 						"                <ion-label>"+ColumnName+"</ion-label>\n"+
@@ -112,38 +114,27 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 						"            </ion-item>\n";
 		
 			} else if( filterType.getName().equals("java.sql.Blob") ||  filterType.getName().equals("java.sql.Clob") ) {
-				//TODO DEVELOP BLOB CLOB
-//				body += "		      <ion-item>\r\n" + 
-//						"		        <div>\r\n" + 
-//						"		          <img [src]=\"'data:' + giustificativo.allegatoContentType + ';base64,' + giustificativo.allegato\"\r\n" + 
-//						"		               style=\"max-height: 100px;\" *ngIf=\"giustificativo?.allegato\" alt=\"giustificativo image\"/>\r\n" + 
-//						"		          <div *ngIf=\"giustificativo.allegato\">\r\n" + 
-//						"		            <p>{{giustificativo.allegatoContentType}}, {{byteSize(giustificativo.allegato)}}</p>\r\n" + 
-//						"		            <ion-button color=\"danger\" (click)=\"clearInputImage('allegato', 'allegatoContentType', 'fileImage')\">\r\n" + 
-//						"		              <ion-icon name=\"trash\" slot=\"icon-only\"></ion-icon>\r\n" + 
-//						"		            </ion-button>\r\n" + 
-//						"		          </div>\r\n" + 
-//						"		          <input type=\"file\" #fileInput style=\"display: none\"\r\n" + 
-//						"		                 (change)=\"setFileData($event, giustificativo, 'allegato', true)\" accept=\"image/*\"/>\r\n" + 
-//						"		          <ion-button *ngIf=\"!giustificativo?.allegato\" (click)=\"getPicture('allegato')\">\r\n" + 
-//						"		            <ion-icon name=\"add-circle\" slot=\"start\"></ion-icon>\r\n" + 
-//						"		            {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}\r\n" + 
-//						"		          </ion-button>\r\n" + 
-//						"		        </div>\r\n" + 
-//						"		      </ion-item>\r\n" + 
-//						"		      <ion-item>\r\n" + 
-//						"		        <ion-label>Spesa</ion-label>\r\n" + 
-//						"		        <ion-select id=\"field_spesa\" formControlName=\"spesa\" [compareWith]=\"compareSpesa\">\r\n" + 
-//						"		          <ion-select-option [value]=\"null\"></ion-select-option>\r\n" + 
-//						"		          <ion-select-option *ngFor=\"let spesaOption of spesas\"\r\n" + 
-//						"		                             [value]=\"spesaOption.id\">{{spesaOption.id}}</ion-select-option>\r\n" + 
-//						"		        </ion-select>\r\n" + 
-//						"		      </ion-item>";
+				body += "		      <ion-item>\r\n" + 
+						"		        <div>\r\n" + 
+						"		          <img [src]=\"'data:' + "+nometabella+"."+columnname+"ContentType + ';base64,' + "+nometabella+"."+columnname+"\"\r\n" + 
+						"		               style=\"max-height: 100px;\" *ngIf=\""+nometabella+"?."+columnname+"\" alt=\""+nometabella+" image\"/>\r\n" + 
+						"		          <div *ngIf=\""+nometabella+"."+columnname+"\">\r\n" + 
+						"		            <p>{{"+nometabella+"."+columnname+"ContentType}}, {{byteSize("+nometabella+"."+columnname+")}}</p>\r\n" + 
+						"		            <ion-button color=\"danger\" (click)=\"clearInputImage('"+columnname+"', '"+columnname+"ContentType', 'fileImage')\">\r\n" + 
+						"		              <ion-icon name=\"trash\" slot=\"icon-only\"></ion-icon>\r\n" + 
+						"		            </ion-button>\r\n" + 
+						"		          </div>\r\n" + 
+						"		          <input type=\"file\" #fileInput style=\"display: none\"\r\n" + 
+						"		                 (change)=\"setFileData($event, "+nometabella+", '"+columnname+"', true)\" accept=\"image/*\"/>\r\n" + 
+						"		          <ion-button *ngIf=\"!"+nometabella+"?."+columnname+"\" (click)=\"getPicture('"+columnname+"')\">\r\n" + 
+						"		            <ion-icon name=\"add-circle\" slot=\"start\"></ion-icon>\r\n" + 
+						"		            {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}\r\n" + 
+						"		          </ion-button>\r\n" + 
+						"		        </div>\r\n" + 
+						"		      </ion-item>\r\n"; 
 			}
 		}
 		
-		
-		//Relations - TODO DEVELOP THIS!
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && conf.isPrintRelation()) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
@@ -159,9 +150,8 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 							body += "\n         <!-- Add Relation:   Name: "+nomeRelazioneSx+"    Type: "+relationType+" -->\n";
-							//String jhiTR = "<span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n";
 							
-							//Relation Spesa ==> Trasferta  - Spesa{structure} to Struttura,
+							//Relation    Spesa ==> Trasferta    -    Spesa{structure} to Struttura,
 							body += 
 							"        <ion-item>\n"+
 							"            <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</ion-label>\n"+
@@ -170,67 +160,34 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 							"                <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeTabellaSx)+"Option of "+Utils.getFirstLowerCase(nomeTabellaSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"Option."+Utils.getFirstUpperCase(nomeSelectSx)+"}}</ion-select-option>"+
 							"            </ion-select>\n"+
 							"        </ion-item>\n";
-//							String body += 
-//							"     <ion-item>\r\n" +
-//							"        <ion-label>Structure</ion-label>\r\n" +
-//							"        <ion-select id=\"field_structure\" formControlName=\"structure\" [compareWith]=\"compareStruttura\">\r\n" +
-//							"          <ion-select-option [value]=\"null\"></ion-select-option>\r\n" +
-//							"          <ion-select-option [value]=\"strutturaOption.id\" *ngFor=\"let strutturaOption of strutturas\">\r\n" +
-//							"            {{strutturaOption.nome}}</ion-select-option>\r\n" +
-//							"        </ion-select>\r\n" +
-//							"      </ion-item>\r\n";
-							
 						}
 
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
 							body += "\n        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany -->\n";
-							//String jhiTR = "<span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</span>\n";
 							
-							
-							String label = Utils.getFirstUpperCase(nomeRelazioneDx);	
-							body += "        <ion-item>\r\n" +
-									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
-									"            <div item-content>\r\n" +
-									"                <span>{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</span>\r\n" +
-									"            </div>\r\n" +
-									"        </ion-item>\r\n";
-							
-							//OneToMany =>    Spesa{giustificativoSpesa} to Giustificativo
-//					      <ion-item>
-//					        <ion-label>Spesa</ion-label>
-//					        <ion-select id="field_spesa" formControlName="spesa" [compareWith]="compareSpesa">
-//					          <ion-select-option [value]="null"></ion-select-option>
-//					          <ion-select-option *ngFor="let spesaOption of spesas"
-//					                             [value]="spesaOption.id">{{spesaOption.id}}</ion-select-option>
-//					        </ion-select>
-//					      </ion-item>
-					      
+							//OneToMany Giustificativo => Spesa   -   Spesa{giustificativoSpesa} to Giustificativo 
+							body+=	
+							"        <ion-item>\r\n" + 
+							"			    <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</ion-label>\r\n" + 
+							"			    <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\r\n" + 
+							"			         <ion-select-option [value]=\"null\"></ion-select-option>\r\n" + 
+							"					 <ion-select-option *ngFor=\"let "+Utils.getFirstLowerCase(nomeTabellaDx)+"Option of "+Utils.getFirstLowerCase(nomeTabellaDx)+"s\" [value]=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"Option.id\">{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"Option."+Utils.getFirstUpperCase(nomeSelectDx)+"}}</ion-select-option>\r\n" + 
+							"				</ion-select>\r\n" + 
+							"        </ion-item>";
 						}
 
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 							body += "\n        <!-- Add Relation:  Name:  "+nomeRelazioneSx+"   Type: ManyToMany -->\n";
-							//String jhiTR = body += "<span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n";
-							String label = 	Utils.getFirstUpperCase(nomeRelazioneSx);
-							body += "        <ion-item>\r\n" +
-									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
-									"            <div item-content>\r\n" +
-									"                <span>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</span>\r\n" +
-									"            </div>\r\n" +
-									"        </ion-item>\r\n";
-							
-							//Relation ??
-//							String body += 
-//									"     <ion-item>\r\n" +
-//									"        <ion-label>Structure</ion-label>\r\n" +
-//									"        <ion-select id=\"field_structure\" formControlName=\"structure\" [compareWith]=\"compareStruttura\">\r\n" +
-//									"          <ion-select-option [value]=\"null\"></ion-select-option>\r\n" +
-//									"          <ion-select-option [value]=\"strutturaOption.id\" *ngFor=\"let strutturaOption of strutturas\">\r\n" +
-//									"            {{strutturaOption.nome}}</ion-select-option>\r\n" +
-//									"        </ion-select>\r\n" +
-//									"      </ion-item>\r\n";
-
+							body += 
+							"        <ion-item>\n"+
+							"            <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</ion-label>\n"+
+							"            <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [compareWith]=\"compare"+Utils.getFirstLowerCase(nomeTabellaSx)+"\">\n"+
+							"                <ion-select-option [value]=\"null\"></ion-select-option>\n"+
+							"                <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeTabellaSx)+"Option of "+Utils.getFirstLowerCase(nomeTabellaSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"Option."+Utils.getFirstUpperCase(nomeSelectSx)+"}}</ion-select-option>"+
+							"            </ion-select>\n"+
+							"        </ion-item>\n";
 							
 						}
 

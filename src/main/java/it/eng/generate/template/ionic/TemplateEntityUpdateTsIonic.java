@@ -19,18 +19,18 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 	public String getBody(){
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		boolean printRelation = conf.isPrintRelation();
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
 		
+		boolean printRelation = conf.isPrintRelation();
+
 		String body = 
 		"import { Component, OnInit } from '@angular/core';\r\n" +
 		"import { FormBuilder, Validators } from '@angular/forms';\r\n" +
 		"import { NavController, Platform, ToastController } from '@ionic/angular';\r\n" +
 		"import { HttpResponse, HttpErrorResponse } from '@angular/common/http';\r\n" +
 		"import { ActivatedRoute } from '@angular/router';\r\n";
-		//Type: Allegato - Clob/Blob
-		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) {
+		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) { //Type: Allegato - Clob/Blob
 			body+= "import {Camera, CameraOptions} from '@ionic-native/camera/ngx';\r\n";
 		}
 		body+=
@@ -46,8 +46,8 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"export class "+Nometabella+"UpdatePage implements OnInit {\r\n\n" +
 		"    "+nometabella+": "+Nometabella+";\r\n";
 		//RELATIONS - TODO DEVELOP
-//		trasfertas: Trasferta[];
-//		strutturas: Struttura[];
+		//		trasfertas: Trasferta[];
+		//		strutturas: Struttura[];
 		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
 			String columnname = Utils.getFieldName(column);
@@ -70,9 +70,9 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		
 		"    form = this.formBuilder.group({\r\n";
 		//RELATIONS - TODO DEVELOP
-//		body +=
-//		"        trasferta: [null, []],\n"+
-//		"        structure: [null, []],\n";
+		//		body +=
+		//		"        trasferta: [null, []],\n"+
+		//		"        structure: [null, []],\n";
 		
 		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
@@ -114,9 +114,8 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"        });\r\n\n" ;
 	
 		
-		
 		//IF BLOB / CLOB 
-		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) {
+		if(Utils.hasColumnAttachment( tabella.getSortedColumns() )) {
 			body +=	"//Set the Camera options\n"+
 					"this.cameraOptions = {\n"+
 					"  quality: 100,\n"+
@@ -197,7 +196,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		//TYPE DATE
 		for (Column column : tabella.getSortedColumns()) {
 			String columnname = Utils.getFieldName(column);
-			if( Utils.isDateField(column) ) {
+			if( Utils.isDateField(column) ) { //DATE FIELDS
 				body +="          const "+columnname+" = this.form.get(['"+columnname+"']).value;\n";
 				body +="          const "+columnname+"Value = "+columnname+" ? getMomentDateNoTZ("+columnname+") : null;\n\n";
 			}
@@ -212,7 +211,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 			String columnname = Utils.getFieldName(column);
 			if(Utils.isPrimaryKeyID(column) ) {
 				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
-			} else if( Utils.isDateField(column) ) {
+			} else if( Utils.isDateField(column) ) { //DATE FIELDS
 				body +="            "+columnname+": "+columnname+"Value,\r\n";
 			} else {
 				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
@@ -266,6 +265,9 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		//		"    compareStruttura(first: Struttura, second: Struttura): boolean {\n"+
 		//		"       return first && second ? first.id === second.id : first === second;\n"+
 		//		"    }\n\n"+
+		
+		
+		
 		body +=
 		"}\r\n";
 
