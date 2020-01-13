@@ -36,11 +36,27 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"    selector: 'page-"+nometabella+"-update',\r\n" +
 		"    templateUrl: '"+nometabella+"-update.html'\r\n" +
 		"})\r\n" +
+		
+		
 		"export class "+Nometabella+"UpdatePage implements OnInit {\r\n\n" +
-		"    "+nometabella+": "+Nometabella+";\r\n" +
+		"    "+nometabella+": "+Nometabella+";\r\n";
+		//RELATIONS - TODO DEVELOP
+//		trasfertas: Trasferta[];
+//		strutturas: Struttura[];
+		//COLUMNS
+		for (Column column : tabella.getSortedColumns()) {
+			String columnname = Utils.getFieldName(column);
+			boolean isNullable = column.isNullable();
+			Class<?> filterType = column.getTypeColumn();
+			if(Utils.isDateField(column) ) {
+				body +="    "+columnname+"Dp: any;\r\n";
+			}
+		}
+		body+=
 		"    isSaving = false;\r\n" +
 		"    isNew = true;\r\n" +
 		"    isReadyToSave: boolean;\r\n\n" +
+		
 		
 		"    form = this.formBuilder.group({\r\n";
 		//RELATIONS - TODO DEVELOP
@@ -48,11 +64,12 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 //		"        trasferta: [null, []],\n"+
 //		"        structure: [null, []],\n";
 		
-		
 		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
 			String columnname = Utils.getFieldName(column);
 			boolean isNullable = column.isNullable();
+			Class<?> filterType = column.getTypeColumn();
+			
 			if(Utils.isPrimaryKeyID(column) ) {
 				body +="        id: [],\r\n";
 			} else {
@@ -139,13 +156,19 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"        const toast = await this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});\r\n" +
 		"        toast.present();\r\n" +
 		"    }\r\n\n" +
-		"    private createFromForm(): "+Nometabella+" {\r\n" +
-		
-		//RELATIONS - TODO DEVELOP THIS TYPE DATE!
-		//"          const dataSpesa = this.form.get(['dataSpesa']).value;\n"+
-		//"          const dataSpesaValue = dataSpesa ? getMomentDateNoTZ(dataSpesa) : null;\n\n"+
 		
 		
+		"    private createFromForm(): "+Nometabella+" {\r\n";
+		//TYPE DATE
+		for (Column column : tabella.getSortedColumns()) {
+			String columnname = Utils.getFieldName(column);
+			if( Utils.isDateField(column) ) {
+				body +="          const "+columnname+" = this.form.get(['"+columnname+"']).value;\n";
+				body +="          const "+columnname+"Value = "+columnname+" ? getMomentDateNoTZ("+columnname+") : null;\n\n";
+			}
+		}
+		
+		body +=
 		"        return {\r\n" +
 		"            ...new "+Nometabella+"(),\r\n";
 		
@@ -153,15 +176,11 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		for (Column column : tabella.getSortedColumns()) {
 			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
-			Class<?> filterType = column.getTypeColumn();
-			boolean isEnumeration = column.getEnumeration()!=null;
 			
 			if(Utils.isPrimaryKeyID(column) ) {
 				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
 			} else if( Utils.isDateField(column) ) {
-				//RELATIONS - TODO DECOMMENT DATE
-				//body +="            "+columnname+": "+columnname+"Value,\r\n";
-				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
+				body +="            "+columnname+": "+columnname+"Value,\r\n";
 			} else {
 				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
 			}
