@@ -537,10 +537,10 @@ public class DataBase {
 			new TemplateAdminEntityAuditModule(this).generateTemplate(); 		//Audit Module TS
 			new TemplateDashboardModule(this).generateTemplate();  				//Chart Dashboard
 			new TemplateDashboardBarchartModule(this).generateTemplate();  		//Barchart Dashboard
-			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  	//Doughnutchart Dashboard
-			new TemplateDashboardLinechartModule(this).generateTemplate();  		//Linechart Dashboard
+			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  //Doughnutchart Dashboard
+			new TemplateDashboardLinechartModule(this).generateTemplate();  	//Linechart Dashboard
 			new TemplateDashboardPiechartModule(this).generateTemplate();  		//Piechart Dashboard
-			new TemplateDashboardPolarareachartModule(this).generateTemplate(); 	//Polarareachart Dashboard
+			new TemplateDashboardPolarareachartModule(this).generateTemplate(); //Polarareachart Dashboard
 			new TemplateDashboardRadarchartModule(this).generateTemplate();  	//Radarchart Dashboard
 			new TemplateConfigurationService(this).generateTemplate(); 
 			new TemplateErrorehandlerInterceptor(this).generateTemplate(); 
@@ -605,7 +605,7 @@ public class DataBase {
 				if (Utils.havingConstraints(config, tabella)) {
 					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate();	//TODO COMPLETE THIS  !!
 				}
-				//new TemplateIntTest(tabella).generateTemplate(); 	//TODO FIXME TEST - COMPLETE THIS  !!
+				//new TemplateIntTest(tabella).generateTemplate(); 							//TODO FIXME TEST - COMPLETE THIS  !!
 				
 				//MultiLanguages
 				for(String languageCode: config.getLanguages()) {
@@ -619,12 +619,12 @@ public class DataBase {
 				new TemplateEntityComponentTs(this, tabella).generateTemplate(); 
 				new TemplateEntityComponentHtml(this, tabella).generateTemplate(); 			
 				new TemplateEntityUpdateComponentTs(tabella).generateTemplate(); 		
-				new TemplateEntityUpdateComponentHtml(this, tabella).generateTemplate(); //DONE DEVELOP ENUMS AND DATES
+				new TemplateEntityUpdateComponentHtml(this, tabella).generateTemplate(); 	//DONE DEVELOP ENUMS AND DATES
 				new TemplateEntityDetailComponentTs(tabella).generateTemplate(); 		
 				new TemplateEntityDetailComponentHtml(tabella).generateTemplate(); 
 				new TemplateEntityDeleteComponentTs(tabella).generateTemplate(); 		
 				new TemplateEntityDeleteComponentHtml(tabella).generateTemplate(); 	
-				new TemplateEntitySharedModel(this, tabella).generateTemplate(); 		//DONE COMPLETE ENUM
+				new TemplateEntitySharedModel(this, tabella).generateTemplate(); 			//DONE COMPLETE ENUM
 				
 				
 				//Mobile Ionic (Dynamics)

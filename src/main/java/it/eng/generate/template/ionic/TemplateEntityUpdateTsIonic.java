@@ -29,6 +29,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"import { NavController, Platform, ToastController } from '@ionic/angular';\r\n" +
 		"import { HttpResponse, HttpErrorResponse } from '@angular/common/http';\r\n" +
 		"import { ActivatedRoute } from '@angular/router';\r\n" +
+		"import {Camera, CameraOptions} from '@ionic-native/camera/ngx';\r\n" + //Type: Blob / Clob
 		"import { Observable } from 'rxjs';\r\n" +
 		"import { "+Nometabella+" } from './"+nometabella+".model';\r\n" +
 		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n" +
@@ -46,13 +47,15 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
 			String columnname = Utils.getFieldName(column);
-			boolean isNullable = column.isNullable();
-			Class<?> filterType = column.getTypeColumn();
 			if(Utils.isDateField(column) ) {
 				body +="    "+columnname+"Dp: any;\r\n";
 			}
 		}
 		body+=
+		
+		"    @ViewChild('fileInput', {static: true}) fileInput;\n"+ // Type: Allegato - Clob/Blob
+		"    cameraOptions: CameraOptions;\n"+ 						// Type: Allegato - Clob/Blob
+				
 		"    isSaving = false;\r\n" +
 		"    isNew = true;\r\n" +
 		"    isReadyToSave: boolean;\r\n\n" +
@@ -68,13 +71,16 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		for (Column column : tabella.getSortedColumns()) {
 			String columnname = Utils.getFieldName(column);
 			boolean isNullable = column.isNullable();
-			Class<?> filterType = column.getTypeColumn();
-			
 			if(Utils.isPrimaryKeyID(column) ) {
 				body +="        id: [],\r\n";
 			} else {
 				body +="        "+columnname+": [null, ["+( isNullable?"":"Validators.required")+"]],\r\n";
 			}
+			
+			//IF BLOB / CLOB 
+			//"        allegato: [null, [Validators.required]],\n"+
+			//"        allegatoContentType: [null, []],\n"+
+			
 		}
 		
 		body +=	
@@ -96,7 +102,23 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"        // Watch the form for changes\r\n" +
 		"        this.form.valueChanges.subscribe((v) => {\r\n" +
 		"            this.isReadyToSave = this.form.valid;\r\n" +
-		"        });\r\n" +
+		"        });\r\n\n" +
+		
+		//IF BLOB / CLOB 
+		"//Set the Camera options\n"+
+		"this.cameraOptions = {\n"+
+		"  quality: 100,\n"+
+		"  targetWidth: 900,\n"+
+		"  targetHeight: 600,\n"+
+		"  destinationType: this.camera.DestinationType.DATA_URL,\n"+
+		"  encodingType: this.camera.EncodingType.JPEG,\n"+
+		"  mediaType: this.camera.MediaType.PICTURE,\n"+
+		"  saveToPhotoAlbum: false,\n"+
+		"  allowEdit: true,\n"+
+		"  sourceType: 1\n"+
+		"};\n\n"+
+		//
+		
 		"    }\r\n\n" +
 		"    ngOnInit() {\r\n" +
 		"        this.activatedRoute.data.subscribe((response) => {\r\n" +
@@ -186,9 +208,44 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		
 		body +=
 		"        };\r\n" +
-		"    }\r\n\n" +
+		"    }\r\n\n";
 		
-		//RELATIONS - TODO DEVELOP
+		
+		//IF BLOB / CLOB SECTION
+		body += 
+		"  getPicture(fieldName) {\r\n" +
+		"    if (Camera.installed()) {\r\n" +
+		"      this.camera.getPicture(this.cameraOptions).then((data) => {\r\n" +
+		"        this.giustificativo[fieldName] = data;\r\n" +
+		"        this.giustificativo[fieldName + 'ContentType'] = 'image/jpeg';\r\n" +
+		"        this.form.patchValue({[fieldName]: data});\r\n" +
+		"        this.form.patchValue({[fieldName + 'ContentType']: 'image/jpeg'});\r\n" +
+		"      }, (err) => {\r\n" +
+		"        alert('Unable to take photo');\r\n" +
+		"      });\r\n" +
+		"    } else {\r\n" +
+		"      this.fileInput.nativeElement.click();\r\n" +
+		"    }\r\n" +
+		"  }\r\n\n" +
+		"  processWebImage(event, fieldName) {\r\n" +
+		"    const reader = new FileReader();\r\n" +
+		"    reader.onload = (readerEvent) => {\r\n" +
+		"      let imageData = (readerEvent.target as any).result;\r\n" +
+		"      const imageType = event.target.files[0].type;\r\n" +
+		"      imageData = imageData.substring(imageData.indexOf(',') + 1);\r\n" +
+		"      this.form.patchValue({[fieldName]: imageData});\r\n" +
+		"      this.form.patchValue({[fieldName + 'ContentType']: imageType});\r\n" +
+		"    };\r\n" +
+		"    reader.readAsDataURL(event.target.files[0]);\r\n" +
+		"  }\r\n\n" +
+		"  clearInputImage(field: string, fieldContentType: string, idInput: string) {\r\n" +
+		"    this.dataUtils.clearInputImage(this.giustificativo, this.elementRef, field, fieldContentType, idInput);\r\n" +
+		"    this.form.patchValue({[field]: ''});\r\n" +
+		"  }\r\n\n";
+
+		
+		
+		//RELATIONS - TODO DEVELOP  
 		//		body +=
 		//		"    compareTrasferta(first: Trasferta, second: Trasferta): boolean {\n"+
 		//		"       return first && second ? first.id === second.id : first === second;\n"+
@@ -196,7 +253,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		//		"    compareStruttura(first: Struttura, second: Struttura): boolean {\n"+
 		//		"       return first && second ? first.id === second.id : first === second;\n"+
 		//		"    }\n\n"+
-		
+		body +=
 		"}\r\n";
 
 		return body;
