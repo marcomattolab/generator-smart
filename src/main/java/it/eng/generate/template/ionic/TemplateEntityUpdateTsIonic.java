@@ -35,6 +35,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		}
 		body+=
 		"import { Observable } from 'rxjs';\r\n" +
+		"import { getMomentDateNoTZ } from '../../../shared/util/moment-util';\r\n" +
 		"import { "+Nometabella+" } from './"+nometabella+".model';\r\n" +
 		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n" +
 		"@Component({\r\n" +
