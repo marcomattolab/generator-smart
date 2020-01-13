@@ -62,10 +62,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
   		//"    dataNascitaDp: any;\r\n" +
 		body += printRelations(conf, INIT_SECTION);
 
-		Set<?> set = tabella.getColumnNames();
-		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for(Column column : tabella.getColumns()) {
 			String nomeColonna = Utils.getFieldName(column);
 			if ( Utils.isDateField(column) ) {
 				String dateType = Utils.isLocalDate(column) ? "any" : "string" ;
@@ -90,10 +87,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"        this.activatedRoute.data.subscribe(({ "+nometabella+" }) => {\r\n" +
 		"            this."+nometabella+" = "+nometabella+";\r\n";
 		
-		Set<?> cset = tabella.getColumnNames();
-		for (Iterator<?> iter = cset.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for(Column column: tabella.getColumns()) {
 			String nomeColonna = Utils.getFieldName(column);
 			if ( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
 				body += "            this."+nomeColonna+" = this."+Utils.getClassNameLowerCase(tabella)+"."+nomeColonna+" != null ? this."+Utils.getClassNameLowerCase(tabella)+"."+nomeColonna+".format(DATE_TIME_FORMAT) : null;\r\n";
@@ -124,9 +118,7 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 		"    save() {\r\n" +
 		"        this.isSaving = true;\r\n" ;
 		
-		for (Iterator<?> iter = cset.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for(Column column: tabella.getColumns()) {
 			String nomeColonna = Utils.getFieldName(column);
 			if ( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
 				body += "        this."+Utils.getClassNameLowerCase(tabella)+"."+nomeColonna+" = this."+nomeColonna+" != null ? moment(this."+nomeColonna+", DATE_TIME_FORMAT) : null;\r\n";

@@ -1,12 +1,25 @@
 package it.eng.generate.template.ionic;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.util.CollectionUtils;
+
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
+import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
+	private String IMPORT_SECTION = "IMPORT_SECTION";
+	private String INIT_SECTION = "INIT_SECTION";
+	private String CONSTRUCTOR_SECTION = "CONSTRUCTOR_SECTION";
+	private String NG_ONINIT_SECTION = "NG_ONINIT_SECTION";
+	private String COMPARE = "COMPARE";
+	private String UPDATE_FORM = "UPDATE_FORM";
+	private String FORM_BUILDER = "FORM_BUILDER";
 	
 	public TemplateEntityUpdateTsIonic(Table tabella) {
 		super(tabella);
@@ -22,7 +35,6 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
 		
-		boolean printRelation = conf.isPrintRelation();
 
 		String body = 
 		"import { Component, OnInit } from '@angular/core';\r\n" +
@@ -37,7 +49,10 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"import { Observable } from 'rxjs';\r\n" +
 		"import { getMomentDateNoTZ } from '../../../shared/util/moment-util';\r\n" +
 		"import { "+Nometabella+" } from './"+nometabella+".model';\r\n" +
-		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n" +
+		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n";
+		body += printRelations(conf, IMPORT_SECTION);
+		
+		body += 
 		"@Component({\r\n" +
 		"    selector: 'page-"+nometabella+"-update',\r\n" +
 		"    templateUrl: '"+nometabella+"-update.html'\r\n" +
@@ -46,9 +61,12 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		
 		"export class "+Nometabella+"UpdatePage implements OnInit {\r\n\n" +
 		"    "+nometabella+": "+Nometabella+";\r\n";
+		
 		//RELATIONS - TODO DEVELOP
 		//		trasfertas: Trasferta[];
 		//		strutturas: Struttura[];
+		body += printRelations(conf, INIT_SECTION);
+		
 		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
 			String columnname = Utils.getFieldName(column);
@@ -74,6 +92,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		//		body +=
 		//		"        trasferta: [null, []],\n"+
 		//		"        structure: [null, []],\n";
+		body += printRelations(conf, FORM_BUILDER);
 		
 		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
@@ -97,11 +116,14 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"    });\r\n\n"+
 		
 		
-		"    constructor(\r\n" +
+		"    constructor(\r\n" ;
+		
 		//RELATIONS - TODO DEVELOP
 		//"        private trasfertaService: TrasfertaService,\n"+
 		//"        private strutturaService: StrutturaService,\n"+
+		body += printRelations(conf, CONSTRUCTOR_SECTION);
 		
+		body +=  
 		"        protected activatedRoute: ActivatedRoute,\r\n" +
 		"        protected navController: NavController,\r\n" +
 		"        protected formBuilder: FormBuilder,\r\n" +
@@ -138,7 +160,11 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"            this.updateForm(response.data);\r\n" +
 		"            this."+nometabella+" = response.data;\r\n" +
 		"            this.isNew = this."+nometabella+".id === null || this."+nometabella+".id === undefined;\r\n" +
-		"        });\r\n" +
+		"        });\r\n";
+		//Relations
+		body += printRelations(conf, NG_ONINIT_SECTION);
+		
+		body += 
 		"    }\r\n\n" +
 		"    updateForm("+nometabella+": "+Nometabella+") {\r\n" +
 		"        this.form.patchValue({\r\n";
@@ -154,7 +180,8 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		//RELATIONS - TODO DEVELOP
 		//body +="            trasferta: spesa.trasfertaId,\n";
 		//body +="            structure: spesa.structureId,\n";
-	      
+		body += printRelations(conf, UPDATE_FORM);
+		
 		body +=
 		"        });\r\n" +
 		"    }\r\n\n" +
@@ -266,7 +293,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		//		"    compareStruttura(first: Struttura, second: Struttura): boolean {\n"+
 		//		"       return first && second ? first.id === second.id : first === second;\n"+
 		//		"    }\n\n"+
-		
+		body += printRelations(conf, COMPARE);
 		
 		
 		body +=
@@ -290,4 +317,149 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		return "mobile/src/app/pages/entities/"+Utils.getClassNameLowerCase(tabella);
 	}
 
+	
+	private String printRelations(ConfigCreateProject conf, String section) {
+		Map<String, String> relMap = new HashMap<>();
+		String res = "";
+		
+		//Relations management
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && conf.isPrintRelation()) {
+			for(ProjectRelation rel: conf.getProjectRelations()) {
+				String relationType = rel.getType();
+				String nomeTabellaSx = rel.getSxTable();
+				String nomeRelazioneSx = rel.getSxName();
+				String nomeTabellaDx = rel.getDxTable();
+				String nomeRelazioneDx = rel.getDxName();
+				String nomeSelectDx = rel.getDxSelect();
+				String nomeTabella = tabella.getNomeTabella().toLowerCase();
+				
+				//Relations OneToOne / ManyToOne
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& (relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne))
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+					if(IMPORT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Interface", 
+								"import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaDx)+".model';\n");
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Model", 
+								"import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n");
+						
+					}else if(INIT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, "    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+						if (relationType.equals(Utils.OneToOne)) {
+							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION+"ANY", "    id"+Utils.getFirstUpperCase(nomeRelazioneSx)+": any;\n");
+						}
+						
+					}else if(CONSTRUCTOR_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
+								"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
+
+					}else if(NG_ONINIT_SECTION.equals(section)) {
+						if (relationType.equals(Utils.OneToOne)) {
+							
+							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+NG_ONINIT_SECTION, 
+									"\n       this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query({ filter: '"+Utils.getFirstLowerCase(nomeRelazioneDx)+"("+Utils.getFirstLowerCase(nomeSelectDx)+")-is-null' }).subscribe(\n"+
+									"         (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
+						             "         if (!this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id) {\n"+
+						             "             this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
+						             "         } else {\n"+
+						             "                  this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.find(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id).subscribe(\n"+
+						             "                  (subRes: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+">) => {\n"+
+						             "                           this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = [subRes.body].concat(res.body);\n"+
+						             "                  },\n"+
+						             "                  (subRes: HttpErrorResponse) => this.onError(subRes.message)\n"+
+						             "                  );\n"+
+						             "               }\n"+
+						             "         },\n"+
+						             "         (res: HttpErrorResponse) => this.onError(res.message)\n"+
+						             "         );\n\n"+
+						             "         console.log(this."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id);\n");
+							
+						} else if (relationType.equals(Utils.ManyToOne)) {
+							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+NG_ONINIT_SECTION, 
+									"\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
+						            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
+						            "            this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
+						            "        },\n"+
+						            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
+						            "        );\n");
+						}
+					}
+				}
+				
+				
+				//Relations OneToMany
+				if(nomeTabellaSx!=null && nomeTabellaDx != null  && relationType.equals(Utils.OneToMany)
+						&& nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+					
+					if(IMPORT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Interface", 
+								"import { I"+Utils.getFirstUpperCase(nomeTabellaSx)+" } from 'app/shared/model/"+Utils.getFirstLowerCase(nomeTabellaSx)+".model';\n");
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Model", 
+								"import { "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service } from 'app/entities/"+Utils.getFirstLowerCase(nomeTabellaSx)+"';\n");
+						
+					}else if(INIT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+INIT_SECTION, 
+								// DONE autoreS ==> preferitoS /   nomeTabellaSx ==> nomeRelazioneDx
+								"    "+Utils.getFirstLowerCase(nomeRelazioneDx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+						
+					}else if(CONSTRUCTOR_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
+								"        private "+Utils.getFirstLowerCase(nomeTabellaSx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service,\r\n");
+						
+					}else if(NG_ONINIT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+INIT_SECTION, 
+								"\n        this."+Utils.getFirstLowerCase(nomeTabellaSx)+"Service.query().subscribe(\n"+
+					            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaSx)+"[]>) => {\n"+
+								// DONE autoreS ==> preferitoS /   nomeTabellaSx ==> nomeRelazioneDx
+					            "            this."+Utils.getFirstLowerCase(nomeRelazioneDx)+"s = res.body;\n"+
+					            "        },\n"+
+					            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
+					            "        );\n");
+						
+						
+					}
+				}
+				
+
+				// DONE Relations ManyToMany 
+				if(nomeTabellaSx!=null && nomeTabellaDx != null 
+						&& relationType.equals(Utils.ManyToMany)
+						&& nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
+					if(IMPORT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Interface", 
+							"import { I"+Utils.getFirstUpperCase(nomeTabellaDx)+" } from 'app/shared/model/"+nomeTabellaDx.toLowerCase()+".model';\n");
+						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Model", 
+							"import { "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from 'app/entities/"+nomeTabellaDx.toLowerCase()+"';\n");
+					
+					}else if(INIT_SECTION.equals(section)) {
+						// FIX 		settores ==> mysectors		 / 		nomeTabellaDx ==> nomeRelazioneSx
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
+							"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+						
+					}else if(CONSTRUCTOR_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
+							"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
+					
+					}else if(NG_ONINIT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
+							"\n        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query().subscribe(\n"+
+				            "        (res: HttpResponse<I"+Utils.getFirstUpperCase(nomeTabellaDx)+"[]>) => {\n"+
+				            "            this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = res.body;\n"+
+				            "        },\n"+
+				            "        (res: HttpErrorResponse) => this.onError(res.message)\n"+
+				            "        );\n");
+						
+					}
+				}
+				
+				
+			}
+		}
+		
+		//Print Relation Map
+		res += Utils.printRelationMap(res, relMap);
+				
+		return res;
+	}
+	
 }
