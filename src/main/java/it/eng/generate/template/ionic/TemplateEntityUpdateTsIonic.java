@@ -174,9 +174,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		
 		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
-			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
-			
 			if(Utils.isPrimaryKeyID(column) ) {
 				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
 			} else if( Utils.isDateField(column) ) {
