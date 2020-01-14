@@ -104,7 +104,13 @@ public class TemplateEntityModelIonic extends AbstractResourceTemplate {
 						}
 						
 					} else if (relationType.equals(Utils.OneToMany)) {
-						//TODO DEVELOP THIS!
+						//public spesaId?: number,
+						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
+							Column columnRel = new Column();
+							columnRel.setName(nomeRelazioneDx+"Id");
+							columnRel.setTypeColumn(Column.corvertModelType("Long"));
+							extendedList.add(columnRel);
+						}
 					}
 				} 
 			}

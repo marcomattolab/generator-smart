@@ -428,9 +428,8 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 								"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
 
 					}else if(UPDATE_FORM.equals(section)) {
-						relMap.put(relationType+nomeRelazioneSx+UPDATE_FORM, 
-								"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id,\n");
-
+//						relMap.put(relationType+nomeRelazioneSx+UPDATE_FORM, 
+//								"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id,\n");
 
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+COMPARE, 
