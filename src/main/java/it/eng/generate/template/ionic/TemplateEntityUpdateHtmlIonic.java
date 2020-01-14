@@ -103,7 +103,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 						"            </ion-item>\n";
 		
 			} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
-				//TODO DEVELOP THIS!
+				//TODO DEVELOP THIS AND TEST!
 				body += "            <ion-item>\n"+
 						"                <ion-label>"+ColumnName+mandatory+"</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+

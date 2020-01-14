@@ -6,11 +6,12 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConfigCreateProject {
-	//TODO CHANGE_ME to modify Destination Path !!!
-	private static final boolean USE_PATHNAME_ENV_B = true;	//APPLE
-	//private static final boolean USE_PATHNAME_ENV_B = false;  	//WINDOWS
-	private static final boolean printRelation = true; //PRINT RELATION MOBILE
-
+	//TODO CHANGE_ME To Modify Destination Path about generated code!!!
+	//private static final boolean USE_PATHNAME_ENV_B = true; //APPLE
+	private static final boolean USE_PATHNAME_ENV_B = false; //WINDOWS
+	
+	//FIXME ENABLE PRINT RELATION ON MOBILE
+	private static final boolean printRelation = true; 
 	
 	private boolean isOracle;
 	private boolean isMysql;
