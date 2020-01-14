@@ -344,35 +344,35 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 					}else if(INIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
-								"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: "+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+						"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: "+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 						if (relationType.equals(Utils.OneToOne)) {
 							relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION+"ANY", "    id"+Utils.getFirstUpperCase(nomeRelazioneSx)+": any;\n");
 						}
 						
 					}else if(FORM_BUILDER.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+FORM_BUILDER, 
-								"        "+Utils.getFirstLowerCase(nomeRelazioneSx)+": [null, []],\n");
+						"        "+Utils.getFirstLowerCase(nomeRelazioneSx)+": [null, []],\n");
 
 					}else if(NG_ONINIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+nomeRelazioneSx+NG_ONINIT_SECTION, 
-						"		this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.findAll()\r\n" + 
-						"		     .subscribe(data => {\r\n" + 
-						"		        this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = data;\r\n" + 
-						"		 }, (error) => this.onError(error));\n");
+						"    this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query()\r\n" + 
+						"      .subscribe(data => {\r\n" + 
+						"        this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = data.body;\r\n" + 
+						"      }, (error) => this.onError(error));");
 						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+CONSTRUCTOR_SECTION, 
-								"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
+						"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
 
 					}else if(UPDATE_FORM.equals(section)) {
 						relMap.put(relationType+nomeRelazioneSx+UPDATE_FORM, 
-								"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id,\n");
+						"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id,\n");
 					
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+COMPARE, 
-								"    compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaDx)+", second: "+Utils.getFirstUpperCase(nomeTabellaDx)+"): boolean {\n"+
-										"       return first && second ? first.id === second.id : first === second;\n"+
-								"    }\n\n");
+						"    compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaDx)+", second: "+Utils.getFirstUpperCase(nomeTabellaDx)+"): boolean {\n"+
+								"       return first && second ? first.id === second.id : first === second;\n"+
+						"    }\n\n");
 
 					}
 				}
@@ -385,32 +385,32 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 					if(IMPORT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Model", 
-								"import { "+Utils.getFirstUpperCase(nomeTabellaSx)+", "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service } from '../"+Utils.getFirstLowerCase(nomeTabellaSx)+"';\n");
+						"import { "+Utils.getFirstUpperCase(nomeTabellaSx)+", "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service } from '../"+Utils.getFirstLowerCase(nomeTabellaSx)+"';\n");
 
 					}else if(INIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+INIT_SECTION, 
-								"    "+Utils.getFirstLowerCase(nomeRelazioneDx)+"s: "+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+						"    "+Utils.getFirstLowerCase(nomeRelazioneDx)+"s: "+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 				
 					}else if(NG_ONINIT_SECTION.equals(section)) {
 						//TODO DEVELP THIS!!!!
 					
 					}else if(FORM_BUILDER.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+FORM_BUILDER, 
-								"    "+Utils.getFirstLowerCase(nomeRelazioneDx)+": [null, []],\n");
+						"    "+Utils.getFirstLowerCase(nomeRelazioneDx)+": [null, []],\n");
 
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
-								"        private "+Utils.getFirstLowerCase(nomeTabellaSx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service,\r\n");
+						"        private "+Utils.getFirstLowerCase(nomeTabellaSx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service,\r\n");
 
 					}else if(UPDATE_FORM.equals(section)) {
 						relMap.put(relationType+nomeRelazioneSx+UPDATE_FORM, 
-								"            "+Utils.getFirstLowerCase(nomeRelazioneDx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id,\n");
+						"            "+Utils.getFirstLowerCase(nomeRelazioneDx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id,\n");
 
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+COMPARE, 
-								"    compare"+Utils.getFirstUpperCase(nomeTabellaSx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaSx)+", second: "+Utils.getFirstUpperCase(nomeTabellaSx)+"): boolean {\n"+
-										"       return first && second ? first.id === second.id : first === second;\n"+
-								"    }\n\n");
+						"    compare"+Utils.getFirstUpperCase(nomeTabellaSx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaSx)+", second: "+Utils.getFirstUpperCase(nomeTabellaSx)+"): boolean {\n"+
+								"       return first && second ? first.id === second.id : first === second;\n"+
+						"    }\n\n");
 
 					}
 				}
@@ -423,32 +423,32 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						&& nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 					if(IMPORT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+IMPORT_SECTION+"Model", 
-								"import { "+Utils.getFirstUpperCase(nomeTabellaDx)+", "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from '../"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n");
+						"import { "+Utils.getFirstUpperCase(nomeTabellaDx)+", "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from '../"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n");
 
 					}else if(INIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
-								"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: "+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
+						"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: "+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 
 					}else if(FORM_BUILDER.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+FORM_BUILDER, 
-								"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+": [null, []],\n");
+						"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+": [null, []],\n");
 
 					}else if(NG_ONINIT_SECTION.equals(section)) {
 						//TODO DEVELP THIS!!!!
 						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
-								"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
+						"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
 
 					}else if(UPDATE_FORM.equals(section)) {
 //						relMap.put(relationType+nomeRelazioneSx+UPDATE_FORM, 
-//								"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id,\n");
+//						"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id,\n");
 
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+COMPARE, 
-								"    compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaDx)+", second: "+Utils.getFirstUpperCase(nomeTabellaDx)+"): boolean {\n"+
-										"       return first && second ? first.id === second.id : first === second;\n"+
-								"    }\n\n");
+						"    compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaDx)+", second: "+Utils.getFirstUpperCase(nomeTabellaDx)+"): boolean {\n"+
+								"       return first && second ? first.id === second.id : first === second;\n"+
+						"    }\n\n");
 					}
 				}
 				//
