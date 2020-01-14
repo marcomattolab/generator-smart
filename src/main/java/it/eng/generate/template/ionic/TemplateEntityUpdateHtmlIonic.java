@@ -159,7 +159,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 							"            <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</ion-label>\n"+
 							"            <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [compareWith]=\"compare"+Utils.getFirstLowerCase(nomeTabellaSx)+"\">\n"+
 							"                <ion-select-option [value]=\"null\"></ion-select-option>\n"+
-							"                <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeTabellaSx)+"Option of "+Utils.getFirstLowerCase(nomeTabellaSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"Option."+Utils.getFirstUpperCase(nomeSelectSx)+"}}</ion-select-option>"+
+							"                <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+Utils.getFirstUpperCase(nomeSelectSx)+"}}</ion-select-option>\n"+
 							"            </ion-select>\n"+
 							"        </ion-item>\n";
 						}
@@ -176,7 +176,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 							"			         <ion-select-option [value]=\"null\"></ion-select-option>\r\n" + 
 							"					 <ion-select-option *ngFor=\"let "+Utils.getFirstLowerCase(nomeTabellaDx)+"Option of "+Utils.getFirstLowerCase(nomeTabellaDx)+"s\" [value]=\""+Utils.getFirstLowerCase(nomeTabellaDx)+"Option.id\">{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"Option."+Utils.getFirstUpperCase(nomeSelectDx)+"}}</ion-select-option>\r\n" + 
 							"				</ion-select>\r\n" + 
-							"        </ion-item>";
+							"        </ion-item>\n";
 						}
 
 					} else if(relationType.equals(Utils.ManyToMany)) {
@@ -187,7 +187,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 							"            <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</ion-label>\n"+
 							"            <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [compareWith]=\"compare"+Utils.getFirstLowerCase(nomeTabellaSx)+"\">\n"+
 							"                <ion-select-option [value]=\"null\"></ion-select-option>\n"+
-							"                <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeTabellaSx)+"Option of "+Utils.getFirstLowerCase(nomeTabellaSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"Option."+Utils.getFirstUpperCase(nomeSelectSx)+"}}</ion-select-option>"+
+							"                <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeTabellaSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeTabellaSx)+"Option of "+Utils.getFirstLowerCase(nomeTabellaSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"Option."+Utils.getFirstUpperCase(nomeSelectSx)+"}}</ion-select-option>\n"+
 							"            </ion-select>\n"+
 							"        </ion-item>\n";
 							

@@ -87,10 +87,11 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 						}
 						
 					} else if(relationType.equals(Utils.ManyToMany)) {
-						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n                <!-- Add Relation: ManyToMany -->\n";
-							body += "                <p>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</p>\r\n";
-						}
+						//TODO DEVELOP NEXT
+//						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+//							body += "\n                <!-- Add Relation: ManyToMany -->\n";
+//							body += "                <p>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</p>\r\n";
+//						}
 						
 					}
 				}

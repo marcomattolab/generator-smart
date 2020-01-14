@@ -19,6 +19,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 	private String COMPARE = "COMPARE";
 	private String UPDATE_FORM = "UPDATE_FORM";
 	private String FORM_BUILDER = "FORM_BUILDER";
+	private String NG_ONINIT_SECTION = "NG_ONINIT_SECTION";
 
 	public TemplateEntityUpdateTsIonic(Table tabella) {
 		super(tabella);
@@ -44,14 +45,13 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) { //Type: Allegato - Clob/Blob
 			body+= "import {Camera, CameraOptions} from '@ionic-native/camera/ngx';\r\n";
 		}
-		body+=
-				"import { Observable } from 'rxjs';\r\n" +
-						"import { getMomentDateNoTZ } from '../../../shared/util/moment-util';\r\n" +
-						"import { "+Nometabella+" } from './"+nometabella+".model';\r\n" +
-						"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n";
-
+		body+="import { Observable } from 'rxjs';\r\n" +
+			  "import { getMomentDateNoTZ } from '../../../shared/util/moment-util';\r\n";
 		//RELATIONS - DONE DEVELOP
 		body += printRelations(conf, IMPORT_SECTION);
+		body +=
+		"import { "+Nometabella+" } from './"+nometabella+".model';\r\n" +
+		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n";
 
 		body += 
 				"@Component({\r\n" +
@@ -163,7 +163,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						"            this.isNew = this."+nometabella+".id === null || this."+nometabella+".id === undefined;\r\n" +
 						"        });\r\n";
 		//RELATIONS - TODO DEVELOP (SKIP!)
-		//body += printRelations(conf, NG_ONINIT_SECTION);
+		body += printRelations(conf, NG_ONINIT_SECTION);
 
 		body += 
 				"    }\r\n\n" +
@@ -340,7 +340,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						&& nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 					if(IMPORT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+IMPORT_SECTION+"Model", 
-								"import {"+Utils.getFirstUpperCase(nomeTabellaDx)+", "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service} from '../"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n");
+								"import { "+Utils.getFirstUpperCase(nomeTabellaDx)+", "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from '../"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n");
 
 					}else if(INIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
@@ -351,8 +351,15 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						
 					}else if(FORM_BUILDER.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+FORM_BUILDER, 
-								"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+": [null, []],\n");
+								"        "+Utils.getFirstLowerCase(nomeRelazioneSx)+": [null, []],\n");
 
+					}else if(NG_ONINIT_SECTION.equals(section)) {
+						relMap.put(relationType+nomeTabellaDx+nomeRelazioneSx+NG_ONINIT_SECTION, 
+						"		this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.findAll()\r\n" + 
+						"		     .subscribe(data => {\r\n" + 
+						"		        this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = data;\r\n" + 
+						"		 }, (error) => this.onError(error));\n");
+						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+CONSTRUCTOR_SECTION, 
 								"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
@@ -378,12 +385,15 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 					if(IMPORT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Model", 
-								"import {"+Utils.getFirstUpperCase(nomeTabellaSx)+", "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service} from '../"+Utils.getFirstLowerCase(nomeTabellaSx)+"';\n");
+								"import { "+Utils.getFirstUpperCase(nomeTabellaSx)+", "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service } from '../"+Utils.getFirstLowerCase(nomeTabellaSx)+"';\n");
 
 					}else if(INIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+INIT_SECTION, 
 								"    "+Utils.getFirstLowerCase(nomeRelazioneDx)+"s: "+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
-
+				
+					}else if(NG_ONINIT_SECTION.equals(section)) {
+						//TODO DEVELP THIS!!!!
+					
 					}else if(FORM_BUILDER.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+FORM_BUILDER, 
 								"    "+Utils.getFirstLowerCase(nomeRelazioneDx)+": [null, []],\n");
@@ -413,7 +423,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						&& nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 					if(IMPORT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+IMPORT_SECTION+"Model", 
-								"import {"+Utils.getFirstUpperCase(nomeTabellaDx)+", "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service} from '../"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n");
+								"import { "+Utils.getFirstUpperCase(nomeTabellaDx)+", "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service } from '../"+Utils.getFirstLowerCase(nomeTabellaDx)+"';\n");
 
 					}else if(INIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+INIT_SECTION, 
@@ -423,6 +433,9 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+FORM_BUILDER, 
 								"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+": [null, []],\n");
 
+					}else if(NG_ONINIT_SECTION.equals(section)) {
+						//TODO DEVELP THIS!!!!
+						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
 								"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
