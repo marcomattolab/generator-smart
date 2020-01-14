@@ -166,7 +166,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  tris -->\n";
+							body += "\n        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  tris. -->\n";
 							
 							//OneToMany Giustificativo => Spesa   -   Spesa{giustificativoSpesa} to Giustificativo 
 							body+=	
@@ -181,11 +181,11 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n        <!-- Add Relation:  Name:  "+nomeRelazioneSx+"   Type: ManyToMany tris -->\n";
+							body += "\n        <!-- Add Relation:  Name:  "+nomeRelazioneSx+"   Type: ManyToMany tris.. -->\n";
 							body += 
 							"        <ion-item>\n"+
 							"            <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</ion-label>\n"+
-							"            <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [compareWith]=\"compare"+Utils.getFirstLowerCase(nomeTabellaSx)+"\">\n"+
+							"            <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\n"+
 							"                <ion-select-option [value]=\"null\"></ion-select-option>\n"+
 							"                <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</ion-select-option>\n"+
 							"            </ion-select>\n"+

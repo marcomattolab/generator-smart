@@ -102,16 +102,17 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 						}
 						
 					} else if(relationType.equals(Utils.ManyToMany)) {
-						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n        <!-- Add Relation: ManyToMany -->\n";
-							String label = 	Utils.getFirstUpperCase(nomeRelazioneSx);
-							body += "        <ion-item>\r\n" +
-									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
-									"            <div item-content>\r\n" +
-									"                <span>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</span>\r\n" +
-									"            </div>\r\n" +
-									"        </ion-item>\r\n";
-						}
+						//TODO DEVELOP THIS FEATURE!!
+//						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+//							body += "\n        <!-- Add Relation: ManyToMany -->\n";
+//							String label = 	Utils.getFirstUpperCase(nomeRelazioneSx);
+//							body += "        <ion-item>\r\n" +
+//									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
+//									"            <div item-content>\r\n" +
+//									"                <span>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</span>\r\n" +
+//									"            </div>\r\n" +
+//									"        </ion-item>\r\n";
+//						}
 						
 					}
 				}
