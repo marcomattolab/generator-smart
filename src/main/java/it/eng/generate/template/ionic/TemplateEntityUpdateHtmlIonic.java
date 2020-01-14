@@ -157,7 +157,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 							body += 
 							"        <ion-item>\n"+
 							"            <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</ion-label>\n"+
-							"            <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [compareWith]=\"compare"+Utils.getFirstLowerCase(nomeTabellaSx)+"\">\n"+
+							"            <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\n"+
 							"                <ion-select-option [value]=\"null\"></ion-select-option>\n"+
 							"                <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</ion-select-option>\n"+
 							"            </ion-select>\n"+

@@ -20,6 +20,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 	private String UPDATE_FORM = "UPDATE_FORM";
 	private String FORM_BUILDER = "FORM_BUILDER";
 	private String NG_ONINIT_SECTION = "NG_ONINIT_SECTION";
+	private String CREATE_FORM = "CREATE_FORM";
 
 	public TemplateEntityUpdateTsIonic(Table tabella) {
 		super(tabella);
@@ -247,6 +248,11 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 			}
 		}
 
+		//TODO Relations CREATE_FORM
+		//			collanaId: this.form.get(['collana']).value, // FIXME
+		//      	collana2Id: this.form.get(['collana2']).value,  // FIXME
+		body += printRelations(conf, CREATE_FORM);	
+		
 		body +=
 				"        };\r\n" +
 						"    }\r\n\n";
@@ -355,10 +361,10 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 					}else if(NG_ONINIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+nomeRelazioneSx+NG_ONINIT_SECTION, 
-						"    this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query()\r\n" + 
+						"      this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query()\r\n" + 
 						"      .subscribe(data => {\r\n" + 
 						"        this."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s = data.body;\r\n" + 
-						"      }, (error) => this.onError(error));");
+						"      }, (error) => this.onError(error));\n\n");
 						
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+CONSTRUCTOR_SECTION, 
@@ -368,6 +374,10 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						relMap.put(relationType+nomeRelazioneSx+UPDATE_FORM, 
 						"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id,\n");
 					
+					}else if(CREATE_FORM.equals(section)) {
+						relMap.put(relationType+nomeRelazioneSx+CREATE_FORM, 
+						"			"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id: this.form.get(['"+Utils.getFirstLowerCase(nomeRelazioneSx)+"']).value,\n");
+						
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+COMPARE, 
 						"    compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaDx)+", second: "+Utils.getFirstUpperCase(nomeTabellaDx)+"): boolean {\n"+
