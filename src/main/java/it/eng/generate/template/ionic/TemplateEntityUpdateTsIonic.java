@@ -392,7 +392,11 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						"    "+Utils.getFirstLowerCase(nomeRelazioneDx)+"s: "+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 				
 					}else if(NG_ONINIT_SECTION.equals(section)) {
-						//TODO DEVELP THIS!!!!
+						relMap.put(relationType+nomeTabellaDx+nomeRelazioneDx+NG_ONINIT_SECTION, 
+						"        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query()\r\n" + 
+						"            .subscribe(data => {\r\n" + 
+						"             this."+Utils.getFirstLowerCase(nomeRelazioneDx)+"s = data.body;\r\n" + 
+						"        }, (error) => this.onError(error));\n\n");
 					
 					}else if(FORM_BUILDER.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+FORM_BUILDER, 

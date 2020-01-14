@@ -21,8 +21,6 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 
 	public String getBody(){
 		// https://www.buildmystring.com/
-		// TODO DEVELOP JHI TRANSLATE
-		// String jhiTranslate = "<span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+".detail.title\">"+Nometabella+"</span>\r\n";
 		
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String Nometabella = Utils.getEntityName(tabella);
@@ -82,7 +80,6 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 							body += "\n         <!-- Add Relation: OneToOne / ManyToOne -->\n";
-							//String jhiTR = "<span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n";
 							String label = Utils.getFirstUpperCase(nomeRelazioneSx);
 							body += "        <ion-item>\r\n" +
 									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
@@ -94,8 +91,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 						
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany -->\n";
-							//String jhiTR = "<span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</span>\n";
+							body += "\n        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  bis -->\n";
 							String label = Utils.getFirstUpperCase(nomeRelazioneDx);	
 							body += "        <ion-item>\r\n" +
 									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
@@ -108,7 +104,6 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
 							body += "\n        <!-- Add Relation: ManyToMany -->\n";
-							//String jhiTR = body += "<span jhiTranslate=\""+conf.getProjectName()+"App."+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</span>\n";
 							String label = 	Utils.getFirstUpperCase(nomeRelazioneSx);
 							body += "        <ion-item>\r\n" +
 									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
