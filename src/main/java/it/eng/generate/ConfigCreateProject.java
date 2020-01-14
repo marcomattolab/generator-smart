@@ -9,7 +9,7 @@ public class ConfigCreateProject {
 	//TODO CHANGE_ME to modify Destination Path !!!
 	private static final boolean USE_PATHNAME_ENV_B = true;	//APPLE
 	//private static final boolean USE_PATHNAME_ENV_B = false;  	//WINDOWS
-	private static final boolean printRelation = false; //PRINT RELATION MOBILE
+	private static final boolean printRelation = true; //PRINT RELATION MOBILE
 
 	
 	private boolean isOracle;
