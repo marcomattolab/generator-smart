@@ -332,7 +332,6 @@ public class TemplateEntityUpdateComponentTs extends AbstractResourceTemplate {
 						
 					}
 				}
-				//
 				
 				
 			}
