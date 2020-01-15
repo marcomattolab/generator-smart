@@ -34,3 +34,16 @@
 ## Documentation Ideas         
 	- See https://www.jaxio.com/en/celerio.html
 	- See https://www.slideshare.net/agoncal/custom-and-generated-code-side-by-side-with-jhipster
+
+	
+	
+## MOBILE: 
+Comando per generare con Android studio APK:
+ionic cordova build android --prod
+ionic cordova build android --dev
+
+
+## Modifiche build di produzione :
+MOBILE => <entity>-detail.module.ts 	(Eliminare)
+
+

@@ -141,8 +141,23 @@ public class TemplatePom {
 		"\n        <sonar.sources>${project.basedir}/src/main/</sonar.sources>" +
 		"\n        <sonar.surefire.reportsPath>${project.testresult.directory}/surefire-reports</sonar.surefire.reportsPath>" +
 		"\n        <sonar.tests>${project.basedir}/src/test/</sonar.tests>" +
-		//"\n        <!-- jh-needle-maven-property -->" +
-		"\n    </properties>" +
+		"\n        <!-- jh-needle-maven-property -->" +
+		
+
+		//AZURE PLUGIN
+		"\n" + 
+		"\n        <!-- Properties di configurazione per il plugin azure-webapp -->" + 
+		"\n		   <!-- " + 
+		"\n        <azure-webapp-maven-plugin.version>1.8.0</azure-webapp-maven-plugin.version>\r\n" + 
+		"\n        <AZURE_AUTH>azure-auth</AZURE_AUTH>" + 
+		"\n        <RESOURCEGROUP_NAME>Exprivia-DFAI-DM-GestioneTrasferte</RESOURCEGROUP_NAME>" + 
+		"\n        <WEBAPP_NAME>gestione-trasferte</WEBAPP_NAME>" + 
+		"\n        <start-class>it.exprivia.trasferte.TrasferteappApp</start-class>" + 
+		"\n		   -->" + 
+		//
+		
+		
+		"\n\n    </properties>" +
 		"\n    <dependencyManagement>" +
 		"\n        <dependencies>" +
 		"\n            <dependency>" +
@@ -152,7 +167,7 @@ public class TemplatePom {
 		"\n                <type>pom</type>" +
 		"\n                <scope>import</scope>" +
 		"\n            </dependency>" +
-		//"\n          <!-- jhipster-needle-maven-add-dependency-management -->" +
+		"\n          <!-- jh-needle-maven-add-dependency-management -->" +
 		"\n        </dependencies>" +
 		"\n    </dependencyManagement>" +
 		"\n    <dependencies>" +
@@ -431,7 +446,7 @@ public class TemplatePom {
 		"\n            <artifactId>spring-security-data</artifactId>" +
 		"\n        </dependency>" +
 
-//		//Dynamic Jasper 1 
+		//Dynamic Jasper 1 
 		"\n 		<!-- Dynamic Jasper 1-->" +
 		"\n			<dependency>" +
 		"\n		  		<groupId>ar.com.fdvs</groupId>" +
@@ -526,7 +541,13 @@ public class TemplatePom {
 		"\n                </executions>" +
 		"\n                <configuration>" +
 		"\n                    <mainClass>${start-class}</mainClass>" +
+		
+		//AZURE
+		"\n                    <!-- COMMENT THIS FOR AZURE - START-->" +
 		"\n                    <executable>true</executable>" +
+		"\n                    <!-- COMMENT THIS FOR AZURE - END -->" +
+		//
+		
 		"\n                    <fork>true</fork>" +
 		"\n                    <!--" +
 		"\n                    Enable the line below to have remote debugging of your application on port 5005" +

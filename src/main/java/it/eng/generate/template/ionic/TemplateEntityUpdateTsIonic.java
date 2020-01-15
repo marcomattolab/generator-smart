@@ -214,6 +214,9 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"    previousState() {\r\n" +
 		"        window.history.back();\r\n" +
 		"    }\r\n\n" +
+		"  isIos(): boolean {\r\n" + 
+		"    return this.platform.is('ios');\r\n" + 
+		"  }\n\n"+
 		"    async onError(error) {\r\n" +
 		"        this.isSaving = false;\r\n" +
 		"        console.error(error);\r\n" +

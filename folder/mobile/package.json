@@ -1,12 +1,14 @@
 {
   "name": "mobile",
   "version": "0.0.1",
-  "author": "Ionic Framework + JHipster",
-  "homepage": "https://www.jhipster.tech",
+  "author": "Ionic Framework + JH",
+  "homepage": "http://www.marcomartorana.it",
   "scripts": {
     "ng": "ng",
     "start": "ionic serve",
     "build": "ng build",
+    "buildProd": "ng build --prod",
+    "generateApk": "ionic cordova build android --prod --release",
     "test": "jest",
     "lint": "ng lint",
     "e2e": "npm run e2e-update && npm run e2e-test",
@@ -25,40 +27,50 @@
     "@angular/platform-browser": "~8.1.2",
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/router": "~8.1.2",
-    "@ionic-native/core": "^5.0.0",
-    "@ionic-native/splash-screen": "^5.0.0",
-    "@ionic-native/status-bar": "^5.0.0",
-    "@ionic/angular": "^4.7.1",
-    "core-js": "^2.5.4",
-    "rxjs": "~6.5.1",
-    "tslib": "^1.9.0",
-    "zone.js": "~0.9.1",
-    "@ionic-native/camera": "5.13.0",
-    "@ngx-translate/core": "11.0.1",
-    "@ngx-translate/http-loader": "4.0.0",
-    "ngx-webstorage": "4.0.1",
-    "ng-jhipster": "0.11.2",
+    "@capacitor/core": "1.4.0",
     "@fortawesome/angular-fontawesome": "0.5.0",
     "@fortawesome/fontawesome-svg-core": "1.2.22",
     "@fortawesome/free-solid-svg-icons": "5.10.2",
+    "@ionic-native/camera": "5.13.0",
+    "@ionic-native/core": "^5.19.1",
+    "@ionic-native/splash-screen": "^5.19.1",
+    "@ionic-native/status-bar": "^5.19.1",
+    "@ionic/angular": "^4.11.8",
     "@ng-bootstrap/ng-bootstrap": "5.1.1",
-    "moment": "^2.24.0"
+    "@ngx-translate/core": "11.0.1",
+    "@ngx-translate/http-loader": "4.0.0",
+    "cordova-android": "8.1.0",
+    "cordova-plugin-camera": "^4.1.0",
+    "core-js": "^2.5.4",
+    "moment": "^2.24.0",
+    "ng-jhipster": "0.11.2",
+    "ngx-webstorage": "4.0.1",
+    "rxjs": "~6.5.1",
+    "tslib": "^1.9.0",
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.801.2",
-    "@angular-devkit/build-angular": "^0.803.21",
+    "@angular-devkit/build-angular": "^0.803.22",
     "@angular-devkit/core": "~8.1.2",
     "@angular-devkit/schematics": "~8.1.2",
     "@angular/cli": "~8.1.2",
     "@angular/compiler": "~8.1.2",
     "@angular/compiler-cli": "~8.1.2",
     "@angular/language-service": "~8.1.2",
+    "@capacitor/cli": "1.4.0",
     "@ionic/angular-toolkit": "~2.0.0",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.4",
     "codelyzer": "^5.0.0",
+    "cordova-plugin-device": "^2.0.3",
+    "cordova-plugin-ionic-keyboard": "^2.2.0",
+    "cordova-plugin-ionic-webview": "^4.1.3",
+    "cordova-plugin-splashscreen": "^5.0.3",
+    "cordova-plugin-statusbar": "^2.4.3",
+    "cordova-plugin-whitelist": "^1.3.4",
     "generator-jhipster": "6.4.0",
     "generator-jhipster-ionic": "4.0.0",
     "html-loader": "0.5.5",
@@ -89,9 +101,21 @@
     "plugins": {
       "cordova-plugin-camera": {
         "CAMERA_USAGE_DESCRIPTION": "Need camera access to take pictures",
-        "PHOTOLIBRARY_USAGE_DESCRIPTION": "Need photo library access to get pictures from there"
-      }
-    }
+        "PHOTOLIBRARY_USAGE_DESCRIPTION": "Need photo library access to get pictures from there",
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
+      "cordova-plugin-ionic-keyboard": {}
+    },
+    "platforms": [
+      "android"
+    ]
   },
   "jest": {
     "preset": "jest-preset-angular",
@@ -132,5 +156,5 @@
     ],
     "coverageDirectory": "./public/coverage"
   },
-  "description": "A hipster Ionic project, made with 💙 by @oktadev!"
+  "description": "A JH Ionic project, made by @Marcomatto!"
 }
