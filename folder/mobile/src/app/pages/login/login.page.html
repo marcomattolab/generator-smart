@@ -32,16 +32,27 @@
       <!--   Direct Accesses TODO: Remove before production deploy  -->
       <ion-row class="ion-padding">
         <ion-col>
+          <!-- 
           <ion-button expand="block" type="button" color="success"
                       (click)="account.username = 'admin'; account.password = 'admin'; doLogin()">
             admin / admin
           </ion-button>
-          <ion-button expand="block" type="button" color="light"
+          <ion-button expand="block" type="button" color="success"
                       (click)="account.username = 'user'; account.password = 'user'; doLogin()">
             user / user
           </ion-button>
+          --> 
+         <ion-chip (click)="account.username = 'admin'; account.password = 'admin'; doLogin()" >
+			  <ion-icon name="person" color="primary"></ion-icon>
+			  <ion-label>User ( user / user )</ion-label>
+		 </ion-chip>
+         <ion-chip (click)="account.username = 'user'; account.password = 'user'; doLogin()" >
+			  <ion-icon name="person" color="primary"></ion-icon>
+			  <ion-label>Admin ( admin / admin )</ion-label>
+		 </ion-chip>
         </ion-col>
       </ion-row>
+      
       
       
     </ion-list>

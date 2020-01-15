@@ -11,8 +11,8 @@
   "DELETE_BUTTON": "Elimina",
   "DONE_BUTTON": "Fatto",
   "EMAIL": "Email",
-  "EMPTY_ENTITIES_MESSAGE": "You haven't generated entities yet.",
-  "EXISTING_USER_ERROR": "Email is already in use! Please choose another one.",
+  "EMPTY_ENTITIES_MESSAGE": "Non hai generato nulla.",
+  "EXISTING_USER_ERROR": "Email utilizzata! Per favore scegli un altro indirizzo.",
   "EXPENDITURE": {
     "TITLE": "Spesa"
   },
@@ -21,7 +21,7 @@
   },
   "ID": "Id",
   "FIRST_NAME": "First Name",
-  "INVALID_PASSWORD_ERROR": "Invalid password, please try again.",
+  "INVALID_PASSWORD_ERROR": "Password non valida, riprova.",
   "ITEM_ABOUT_PLACEHOLDER": "Informazioni",
   "ITEM_CREATE_CHOOSE_IMAGE": "Aggiungi immagine",
   "ITEM_CREATE_TITLE": "Nuovo elemento",
@@ -47,13 +47,13 @@
   "LOGOUT_TITLE": "Logout",
   "MAP_TITLE": "Mappa",
   "NAME": "Nome",
-  "NO_ACCOUNT_MESSAGE": "Don't have an account yet?",
+  "NO_ACCOUNT_MESSAGE": "Non hai ancora un account?",
   "PASSWORD": "Password",
   "PLACE": {
     "TITLE": "Luogo"
   },
-  "REMEMBER_ME": "Remember Me",
-  "SEARCH_PLACEHOLDER": "Trova elementi in lista, ex. \"Donald Duck\"",
+  "REMEMBER_ME": "Ricordami",
+  "SEARCH_PLACEHOLDER": "Trova elementi in lista, ex. \"Pippo Baudo\"",
   "SEARCH_TITLE": "Ricerca",
   "SETTINGS_OPTION1": "Opzione 1",
   "SETTINGS_OPTION2": "Opzione 2",
@@ -65,7 +65,7 @@
   "SIGNUP": "Registrati",
   "SIGNUP_BUTTON": "Registrati",
   "SIGNUP_ERROR": "Non è possibile creare l'utente. Assicurarsi di aver inserito le informazioni utente correttamente e poi riprovare.",
-  "SIGNUP_SUCCESS": "Registration saved! Please check your email for confirmation.",
+  "SIGNUP_SUCCESS": "Registrazione salvata! Verifica sulla tua mail per conferma.",
   "SIGNUP_TITLE": "Registrazione",
   "TAB1_TITLE": "Elenco",
   "TAB2_TITLE": "Ricerca",
@@ -83,6 +83,6 @@
   "TUTORIAL_SLIDE3_TITLE": "Come iniziare",
   "TUTORIAL_SLIDE4_TITLE": "Pronti ad iniziare?",
   "USERNAME": "Nome utente",
-  "WELCOME_INTRO": "Il punto di partenza per la tua prossima applicazione Ionic",
+  "WELCOME_INTRO": "Benvenuto nell'applicazione Ionic generata con il tool Generator Smart di Marco Martorana.",
   "WELCOME_TITLE": "Benvenuto"
 }
