@@ -72,14 +72,14 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 			
 			} else if (filterType.getName().equals("java.lang.String") && !isEnumeration) {
 				body += "            <ion-item>\r\n" +
-						"                <ion-label position=\"floating\">"+ColumnName+mandatory+"</ion-label>\r\n" +
+						"                <ion-label position=\"fixed\">"+ColumnName+mandatory+"</ion-label>\r\n" +
 						"                <ion-input type=\"text\" name=\""+columnname+"\" formControlName=\""+columnname+"\"></ion-input>\r\n" +
 						"            </ion-item>\r\n";
 		
 			} else if(filterType.getName().equals("java.lang.String") && isEnumeration) {
 				//ENUMERATION
 				body += "            <ion-item>\r\n" +
-						"                <ion-label>"+ColumnName+mandatory+"</ion-label>\r\n" +
+						"                <ion-label position=\"fixed\">"+ColumnName+mandatory+"</ion-label>\r\n" +
 						"                <ion-select formControlName=\""+columnname+"\" id=\"field_"+columnname+"\">\r\n";
 				List<Enumeration> enumList = Utils.getEnumerationsByDbAndTable(database, tabella);
 				for(Enumeration e : enumList) {
@@ -94,26 +94,26 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 			} else if(filterType.getName().equals("java.lang.Long") || filterType.getName().equals("java.lang.Integer") || filterType.getName().equals("java.lang.Float") || filterType.getName().equals("java.math.BigDecimal")) {
 				body += "            <ion-item>\n"+
-						"                <ion-label position=\"floating\">"+ColumnName+mandatory+"</ion-label>\n"+
+						"                <ion-label position=\"fixed\">"+ColumnName+mandatory+"</ion-label>\n"+
 						"                <ion-input type=\"number\" name=\""+columnname+"\" formControlName=\""+columnname+"\"></ion-input>\n"+
 						"            </ion-item>\n";
 				
 			} else if( Utils.isDateField(column) && Utils.isLocalDate(column) ) {
 				body += "            <ion-item>\n"+
-						"                <ion-label>"+ColumnName+mandatory+"</ion-label>\n"+
+						"                <ion-label position=\"fixed\">"+ColumnName+mandatory+"</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
 						"            </ion-item>\n";
 		
 			} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
 				//TODO DEVELOP THIS AND TEST!
 				body += "            <ion-item>\n"+
-						"                <ion-label>"+ColumnName+mandatory+"</ion-label>\n"+
+						"                <ion-label position=\"fixed\">"+ColumnName+mandatory+"</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
 						"            </ion-item>\n";
 				
 			} else if(filterType.getName().equals("java.lang.Boolean")) {
 				body += "            <ion-item>\n"+
-						"                <ion-label>"+ColumnName+mandatory+"</ion-label>\n"+
+						"                <ion-label position=\"fixed\">"+ColumnName+mandatory+"</ion-label>\n"+
 						"                <ion-checkbox formControlName=\""+columnname+"\"></ion-checkbox>\n"+
 						"            </ion-item>\n";
 		
@@ -158,7 +158,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 							//Relation    Spesa ==> Trasferta    -    Spesa{structure} to Struttura,
 							body += 
 							"        <ion-item>\n"+
-							"            <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</ion-label>\n"+
+							"            <ion-label position=\"fixed\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</ion-label>\n"+
 							"            <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\n"+
 							"                <ion-select-option [value]=\"null\"></ion-select-option>\n"+
 							"                <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</ion-select-option>\n"+
@@ -173,7 +173,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 							//OneToMany Giustificativo => Spesa   -   Spesa{giustificativoSpesa} to Giustificativo 
 							body+=	
 							"        <ion-item>\r\n" + 
-							"			    <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</ion-label>\r\n" + 
+							"			    <ion-label position=\"fixed\">"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</ion-label>\r\n" + 
 							"			    <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\r\n" + 
 							"			         <ion-select-option [value]=\"null\"></ion-select-option>\r\n" + 
 							"					 <ion-select-option *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneDx)+"s\" [value]=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option.id\">{{"+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</ion-select-option>\r\n" + 
@@ -186,7 +186,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 							body += "\n        <!-- Add Relation:  Name:  "+nomeRelazioneSx+"   Type: ManyToMany tris.. -->\n";
 							body += 
 							"        <ion-item>\n"+
-							"            <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</ion-label>\n"+
+							"            <ion-label position=\"fixed\">"+Utils.getFirstUpperCase(nomeRelazioneSx)+"</ion-label>\n"+
 							"            <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\n"+
 							"                <ion-select-option [value]=\"null\"></ion-select-option>\n"+
 							"                <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</ion-select-option>\n"+

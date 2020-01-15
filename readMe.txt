@@ -43,7 +43,3 @@ ionic cordova build android --prod
 ionic cordova build android --dev
 
 
-## Modifiche build di produzione :
-MOBILE => <entity>-detail.module.ts 	(Eliminare)
-
-
