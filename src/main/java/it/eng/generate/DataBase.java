@@ -100,7 +100,6 @@ import it.eng.generate.template.ionic.TemplateEntitiesModuleIonic;
 import it.eng.generate.template.ionic.TemplateEntitiesPageIonic;
 import it.eng.generate.template.ionic.TemplateEntityDetailHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityDetailIonic;
-import it.eng.generate.template.ionic.TemplateEntityDetailModuleIonic;
 import it.eng.generate.template.ionic.TemplateEntityHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityIndexIonic;
 import it.eng.generate.template.ionic.TemplateEntityIonic;
