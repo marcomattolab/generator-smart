@@ -48,7 +48,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 				//System.out.println("#Skip generation for Primary Key ID..");
 				body +=
 				"        <ion-item>\r\n" +
-				"            <ion-label position=\"floating\">"+ColumnName+"</ion-label>\r\n" +
+				"            <ion-label position=\"fixed\">"+ColumnName+"</ion-label>\r\n" +
 				"            <div item-content>\r\n" +
 				"                <span>{{"+nometabella+"."+columnname+"}}</span>\r\n" +
 				"            </div>\r\n" +
@@ -56,7 +56,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 			} else {
 				body +=
 				"        <ion-item>\r\n" +
-				"            <ion-label position=\"floating\">"+ColumnName+"</ion-label>\r\n" +
+				"            <ion-label position=\"fixed\">"+ColumnName+"</ion-label>\r\n" +
 				"            <div item-content>\r\n" +
 				"                <span>{{"+nometabella+"."+columnname+"}}</span>\r\n" +
 				"            </div>\r\n" +
@@ -82,7 +82,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 							body += "\n         <!-- Add Relation: OneToOne / ManyToOne -->\n";
 							String label = Utils.getFirstUpperCase(nomeRelazioneSx);
 							body += "        <ion-item>\r\n" +
-									"            <ion-label position=\"floating\">"+label+"</ion-label>\r\n" +
+									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
 									"            <div item-content>\r\n" +
 									"                <span>{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</span>\r\n" +
 									"            </div>\r\n" +
@@ -94,7 +94,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 							body += "\n        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  bis -->\n";
 							String label = Utils.getFirstUpperCase(nomeRelazioneDx);	
 							body += "        <ion-item>\r\n" +
-									"            <ion-label position=\"floating\">"+label+"</ion-label>\r\n" +
+									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
 									"            <div item-content>\r\n" +
 									"                <span>{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</span>\r\n" +
 									"            </div>\r\n" +
