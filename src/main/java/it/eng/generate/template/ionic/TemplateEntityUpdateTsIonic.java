@@ -38,11 +38,11 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 
 		String body = 
-				"import { Component, OnInit } from '@angular/core';\r\n" +
-						"import { FormBuilder, Validators } from '@angular/forms';\r\n" +
-						"import { NavController, Platform, ToastController } from '@ionic/angular';\r\n" +
-						"import { HttpResponse, HttpErrorResponse } from '@angular/common/http';\r\n" +
-						"import { ActivatedRoute } from '@angular/router';\r\n";
+		"import { Component, OnInit } from '@angular/core';\r\n" +
+		"import { FormBuilder, Validators } from '@angular/forms';\r\n" +
+		"import { NavController, Platform, ToastController } from '@ionic/angular';\r\n" +
+		"import { HttpResponse, HttpErrorResponse } from '@angular/common/http';\r\n" +
+		"import { ActivatedRoute } from '@angular/router';\r\n";
 		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) { //Type: Allegato - Clob/Blob
 			body+= "import {Camera, CameraOptions} from '@ionic-native/camera/ngx';\r\n";
 		}
@@ -54,11 +54,10 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"import { "+Nometabella+" } from './"+nometabella+".model';\r\n" +
 		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n";
 
-		body += 
-				"@Component({\r\n" +
-						"    selector: 'page-"+nometabella+"-update',\r\n" +
-						"    templateUrl: '"+nometabella+"-update.html'\r\n" +
-						"})\r\n" +
+		body += "@Component({\r\n" +
+				"    selector: 'page-"+nometabella+"-update',\r\n" +
+				"    templateUrl: '"+nometabella+"-update.html'\r\n" +
+				"})\r\n" +
 
 
 		"export class "+Nometabella+"UpdatePage implements OnInit {\r\n\n" +
@@ -157,19 +156,33 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 		body +=	
 				"    }\r\n\n" +
-						"    ngOnInit() {\r\n" +
-						"        this.activatedRoute.data.subscribe((response) => {\r\n" +
-						"            this.updateForm(response.data);\r\n" +
-						"            this."+nometabella+" = response.data;\r\n" +
-						"            this.isNew = this."+nometabella+".id === null || this."+nometabella+".id === undefined;\r\n" +
-						"        });\r\n";
-		//RELATIONS - TODO DEVELOP (SKIP!)
+				"    ngOnInit() {\r\n";
+//DONE MOVED THIS SNIPPET 'updateForm' From "ngOnInit" To "ionViewDidEnter" to load/see select 	
+//				"        this.activatedRoute.data.subscribe((response) => {\r\n" +
+//				"            this.updateForm(response.data);\r\n" +
+//				"            this."+nometabella+" = response.data;\r\n" +
+//				"            this.isNew = this."+nometabella+".id === null || this."+nometabella+".id === undefined;\r\n" +
+//				"        });\r\n";
 		body += printRelations(conf, NG_ONINIT_SECTION);
 
 		body += 
 				"    }\r\n\n" +
-						"    updateForm("+nometabella+": "+Nometabella+") {\r\n" +
-						"        this.form.patchValue({\r\n";
+		
+				
+				//DONE MOVED THIS SNIPPET 'updateForm' From "ngOnInit" To "ionViewDidEnter" to load/see select 
+				"    ionViewDidEnter(){\n" +
+				"        this.activatedRoute.data.subscribe((response) => {\n" +
+				"            this.updateForm(response.data);\n" +
+				"            this."+nometabella+" = response.data;\n" +
+				"            this.isNew = this."+nometabella+".id === null || this."+nometabella+".id === undefined;\n" +
+				"        });\n"+
+				"    }\n\n"+
+				
+				
+				
+				
+				"    updateForm("+nometabella+": "+Nometabella+") {\r\n" +
+				"        this.form.patchValue({\r\n";
 		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
 			String columnname = Utils.getFieldName(column);
@@ -186,7 +199,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 		body +=
 				"        });\r\n" +
-						"    }\r\n\n" +
+				"    }\r\n\n" +
 
 
 		"    save() {\r\n" +
@@ -214,9 +227,9 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"    previousState() {\r\n" +
 		"        window.history.back();\r\n" +
 		"    }\r\n\n" +
-		"  isIos(): boolean {\r\n" + 
+		"    isIos(): boolean {\r\n" + 
 		"    return this.platform.is('ios');\r\n" + 
-		"  }\n\n"+
+		"    }\n\n"+
 		"    async onError(error) {\r\n" +
 		"        this.isSaving = false;\r\n" +
 		"        console.error(error);\r\n" +
@@ -237,7 +250,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 		body +=
 				"        return {\r\n" +
-						"            ...new "+Nometabella+"(),\r\n";
+				"            ...new "+Nometabella+"(),\r\n";
 
 		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
@@ -258,7 +271,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		
 		body +=
 				"        };\r\n" +
-						"    }\r\n\n";
+				"    }\r\n\n";
 
 
 		//IF BLOB / CLOB SECTION
