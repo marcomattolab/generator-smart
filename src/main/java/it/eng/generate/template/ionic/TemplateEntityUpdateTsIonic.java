@@ -423,9 +423,13 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						relMap.put(relationType+nomeRelazioneSx+UPDATE_FORM, 
 						"            "+Utils.getFirstLowerCase(nomeRelazioneDx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id,\n");
 
+					}else if(CREATE_FORM.equals(section)) {
+						relMap.put(relationType+nomeRelazioneSx+CREATE_FORM, 
+						"			"+Utils.getFirstLowerCase(nomeRelazioneDx)+"Id: this.form.get(['"+Utils.getFirstLowerCase(nomeRelazioneDx)+"']).value,\n");
+						
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+COMPARE, 
-						"\n\n\n //TEST\n    compare"+Utils.getFirstUpperCase(nomeTabellaSx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaSx)+", second: "+Utils.getFirstUpperCase(nomeTabellaSx)+"): boolean {\n"+
+						"    compare"+Utils.getFirstUpperCase(nomeTabellaSx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaSx)+", second: "+Utils.getFirstUpperCase(nomeTabellaSx)+"): boolean {\n"+
 								"       return first && second ? first.id === second.id : first === second;\n"+
 						"    }\n\n");
 

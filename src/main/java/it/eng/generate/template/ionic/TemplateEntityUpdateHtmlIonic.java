@@ -166,15 +166,15 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  tris. -->\n";
+							body += "\n        	<!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  tris. -->\n";
 							body+=	
-							"        <ion-item>\r\n" + 
+							"        	<ion-item>\r\n" + 
 							"			    <ion-label>"+Utils.getFirstUpperCase(nomeRelazioneDx)+"</ion-label>\r\n" + 
 							"			    <ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaSx)+"\">\r\n" + 
 							"			         <ion-select-option [value]=\"null\"></ion-select-option>\r\n" + 
 							"					 <ion-select-option *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneDx)+"s\" [value]=\""+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option.id\">{{"+Utils.getFirstLowerCase(nomeRelazioneDx)+"Option."+Utils.getFirstLowerCase(nomeSelectDx)+"}}</ion-select-option>\r\n" + 
 							"				</ion-select>\r\n" + 
-							"        </ion-item>\n";
+							"        	</ion-item>\n";
 						}
 
 					} else if(relationType.equals(Utils.ManyToMany)) {

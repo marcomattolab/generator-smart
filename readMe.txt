@@ -48,14 +48,8 @@ ionic cordova build android --dev
 
 BUG1:**
 OneToMany => "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito2", "dxSelect":"nome"
-Bug =>	In Edit Cliente la select "preferito2" deve mostrare Autore (invece mostra cliente)
-Soluzione => ClienteService ==> AutoreService in cliente-update.ts
+Bug =>	In Edit Autore la select "bestseller" NON mostra il suo valore.
 
-cliente.model:
-	  "preferitoId" : 1,
-	  "preferitoNome" : "Dante ",
-	  "preferito2Id" : 2,
-	  "preferito2Nome" : "Leonardo"
      
 BUG2:
 OneToOne => "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"
