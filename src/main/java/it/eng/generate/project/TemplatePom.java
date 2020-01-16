@@ -36,7 +36,7 @@ public class TemplatePom {
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		boolean IS_ORACLE = conf.isOracle();
 		String body = 
-		"\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">" +
+		"<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">" +
 		"\n    <modelVersion>4.0.0</modelVersion>" +
 		"\n    <groupId>"+conf.getPackageclass()+"</groupId>" +
 		"\n    <artifactId>"+conf.getProjectName()+"</artifactId>" +
@@ -147,13 +147,13 @@ public class TemplatePom {
 		//AZURE PLUGIN
 		"\n" + 
 		"\n        <!-- Properties di configurazione per il plugin azure-webapp -->" + 
-		"\n		   <!-- " + 
-		"\n        <azure-webapp-maven-plugin.version>1.8.0</azure-webapp-maven-plugin.version>\r\n" + 
+		"\n		<!-- " + 
+		"\n        <azure-webapp-maven-plugin.version>1.8.0</azure-webapp-maven-plugin.version>" + 
 		"\n        <AZURE_AUTH>azure-auth</AZURE_AUTH>" + 
 		"\n        <RESOURCEGROUP_NAME>Exprivia-DFAI-DM-GestioneTrasferte</RESOURCEGROUP_NAME>" + 
 		"\n        <WEBAPP_NAME>gestione-trasferte</WEBAPP_NAME>" + 
 		"\n        <start-class>it.exprivia.trasferte.TrasferteappApp</start-class>" + 
-		"\n		   -->" + 
+		"\n		-->" + 
 		//
 		
 		
@@ -418,22 +418,23 @@ public class TemplatePom {
 		"\n        </dependency>" +
 		
 		// Security JWT 
+		"\n" +
 		"\n        <!-- Spring Security JWT -->" +
-		"\n        <dependency>\r\n" +
-		"\n            <groupId>io.jsonwebtoken</groupId>\r\n" +
-		"\n            <artifactId>jjwt-api</artifactId>\r\n" +
-		"\n        </dependency>\r\n" +
-		"\n        <dependency>\r\n" +
-		"\n            <groupId>io.jsonwebtoken</groupId>\r\n" +
-		"\n            <artifactId>jjwt-impl</artifactId>\r\n" +
-		"\n            <scope>runtime</scope>\r\n" +
-		"\n        </dependency>\r\n" +
-		"\n        <dependency>\r\n" +
-		"\n            <groupId>io.jsonwebtoken</groupId>\r\n" +
-		"\n            <artifactId>jjwt-jackson</artifactId>\r\n" +
-		"\n            <scope>runtime</scope>\r\n" +
-		"\n        </dependency>\r\n"+
-		
+		"\n        <dependency>" +
+		"\n            <groupId>io.jsonwebtoken</groupId>" +
+		"\n            <artifactId>jjwt-api</artifactId>" +
+		"\n        </dependency>" +
+		"\n        <dependency>" +
+		"\n            <groupId>io.jsonwebtoken</groupId>" +
+		"\n            <artifactId>jjwt-impl</artifactId>" +
+		"\n            <scope>runtime</scope>" +
+		"\n        </dependency>" +
+		"\n        <dependency>" +
+		"\n            <groupId>io.jsonwebtoken</groupId>" +
+		"\n            <artifactId>jjwt-jackson</artifactId>" +
+		"\n            <scope>runtime</scope>" +
+		"\n        </dependency>"+
+		"\n" +
 		
 		"\n        <!-- Spring Cloud -->" +
 		"\n        <dependency>" +

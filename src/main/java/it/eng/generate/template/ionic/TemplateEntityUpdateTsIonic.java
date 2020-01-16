@@ -85,8 +85,8 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 		body+=
 				"    isSaving = false;\r\n" +
-						"    isNew = true;\r\n" +
-						"    isReadyToSave: boolean;\r\n\n" +
+				"    isNew = true;\r\n" +
+				"    isReadyToSave: boolean;\r\n\n" +
 
 
 		"    form = this.formBuilder.group({\r\n";
@@ -406,14 +406,14 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 				
 					}else if(NG_ONINIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+nomeRelazioneDx+NG_ONINIT_SECTION, 
-						"        this."+Utils.getFirstLowerCase(nomeTabellaDx)+"Service.query()\r\n" + 
+						"        this."+Utils.getFirstLowerCase(nomeTabellaSx)+"Service.query()\r\n" + 
 						"            .subscribe(data => {\r\n" + 
 						"             this."+Utils.getFirstLowerCase(nomeRelazioneDx)+"s = data.body;\r\n" + 
 						"        }, (error) => this.onError(error));\n\n");
 					
 					}else if(FORM_BUILDER.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneDx+FORM_BUILDER, 
-						"    "+Utils.getFirstLowerCase(nomeRelazioneDx)+": [null, []],\n");
+						"    	"+Utils.getFirstLowerCase(nomeRelazioneDx)+": [null, []],\n");
 
 					}else if(CONSTRUCTOR_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+CONSTRUCTOR_SECTION, 
@@ -425,7 +425,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+COMPARE, 
-						"    compare"+Utils.getFirstUpperCase(nomeTabellaSx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaSx)+", second: "+Utils.getFirstUpperCase(nomeTabellaSx)+"): boolean {\n"+
+						"\n\n\n //TEST\n    compare"+Utils.getFirstUpperCase(nomeTabellaSx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaSx)+", second: "+Utils.getFirstUpperCase(nomeTabellaSx)+"): boolean {\n"+
 								"       return first && second ? first.id === second.id : first === second;\n"+
 						"    }\n\n");
 
