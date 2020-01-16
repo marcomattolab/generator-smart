@@ -633,7 +633,7 @@ public class DataBase {
 				new TemplateEntityModuleIonic(tabella).generateTemplate(); 
 				new TemplateEntityServiceIonic(tabella).generateTemplate();  			
 				new TemplateEntityIonic(tabella).generateTemplate();  		
-				//new TemplateEntityDetailModuleIonic(tabella).generateTemplate();  		
+				//new TemplateEntityDetailModuleIonic(tabella).generateTemplate();  		//Comment to build apk in production 	
 				new TemplateEntityDetailIonic(tabella).generateTemplate();  		
 				new TemplateEntityHtmlIonic(tabella).generateTemplate(); 
 				new TemplateEntityDetailHtmlIonic(tabella).generateTemplate(); 
