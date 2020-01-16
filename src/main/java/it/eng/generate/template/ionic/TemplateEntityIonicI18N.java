@@ -103,14 +103,6 @@ public class TemplateEntityIonicI18N extends AbstractResourceTemplate {
 			int i = 0;
 			int size = CollectionUtils.isEmpty(tabella.getColumns()) ? 0 : tabella.getColumns().size();
 			
-			//CICLE COLUMNS
-			for (Column column : tabella.getColumns()) { 
-				String ColumnName = Utils.getFieldNameForMethod(column);
-				result += Utils.generateJsonUppercase(column) + ( i+1<size ? ",\n" : "\n");
-				i++;
-			}
-			//CICLE COLUMNS
-			
 			//CICLE RELATIONS
 			if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
 				for(ProjectRelation rel: conf.getProjectRelations()) {
@@ -147,6 +139,14 @@ public class TemplateEntityIonicI18N extends AbstractResourceTemplate {
 				}
 			}
 			//CICLE RELATIONS
+			
+			//CICLE COLUMNS
+			for (Column column : tabella.getSortedColumns()) { 
+				String ColumnName = Utils.getFieldNameForMethod(column);
+				result += Utils.generateJsonUppercase(column) + ( i+1<size ? ",\n" : "\n");
+				i++;
+			}
+			//CICLE COLUMNS
 			
 			result += "  },\n"; 
 		}

@@ -46,6 +46,7 @@ ionic cordova build android --dev
 
 
 
+
 BUG1:**
 OneToMany => "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito2", "dxSelect":"nome"
 Bug =>	In Edit Autore la select "bestseller" NON mostra il suo valore.
