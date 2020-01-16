@@ -190,6 +190,24 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 							"            		</ion-select>\n"+
 							"        		</ion-item>\n";
 							
+							//TODO DEVELP THIS!!!
+							String xyz = 
+							"			<ion-item>\r\n" + 
+							"                <ion-label><%= relationshipNameHumanized %></ion-label>\r\n" + 
+							"                <ion-select id=\"field_<%= relationshipName %>\" multiple=\"true\" formControlName=\"<%= relationshipFieldNamePlural %>\" [compareWith]=\"compare<%=otherEntityNameCapitalized %>\"<% if (relationshipRequired) { %> required<% } %>>\r\n" + 
+							"                    <ion-select-option [value]=\"<%=otherEntityName %>Option\" *ngFor=\"let <%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById\">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>\r\n" + 
+							"                </ion-select>\r\n" + 
+							"            </ion-item>";
+							
+							xyz+=
+							"            <div [hidden]=\"!(form.controls.<%= relationshipName %>?.dirty && form.controls.<%= relationshipName %>?.invalid)\">\r\n" + 
+							"                <%_ if (relationshipRequired) { _%>\r\n" + 
+							"                <small [hidden]=\"!form.controls.<%= relationshipName %>?.errors?.required\">\r\n" + 
+							"                    This field is required.\r\n" + 
+							"                </small>\r\n" + 
+							"                <%_ } _%>\r\n" + 
+							"            </div>";
+					
 						}
 
 					}
