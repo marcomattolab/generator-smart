@@ -51,16 +51,6 @@ OneToMany => "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "d
 Bug =>	In Edit Autore la select "bestseller" NON mostra il suo valore.
 
 
-//TODO MOVE THIS SNIPPET 'updateForm' From ""ngOnInit" To "ionViewDidEnter" to load select 
- ionViewDidEnter(){
-	this.activatedRoute.data.subscribe((response) => {
-      this.updateForm(response.data);
-      this.trasferta = response.data;
-      this.isNew = this.trasferta.id === null || this.trasferta.id === undefined;
-    });
-}
-
-     
 BUG2:
 OneToOne => "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"
 Bug =>	In Edit Autore la select "bestseller" NON mostra il suo valore.

@@ -154,15 +154,14 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 					"};\n\n";
 		}
 
-		body +=	
-				"    }\r\n\n" +
+		body +=	"    }\r\n\n" +
 				"    ngOnInit() {\r\n";
-//DONE MOVED THIS SNIPPET 'updateForm' From "ngOnInit" To "ionViewDidEnter" to load/see select 	
-//				"        this.activatedRoute.data.subscribe((response) => {\r\n" +
-//				"            this.updateForm(response.data);\r\n" +
-//				"            this."+nometabella+" = response.data;\r\n" +
-//				"            this.isNew = this."+nometabella+".id === null || this."+nometabella+".id === undefined;\r\n" +
-//				"        });\r\n";
+		//DONE MOVED THIS SNIPPET 'updateForm' From "ngOnInit" To "ionViewDidEnter" to load/see select 	
+		//				"        this.activatedRoute.data.subscribe((response) => {\r\n" +
+		//				"            this.updateForm(response.data);\r\n" +
+		//				"            this."+nometabella+" = response.data;\r\n" +
+		//				"            this.isNew = this."+nometabella+".id === null || this."+nometabella+".id === undefined;\r\n" +
+		//				"        });\r\n";
 		body += printRelations(conf, NG_ONINIT_SECTION);
 
 		body += 

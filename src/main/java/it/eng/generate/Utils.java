@@ -949,6 +949,14 @@ public class Utils {
 		return ret;
 	}
 
+	public static String generateJsonUppercase(Column column) {
+		String ret = "";
+		String ColumnName = getFieldNameForMethod(column);
+		String columnname = getFieldName(column);
+		ret += "\t\t\t\""+columnname.toUpperCase()+"\": \""+splitCamelCase(ColumnName)+"\"";
+		return ret;
+	}
+
 	public static String splitCamelCase(String column) {
 		String result = StringUtils.capitalize(StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(column), " "));
 		result = result.replaceAll(" _ ", " "); //RAPID FIX

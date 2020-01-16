@@ -103,6 +103,7 @@ import it.eng.generate.template.ionic.TemplateEntityDetailIonic;
 import it.eng.generate.template.ionic.TemplateEntityHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityIndexIonic;
 import it.eng.generate.template.ionic.TemplateEntityIonic;
+import it.eng.generate.template.ionic.TemplateEntityIonicI18N;
 import it.eng.generate.template.ionic.TemplateEntityModelIonic;
 import it.eng.generate.template.ionic.TemplateEntityModuleIonic;
 import it.eng.generate.template.ionic.TemplateEntityServiceIonic;
@@ -586,6 +587,11 @@ public class DataBase {
 			Map<String, List<String>> map = this.getEnumeration();
 			for(String enumName: map.keySet()) {
 				enumList.add( new Enumeration(enumName, map.get(enumName)) );
+			}
+			
+			//MultiLanguages Ionic (dynamics) 
+			for(String languageCode: config.getLanguages()) {
+				new TemplateEntityIonicI18N(this, languageCode).generateTemplate();  
 			}
 
 			//All Other Level (dynamics) 
