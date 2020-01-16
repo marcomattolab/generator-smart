@@ -25,6 +25,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
+		String TABELLA = Nometabella.toUpperCase();
 		
 		String body = 
 		"<ion-header>\r\n" +
@@ -32,9 +33,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 		"        <ion-buttons slot=\"start\">\r\n" +
 		"            <ion-back-button></ion-back-button>\r\n" +
 		"        </ion-buttons>\r\n" +
-		"        <ion-title>\r\n" +
-		"            "+Nometabella+"\r\n" +
-		"        </ion-title>\r\n" +
+		"        <ion-title>{{"+TABELLA+" | translate}}</ion-title>\r\n" +
 		"    </ion-toolbar>\r\n" +
 		"</ion-header>\r\n\n" +
 		"<ion-content padding>\r\n" +
@@ -44,11 +43,12 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 		for (Column column : tabella.getSortedColumns()) {
 			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
+			String COLONNA = ColumnName.toUpperCase();
 			if(Utils.isPrimaryKeyID(column) ) {
 				//System.out.println("#Skip generation for Primary Key ID..");
 				body +=
 				"        <ion-item>\r\n" +
-				"            <ion-label position=\"fixed\">"+ColumnName+"</ion-label>\r\n" +
+				"            <ion-label position=\"fixed\">{{"+TABELLA+"."+COLONNA+" | translate}}</ion-label>\r\n" +
 				"            <div item-content>\r\n" +
 				"                <span>{{"+nometabella+"."+columnname+"}}</span>\r\n" +
 				"            </div>\r\n" +
@@ -56,7 +56,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 			} else {
 				body +=
 				"        <ion-item>\r\n" +
-				"            <ion-label position=\"fixed\">"+ColumnName+"</ion-label>\r\n" +
+				"            <ion-label position=\"fixed\">{{"+TABELLA+"."+COLONNA+" | translate}}</ion-label>\r\n" +
 				"            <div item-content>\r\n" +
 				"                <span>{{"+nometabella+"."+columnname+"}}</span>\r\n" +
 				"            </div>\r\n" +
@@ -79,10 +79,10 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n         <!-- Add Relation: OneToOne / ManyToOne -->\n";
-							String label = Utils.getFirstUpperCase(nomeRelazioneSx);
+							body += "        <!-- Add Relation:   Name: "+nomeRelazioneSx+"    Type: "+relationType+"   alfa -->\n";
+							String LABEL = Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase();
 							body += "        <ion-item>\r\n" +
-									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
+									"            <ion-label position=\"fixed\">{{"+nomeTabella.toUpperCase()+"."+LABEL+" | translate}}</ion-label>\r\n" +
 									"            <div item-content>\r\n" +
 									"                <span>{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</span>\r\n" +
 									"            </div>\r\n" +
@@ -91,10 +91,10 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 						
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  bis -->\n";
-							String label = Utils.getFirstUpperCase(nomeRelazioneDx);	
+							body += "        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  tetas -->\n";
+							String LABEL = Utils.getFirstUpperCase(nomeRelazioneDx).toUpperCase();	
 							body += "        <ion-item>\r\n" +
-									"            <ion-label position=\"fixed\">"+label+"</ion-label>\r\n" +
+									"            <ion-label position=\"fixed\">{{"+nomeTabella.toUpperCase()+"."+LABEL+" | translate}}</ion-label>\r\n" +
 									"            <div item-content>\r\n" +
 									"                <span>{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</span>\r\n" +
 									"            </div>\r\n" +
@@ -104,10 +104,10 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						//TODO DEVELOP THIS FEATURE!!
 //						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-//							body += "\n        <!-- Add Relation: ManyToMany -->\n";
-//							String label = 	Utils.getFirstUpperCase(nomeRelazioneSx);
+//							body += "        <!-- Add Relation:  Name: "+nomeRelazioneSx+"   Type: ManyToMany    yota -->\n";
+//							String LABEL = 	Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase();
 //							body += "        <ion-item>\r\n" +
-//									"            <ion-label position=\"floating\">"+label+"</ion-label>\r\n" +
+//									"            <ion-label position=\"floating\">{{"+nomeTabella.toUpperCase()+"."+LABEL+"}}</ion-label>\r\n" +
 //									"            <div item-content>\r\n" +
 //									"                <span>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</span>\r\n" +
 //									"            </div>\r\n" +
