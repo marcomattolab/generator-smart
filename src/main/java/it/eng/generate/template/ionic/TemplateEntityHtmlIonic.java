@@ -115,7 +115,7 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		"        </ion-item-sliding>\r\n" +
 		"    </ion-list>\r\n\n" +
 		"    <ion-item *ngIf=\"!"+nometabella+"s?.length\">\r\n" +
-		"        <ion-label>{{ '"+TABELLA+".NO"+TABELLA+"FOUND' | translate}}</ion-label>" +
+		"        <ion-label>{{ '"+TABELLA+".NO_ITEMS' | translate}}</ion-label>" +
 		"    </ion-item>\r\n\n" +
 		"    <ion-fab vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\r\n" +
 		"        <ion-fab-button (click)=\"new()\">\r\n" +

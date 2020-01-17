@@ -142,11 +142,9 @@ public class TemplateEntityIonicI18N extends AbstractResourceTemplate {
 			}
 			//CICLE RELATIONS
 			
-			//ADD LABEL "NOCLIENTEFOUND" => "No Cliente Found"
-			Column columnNoItem = Utils.buildNoItemTable(TABLENAME);
-			result += Utils.generateJsonUppercase(columnNoItem) + ",\n";
-			
-			//ADD LABEL "TITLE"  => "TABLENAME"
+			//LABEL "CLIENTE.NO_ITEMS" => "No Cliente Found"
+			//LABEL "CLIENTE.TITLE"    => "Cliente"
+			result += "\t\t\t\"NO_ITEMS\": \"No "+Utils.splitCamelCase(Tablename)+" Found.\",\n";
 			result += "\t\t\t\"TITLE\": \""+Utils.splitCamelCase(Tablename)+"\",\n";
 			
 			//CICLE COLUMNS
