@@ -111,7 +111,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 				
 			} else if( Utils.isDateField(column) && Utils.isLocalDate(column) ) {
 				body += "            <ion-item>\n"+
-						"                <ion-label position=\"fixed\">{{"+TABELLA+"."+COLONNA+" | translate}}</ion-label>\n"+
+						"                <ion-label position=\"fixed\">{{'"+TABELLA+"."+COLONNA+"' | translate}}</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
 						"            </ion-item>\n";
 		
