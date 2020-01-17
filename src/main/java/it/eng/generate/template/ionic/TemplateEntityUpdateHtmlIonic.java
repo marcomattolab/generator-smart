@@ -60,25 +60,37 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 			Class<?> filterType = column.getTypeColumn();
 			boolean isEnumeration = column.getEnumeration()!=null;
 			boolean isNullable = column.isNullable();
-			String mandatory = isNullable ? "" : "*";
+			String mandatoryStar = isNullable ? "" : "*";
+			String required = isNullable ? "" : " required ";
+			
+			boolean isTextArea = false; //TODO MANAGE THIS!
 			
 			if(Utils.isPrimaryKeyID(column) ) {
 				body += "            <ion-item [hidden]=\"!form.id\">\r\n" +
-						"                <ion-label>{{'"+TABELLA+"."+COLONNA+"' | translate}}</ion-label>\r\n" +
+						"                <ion-label>{{'"+TABELLA+"."+COLONNA+"' | translate}}"+mandatoryStar+"</ion-label>\r\n" +
 						"                <ion-input type=\"hidden\" id=\"id\" formControlName=\"id\" readonly></ion-input>\r\n" +
 						"            </ion-item>\r\n";
-			
-			} else if (filterType.getName().equals("java.lang.String") && !isEnumeration) {
+				
+			} else if (filterType.getName().equals("java.lang.String") && !isEnumeration && isTextArea) {
+				//TEXTAREA
+				body += 
+				"            <ion-item>\n" +
+				"                <ion-label position=\"fixed\">{{'"+TABELLA+"."+COLONNA+"' | translate}}"+mandatoryStar+"</ion-label>\r\n" +
+				"                <ion-textarea placeholder=\""+columnname+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\">\n"+
+				"                </ion-textarea>\n"+
+				"            </ion-item>\n";
+				
+			} else if (filterType.getName().equals("java.lang.String") && !isEnumeration && !isTextArea) {
 				//STRING
 				body += "            <ion-item>\r\n" +
-						"                <ion-label position=\"floating\">{{'"+TABELLA+"."+COLONNA+"' | translate}}</ion-label>\r\n" +
+						"                <ion-label position=\"fixed\">{{'"+TABELLA+"."+COLONNA+"' | translate}}"+mandatoryStar+"</ion-label>\r\n" +
 						"                <ion-input type=\"text\" name=\""+columnname+"\" formControlName=\""+columnname+"\"></ion-input>\r\n" +
 						"            </ion-item>\r\n";
 		
 			} else if(filterType.getName().equals("java.lang.String") && isEnumeration) {
 				//ENUMERATION
 				body += "            <ion-item>\r\n" +
-						"                <ion-label>{{'"+TABELLA+"."+COLONNA+"' | translate}}</ion-label>\r\n" +
+						"                <ion-label>{{'"+TABELLA+"."+COLONNA+"' | translate}}"+mandatoryStar+"</ion-label>\r\n" +
 						"                <ion-select formControlName=\""+columnname+"\" id=\"field_"+columnname+"\">\r\n";
 				List<Enumeration> enumList = Utils.getEnumerationsByDbAndTable(database, tabella);
 				for(Enumeration e : enumList) {
@@ -93,26 +105,26 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 			} else if(filterType.getName().equals("java.lang.Long") || filterType.getName().equals("java.lang.Integer") || filterType.getName().equals("java.lang.Float") || filterType.getName().equals("java.math.BigDecimal")) {
 				body += "            <ion-item>\n"+
-						"                <ion-label>{{'"+TABELLA+"."+COLONNA+"' | translate}}</ion-label>\n"+
+						"                <ion-label position=\"fixed\">{{'"+TABELLA+"."+COLONNA+"' | translate}}"+mandatoryStar+"</ion-label>\n"+
 						"                <ion-input type=\"number\" name=\""+columnname+"\" formControlName=\""+columnname+"\"></ion-input>\n"+
 						"            </ion-item>\n";
 				
 			} else if( Utils.isDateField(column) && Utils.isLocalDate(column) ) {
 				body += "            <ion-item>\n"+
-						"                <ion-label>{{"+TABELLA+"."+COLONNA+" | translate}}</ion-label>\n"+
+						"                <ion-label position=\"fixed\">{{"+TABELLA+"."+COLONNA+" | translate}}</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
 						"            </ion-item>\n";
 		
 			} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
 				//TODO DEVELOP THIS AND TEST!
 				body += "            <ion-item>\n"+
-						"                <ion-label>{{'"+TABELLA+"."+COLONNA+"' | translate}}</ion-label>\n"+
+						"                <ion-label position=\"fixed\">{{'"+TABELLA+"."+COLONNA+"' | translate}}"+mandatoryStar+"</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
 						"            </ion-item>\n";
 				
 			} else if(filterType.getName().equals("java.lang.Boolean")) {
 				body += "            <ion-item>\n"+
-						"                <ion-label>{{'"+TABELLA+"."+COLONNA+"' | translate}}</ion-label>\n"+
+						"                <ion-label position=\"fixed\">{{'"+TABELLA+"."+COLONNA+"' | translate}}"+mandatoryStar+"</ion-label>\n"+
 						"                <ion-checkbox formControlName=\""+columnname+"\"></ion-checkbox>\n"+
 						"            </ion-item>\n";
 		
@@ -149,6 +161,11 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 				String nomeSelectDx = rel.getDxSelect();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 
+//				//TODO DEVELOP THIS - READ REQUIRED RELATION FROM CONFIG FILE !!
+//				boolean relationshipRequired = !relation.isNullable();
+//				String relMandatoryStar = relationshipRequired ? "*" : "";
+//				String relRequired = relationshipRequired ? " required " : "";
+				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
@@ -180,7 +197,6 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						//TODO DEVELOP/TEST THIS FEATURE!!
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-							boolean relationshipRequired = false; //TODO ENABLE DEVELOP THIS!!!
 							body += "		    <!-- Add Relation:  Name:  "+nomeRelazioneSx+"   Type: ManyToMany   delta123! -->\n";
 							body+= 
 							"        	<ion-item>\r\n" + 

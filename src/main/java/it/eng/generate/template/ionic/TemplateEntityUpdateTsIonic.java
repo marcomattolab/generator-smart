@@ -125,17 +125,17 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		body += printRelations(conf, CONSTRUCTOR_SECTION);
 
 		body +=  
-				"        protected activatedRoute: ActivatedRoute,\r\n" +
-						"        protected navController: NavController,\r\n" +
-						"        protected formBuilder: FormBuilder,\r\n" +
-						"        protected platform: Platform,\r\n" +
-						"        protected toastCtrl: ToastController,\r\n" +
-						"        private "+nometabella+"Service: "+Nometabella+"Service\r\n"+
-						"    ) {\r\n\n" +
-						"        // Watch the form for changes\r\n" +
-						"        this.form.valueChanges.subscribe((v) => {\r\n" +
-						"            this.isReadyToSave = this.form.valid;\r\n" +
-						"        });\r\n\n" ;
+		"        protected activatedRoute: ActivatedRoute,\r\n" +
+		"        protected navController: NavController,\r\n" +
+		"        protected formBuilder: FormBuilder,\r\n" +
+		"        protected platform: Platform,\r\n" +
+		"        protected toastCtrl: ToastController,\r\n" +
+		"        private "+nometabella+"Service: "+Nometabella+"Service\r\n"+
+		"    ) {\r\n\n" +
+		"        // Watch the form for changes\r\n" +
+		"        this.form.valueChanges.subscribe((v) => {\r\n" +
+		"            this.isReadyToSave = this.form.valid;\r\n" +
+		"        });\r\n\n" ;
 
 
 		//IF BLOB / CLOB 
@@ -156,7 +156,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 		body +=	"    }\r\n\n" +
 				"    ngOnInit() {\r\n";
-		//DONE MOVED THIS SNIPPET 'updateForm' From "ngOnInit" To "ionViewDidEnter" to load/see select 	
+		//DONE MOVED THIS SNIPPET 'updateForm' From "ngOnInit" To "ionViewDidEnter" to load/see Select 	
 		//				"        this.activatedRoute.data.subscribe((response) => {\r\n" +
 		//				"            this.updateForm(response.data);\r\n" +
 		//				"            this."+nometabella+" = response.data;\r\n" +
@@ -165,23 +165,23 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		body += printRelations(conf, NG_ONINIT_SECTION);
 
 		body += 
-				"    }\r\n\n" +
+		"    }\r\n\n" +
+
 		
-				
-				//DONE MOVED THIS SNIPPET 'updateForm' From "ngOnInit" To "ionViewDidEnter" to load/see select 
-				"    ionViewDidEnter(){\n" +
-				"        this.activatedRoute.data.subscribe((response) => {\n" +
-				"            this.updateForm(response.data);\n" +
-				"            this."+nometabella+" = response.data;\n" +
-				"            this.isNew = this."+nometabella+".id === null || this."+nometabella+".id === undefined;\n" +
-				"        });\n"+
-				"    }\n\n"+
-				
-				
-				
-				
-				"    updateForm("+nometabella+": "+Nometabella+") {\r\n" +
-				"        this.form.patchValue({\r\n";
+		//DONE MOVED THIS SNIPPET 'updateForm' From "ngOnInit" To "ionViewDidEnter" to load/see Select 
+		"    ionViewDidEnter(){\n" +
+		"        this.activatedRoute.data.subscribe((response) => {\n" +
+		"            this.updateForm(response.data);\n" +
+		"            this."+nometabella+" = response.data;\n" +
+		"            this.isNew = this."+nometabella+".id === null || this."+nometabella+".id === undefined;\n" +
+		"        });\n"+
+		"    }\n\n"+
+		
+		
+		
+		
+		"    updateForm("+nometabella+": "+Nometabella+") {\r\n" +
+		"        this.form.patchValue({\r\n";
 		//COLUMNS
 		for (Column column : tabella.getSortedColumns()) {
 			String columnname = Utils.getFieldName(column);
@@ -263,9 +263,9 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 			}
 		}
 
-		//TODO Relations CREATE_FORM
-		//			collanaId: this.form.get(['collana']).value, // FIXME
-		//      	collana2Id: this.form.get(['collana2']).value,  // FIXME
+		//DONE Relations CREATE_FORM
+		//			collanaId: this.form.get(['collana']).value, 
+		//      	collana2Id: this.form.get(['collana2']).value,
 		body += printRelations(conf, CREATE_FORM);	
 		
 		body +=
@@ -407,7 +407,6 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 				//Relations OneToMany
 				if(nomeTabellaSx!=null && nomeTabellaDx != null  && relationType.equals(Utils.OneToMany)
 						&& nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
-
 					if(IMPORT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+IMPORT_SECTION+"Model", 
 						"import { "+Utils.getFirstUpperCase(nomeTabellaSx)+", "+Utils.getFirstUpperCase(nomeTabellaSx)+"Service } from '../"+Utils.getFirstLowerCase(nomeTabellaSx)+"';\n");
@@ -463,8 +462,6 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: "+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 
 					}else if(FORM_BUILDER.equals(section)) {
-//						mysectorId: [null, []],
-//				    	mysector2Id: [null, []],
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+FORM_BUILDER, 
 						"    	"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id: [null, []],\n");
 
@@ -480,14 +477,10 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
 
 					}else if(UPDATE_FORM.equals(section)) {
-//					    mysectorId: azienda.mysectors,
-//			            mysector2Id: azienda.mysector2s,
 						relMap.put(relationType+nomeRelazioneSx+UPDATE_FORM, 
 						"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id: "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s,\n");
 
 					}else if(CREATE_FORM.equals(section)) {
-//						mysectors: this.form.get(['mysectorId']).value,
-//			            mysector2s: this.form.get(['mysector2Id']).value,
 						relMap.put(relationType+nomeRelazioneSx+CREATE_FORM, 
 						"			"+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: this.form.get(['"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id']).value,\n");
 				

@@ -44,6 +44,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
 			String COLONNA = ColumnName.toUpperCase();
+			
 			if(Utils.isPrimaryKeyID(column) ) {
 				//System.out.println("#Skip generation for Primary Key ID..");
 				body +=
@@ -79,7 +80,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-							body += "        <!-- Add Relation:   Name: "+nomeRelazioneSx+"    Type: "+relationType+"   alfa -->\n";
+							body += "        <!-- Add Relation:   Name: "+nomeRelazioneSx+"    Type: "+relationType+"   Alfa -->\n";
 							String LABEL = Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase();
 							body += "        <ion-item>\r\n" +
 									"            <ion-label position=\"fixed\">{{'"+nomeTabella.toUpperCase()+"."+LABEL+"' | translate}}</ion-label>\r\n" +
@@ -91,7 +92,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 						
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  tetas -->\n";
+							body += "        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany    Gamma -->\n";
 							String LABEL = Utils.getFirstUpperCase(nomeRelazioneDx).toUpperCase();	
 							body += "        <ion-item>\r\n" +
 									"            <ion-label position=\"fixed\">{{'"+nomeTabella.toUpperCase()+"."+LABEL+"' | translate}}</ion-label>\r\n" +
@@ -102,18 +103,19 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 						}
 						
 					} else if(relationType.equals(Utils.ManyToMany)) {
-//						//TODO DEVELOP THIS FEATURE  !!
-//						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-//							body += "        <!-- Add Relation:  Name: "+nomeRelazioneSx+"   Type: ManyToMany    yota1 -->\n";
-//							String LABEL = 	Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase();
-//							body += "        <ion-item>\r\n" +
-//									"            <ion-label position=\"floating\">{{'"+nomeTabella.toUpperCase()+"."+LABEL+"' | translate}}</ion-label>\r\n" +
-//									"            <div item-content>\r\n" +
-//									"                <span>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</span>\r\n" +
-//									"            </div>\r\n" +
-//									"        </ion-item>\r\n";
-//						}
-						
+						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
+							String LABEL = 	Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase();
+							body += "        <!-- Add Relation:  Name: "+nomeRelazioneSx+"   Type: ManyToMany    Yota -->\n";
+							body += "        <ion-item>\r\n" +
+									"            <ion-label position=\"fixed\">{{'"+nomeTabella.toUpperCase()+"."+LABEL+"' | translate}}</ion-label>\n" +
+									"            <div item-content>\n" +
+									"                <span *ngFor=\"let "+nomeRelazioneSx+" of "+nomeTabella+"."+nomeRelazioneSx+"s; let last = last\">"+
+									"                   {{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}} {{last ? '' : ', '}}"+
+									"                </span>\n" +
+									"            </div>\n" +
+									"        </ion-item>\n";
+						}
+		                
 					}
 				}
 			}
