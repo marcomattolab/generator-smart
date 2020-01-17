@@ -33,7 +33,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 		"        <ion-buttons slot=\"start\">\r\n" +
 		"            <ion-back-button></ion-back-button>\r\n" +
 		"        </ion-buttons>\r\n" +
-		"        <ion-title>{{"+TABELLA+" | translate}}</ion-title>\r\n" +
+		"        <ion-title>{{'"+TABELLA+".TITLE' | translate}}</ion-title>\r\n" +
 		"    </ion-toolbar>\r\n" +
 		"</ion-header>\r\n\n" +
 		"<ion-content padding>\r\n" +
@@ -48,7 +48,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 				//System.out.println("#Skip generation for Primary Key ID..");
 				body +=
 				"        <ion-item>\r\n" +
-				"            <ion-label position=\"fixed\">{{"+TABELLA+"."+COLONNA+" | translate}}</ion-label>\r\n" +
+				"            <ion-label position=\"fixed\">{{'"+TABELLA+"."+COLONNA+"' | translate}}</ion-label>\r\n" +
 				"            <div item-content>\r\n" +
 				"                <span>{{"+nometabella+"."+columnname+"}}</span>\r\n" +
 				"            </div>\r\n" +
@@ -56,7 +56,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 			} else {
 				body +=
 				"        <ion-item>\r\n" +
-				"            <ion-label position=\"fixed\">{{"+TABELLA+"."+COLONNA+" | translate}}</ion-label>\r\n" +
+				"            <ion-label position=\"fixed\">{{'"+TABELLA+"."+COLONNA+"' | translate}}</ion-label>\r\n" +
 				"            <div item-content>\r\n" +
 				"                <span>{{"+nometabella+"."+columnname+"}}</span>\r\n" +
 				"            </div>\r\n" +
@@ -82,7 +82,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 							body += "        <!-- Add Relation:   Name: "+nomeRelazioneSx+"    Type: "+relationType+"   alfa -->\n";
 							String LABEL = Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase();
 							body += "        <ion-item>\r\n" +
-									"            <ion-label position=\"fixed\">{{"+nomeTabella.toUpperCase()+"."+LABEL+" | translate}}</ion-label>\r\n" +
+									"            <ion-label position=\"fixed\">{{'"+nomeTabella.toUpperCase()+"."+LABEL+"' | translate}}</ion-label>\r\n" +
 									"            <div item-content>\r\n" +
 									"                <span>{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</span>\r\n" +
 									"            </div>\r\n" +
@@ -94,7 +94,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 							body += "        <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  tetas -->\n";
 							String LABEL = Utils.getFirstUpperCase(nomeRelazioneDx).toUpperCase();	
 							body += "        <ion-item>\r\n" +
-									"            <ion-label position=\"fixed\">{{"+nomeTabella.toUpperCase()+"."+LABEL+" | translate}}</ion-label>\r\n" +
+									"            <ion-label position=\"fixed\">{{'"+nomeTabella.toUpperCase()+"."+LABEL+"' | translate}}</ion-label>\r\n" +
 									"            <div item-content>\r\n" +
 									"                <span>{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</span>\r\n" +
 									"            </div>\r\n" +
@@ -107,7 +107,7 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 //							body += "        <!-- Add Relation:  Name: "+nomeRelazioneSx+"   Type: ManyToMany    yota -->\n";
 //							String LABEL = 	Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase();
 //							body += "        <ion-item>\r\n" +
-//									"            <ion-label position=\"floating\">{{"+nomeTabella.toUpperCase()+"."+LABEL+"}}</ion-label>\r\n" +
+//									"            <ion-label position=\"floating\">{{'"+nomeTabella.toUpperCase()+"."+LABEL+"' | translate}}</ion-label>\r\n" +
 //									"            <div item-content>\r\n" +
 //									"                <span>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</span>\r\n" +
 //									"            </div>\r\n" +

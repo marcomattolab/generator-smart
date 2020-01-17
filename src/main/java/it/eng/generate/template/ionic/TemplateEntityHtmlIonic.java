@@ -32,7 +32,7 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		"        <ion-buttons slot=\"start\">\r\n" +
 		"            <ion-back-button></ion-back-button>\r\n" +
 		"        </ion-buttons>\r\n" +
-		"        <ion-title>{{"+TABELLA+" | translate}}</ion-title>\r\n" +
+		"        <ion-title>{{'"+TABELLA+".TITLE' | translate}}</ion-title>\r\n" +
 		"    </ion-toolbar>\r\n" +
 		"</ion-header>\r\n\n" +
 		"<!-- todo: add elasticsearch support -->\r\n\n" +
@@ -115,7 +115,7 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		"        </ion-item-sliding>\r\n" +
 		"    </ion-list>\r\n\n" +
 		"    <ion-item *ngIf=\"!"+nometabella+"s?.length\">\r\n" +
-		"        <ion-label>{{ NO"+TABELLA+"FOUND | translate}}</ion-label>" +
+		"        <ion-label>{{ 'NO"+TABELLA+"FOUND' | translate}}</ion-label>" +
 		"    </ion-item>\r\n\n" +
 		"    <ion-fab vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\r\n" +
 		"        <ion-fab-button (click)=\"new()\">\r\n" +

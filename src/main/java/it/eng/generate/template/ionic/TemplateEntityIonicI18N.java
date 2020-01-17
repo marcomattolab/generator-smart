@@ -30,6 +30,7 @@ public class TemplateEntityIonicI18N extends AbstractResourceTemplate {
 		"  \"CANCEL_BUTTON\": \"Annulla\",\r\n" + 
 		"  \"CARDS_TITLE\": \"Social\",\r\n" + 
 		"  \"DELETE_BUTTON\": \"Elimina\",\r\n" + 
+		"  \"EDIT_BUTTON\": \"Edit\",\r\n" + 
 		"  \"DONE_BUTTON\": \"Fatto\",\r\n" + 
 		"  \"EMAIL\": \"Email\",\r\n" + 
 		"  \"EMPTY_ENTITIES_MESSAGE\": \"Non hai generato nulla.\",\r\n" + 
@@ -70,6 +71,7 @@ public class TemplateEntityIonicI18N extends AbstractResourceTemplate {
 		"  \"TAB1_TITLE\": \"Elenco\",\r\n" + 
 		"  \"TAB2_TITLE\": \"Ricerca\",\r\n" + 
 		"  \"TAB3_TITLE\": \"Utente\",\r\n" + 
+		"  \"FIELD_REQUIRED\": \"Campo obbligatorio.\",\r\n" + 
 		
 		buildTables(conf) +
 		
@@ -140,9 +142,12 @@ public class TemplateEntityIonicI18N extends AbstractResourceTemplate {
 			}
 			//CICLE RELATIONS
 			
-			//ADD NO COLUMN LABEL
+			//ADD LABEL "NOCLIENTEFOUND" => "No Cliente Found"
 			Column columnNoItem = Utils.buildNoItemTable(TABLENAME);
 			result += Utils.generateJsonUppercase(columnNoItem) + ",\n";
+			
+			//ADD LABEL "TITLE"  => "TABLENAME"
+			result += "\t\t\t\"TITLE\": \""+Utils.splitCamelCase(Tablename)+"\",\n";
 			
 			//CICLE COLUMNS
 			for (Column column : tabella.getSortedColumns()) { 
