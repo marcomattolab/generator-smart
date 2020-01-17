@@ -45,9 +45,8 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		"            <ion-item (click)=\"view("+nometabella+")\">\r\n" +
 		"              <ion-label text-wrap>\r\n";
 		
-		// CICLE PROPERTIES & RELATIONS START
 		
-		// Columns
+		// CICLE Columns
 		for (Column column : tabella.getSortedColumns()) {
 			String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
@@ -59,7 +58,7 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 			}
 		}
 		
-		//Relations
+		//CICLE Relations
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && conf.isPrintRelation()) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
@@ -94,9 +93,8 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 				}
 			}
 		}
-		//Relations
+		// END CICLE
 		
-		// CICLE PROPERTIES & RELATIONS END
 		
 		body +=
 		"              </ion-label>\r\n" +

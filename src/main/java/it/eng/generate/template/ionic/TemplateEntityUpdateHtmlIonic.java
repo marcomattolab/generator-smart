@@ -116,7 +116,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 						"            </ion-item>\n";
 		
 			} else if( Utils.isDateField(column) && !Utils.isLocalDate(column)) {
-				//TODO DEVELOP THIS AND TEST!
+				//TODO DEVELOP "DATE FIELD" AND TEST!
 				body += "            <ion-item>\n"+
 						"                <ion-label position=\"floating\">{{'"+TABELLA+"."+COLONNA+"' | translate}}"+mandatoryStar+"</ion-label>\n"+
 						"                <ion-datetime displayFormat=\""+Utils.DATE_PATTERN+"\" formControlName=\""+columnname+"\" id=\"field_"+columnname+"\"></ion-datetime>\n"+
@@ -161,7 +161,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 				String nomeSelectDx = rel.getDxSelect();
 				String nomeTabella = tabella.getNomeTabella().toLowerCase();
 
-//				//TODO DEVELOP THIS - READ REQUIRED RELATION FROM CONFIG FILE !!
+//				//TODO DEVELOP THIS - READ 'relationshipRequired' FROM CONFIG FILE !!
 //				boolean relationshipRequired = !relation.isNullable();
 //				String relMandatoryStar = relationshipRequired ? "*" : "";
 //				String relRequired = relationshipRequired ? " required " : "";
@@ -169,8 +169,9 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-							body += "         	<!-- Add Relation:    Name: "+nomeRelazioneSx+"    Type: "+relationType+"  beta -->\n";
-							body += 
+							body+= 
+							"         	<!-- Add Relation:    Name: "+nomeRelazioneSx+"    Type: "+relationType+"  beta -->\n";
+							body+= 
 							"        		<ion-item>\n"+
 							"            		<ion-label position=\"floating\">{{'"+nomeTabellaSx.toUpperCase()+"."+Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase()+"' | translate}}</ion-label>\n"+
 							"            		<ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\">\n"+
@@ -182,7 +183,8 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "         	<!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany   gamma -->\n";
+							body+= 
+							"         	<!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany   gamma -->\n";
 							body+=	
 							"        		<ion-item>\n" + 
 							"            		<ion-label position=\"floating\">{{'"+nometabella.toUpperCase()+"."+Utils.getFirstUpperCase(nomeRelazioneDx).toUpperCase()+"' | translate}}</ion-label>\r\n" + 
@@ -197,21 +199,22 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						//TODO DEVELOP/TEST THIS FEATURE!!
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
-							body += "		    <!-- Add Relation:  Name:  "+nomeRelazioneSx+"   Type: ManyToMany   delta123! -->\n";
 							body+= 
-							"        	<ion-item>\r\n" + 
-							"            	<ion-label position=\"floating\">{{'"+nomeTabella.toUpperCase()+"."+Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase()+"' | translate}}</ion-label>\n"+
-							"            	<ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\" multiple=\"true\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\n" + 
+							"         	<!-- Add Relation:  Name:  "+nomeRelazioneSx+"   Type: ManyToMany   delta123! -->\n";
+							body+= 
+							"        		<ion-item>\r\n" + 
+							"            		<ion-label position=\"floating\">{{'"+nomeTabella.toUpperCase()+"."+Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase()+"' | translate}}</ion-label>\n"+
+							"            		<ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\" multiple=\"true\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\n" + 
 							"                      <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</ion-select-option>\n" + 
-							"            	</ion-select>\n" + 
-							"        	</ion-item>\n";
-//							"        	<div [hidden]=\"!(form.controls."+nomeRelazioneSx+"?.dirty && form.controls."+nomeRelazioneSx+"?.invalid)\">\n" + 
+							"            		</ion-select>\n" + 
+							"        		</ion-item>\n";
+//							"        		<div [hidden]=\"!(form.controls."+nomeRelazioneSx+"?.dirty && form.controls."+nomeRelazioneSx+"?.invalid)\">\n" + 
 //							""+(relationshipRequired 
-//							?"            	<small [hidden]=\"!form.controls."+nomeRelazioneSx+"?.errors?.required\">\n" + 
-//							"                  {{ FIELD_REQUIRED | translate}" + 
-//							"            	</small>\n" 
+//							?"            		<small [hidden]=\"!form.controls."+nomeRelazioneSx+"?.errors?.required\">\n" + 
+//							"                    {{ FIELD_REQUIRED | translate}" + 
+//							"            		</small>\n" 
 //							: "")+
-//							"        	</div>\n\n";
+//							"        		</div>\n\n";
 					
 						}
 
