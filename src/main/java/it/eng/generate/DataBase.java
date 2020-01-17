@@ -490,7 +490,7 @@ public class DataBase {
 			new TemplateUserResource(this).generateTemplate();
 			new TemplateUserJWTController(this).generateTemplate();
 			new TemplateLogsResource(this).generateTemplate();
-			new TemplateReportBase(this).generateTemplate();	 //Dynamic Jasper	
+			new TemplateReportBase(this).generateTemplate();	//Dynamic Jasper	
 
 			//WEB.REST.UTILS (statics)
 			new TemplateHeaderUtil(this).generateTemplate();
@@ -639,7 +639,7 @@ public class DataBase {
 				new TemplateEntityModuleIonic(tabella).generateTemplate(); 
 				new TemplateEntityServiceIonic(tabella).generateTemplate();  			
 				new TemplateEntityIonic(tabella).generateTemplate();  		
-				//new TemplateEntityDetailModuleIonic(tabella).generateTemplate();  		//Comment to build apk in production 	
+				//new TemplateEntityDetailModuleIonic(tabella).generateTemplate();  //Commented to build apk in production 	
 				new TemplateEntityDetailIonic(tabella).generateTemplate();  		
 				new TemplateEntityHtmlIonic(tabella).generateTemplate(); 
 				new TemplateEntityDetailHtmlIonic(tabella).generateTemplate(); 

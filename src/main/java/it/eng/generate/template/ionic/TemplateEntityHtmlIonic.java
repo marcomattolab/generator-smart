@@ -21,10 +21,10 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 
 	public String getBody(){
 		// https://www.buildmystring.com/
-		// String jhiTranslate = "<span jhiTranslate=\""+conf.getProjectName()+"App."+nometabella+".detail.title\">"+Nometabella+"</span>\r\n";
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
+		String TABELLA = Nometabella.toUpperCase();
 		
 		String body = 
 		"<ion-header>\r\n" +
@@ -32,9 +32,7 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		"        <ion-buttons slot=\"start\">\r\n" +
 		"            <ion-back-button></ion-back-button>\r\n" +
 		"        </ion-buttons>\r\n" +
-		"        <ion-title>\r\n" +
-		"            "+Nometabella+"s\r\n" +
-		"        </ion-title>\r\n" +
+		"        <ion-title>{{"+TABELLA+" | translate}}</ion-title>\r\n" +
 		"    </ion-toolbar>\r\n" +
 		"</ion-header>\r\n\n" +
 		"<!-- todo: add elasticsearch support -->\r\n\n" +
@@ -76,23 +74,22 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n                <!-- Add Relation: OneToOne / ManyToOne -->\n";
-							body += "                <p>{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</p>\r\n";
+							body += "                <!-- Add Relation:  Name: "+nomeRelazioneSx+"      Type: "+relationType+" -->\n";
+							body += "                <p>{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</p>\n";
 						}
 						
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "\n                <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany -->\n";
-							body += "                <p>{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</p>\r\n";
+							body += "                <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany -->\n";
+							body += "                <p>{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</p>\n";
 						}
 						
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						//TODO DEVELOP NEXT
 //						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-//							body += "\n                <!-- Add Relation: ManyToMany -->\n";
-//							body += "                <p>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</p>\r\n";
+//							body += "                <!-- Add Relation:   Name: "+nomeRelazioneSx+"   Type: "+relationType+" -->\n";
+//							body += "                <p>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</p>\n";
 //						}
-						
 					}
 				}
 			}
@@ -118,9 +115,7 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		"        </ion-item-sliding>\r\n" +
 		"    </ion-list>\r\n\n" +
 		"    <ion-item *ngIf=\"!"+nometabella+"s?.length\">\r\n" +
-		"        <ion-label>\r\n" +
-		"            No "+Nometabella+"s found.\r\n" +
-		"        </ion-label>\r\n" +
+		"        <ion-label>{{ NO"+TABELLA+"FOUND | translate}}</ion-label>" +
 		"    </ion-item>\r\n\n" +
 		"    <ion-fab vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\r\n" +
 		"        <ion-fab-button (click)=\"new()\">\r\n" +

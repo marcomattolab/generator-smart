@@ -1234,4 +1234,14 @@ public class Utils {
 		return hasColumnAttachment;
 	}
 	
+	/**
+	 * @param TABLENAME
+	 * @return Column
+	 */
+	public static Column buildNoItemTable(String TABLENAME) {
+		Column columnNoItem = new Column();
+		columnNoItem.setName("No_"+TABLENAME+"_Found");
+		columnNoItem.setTypeColumn(Column.corvertModelType("String"));
+		return columnNoItem;
+	}
 }

@@ -140,6 +140,10 @@ public class TemplateEntityIonicI18N extends AbstractResourceTemplate {
 			}
 			//CICLE RELATIONS
 			
+			//ADD NO COLUMN LABEL
+			Column columnNoItem = Utils.buildNoItemTable(TABLENAME);
+			result += Utils.generateJsonUppercase(columnNoItem) + ",\n";
+			
 			//CICLE COLUMNS
 			for (Column column : tabella.getSortedColumns()) { 
 				String ColumnName = Utils.getFieldNameForMethod(column);
