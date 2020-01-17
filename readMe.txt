@@ -38,9 +38,3 @@
  - ionic cordova build android --prod
  - ionic cordova build android --dev
 
-Relations:**
-- OneToMany  => "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito2", "dxSelect":"nome"
-- OneToOne   => "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"
-- ManyToOne  => "sxTable":"Libro", "sxName":"collana2", "sxSelect":"nome" , "dxName":"have", "dxTable":"Collana"
-- ManyToMany => "sxTable":"Azienda", "sxName":"mysector2", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myazienda2", "dxSelect":"nominativo"
-
