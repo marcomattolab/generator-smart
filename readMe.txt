@@ -46,25 +46,11 @@ ionic cordova build android --dev
 
 
 
-
-BUG1:**
-OneToMany => "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito2", "dxSelect":"nome"
-Bug =>	In Edit Autore la select "bestseller" NON mostra il suo valore.
-
-
-BUG2:
-OneToOne => "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"
-Bug =>	In Edit Autore la select "bestseller" NON mostra il suo valore.
-
-
-BUG3:
-ManyToOne => "sxTable":"Libro", "sxName":"collana2", "sxSelect":"nome" , "dxName":"have", "dxTable":"Collana"
-Bug =>		In edit Libro la select "collana2" NON mostra il suo valore.
-
-
-BUG4:
-ManyToMany => "sxTable":"Azienda", "sxName":"mysector2", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myazienda2", "dxSelect":"nominativo"
-Bug => In edit Azienda non salva il campo mysector2. Inoltre "mysector2" dovrebbe essere una multiselect.
+Relations:**
+- OneToMany => "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito2", "dxSelect":"nome"
+- OneToOne => "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"
+- ManyToOne => "sxTable":"Libro", "sxName":"collana2", "sxSelect":"nome" , "dxName":"have", "dxTable":"Collana"
+- ManyToMany => "sxTable":"Azienda", "sxName":"mysector2", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myazienda2", "dxSelect":"nominativo"
 
 	
 
