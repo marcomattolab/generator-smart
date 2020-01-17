@@ -463,8 +463,10 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						"    "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: "+Utils.getFirstUpperCase(nomeTabellaDx)+"[];\n");
 
 					}else if(FORM_BUILDER.equals(section)) {
+//						mysectorId: [null, []],
+//				    	mysector2Id: [null, []],
 						relMap.put(relationType+nomeTabellaSx+nomeRelazioneSx+FORM_BUILDER, 
-						"    	"+Utils.getFirstLowerCase(nomeRelazioneSx)+": [null, []],\n");
+						"    	"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id: [null, []],\n");
 
 					}else if(NG_ONINIT_SECTION.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+nomeRelazioneSx+NG_ONINIT_SECTION, 
@@ -478,9 +480,17 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						"        private "+Utils.getFirstLowerCase(nomeTabellaDx)+"Service: "+Utils.getFirstUpperCase(nomeTabellaDx)+"Service,\r\n");
 
 					}else if(UPDATE_FORM.equals(section)) {
-//						relMap.put(relationType+nomeRelazioneSx+UPDATE_FORM, 
-//						"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+": "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id,\n");
+//					    mysectorId: azienda.mysectors,
+//			            mysector2Id: azienda.mysector2s,
+						relMap.put(relationType+nomeRelazioneSx+UPDATE_FORM, 
+						"            "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id: "+nomeTabella+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+"s,\n");
 
+					}else if(CREATE_FORM.equals(section)) {
+//						mysectors: this.form.get(['mysectorId']).value,
+//			            mysector2s: this.form.get(['mysector2Id']).value,
+						relMap.put(relationType+nomeRelazioneSx+CREATE_FORM, 
+						"			"+Utils.getFirstLowerCase(nomeRelazioneSx)+"s: this.form.get(['"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id']).value,\n");
+				
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+COMPARE, 
 						"    compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaDx)+", second: "+Utils.getFirstUpperCase(nomeTabellaDx)+"): boolean {\n"+

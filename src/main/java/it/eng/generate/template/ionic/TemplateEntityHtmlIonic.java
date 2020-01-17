@@ -74,20 +74,20 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if(relationType.equals(Utils.OneToOne) || relationType.equals(Utils.ManyToOne)) {
 						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-							body += "                <!-- Add Relation:  Name: "+nomeRelazioneSx+"      Type: "+relationType+" -->\n";
+							body += "                <!-- Add Relation:  Name: "+nomeRelazioneSx+"      Type: "+relationType+"  pilota -->\n";
 							body += "                <p>{{"+Utils.getFirstLowerCase(nomeTabellaSx)+"."+Utils.getFirstLowerCase(nomeRelazioneSx)+""+Utils.getFirstUpperCase(nomeSelectSx)+"}}</p>\n";
 						}
 						
 					} else if(relationType.equals(Utils.OneToMany)) {
 						if ( nomeTabellaDx.toLowerCase().equals(nomeTabella) ) {
-							body += "                <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany -->\n";
+							body += "                <!-- Add Relation    Name: "+nomeRelazioneDx+"     Type: OneToMany  jungla -->\n";
 							body += "                <p>{{"+Utils.getFirstLowerCase(nomeTabellaDx)+"."+Utils.getFirstLowerCase(nomeRelazioneDx)+""+Utils.getFirstUpperCase(nomeSelectDx)+"}}</p>\n";
 						}
 						
 					} else if(relationType.equals(Utils.ManyToMany)) {
-						//TODO DEVELOP NEXT
+//						//TODO DEVELOP THIS FEATURE!
 //						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) ) {
-//							body += "                <!-- Add Relation:   Name: "+nomeRelazioneSx+"   Type: "+relationType+" -->\n";
+//							body += "                <!-- Add Relation:   Name: "+nomeRelazioneSx+"   Type: "+relationType+"  tango -->\n";
 //							body += "                <p>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</p>\n";
 //						}
 					}

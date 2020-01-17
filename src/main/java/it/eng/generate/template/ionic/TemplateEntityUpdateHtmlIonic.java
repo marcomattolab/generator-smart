@@ -179,34 +179,23 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 					} else if(relationType.equals(Utils.ManyToMany)) {
 						//TODO DEVELOP/TEST THIS FEATURE!!
-						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella) && false) {
+						if ( nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 							boolean relationshipRequired = false; //TODO ENABLE DEVELOP THIS!!!
-							body += "		    <!-- Add Relation:  Name:  "+nomeRelazioneSx+"   Type: ManyToMany   delta!!!!! -->\n";
-//							body += 
-//							"        		<ion-item>\n"+
-//							"            		<ion-label>{{'"+nomeTabella.toUpperCase()+"."+Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase()+"' | translate}}</ion-label>\n"+
-//							"            		<ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\n"+
-//							"                		<ion-select-option [value]=\"null\"></ion-select-option>\n"+
-//							"                		<ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option.id\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</ion-select-option>\n"+
-//							"            		</ion-select>\n"+
-//							"        		</ion-item>\n";
+							body += "		    <!-- Add Relation:  Name:  "+nomeRelazioneSx+"   Type: ManyToMany   delta123! -->\n";
 							body+= 
-							"        		<ion-item>\r\n" + 
-							"            		<ion-label>{{'"+nomeTabella.toUpperCase()+"."+Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase()+"' | translate}}</ion-label>\n"+
-							"            		<ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"\" multiple=\"true\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"s\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\n" + 
-							//"                       <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option\" *ngFor=\"let "+nomeTabella+"Option of "+nomeRelazioneSx+"s; trackBy: track"+Utils.getFirstUpperCase(nomeTabella)+"ById\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</ion-select-option>\n" + 
-							"                       <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option\" *ngFor=\"let "+nomeTabella+"Option of "+nomeRelazioneSx+"s;>{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</ion-select-option>\n" + 
-							"            		</ion-select>\n" + 
-							"        		</ion-item>\n"+
-							
-							
-							"        		<div [hidden]=\"!(form.controls."+nomeRelazioneSx+"?.dirty && form.controls."+nomeRelazioneSx+"?.invalid)\">\n" + 
-							""+(relationshipRequired 
-							?"            		<small [hidden]=\"!form.controls."+nomeRelazioneSx+"?.errors?.required\">\n" + 
-							"                       {{ FIELD_REQUIRED | translate}" + 
-							"            		</small>\n" 
-							: "")+
-							"        		</div>\n\n";
+							"        	<ion-item>\r\n" + 
+							"            	<ion-label>{{'"+nomeTabella.toUpperCase()+"."+Utils.getFirstUpperCase(nomeRelazioneSx).toUpperCase()+"' | translate}}</ion-label>\n"+
+							"            	<ion-select id=\"field_"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\" multiple=\"true\" formControlName=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Id\" [compareWith]=\"compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"\">\n" + 
+							"                      <ion-select-option [value]=\""+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option\" *ngFor=\"let "+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option of "+Utils.getFirstLowerCase(nomeRelazioneSx)+"s;\">{{"+Utils.getFirstLowerCase(nomeRelazioneSx)+"Option."+Utils.getFirstLowerCase(nomeSelectSx)+"}}</ion-select-option>\n" + 
+							"            	</ion-select>\n" + 
+							"        	</ion-item>\n";
+//							"        	<div [hidden]=\"!(form.controls."+nomeRelazioneSx+"?.dirty && form.controls."+nomeRelazioneSx+"?.invalid)\">\n" + 
+//							""+(relationshipRequired 
+//							?"            	<small [hidden]=\"!form.controls."+nomeRelazioneSx+"?.errors?.required\">\n" + 
+//							"                  {{ FIELD_REQUIRED | translate}" + 
+//							"            	</small>\n" 
+//							: "")+
+//							"        	</div>\n\n";
 					
 						}
 
