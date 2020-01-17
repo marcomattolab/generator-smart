@@ -8,7 +8,7 @@
 ## Sezione Modello JSON
 	- LOW - Modello JSON => Se metto un campo CamelCase "firstName" non funge! (Deve essere tutto minuscolo "firstname")
 	- LOW - Modello JSON => Colonna "id" deve essere sempre presente! (ToDo: Add automatically)
-	- LOW - Modello JSON => @@ Generare profili da file di configurazione ed abilitarli alle voci menu e menu veloce(debug)
+	- LOW - Modello JSON => @@ Generare "profili" da file di configurazione ed abilitarli alle voci menu e menu veloce(debug)
   	- LOW - Modello JSON => Develop wizard to create JSON project (see https://www.cc28tech.com/angular-multi-step-wizard-part-1/ )
 
 ## FILTRI RICERCA
@@ -18,7 +18,6 @@
 			
 ## BUG e/o Altre Migliorie
 	- HIG - @Gestire i campi BLOB / CLOB - Add altri tipologie: ImageBlob, Blob, BigDecimal, Double etc
-  	- HIG - @IONIC 4 - Gestire Relazioni (OneToMany etc) e gestire pulsanti (Edit Save Back non visibili)
 	- LOW - BUG in IONIC (autenticazione FE JWT see Bearer not found!)
   	- LOW - Inserire controllo Pattern | MinSize | MaxSize lato backend / Hibernate
 
@@ -34,23 +33,14 @@
 ## Documentation Ideas         
 	- See https://www.jaxio.com/en/celerio.html
 	- See https://www.slideshare.net/agoncal/custom-and-generated-code-side-by-side-with-jhipster
-
 	
-	
-## MOBILE: 
-Comando per generare con Android studio APK:
-ionic cordova build android --prod
-ionic cordova build android --dev
-
-
-
-
+## MOBILE - Comando per generare con Android studio APK:
+ - ionic cordova build android --prod
+ - ionic cordova build android --dev
 
 Relations:**
-- OneToMany => "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito2", "dxSelect":"nome"
-- OneToOne => "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"
-- ManyToOne => "sxTable":"Libro", "sxName":"collana2", "sxSelect":"nome" , "dxName":"have", "dxTable":"Collana"
+- OneToMany  => "sxTable":"Autore", "sxName":"clienti", "sxSelect":"firstname" , "dxTable":"Cliente", "dxName":"preferito2", "dxSelect":"nome"
+- OneToOne   => "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"
+- ManyToOne  => "sxTable":"Libro", "sxName":"collana2", "sxSelect":"nome" , "dxName":"have", "dxTable":"Collana"
 - ManyToMany => "sxTable":"Azienda", "sxName":"mysector2", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myazienda2", "dxSelect":"nominativo"
-
-	
 
