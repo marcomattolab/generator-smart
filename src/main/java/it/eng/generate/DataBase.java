@@ -102,7 +102,7 @@ import it.eng.generate.template.ionic.TemplateEntityDetailHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityDetailIonic;
 import it.eng.generate.template.ionic.TemplateEntityHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityIndexIonic;
-import it.eng.generate.template.ionic.TemplateEntityIonic;
+import it.eng.generate.template.ionic.TemplateEntityTsIonic;
 import it.eng.generate.template.ionic.TemplateEntityIonicI18N;
 import it.eng.generate.template.ionic.TemplateEntityModelIonic;
 import it.eng.generate.template.ionic.TemplateEntityModuleIonic;
@@ -638,7 +638,7 @@ public class DataBase {
 				new TemplateEntityModelIonic(this, tabella).generateTemplate(); 	
 				new TemplateEntityModuleIonic(tabella).generateTemplate(); 
 				new TemplateEntityServiceIonic(tabella).generateTemplate();  			
-				new TemplateEntityIonic(tabella).generateTemplate();  		
+				new TemplateEntityTsIonic(tabella).generateTemplate();  		
 				//new TemplateEntityDetailModuleIonic(tabella).generateTemplate();  //Commented to build apk in production 	
 				new TemplateEntityDetailIonic(tabella).generateTemplate();  		
 				new TemplateEntityHtmlIonic(tabella).generateTemplate(); 

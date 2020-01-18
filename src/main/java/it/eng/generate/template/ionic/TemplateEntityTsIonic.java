@@ -5,9 +5,9 @@ import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;
 
-public class TemplateEntityIonic extends AbstractResourceTemplate {
+public class TemplateEntityTsIonic extends AbstractResourceTemplate {
 
-	public TemplateEntityIonic(Table tabella) {
+	public TemplateEntityTsIonic(Table tabella) {
 		super(tabella);
 	}
 
@@ -87,6 +87,28 @@ public class TemplateEntityIonic extends AbstractResourceTemplate {
 		"    view("+nometabella+": "+Nometabella+") {\r\n" +
 		"        this.navController.navigateForward('/tabs/entities/"+nometabella+"/' + "+nometabella+".id + '/view');\r\n" +
 		"    }\r\n\n" +
+		
+		
+		//Filtro di Ricerca
+		"    getItems(ev) {\n" + 
+		"    		this."+nometabella+"Service.query()\n" + 
+		"	        .subscribe(data => {\n" + 
+		"	        		// Set response\n" + 
+		"	        		this."+nometabella+"s = data.body;\n\n" + 
+		"		         // Set val written into search filter\n" + 
+		"		         var val = ev.target.value;\n\n" + 
+		"		         // If the value is an empty string do not filter items\n" + 
+		"		         if (val && val.trim() != '') {\n" + 
+		"			        	 this."+nometabella+"s = this."+nometabella+"s.filter((item) => {\n" + 
+		"			        		 return (item."+Utils.getFilterName(tabella)+".toLowerCase().indexOf(val.toLowerCase()) > -1);\n" + 
+		"			        	 })\n" + 
+		"		         }\n" + 
+		"	         \n" + 
+		"	      }, (error) => this.onError(error));\n" + 
+		"    }\n\n"+
+		//
+		
+		
 		"}\r\n";
 
 		return body;

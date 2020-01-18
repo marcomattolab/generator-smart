@@ -111,7 +111,7 @@ public class Utils {
 		className = className.substring(0,1).toUpperCase()+className.substring(1);
 		return className; 
 	}
-	
+
 	public static String getCostantName(Table table){
 		String costantName = table.getNomeTabella().toUpperCase();
 		return costantName; 
@@ -1232,6 +1232,32 @@ public class Utils {
 			}
 		}
 		return hasColumnAttachment;
+	}
+	
+	/**
+	 * Retrieve search filter name for IONIC
+	 * @param table table name
+	 * @return search filter name
+	 */
+	@Deprecated
+	public static String getFilterName(Table table){
+		String filterName = "";
+		for(Column col : table.getColumns()) {
+			//TODO MOVE THESE INTO PROPERTIES
+			if( col.getName().toLowerCase().equals("name") ||
+					col.getName().toLowerCase().equals("nome") ||	
+					col.getName().toLowerCase().equals("title") ||	
+					col.getName().toLowerCase().equals("name") ||	
+					col.getName().toLowerCase().equals("firstname") ||	
+					col.getName().toLowerCase().equals("desc") ||	
+					col.getName().toLowerCase().equals("descrizione") ||	
+					col.getName().toLowerCase().equals("codice") ||	
+					col.getName().toLowerCase().equals("id") ) {
+				filterName = col.getName();
+				break;
+			}
+		}
+		return filterName; 
 	}
 	
 }

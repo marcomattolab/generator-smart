@@ -35,11 +35,16 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		"        <ion-title>{{'"+TABELLA+".TITLE' | translate}}</ion-title>\r\n" +
 		"    </ion-toolbar>\r\n" +
 		"</ion-header>\r\n\n" +
-		"<!-- todo: add elasticsearch support -->\r\n\n" +
 		"<ion-content padding>\r\n" +
 		"    <ion-refresher [disabled]=\"plt.is('desktop')\" slot=\"fixed\" (ionRefresh)=\"loadAll($event)\">\r\n" +
 		"        <ion-refresher-content></ion-refresher-content>\r\n" +
 		"    </ion-refresher>\r\n" +
+		
+		//Filtro di Ricerca
+		"    <!--\n"+
+		"    <ion-searchbar (ionInput)=\"getItems($event)\"></ion-searchbar>\n"+
+		"    -->\n"+
+		
 		"    <ion-list>\r\n" +
 		"        <ion-item-sliding *ngFor=\"let "+nometabella+" of "+nometabella+"s; trackBy: trackId\" #slidingItem>\r\n" +
 		"            <ion-item (click)=\"view("+nometabella+")\">\r\n" +
