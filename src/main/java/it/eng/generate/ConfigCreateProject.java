@@ -6,7 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConfigCreateProject {
-	//TODO CHANGE_ME To Modify Destination Path about generated code!!!
+	//FIXME CHANGE_ME To Modify Destination Path about generated code!!!
 	private static final boolean USE_PATHNAME_ENV_B = true; //APPLE
 	//private static final boolean USE_PATHNAME_ENV_B = false; //WINDOWS
 	
@@ -61,8 +61,8 @@ public class ConfigCreateProject {
 	private String resConfigLiquibaseChangelogFolder = "config.liquibase.changelog";
 	
 	private String projectName;
-	
 	private String[] languages;
+	private String[] profiles;
 	
 	private static ConfigCreateProject ccp;
 	
@@ -96,6 +96,7 @@ public class ConfigCreateProject {
 		this.setUrlConnection(jsonConf.getUrlConnection());
 		this.setEnumerations(jsonConf.getEnumerations());
 		this.setLanguages( jsonConf.getLanguages().toArray(new String[jsonConf.getLanguages().size()]) );
+		this.setProfiles( jsonConf.getProfiles().toArray(new String[jsonConf.getProfiles().size()]) );
 		this.setProjectEntities(jsonConf.getEntities());
 		this.setProjectRelations(jsonConf.getRelations());
 		this.setMysql(jsonConf.getDriver().contains("mysql") ? true : false);
@@ -512,6 +513,13 @@ public class ConfigCreateProject {
 		return printRelation;
 	}
 
+	public String[] getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(String[] profiles) {
+		this.profiles = profiles;
+	}
 
 	public String toString() {
 		String ret = "";

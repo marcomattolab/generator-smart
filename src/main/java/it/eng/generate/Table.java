@@ -11,6 +11,7 @@ public class Table {
 	HashMap<String, Column> colonne;
 	private String nomeTabellaCompleto;
 	private String nomeTabella;
+	private List<String> profiles;
 	private int sort;
 	
 	public Table() {
@@ -82,6 +83,14 @@ public class Table {
 
 	public void setSort(int sort) {
 		this.sort = sort;
+	}
+
+	public List<String> getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(List<String> profiles) {
+		this.profiles = profiles;
 	}
 
 }

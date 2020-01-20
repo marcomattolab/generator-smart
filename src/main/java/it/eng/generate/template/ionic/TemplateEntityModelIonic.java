@@ -130,7 +130,6 @@ public class TemplateEntityModelIonic extends AbstractResourceTemplate {
 	 * @return body with import 
 	 */
 	private String writeImportRelations(ConfigCreateProject conf) {
-		//"import { Giustificativo } from '../giustificativo/giustificativo.model';\n"+
 		String res = "";
 		Map<String, String> resMap = new HashMap<>();
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {

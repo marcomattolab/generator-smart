@@ -1259,5 +1259,22 @@ public class Utils {
 		}
 		return filterName; 
 	}
+
+	public static String getAuthorities(Table tabella, String aroundChar) {
+		String result = "";
+		if(tabella.getProfiles()!=null && tabella.getProfiles().size()>0) {
+			int i = 0;
+			int size = tabella.getProfiles().size();
+			for(String profile: tabella.getProfiles()) {
+				result += ""+aroundChar+""+profile+""+aroundChar+""+ (i+1<size?", ":"");
+				i++;
+			}
+		} else {
+			//Default
+			//result += "UserRole.ROLE_ADMIN, UserRole.ROLE_USER"; 
+			result += aroundChar+"ROLE_ADMIN"+aroundChar+", "+aroundChar+"ROLE_USER"+aroundChar;
+		}
+		return result;
+	}
 	
 }

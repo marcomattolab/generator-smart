@@ -289,7 +289,7 @@ public class DataBase {
 			
 		} else {
 			
-			//CASE B - Generate from Project Entities
+			//CASE B - Generate from Project Entities JSON
 			List<ProjectEntity> prjEntities = ccp.getProjectEntities();
 			
 			if (!CollectionUtils.isEmpty(prjEntities)) {
@@ -300,6 +300,7 @@ public class DataBase {
 					
 					table.setNomeTabellaCompleto(tableName);
 					table.setNomeTabella(tableName);
+					table.setProfiles(entity.getProfiles());
 					this.addTable(tableName, table);
 					
 					int sortColumn = 0;

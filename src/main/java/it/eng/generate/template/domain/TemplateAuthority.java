@@ -18,7 +18,8 @@ public class TemplateAuthority extends AbstractTemplate {
 	public String getBody(){
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder() +";\r\n\n" +
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder() +";\r\n\n" +
 		"import org.hibernate.annotations.Cache;\r\n" +
 		"import org.hibernate.annotations.CacheConcurrencyStrategy;\r\n" +
 		"import javax.persistence.Entity;\r\n" +

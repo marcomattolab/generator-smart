@@ -23,8 +23,9 @@ public class TemplateEntityModuleIonic extends AbstractResourceTemplate {
 
 		//TODO MOVE IN PROPERTY
 		//String authorities = "UserRole.ROLE_ADMIN, UserRole.ROLE_USER"; 
-		String authorities = "'ROLE_ADMIN', 'ROLE_USER'"; 
-		
+		//String authorities = "'ROLE_ADMIN', 'ROLE_USER'"; 
+		String authorities = Utils.getAuthorities(tabella,"'");
+				
 		String body = 
 		"import { NgModule, Injectable } from '@angular/core';\r\n" +
 		"import { TranslateModule } from '@ngx-translate/core';\r\n" +

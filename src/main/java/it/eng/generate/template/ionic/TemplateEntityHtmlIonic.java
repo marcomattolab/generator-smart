@@ -40,11 +40,6 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		"        <ion-refresher-content></ion-refresher-content>\r\n" +
 		"    </ion-refresher>\r\n" +
 		
-		//Filtro di Ricerca
-		"    <!--\n"+
-		"    <ion-searchbar (ionInput)=\"getItems($event)\"></ion-searchbar>\n"+
-		"    -->\n"+
-		
 		"    <ion-list>\r\n" +
 		"        <ion-item-sliding *ngFor=\"let "+nometabella+" of "+nometabella+"s; trackBy: trackId\" #slidingItem>\r\n" +
 		"            <ion-item (click)=\"view("+nometabella+")\">\r\n" +

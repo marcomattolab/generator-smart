@@ -10,6 +10,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class ProjectEntity {
 	private String name;
+
+	@JsonProperty("profiles")
+	@JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+	private List<String> profiles;
 	
 	@JsonProperty("fields")
 	@JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
@@ -29,6 +33,14 @@ public class ProjectEntity {
 	
 	public void setFields(List<Field> fields) {
 		this.fields = fields;
+	}
+
+	public List<String> getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(List<String> profiles) {
+		this.profiles = profiles;
 	}
     
 }

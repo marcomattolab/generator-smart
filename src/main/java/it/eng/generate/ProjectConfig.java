@@ -21,6 +21,7 @@ public class ProjectConfig {
     private String projectName;
     private String urlConnection;
     private List<String> languages;
+    private List<String> profiles;
     
     @JsonProperty("entities")
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
@@ -93,6 +94,12 @@ public class ProjectConfig {
 	}
 	public void setLanguages(List<String> languages) {
 		this.languages = languages;
+	}
+	public List<String> getProfiles() {
+		return profiles;
+	}
+	public void setProfiles(List<String> profiles) {
+		this.profiles = profiles;
 	}
 	public boolean isGenerateTest() {
 		return generateTest;
