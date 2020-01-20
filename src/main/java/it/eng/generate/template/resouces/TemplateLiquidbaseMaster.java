@@ -1,10 +1,7 @@
 package it.eng.generate.template.resouces;
 
-import org.springframework.util.CollectionUtils;
-
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.DataBase;
-import it.eng.generate.ProjectRelation;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
 import it.eng.generate.template.AbstractResourceTemplate;

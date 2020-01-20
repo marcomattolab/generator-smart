@@ -64,7 +64,7 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 			//boolean isPrimaryKey = column.isKey();
 			
 			//String nomeColonna = Utils.getFieldName(column);  	// dataNascita
-			String nomeColonna = column.getName();					// data_nascita
+			String nomeColonna = column.getName();				// data_nascita
 			int sizeColumn = column.getColumnSize();
 			
 			if( Utils.isPrimaryKeyID(column) ) {
@@ -187,7 +187,6 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 				
 				if(nomeTabellaSx!=null && nomeTabellaDx != null) {
 					if ( relationType.equals(Utils.ManyToMany) ) {
-						// Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)} 
 						if (nomeTabellaSx.toLowerCase().equals(nomeTabella)) {
 						body += "\n		<createTable tableName=\""+ Utils.getFirstLowerCase(nomeTabellaSx) + "_"+ Utils.getFirstLowerCase(nomeRelazioneSx) +"\">\r\n" +
 								"          <column name=\""+ Utils.getFirstLowerCase(nomeRelazioneSx) +"s_id\" type=\"bigint\">\r\n" +
@@ -231,7 +230,7 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 		"    </changeSet>\r\n" +
 				
 		
-		//Audit - BuildMyString.com generated code. Please enjoy your string responsibly.
+		//Audit START
 		"    <!-- Added the entity audit columns -->\r\n" +
 		"    <changeSet id=\""+Utils.getCurrentDate(tabella.getSort())+"-audit-1\" author=\"jhipster-entity-audit\">\r\n" +
 		"        <addColumn tableName=\""+entityname+"\">\r\n" +
@@ -258,7 +257,6 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 		"    </changeSet>\n" +
 		"    -->\n\n" +
 		
-		"    <!-- jh-needle-liquibase-add-changeset - JH will add changesets here, do not remove-->\r\n" +
 		"</databaseChangeLog>\r\n";
 		return body;
 	}

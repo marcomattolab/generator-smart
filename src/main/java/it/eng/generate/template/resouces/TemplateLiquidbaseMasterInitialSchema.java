@@ -38,7 +38,7 @@ public class TemplateLiquidbaseMasterInitialSchema extends AbstractResourceTempl
 		"        Core tables.\r\n" +
 		"        The initial schema has the '00000000000001' id, so that it is over-written if we re-generate it.\r\n" +
 		"    -->\r\n" +
-		"    <changeSet id=\"00000000000001\" author=\"jhipster\">\r\n" +
+		"    <changeSet id=\"00000000000001\" author=\"smart\">\r\n" +
 		"        <createTable tableName=\"jhi_user\">\r\n" +
 		"            <column name=\"id\" type=\"bigint\" autoIncrement=\"${autoIncrement}\">\r\n" +
 		"                <constraints primaryKey=\"true\" nullable=\"false\"/>\r\n" +
@@ -83,18 +83,6 @@ public class TemplateLiquidbaseMasterInitialSchema extends AbstractResourceTempl
 		"            </column>\r\n" +
 		"        </createTable>\r\n" +
 		"        <addPrimaryKey columnNames=\"user_id, authority_name\" tableName=\"jhi_user_authority\"/>\r\n" +
-//		"        <createTable tableName=\"jhi_persistent_token\">\r\n" +
-//		"            <column name=\"series\" type=\"varchar(20)\">\r\n" +
-//		"                <constraints primaryKey=\"true\" nullable=\"false\"/>\r\n" +
-//		"            </column>\r\n" +
-//		"            <column name=\"user_id\" type=\"bigint\"/>\r\n" +
-//		"            <column name=\"token_value\" type=\"varchar(20)\">\r\n" +
-//		"                <constraints nullable=\"false\" />\r\n" +
-//		"            </column>\r\n" +
-//		"            <column name=\"token_date\" type=\"date\"/>\r\n" +
-//		"            <column name=\"ip_address\" type=\"varchar(39)\"/>\r\n" +
-//		"            <column name=\"user_agent\" type=\"varchar(255)\"/>\r\n" +
-//		"        </createTable>\r\n" +
 		"        <addForeignKeyConstraint baseColumnNames=\"authority_name\"\r\n" +
 		"                                 baseTableName=\"jhi_user_authority\"\r\n" +
 		"                                 constraintName=\"fk_authority_name\"\r\n" +
@@ -108,11 +96,6 @@ public class TemplateLiquidbaseMasterInitialSchema extends AbstractResourceTempl
 		"        <addNotNullConstraint   columnName=\"password_hash\"\r\n" +
 		"                                columnDataType=\"varchar(60)\"\r\n" +
 		"                                tableName=\"jhi_user\"/>\r\n" +
-//		"        <addForeignKeyConstraint baseColumnNames=\"user_id\"\r\n" +
-//		"                                 baseTableName=\"jhi_persistent_token\"\r\n" +
-//		"                                 constraintName=\"fk_user_persistent_token\"\r\n" +
-//		"                                 referencedColumnNames=\"id\"\r\n" +
-//		"                                 referencedTableName=\"jhi_user\"/>\r\n" +
 		"        <loadData encoding=\"UTF-8\"\r\n" +
 		"                  file=\"config/liquibase/users.csv\"\r\n" +
 		"                  separator=\";\"\r\n" +
@@ -166,7 +149,7 @@ public class TemplateLiquidbaseMasterInitialSchema extends AbstractResourceTempl
 		"                                 referencedColumnNames=\"event_id\"\r\n" +
 		"                                 referencedTableName=\"jhi_persistent_audit_event\"/>\r\n" +
 		"    </changeSet>\r\n" +
-		"    <changeSet author=\"jhipster\" id=\"00000000000002\" context=\"test\">\r\n" +
+		"    <changeSet author=\"smart\" id=\"00000000000002\" context=\"test\">\r\n" +
 		"        <createTable tableName=\"jhi_date_time_wrapper\">\r\n" +
 		"            <column autoIncrement=\"${autoIncrement}\" name=\"id\" type=\"BIGINT\">\r\n" +
 		"                <constraints primaryKey=\"true\" primaryKeyName=\"jhi_date_time_wrapperPK\"/>\r\n" +
