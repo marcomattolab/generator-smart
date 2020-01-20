@@ -21,7 +21,6 @@ public class TemplateEntityModuleIonic extends AbstractResourceTemplate {
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
 
-		//TODO MOVE IN PROPERTY
 		//String authorities = "UserRole.ROLE_ADMIN, UserRole.ROLE_USER"; 
 		//String authorities = "'ROLE_ADMIN', 'ROLE_USER'"; 
 		String authorities = Utils.getAuthorities(tabella,"'");

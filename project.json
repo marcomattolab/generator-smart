@@ -36,11 +36,11 @@
   			{"fname":"name", "ftype":"String", "frequired":true, "fsize":500}, 
   			{"fname":"publishyear", "ftype":"String", "frequired":false, "fsize":4}, 
   			{"fname":"copies", "ftype":"Integer", "frequired":false, "fsize":21}
-  	]},
+  	],"profiles" : [ "ROLE_ADMIN" ]},
   	{"name":"Collana", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
   			{"fname":"nome", "ftype":"String", "frequired":true, "fsize":500}
-  	]},
+  	], "profiles" : [ "ROLE_OPERATOR" ]},
   	{"name":"Cliente", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
   			{"fname":"firstname", "ftype":"String", "frequired":true, "fsize":500}, 
@@ -48,7 +48,7 @@
   			{"fname":"type", "ftype":"TipoCliente", "frequired":false, "fsize":500}, 
   			{"fname":"email", "ftype":"String", "frequired":false, "fsize":500}, 
   			{"fname":"address", "ftype":"String", "frequired":false, "fsize":600}
-  	]},
+  	],"profiles" : [ "ROLE_USER" ]},
   	{"name":"Azienda", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
   			{"fname":"codice", "ftype":"String", "frequired":true, "fsize":10, "fminlength": 3, "fmaxlength": 10},

@@ -35,22 +35,22 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 
 		String body = 
 				"<ion-header>\r\n" +
-						"    <ion-toolbar>\r\n" +
-						"        <ion-buttons slot=\"start\">\r\n" +
-						"            <ion-back-button></ion-back-button>\r\n" +
-						"        </ion-buttons>\r\n" +
-						"        <ion-title>{{'"+TABELLA+".TITLE' | translate}}</ion-title>\r\n" +
-						"        <ion-buttons slot=\"end\">\r\n" +
-						"            <ion-button [disabled]=\"!isReadyToSave\" (click)=\"save()\" color=\"white\">\r\n" +
-						"              <span *ngIf=\"isIos()\">{{'DONE_BUTTON' | translate}}</span>\r\n" + 
-						"              <ion-icon name=\"md-checkmark\" *ngIf=\"!isIos()\"></ion-icon>\r\n" + 
-						"            </ion-button>\r\n" +
-						"        </ion-buttons>\r\n" +
-						"    </ion-toolbar>\r\n" +
-						"</ion-header>\r\n\n" +
-						"<ion-content padding>\r\n" +
-						"    <form *ngIf=\"form\" name=\"form\" [formGroup]=\"form\" (ngSubmit)=\"save()\">\r\n" +
-						"        <ion-list>\r\n";
+				"    <ion-toolbar>\r\n" +
+				"        <ion-buttons slot=\"start\">\r\n" +
+				"            <ion-back-button></ion-back-button>\r\n" +
+				"        </ion-buttons>\r\n" +
+				"        <ion-title>{{'"+TABELLA+".TITLE' | translate}}</ion-title>\r\n" +
+				"        <ion-buttons slot=\"end\">\r\n" +
+				"            <ion-button [disabled]=\"!isReadyToSave\" (click)=\"save()\" color=\"white\">\r\n" +
+				"              <span *ngIf=\"isIos()\">{{'DONE_BUTTON' | translate}}</span>\r\n" + 
+				"              <ion-icon name=\"md-checkmark\" *ngIf=\"!isIos()\"></ion-icon>\r\n" + 
+				"            </ion-button>\r\n" +
+				"        </ion-buttons>\r\n" +
+				"    </ion-toolbar>\r\n" +
+				"</ion-header>\r\n\n" +
+				"<ion-content padding>\r\n" +
+				"    <form *ngIf=\"form\" name=\"form\" [formGroup]=\"form\" (ngSubmit)=\"save()\">\r\n" +
+				"        <ion-list>\r\n";
 
 		//Columns
 		for (Column column : tabella.getSortedColumns()) {
