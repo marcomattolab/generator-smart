@@ -19,6 +19,7 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 	public String getBody(){
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
+		
 		String body = 
 		"<nav class=\"navbar navbar-dark navbar-expand-md jh-navbar\">\r\n" +
 		"    <div class=\"jh-logo-container float-left\">\r\n" +
@@ -91,7 +92,6 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 		"            </li>\r\n" +
 		//
 		
-		"            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->\r\n" +
 		"            <li *ngSwitchCase=\"true\" ngbDropdown class=\"nav-item dropdown pointer\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n" +
 		"                <a class=\"nav-link dropdown-toggle\" ngbDropdownToggle href=\"javascript:void(0);\" id=\"entity-menu\">\r\n" +
 		"                    <span>\r\n" +
@@ -107,8 +107,9 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 		for(Table table: Utils.getTables(database)  ) {
 			String Tablename = Utils.getEntityName(table);
 			String tablename = Utils.getFieldName(table);
+			String authorities = Utils.getAuthorities(table, "'");
 			body+=
-			"                    <li>\r\n" +
+			"                    <li *jhiHasAnyAuthority=\""+authorities+"\">\r\n" +
 			"                        <a class=\"dropdown-item\" routerLink=\""+tablename+"\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{ exact: true }\" (click)=\"collapseNavbar()\">\r\n" +
 			"                            <fa-icon icon=\"asterisk\" fixedWidth=\"true\"></fa-icon>\r\n" +
 			"                            <span jhiTranslate=\"global.menu.entities."+tablename+"\">"+Tablename+"</span>\r\n" +
@@ -117,7 +118,6 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 		}
 				
 		body+=
-		"                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->\r\n" +
 		"                </ul>\r\n" +
 		// MENU ENTITIES END
 		
@@ -173,19 +173,19 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 		"                        </a>\r\n" +
 		"                    </li>\r\n" +
 
-		//Audit - BuildMyString.com generated code. Please enjoy your string responsibly.
+		//Audit
 		"                    <li>\r\n" +
 		"                        <a class=\"dropdown-item\" routerLink=\"admin/entity-audit\" routerLinkActive=\"active\" (click)=\"collapseNavbar()\">\r\n" +
-	  //"                            <fa-icon [icon]=\"'list-alt'\" [fixedWidth]=\"true\"></fa-icon>&nbsp;\r\n" +
 		"                            <fa-icon icon=\"tasks\" fixedWidth=\"true\"></fa-icon>\n"+
 		"                            <span jhiTranslate=\"global.menu.admin.entity-audit\">Entity Audit</span>\r\n" +
 		"                        </a>\r\n" +
 		"                    </li>\r\n"+
-		//Audit
 		
-		"                    <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->\r\n" +
 		"                </ul>\r\n" +
 		"            </li>\r\n" +
+
+		
+		//Tools
 		"            <li ngbDropdown class=\"nav-item dropdown pointer\" *ngIf=\"languages && languages.length > 1\">\r\n" +
 		"                <a class=\"nav-link dropdown-toggle\" ngbDropdownToggle href=\"javascript:void(0);\" id=\"languagesnavBarDropdown\">\r\n" +
 		"                    <span>\r\n" +
@@ -224,12 +224,6 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 		"                            <span jhiTranslate=\"global.menu.account.password\">Password</span>\r\n" +
 		"                        </a>\r\n" +
 		"                    </li>\r\n" +
-//		"                    <li *ngSwitchCase=\"true\">\r\n" +
-//		"                        <a class=\"dropdown-item\" routerLink=\"sessions\" routerLinkActive=\"active\" (click)=\"collapseNavbar()\">\r\n" +
-//		"                            <fa-icon icon=\"cloud\" fixedWidth=\"true\"></fa-icon>\r\n" +
-//		"                            <span jhiTranslate=\"global.menu.account.sessions\">Sessions</span>\r\n" +
-//		"                        </a>\r\n" +
-//		"                    </li>\r\n" +
 		"                    <li *ngSwitchCase=\"true\">\r\n" +
 		"                        <a class=\"dropdown-item\" (click)=\"logout()\" id=\"logout\">\r\n" +
 		"                            <fa-icon icon=\"sign-out-alt\" fixedWidth=\"true\"></fa-icon>\r\n" +
