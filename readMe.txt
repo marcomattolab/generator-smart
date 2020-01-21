@@ -44,10 +44,3 @@ WEB
 and so on (dashboard...)
 
 
-MOBILE
-/demogenerated/mobile/src/app/pages/entities/entities.page.ts  e  /demogenerated/mobile/src/app/services/user/user.model.ts
-/demogenerated/mobile/src/app/pages/home/home.module.ts
-
-
-
-
