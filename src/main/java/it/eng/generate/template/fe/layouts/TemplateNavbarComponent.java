@@ -107,12 +107,11 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 		for(Table table: Utils.getTables(database)  ) {
 			String Tablename = Utils.getEntityName(table);
 			String tablename = Utils.getFieldName(table);
-			String authorities = Utils.getAuthorities(table, "'");
+			String authorities = Utils.getAuthorities(table, Utils.APICE);
 			
-			//String jhiAuthorities = " *jhiHasAnyAuthority= \""+authorities+"\"";
-			String jhiAuthorities = "";
+			String jhiAuthorities = "*jhiHasAnyAuthority= \"["+authorities+"\"]";
 			body+=
-			"                    <li"+ jhiAuthorities+">\r\n" +
+			"                    <li "+ jhiAuthorities+" >\r\n" +
 			"                        <a class=\"dropdown-item\" routerLink=\""+tablename+"\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{ exact: true }\" (click)=\"collapseNavbar()\">\r\n" +
 			"                            <fa-icon icon=\"asterisk\" fixedWidth=\"true\"></fa-icon>\r\n" +
 			"                            <span jhiTranslate=\"global.menu.entities."+tablename+"\">"+Tablename+"</span>\r\n" +

@@ -21,9 +21,8 @@ public class TemplateEntityDetailModuleIonic extends AbstractResourceTemplate {
 		String nometabella = Utils.getClassNameLowerCase(tabella);
 		String Nometabella = Utils.getEntityName(tabella);
 		
-		//String authorities = "UserRole.ROLE_ADMIN, UserRole.ROLE_USER"; 
 		//String authorities = "'ROLE_ADMIN', 'ROLE_USER'"; 
-		String authorities = Utils.getAuthorities(tabella,"'");
+		String authorities = Utils.getAuthorities(tabella,Utils.APICE);
 		
 		String body = 
 		"import { NgModule } from '@angular/core';\r\n" +
