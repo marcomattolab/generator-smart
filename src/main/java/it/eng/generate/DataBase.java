@@ -67,12 +67,18 @@ import it.eng.generate.template.fe.blocks.TemplateErrorehandlerInterceptor;
 import it.eng.generate.template.fe.core.TemplateCoreModule;
 import it.eng.generate.template.fe.core.TemplateLanguageHelper;
 import it.eng.generate.template.fe.dashboard.TemplateDashboardBarchartModule;
+import it.eng.generate.template.fe.dashboard.TemplateDashboardBarchartRoute;
 import it.eng.generate.template.fe.dashboard.TemplateDashboardDoughnutchartModule;
+import it.eng.generate.template.fe.dashboard.TemplateDashboardDoughnutchartRoute;
 import it.eng.generate.template.fe.dashboard.TemplateDashboardLinechartModule;
+import it.eng.generate.template.fe.dashboard.TemplateDashboardLinechartRoute;
 import it.eng.generate.template.fe.dashboard.TemplateDashboardModule;
 import it.eng.generate.template.fe.dashboard.TemplateDashboardPiechartModule;
+import it.eng.generate.template.fe.dashboard.TemplateDashboardPiechartRoute;
 import it.eng.generate.template.fe.dashboard.TemplateDashboardPolarareachartModule;
+import it.eng.generate.template.fe.dashboard.TemplateDashboardPolarareachartRoute;
 import it.eng.generate.template.fe.dashboard.TemplateDashboardRadarchartModule;
+import it.eng.generate.template.fe.dashboard.TemplateDashboardRadarchartRoute;
 import it.eng.generate.template.fe.entities.TemplateEntityComponentHtml;
 import it.eng.generate.template.fe.entities.TemplateEntityComponentTs;
 import it.eng.generate.template.fe.entities.TemplateEntityDeleteComponentHtml;
@@ -553,11 +559,17 @@ public class DataBase {
 			new TemplateAdminEntityAuditModule(this).generateTemplate(); 		//Audit Module TS
 			new TemplateDashboardModule(this).generateTemplate();  				//Chart Dashboard
 			new TemplateDashboardBarchartModule(this).generateTemplate();  		//Barchart Dashboard
-			new TemplateDashboardDoughnutchartModule(this).generateTemplate();  //Doughnutchart Dashboard
-			new TemplateDashboardLinechartModule(this).generateTemplate();  	//Linechart Dashboard
+			new TemplateDashboardBarchartRoute(this).generateTemplate();  		//Barchart Route
+			new TemplateDashboardDoughnutchartModule(this).generateTemplate();   //Doughnutchart Dashboard
+			new TemplateDashboardDoughnutchartRoute(this).generateTemplate();    //Doughnutchart Route
+			new TemplateDashboardLinechartModule(this).generateTemplate();  	    //Linechart Dashboard
+			new TemplateDashboardLinechartRoute(this).generateTemplate();  	    //Linechart Route
 			new TemplateDashboardPiechartModule(this).generateTemplate();  		//Piechart Dashboard
-			new TemplateDashboardPolarareachartModule(this).generateTemplate(); //Polarareachart Dashboard
+			new TemplateDashboardPiechartRoute(this).generateTemplate();  		//Piechart Route
+			new TemplateDashboardPolarareachartModule(this).generateTemplate();  //Polarareachart Dashboard
+			new TemplateDashboardPolarareachartRoute(this).generateTemplate();   //Polarareachart Route
 			new TemplateDashboardRadarchartModule(this).generateTemplate();  	//Radarchart Dashboard
+			new TemplateDashboardRadarchartRoute(this).generateTemplate();  		//Radarchart Route
 			new TemplateConfigurationService(this).generateTemplate(); 
 			new TemplateErrorehandlerInterceptor(this).generateTemplate(); 
 			new TemplateCoreModule(this).generateTemplate(); 

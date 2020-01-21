@@ -25,7 +25,7 @@ public class TemplateDashboardModule extends AbstractResourceTemplate {
 		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"LinechartModule } from './linechart/linechart.module';\r\n" +
 		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"PiechartModule } from './piechart/piechart.module';\r\n" +
 		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"PolarareachartModule } from './polarareachart/polarareachart.module';\r\n" +
-		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"RadarchartModule } from './radarchart/radarchart.module';\r\n" +
+		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"RadarchartModule } from './radarchart/radarchart.module';\r\n\n" +
 		"@NgModule({\r\n" +
 		"    imports: [\r\n" +
 		"        "+Utils.getClassNameCamelCase(conf.getProjectName()) +"BarchartModule,\r\n" +
