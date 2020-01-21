@@ -577,6 +577,7 @@ public class DataBase {
 			new TemplateHomeModuleIonic(this).generateTemplate(); 	
 			new TemplateAccountModuleIonic(this).generateTemplate(); 	
 			
+			
 			//TEST Classes - TODO DEVELOP THIS!!
 			if (config.isGenerateTest()) {
 				new TemplateWebConfigurerTest(this).generateTemplate();

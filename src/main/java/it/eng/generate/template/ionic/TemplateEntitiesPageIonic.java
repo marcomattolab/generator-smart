@@ -21,11 +21,6 @@ public class TemplateEntitiesPageIonic extends AbstractResourceTemplate {
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		
 		//TODO ADD IN PROPERTIES
-		//String authorities = "UserRole.ROLE_ADMIN, UserRole.ROLE_USER"; 
-		//String authorities = "'ROLE_ADMIN', 'ROLE_USER'"; 
-		String authorities = Utils.getGlobalAuthorities(conf, Utils.APICE);
-				
-		//TODO ADD IN PROPERTIES
         String[] icons = {
         		"'airplane'", "'document'", "'card'", 
         		"'thumbs-up'", "'business'", "'settings'", 
@@ -61,6 +56,11 @@ public class TemplateEntitiesPageIonic extends AbstractResourceTemplate {
 		for(Table table: Utils.getTables(database) ) {
 			String Tablename = Utils.getEntityName(table);
 			String tablename = Utils.getFieldName(table);
+			
+			//String authorities = "UserRole.ROLE_ADMIN, UserRole.ROLE_USER"; 
+			//String authorities = "'ROLE_ADMIN', 'ROLE_USER'"; 
+			String authorities = Utils.getAuthorities(table, Utils.APICE);
+			
 			boolean isLast = i+1 == lSize;
 			body += 
 			"    {\r\n" +

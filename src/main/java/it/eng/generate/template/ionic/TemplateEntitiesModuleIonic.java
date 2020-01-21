@@ -21,7 +21,6 @@ public class TemplateEntitiesModuleIonic extends AbstractResourceTemplate {
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		
 		//String authorities = "'ROLE_ADMIN', 'ROLE_USER'"; 
-		//String authorities = Utils.getAuthorities(tabella, Utils.APICE);
 		String authorities = Utils.getGlobalAuthorities(conf, Utils.APICE);
 		
 		String body = 

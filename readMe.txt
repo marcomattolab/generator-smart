@@ -8,7 +8,6 @@
 ## Sezione Modello JSON
 	- LOW - Modello JSON => Se metto un campo CamelCase "firstName" non funge! (Deve essere tutto minuscolo "firstname")
 	- LOW - Modello JSON => Colonna "id" deve essere sempre presente! (ToDo: Add automatically)
-	- LOW - Modello JSON => @@ Generare "profili" da file di configurazione ed abilitarli alle voci menu e menu veloce(debug)
   	- LOW - Modello JSON => Develop wizard to create JSON project (see https://www.cc28tech.com/angular-multi-step-wizard-part-1/ )
 
 ## FILTRI RICERCA
@@ -38,9 +37,7 @@
  - ionic cordova build android --prod
  - ionic cordova build android --dev
 
-
 WEB
 /demogenerated/src/main/webapp/app/dashboard/barchart/barchart.route.ts
 and so on (dashboard...)
-
 
