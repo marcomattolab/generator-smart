@@ -109,7 +109,7 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 			String tablename = Utils.getFieldName(table);
 			String authorities = Utils.getAuthorities(table, Utils.APICE);
 			
-			String jhiAuthorities = "*jhiHasAnyAuthority= \"["+authorities+"\"]";
+			String jhiAuthorities = "*jhiHasAnyAuthority= \"["+authorities+"]\"";
 			body+=
 			"                    <li "+ jhiAuthorities+" >\r\n" +
 			"                        <a class=\"dropdown-item\" routerLink=\""+tablename+"\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{ exact: true }\" (click)=\"collapseNavbar()\">\r\n" +
