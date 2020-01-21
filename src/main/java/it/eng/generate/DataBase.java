@@ -97,6 +97,7 @@ import it.eng.generate.template.fe.shared.TemplateEntitySharedModel;
 import it.eng.generate.template.fe.shared.TemplateSharedCommonModule;
 import it.eng.generate.template.fe.shared.TemplateSharedLibsModule;
 import it.eng.generate.template.fe.shared.TemplateSharedModule;
+import it.eng.generate.template.ionic.TemplateAccountModuleIonic;
 import it.eng.generate.template.ionic.TemplateEntitiesModuleIonic;
 import it.eng.generate.template.ionic.TemplateEntitiesPageIonic;
 import it.eng.generate.template.ionic.TemplateEntityDetailHtmlIonic;
@@ -572,6 +573,7 @@ public class DataBase {
 			//Mobile Ionic (Statics)
 			new TemplateEntitiesModuleIonic(this).generateTemplate(); 			
 			new TemplateEntitiesPageIonic(this).generateTemplate(); 	
+			new TemplateAccountModuleIonic(this).generateTemplate(); 	
 			
 			//TEST Classes - TODO DEVELOP THIS!!
 			if (config.isGenerateTest()) {
@@ -669,7 +671,6 @@ public class DataBase {
 					new TemplateEnumerationsI18N(e, languageCode).generateTemplate();  
 				}
 			}
-			
 			
 			//DELETE TEST FOLDER
 			if ( !config.isGenerateTest() ) {
