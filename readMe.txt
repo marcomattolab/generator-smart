@@ -37,7 +37,3 @@
  - ionic cordova build android --prod
  - ionic cordova build android --dev
 
-WEB
-/demogenerated/src/main/webapp/app/dashboard/barchart/barchart.route.ts
-and so on (dashboard...)
-
