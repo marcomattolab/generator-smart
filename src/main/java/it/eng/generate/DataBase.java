@@ -112,6 +112,7 @@ import it.eng.generate.template.ionic.TemplateEntityTsIonic;
 import it.eng.generate.template.ionic.TemplateEntityUpdateHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityUpdateTsIonic;
 import it.eng.generate.template.ionic.TemplateHomeModuleIonic;
+import it.eng.generate.template.ionic.TemplateLoginPageIonic;
 import it.eng.generate.template.report.TemplateReportUtils;
 import it.eng.generate.template.repository.TemplateAuthorityRepository;
 import it.eng.generate.template.repository.TemplateCustomAuditEventRepository;
@@ -573,6 +574,7 @@ public class DataBase {
 			
 			//Mobile Ionic (Statics)
 			new TemplateEntitiesModuleIonic(this).generateTemplate(); 			
+			new TemplateLoginPageIonic(this).generateTemplate(); 	
 			new TemplateEntitiesPageIonic(this).generateTemplate(); 	
 			new TemplateHomeModuleIonic(this).generateTemplate(); 	
 			new TemplateAccountModuleIonic(this).generateTemplate(); 	

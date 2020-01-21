@@ -1256,7 +1256,6 @@ public class Utils {
 		}
 		return result;
 	}
-	
 
 	/**
 	 * Return Global's Roles.
@@ -1276,6 +1275,27 @@ public class Utils {
 			}
 		} else {
 			result += aroundChar+"ROLE_ADMIN"+aroundChar+", "+aroundChar+"ROLE_USER"+aroundChar;
+		}
+		return result;
+	}
+	
+	/**
+	 * Return authorities credentials.
+	 * 
+	 * @param conf
+	 * @return List<String>
+	 */
+	public static List<String> getGlobalAuthoritiesCredential(ConfigCreateProject conf) {
+		List<String> result = new ArrayList<>();
+		if(conf.getProfiles()!=null && conf.getProfiles().length>0) {
+			for(int i=0; i<conf.getProfiles().length; i++) {
+				String profileRole = conf.getProfiles()[i];
+				String profile = profileRole.replace("ROLE_", "").toLowerCase();
+				result.add(profile);
+			}
+		} else {
+			result.add("user");
+			result.add("admin");
 		}
 		return result;
 	}
