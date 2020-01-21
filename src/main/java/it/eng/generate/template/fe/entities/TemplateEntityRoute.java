@@ -16,11 +16,14 @@ public class TemplateEntityRoute extends AbstractResourceTemplate {
 	}
 
 	public String getBody(){
-		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
+		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		String Nometabella = Utils.getEntityName(tabella);
 		String nometabella = Utils.getClassNameLowerCase(tabella);
 		String INometabella = Utils.getIName(tabella);
+		
+		//Authorities
+		String authorities = Utils.getAuthorities(tabella, Utils.APICE);
 		
 		String body = 
 		"import { Injectable } from '@angular/core';\r\n" +
@@ -59,7 +62,7 @@ public class TemplateEntityRoute extends AbstractResourceTemplate {
 		"            pagingParams: JhiResolvePagingParams\r\n" +
 		"        },\r\n" +
 		"        data: {\r\n" +
-		"            authorities: ['ROLE_USER'],\r\n" +
+		"            authorities: ["+authorities+"],\r\n" +
 		"            defaultSort: 'id,asc',\r\n" +
 		"            pageTitle: '"+conf.getProjectName()+"App."+nometabella+".home.title'\r\n" +
 		"        },\r\n" +
@@ -72,7 +75,7 @@ public class TemplateEntityRoute extends AbstractResourceTemplate {
 		"            "+nometabella+": "+Nometabella+"Resolve\r\n" +
 		"        },\r\n" +
 		"        data: {\r\n" +
-		"            authorities: ['ROLE_USER'],\r\n" +
+		"            authorities: ["+authorities+"],\r\n" +
 		"            pageTitle: '"+conf.getProjectName()+"App."+nometabella+".home.title'\r\n" +
 		"        },\r\n" +
 		"        canActivate: [UserRouteAccessService]\r\n" +
@@ -84,7 +87,7 @@ public class TemplateEntityRoute extends AbstractResourceTemplate {
 		"            "+nometabella+": "+Nometabella+"Resolve\r\n" +
 		"        },\r\n" +
 		"        data: {\r\n" +
-		"            authorities: ['ROLE_USER'],\r\n" +
+		"            authorities: ["+authorities+"],\r\n" +
 		"            pageTitle: '"+conf.getProjectName()+"App."+nometabella+".home.title'\r\n" +
 		"        },\r\n" +
 		"        canActivate: [UserRouteAccessService]\r\n" +
@@ -96,7 +99,7 @@ public class TemplateEntityRoute extends AbstractResourceTemplate {
 		"            "+nometabella+": "+Nometabella+"Resolve\r\n" +
 		"        },\r\n" +
 		"        data: {\r\n" +
-		"            authorities: ['ROLE_USER'],\r\n" +
+		"            authorities: ["+authorities+"],\r\n" +
 		"            pageTitle: '"+conf.getProjectName()+"App."+nometabella+".home.title'\r\n" +
 		"        },\r\n" +
 		"        canActivate: [UserRouteAccessService]\r\n" +
@@ -110,7 +113,7 @@ public class TemplateEntityRoute extends AbstractResourceTemplate {
 		"            "+nometabella+": "+Nometabella+"Resolve\r\n" +
 		"        },\r\n" +
 		"        data: {\r\n" +
-		"            authorities: ['ROLE_USER'],\r\n" +
+		"            authorities: ["+authorities+"],\r\n" +
 		"            pageTitle: '"+conf.getProjectName()+"App."+nometabella+".home.title'\r\n" +
 		"        },\r\n" +
 		"        canActivate: [UserRouteAccessService],\r\n" +

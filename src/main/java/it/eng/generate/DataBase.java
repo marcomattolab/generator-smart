@@ -59,6 +59,7 @@ import it.eng.generate.template.fe.TemplateAppRoutingModule;
 import it.eng.generate.template.fe.TemplateIndex;
 import it.eng.generate.template.fe.TemplateManifest;
 import it.eng.generate.template.fe.account.TemplateAccountModule;
+import it.eng.generate.template.fe.account.TemplateAccountSettingsModule;
 import it.eng.generate.template.fe.admin.TemplateAdminEntityAuditModule;
 import it.eng.generate.template.fe.admin.TemplateAdminModule;
 import it.eng.generate.template.fe.admin.TemplateConfigurationService;
@@ -566,7 +567,8 @@ public class DataBase {
 			new TemplateSharedCommonModule(this).generateTemplate(); 
 			new TemplateAlertErrorComponent(this).generateTemplate(); 
 			new TemplateModule(this).generateTemplate(); 						//Cicle Entities Done
-
+			new TemplateAccountSettingsModule(this).generateTemplate(); 
+			
 			//Mobile Ionic (Statics)
 			new TemplateEntitiesModuleIonic(this).generateTemplate(); 			
 			new TemplateEntitiesPageIonic(this).generateTemplate(); 	

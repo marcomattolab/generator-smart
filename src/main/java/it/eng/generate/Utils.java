@@ -19,6 +19,7 @@ public class Utils {
 	public static String OneToMany = "OneToMany";
 	public static String ManyToOne = "ManyToOne";
 	
+	public static String APICE = "'";
 	public static String DATE_PATTERN = "DD/MM/YYYY"; //TODO MOVE INTO PROPERTY
 	
 	public static String getServiceClassName(Table table){
@@ -1235,31 +1236,12 @@ public class Utils {
 	}
 	
 	/**
-	 * Retrieve search filter name for IONIC
-	 * @param table table name
-	 * @return search filter name
+	 * Return Table's Roles.
+	 * 
+	 * @param tabella Table
+	 * @param aroundChar Char to put before and after ROLE
+	 * @return String
 	 */
-	@Deprecated
-	public static String getFilterName(Table table){
-		String filterName = "";
-		for(Column col : table.getColumns()) {
-			//TODO MOVE THESE INTO PROPERTIES
-			if( col.getName().toLowerCase().equals("name") ||
-					col.getName().toLowerCase().equals("nome") ||	
-					col.getName().toLowerCase().equals("title") ||	
-					col.getName().toLowerCase().equals("name") ||	
-					col.getName().toLowerCase().equals("firstname") ||	
-					col.getName().toLowerCase().equals("desc") ||	
-					col.getName().toLowerCase().equals("descrizione") ||	
-					col.getName().toLowerCase().equals("codice") ||	
-					col.getName().toLowerCase().equals("id") ) {
-				filterName = col.getName();
-				break;
-			}
-		}
-		return filterName; 
-	}
-
 	public static String getAuthorities(Table tabella, String aroundChar) {
 		String result = "";
 		if(tabella.getProfiles()!=null && tabella.getProfiles().size()>0) {
@@ -1270,8 +1252,29 @@ public class Utils {
 				i++;
 			}
 		} else {
-			//Default
-			//result += "UserRole.ROLE_ADMIN, UserRole.ROLE_USER"; 
+			result += aroundChar+"ROLE_ADMIN"+aroundChar+", "+aroundChar+"ROLE_USER"+aroundChar;
+		}
+		return result;
+	}
+	
+
+	/**
+	 * Return Global's Roles.
+	 * 
+	 * @param conf
+	 * @param aroundChar
+	 * @return String
+	 */
+	public static String getGlobalAuthorities(ConfigCreateProject conf, String aroundChar) {
+		String result = "";
+		String[] profiles = conf.getProfiles();
+		if(profiles!=null && profiles.length>0) {
+			int size = profiles.length;
+			for(int i=0; i<size; i++) {
+				String profile = profiles[i];
+				result += ""+aroundChar+""+profile+""+aroundChar+""+ (i+1<size?", ":"");
+			}
+		} else {
 			result += aroundChar+"ROLE_ADMIN"+aroundChar+", "+aroundChar+"ROLE_USER"+aroundChar;
 		}
 		return result;

@@ -24,7 +24,6 @@ public class TemplateAccountModule extends AbstractResourceTemplate {
 		"import { RouterModule } from '@angular/router';\r\n" +
 		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"SharedModule } from 'app/shared';\r\n" +
 		"import {\r\n" +
-		//"    SessionsComponent,\r\n" +
 		"    PasswordStrengthBarComponent,\r\n" +
 		"    RegisterComponent,\r\n" +
 		"    ActivateComponent,\r\n" +
@@ -43,7 +42,6 @@ public class TemplateAccountModule extends AbstractResourceTemplate {
 		"        PasswordStrengthBarComponent,\r\n" +
 		"        PasswordResetInitComponent,\r\n" +
 		"        PasswordResetFinishComponent,\r\n" +
-		//"        SessionsComponent,\r\n" +
 		"        SettingsComponent\r\n" +
 		"    ],\r\n" +
 		"    schemas: [CUSTOM_ELEMENTS_SCHEMA]\r\n" +

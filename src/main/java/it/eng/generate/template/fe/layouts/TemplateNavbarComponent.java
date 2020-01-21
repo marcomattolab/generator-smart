@@ -108,8 +108,11 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 			String Tablename = Utils.getEntityName(table);
 			String tablename = Utils.getFieldName(table);
 			String authorities = Utils.getAuthorities(table, "'");
+			
+			//String jhiAuthorities = " *jhiHasAnyAuthority= \""+authorities+"\"";
+			String jhiAuthorities = "";
 			body+=
-			"                    <li *jhiHasAnyAuthority=\""+authorities+"\">\r\n" +
+			"                    <li"+ jhiAuthorities+">\r\n" +
 			"                        <a class=\"dropdown-item\" routerLink=\""+tablename+"\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{ exact: true }\" (click)=\"collapseNavbar()\">\r\n" +
 			"                            <fa-icon icon=\"asterisk\" fixedWidth=\"true\"></fa-icon>\r\n" +
 			"                            <span jhiTranslate=\"global.menu.entities."+tablename+"\">"+Tablename+"</span>\r\n" +
@@ -184,6 +187,7 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 		"                </ul>\r\n" +
 		"            </li>\r\n" +
 
+		
 		
 		//Tools
 		"            <li ngbDropdown class=\"nav-item dropdown pointer\" *ngIf=\"languages && languages.length > 1\">\r\n" +

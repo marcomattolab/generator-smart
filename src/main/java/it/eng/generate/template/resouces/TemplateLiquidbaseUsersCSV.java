@@ -37,18 +37,17 @@ public class TemplateLiquidbaseUsersCSV extends AbstractResourceTemplate{
 
 	private String buildProfiles(String[] profiles) {
 		String res = "";
+		System.out.println("----- Credential Section Start --------");
 		for (int id = 0; id < profiles.length; id++) {
 			String profileRole = profiles[id];
 			String profile = profileRole.replace("ROLE_", "").toLowerCase();
 			String Profile = Utils.getFirstUpperCase(profile);
-			
-			//String passwordHash = "$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;";
 			String passwordHash = BCrypt.withDefaults().hashToString(12, profile.toCharArray());
-			System.out.println(" - Role: "+profileRole+" user: "+profile+" password: "+passwordHash);
+			System.out.println(" - Role: "+profileRole+" Credential(user/pwd): "+profile+"/"+profile+" Password(Cripted): "+passwordHash);
 					
-			//	  "id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;created_by;last_modified_by\n" + 
 			res+= (id+1)+";"+profile+";"+passwordHash+";"+Profile+";"+Profile+";"+profile+"@localhost;;true;it;system;system\n";
 		}
+		System.out.println("----- Credential Section End --------");
 		return res;
 	}
 
