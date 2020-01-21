@@ -526,7 +526,6 @@ public class DataBase {
 			new TemplateLiquidbaseEntityAudit(this).generateTemplate(); 
 			new TemplateLiquidbaseMasterInitialSchema(this).generateTemplate(); 
 			new TemplateLiquidbaseMaster(this).generateTemplate(); 					
-			new TemplateLiquidbaseMaster(this).generateTemplate(); 					
 			new TemplateMessage(this).generateTemplate();
 
 			//Resource Liquibase CSV

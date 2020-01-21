@@ -1,6 +1,5 @@
 package it.eng.generate.template.resouces;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.DataBase;
 import it.eng.generate.Utils;
@@ -56,7 +55,7 @@ public class TemplateLiquidbaseUsersAuthoritiesCSV extends AbstractResourceTempl
 	}
 
 	public String getClassName() {
-		return "authorities";
+		return "user_authority";
 	}
 	
 	public String getSourceFolder() {

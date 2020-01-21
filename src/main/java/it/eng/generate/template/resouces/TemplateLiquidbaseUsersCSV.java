@@ -62,7 +62,7 @@ public class TemplateLiquidbaseUsersCSV extends AbstractResourceTemplate{
 	}
 
 	public String getClassName() {
-		return "authorities";
+		return "user";
 	}
 	
 	public String getSourceFolder() {
