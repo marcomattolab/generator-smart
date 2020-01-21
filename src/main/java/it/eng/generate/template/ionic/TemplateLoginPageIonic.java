@@ -55,20 +55,21 @@ public class TemplateLoginPageIonic extends AbstractResourceTemplate {
 		"      </ion-row>\r\n\n";
 
 		body+=
-		"      <!-- Direct Accesses START: Remove before production  -->\r\n";
+		"      <!-- Direct Accesses START: Remove before production  -->\r\n"+
+		"      <!-- \n"+
+		"      <ion-row class=\"ion-padding\">\n";
 		for(String credential: authorities) {
 			body+=
-			"      <ion-row class=\"ion-padding\">\n" + 
 			"        <ion-col>\n" + 
-			"         <ion-chip (click)=\"account.username = '"+credential+"'; account.password = '"+credential+"'; doLogin()\" >\n" + 
+			"           <ion-chip (click)=\"account.username = '"+credential+"'; account.password = '"+credential+"'; doLogin()\" >\n" + 
 			"			  <ion-icon name=\"person\" color=\"primary\"></ion-icon>\n" + 
-			"			  <ion-label>"+Utils.getFirstUpperCase(credential)+" ( "+credential+" / "+credential+" )</ion-label>\n" + 
-			"		  </ion-chip>\n" + 
-			"        </ion-col>\n" + 
-			"      </ion-row>\n";
+			//"			  <ion-label>"+Utils.getFirstUpperCase(credential)+" ( "+credential+" / "+credential+" )</ion-label>\n" + 
+			"			  <ion-label>"+Utils.getFirstUpperCase(credential)+"</ion-label>\n" + 
+			"		   </ion-chip>\n" + 
+			"        </ion-col>\n";
 		}
-		body+=
-		"      <!-- Direct Accesses END:   Remove before production  -->\r\n\n";
+		body+="      </ion-row>\n";
+		body+="      -->\n\n\n";
 		
 		
 		body+=
