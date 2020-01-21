@@ -19,6 +19,12 @@
 	- HIG - @Gestire i campi BLOB / CLOB - Add altri tipologie: ImageBlob, Blob, BigDecimal, Double etc
 	- LOW - BUG in IONIC (autenticazione FE JWT see Bearer not found!)
   	- LOW - Inserire controllo Pattern | MinSize | MaxSize lato backend / Hibernate
+	
+	- LOW - ==> CSV con i dati liquibase!!
+	- LOW - ==> Integrare da IONIC/Mobile le librerie camera / google-map
+	- LOW - ==> Creare dahboard generata dynamicamente
+	- LOW - ==> Inserire pulsanti Login nella webapp 
+	- LOW - ==> Classi di test sviluppo
 
 ## Migliorie / Plugin / OpenPoint
 	- LOW - Inserire motore di workflow (Activity BPS, Spring workflow ....)
