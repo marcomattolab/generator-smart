@@ -21,8 +21,10 @@ public class TemplateEntitiesPageIonic extends AbstractResourceTemplate {
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		
 		//TODO ADD IN PROPERTIES
-		String authorities = "UserRole.ROLE_ADMIN, UserRole.ROLE_USER"; 
-		
+		//String authorities = "UserRole.ROLE_ADMIN, UserRole.ROLE_USER"; 
+		//String authorities = "'ROLE_ADMIN', 'ROLE_USER'"; 
+		String authorities = Utils.getGlobalAuthorities(conf, Utils.APICE);
+				
 		//TODO ADD IN PROPERTIES
         String[] icons = {
         		"'airplane'", "'document'", "'card'", 
@@ -42,14 +44,15 @@ public class TemplateEntitiesPageIonic extends AbstractResourceTemplate {
 		"  labelKey: string;\r\n" +
 		"  component: string;\r\n" +
 		"  route: string;\r\n" +
-		"  authorizedRoles: Array<UserRole>;\r\n" +
+		//"  authorizedRoles: Array<UserRole>;\r\n" +
+		"  authorizedRoles: Array<String>;\r\n" +
 		"  icon: string;\r\n" +
 		"}\r\n\n" +
 		"@Component({\r\n" +
 		"  selector: 'app-entities',\r\n" +
 		"  templateUrl: 'entities.page.html',\r\n" +
 		"  styleUrls: ['entities.page.scss']\r\n" +
-		"})\r\n" +
+		"})\n\n" +
 		"export class EntitiesPage {\r\n" +
 		"  allEntities: Array<EntityItem> = [\r\n";
 		

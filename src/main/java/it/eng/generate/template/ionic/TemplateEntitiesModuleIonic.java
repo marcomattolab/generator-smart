@@ -20,8 +20,10 @@ public class TemplateEntitiesModuleIonic extends AbstractResourceTemplate {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		
-		String authorities = "'ROLE_USER'"; //TODO ADD IN PROPERTIES
-
+		//String authorities = "'ROLE_ADMIN', 'ROLE_USER'"; 
+		//String authorities = Utils.getAuthorities(tabella, Utils.APICE);
+		String authorities = Utils.getGlobalAuthorities(conf, Utils.APICE);
+		
 		String body = 
 		"import {CommonModule} from '@angular/common';\r\n" +
 		"import {NgModule} from '@angular/core';\r\n" +
