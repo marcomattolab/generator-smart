@@ -47,7 +47,7 @@ public class TemplateLiquidbaseUsersCSV extends AbstractResourceTemplate{
 			System.out.println(" - Role: "+profileRole+" user: "+profile+" password: "+passwordHash);
 					
 			//	  "id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;created_by;last_modified_by\n" + 
-			res+= id+";"+profile+";"+passwordHash+";"+Profile+";"+Profile+";"+profile+"@localhost;;true;it;system;system\n";
+			res+= (id+1)+";"+profile+";"+passwordHash+";"+Profile+";"+Profile+";"+profile+"@localhost;;true;it;system;system\n";
 		}
 		return res;
 	}
@@ -62,7 +62,7 @@ public class TemplateLiquidbaseUsersCSV extends AbstractResourceTemplate{
 	}
 
 	public String getClassName() {
-		return "user";
+		return "users";
 	}
 	
 	public String getSourceFolder() {

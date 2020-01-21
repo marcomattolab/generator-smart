@@ -49,13 +49,13 @@ public class TemplateLiquidbaseUsersAuthoritiesCSV extends AbstractResourceTempl
 			String profileRole = profiles[id];
 			//"1;ROLE_ADMIN\n" +
 			//"2;ROLE_USER\n" + 
-			res+= id+";"+profileRole+"\n";
+			res += (id+1)+";"+profileRole+"\n";
 		}
 		return res;
 	}
 
 	public String getClassName() {
-		return "user_authority";
+		return "users_authorities";
 	}
 	
 	public String getSourceFolder() {
