@@ -24,7 +24,6 @@ public class TemplateLiquidbaseMasterInitialSchema extends AbstractResourceTempl
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
 		
-		
 		String body = 
 		"<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n" +
 		"<databaseChangeLog\r\n" +

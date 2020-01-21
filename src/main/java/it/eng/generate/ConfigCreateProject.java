@@ -7,11 +7,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConfigCreateProject {
 	//FIXME CHANGE_ME To Modify Destination Path about generated code!!!
-	private static final boolean USE_PATHNAME_ENV_B = true; //APPLE
-	//private static final boolean USE_PATHNAME_ENV_B = false; //WINDOWS
+	//private static final boolean USE_PATHNAME_ENV_B = true; //APPLE
+	private static final boolean USE_PATHNAME_ENV_B = false; //WINDOWS
 	
-	//FIXME ENABLE PRINT RELATION ON MOBILE
-	private static final boolean printRelation = true; 
+	private static final boolean printRelationMobile = true; //TODO ENABLE/DISABLE Relation Print on Mobile
 	
 	private boolean isOracle;
 	private boolean isMysql;
@@ -510,7 +509,7 @@ public class ConfigCreateProject {
 	}
 
 	public boolean isPrintRelation() {
-		return printRelation;
+		return printRelationMobile;
 	}
 
 	public String[] getProfiles() {

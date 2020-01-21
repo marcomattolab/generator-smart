@@ -102,11 +102,11 @@ import it.eng.generate.template.ionic.TemplateEntityDetailHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityDetailIonic;
 import it.eng.generate.template.ionic.TemplateEntityHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityIndexIonic;
-import it.eng.generate.template.ionic.TemplateEntityTsIonic;
 import it.eng.generate.template.ionic.TemplateEntityIonicI18N;
 import it.eng.generate.template.ionic.TemplateEntityModelIonic;
 import it.eng.generate.template.ionic.TemplateEntityModuleIonic;
 import it.eng.generate.template.ionic.TemplateEntityServiceIonic;
+import it.eng.generate.template.ionic.TemplateEntityTsIonic;
 import it.eng.generate.template.ionic.TemplateEntityUpdateHtmlIonic;
 import it.eng.generate.template.ionic.TemplateEntityUpdateTsIonic;
 import it.eng.generate.template.report.TemplateReportUtils;
@@ -121,10 +121,14 @@ import it.eng.generate.template.resouces.TemplateApplicationDev;
 import it.eng.generate.template.resouces.TemplateApplicationProd;
 import it.eng.generate.template.resouces.TemplateBanner;
 import it.eng.generate.template.resouces.TemplateI18N;
+import it.eng.generate.template.resouces.TemplateLiquidbaseAuthoritiesCSV;
 import it.eng.generate.template.resouces.TemplateLiquidbaseChangelog;
 import it.eng.generate.template.resouces.TemplateLiquidbaseChangelogConstraint;
+import it.eng.generate.template.resouces.TemplateLiquidbaseEntityAudit;
 import it.eng.generate.template.resouces.TemplateLiquidbaseMaster;
 import it.eng.generate.template.resouces.TemplateLiquidbaseMasterInitialSchema;
+import it.eng.generate.template.resouces.TemplateLiquidbaseUsersAuthoritiesCSV;
+import it.eng.generate.template.resouces.TemplateLiquidbaseUsersCSV;
 import it.eng.generate.template.resouces.TemplateMessage;
 import it.eng.generate.template.security.TemplateAuthoritiesConstants;
 import it.eng.generate.template.security.TemplateDomainUserDetailsService;
@@ -393,7 +397,6 @@ public class DataBase {
 	public void generateFile() {
 		System.out.println("-------------------------------------------------------");
 		System.out.println("Generating Project and project Files for BE and FE ...");
-
 		
 		try {
 			ConfigCreateProject config = ConfigCreateProject.getIstance();
@@ -515,15 +518,23 @@ public class DataBase {
 			new TemplateInvalidPasswordException(this).generateTemplate();
 			new TemplateLoginAlreadyUsedException(this).generateTemplate();
 
-			//RESOURCES START
+			//RESOURCES START (statics)
 			new TemplateBanner(this).generateTemplate();
 			new TemplateApplication(this).generateTemplate();
 			new TemplateApplicationProd(this).generateTemplate();
 			new TemplateApplicationDev(this).generateTemplate();
+			new TemplateLiquidbaseEntityAudit(this).generateTemplate(); 
 			new TemplateLiquidbaseMasterInitialSchema(this).generateTemplate(); 
+			new TemplateLiquidbaseMaster(this).generateTemplate(); 					
 			new TemplateLiquidbaseMaster(this).generateTemplate(); 					
 			new TemplateMessage(this).generateTemplate();
 
+			//Resource Liquibase CSV
+			new TemplateLiquidbaseAuthoritiesCSV(this).generateTemplate(); 					
+			new TemplateLiquidbaseUsersCSV(this).generateTemplate(); 					
+			new TemplateLiquidbaseUsersAuthoritiesCSV(this).generateTemplate(); 					
+
+			
 			//Copy All Template
 			new TemplateCopyAll(this).generateTemplate();
 			
@@ -606,13 +617,13 @@ public class DataBase {
 				new TemplateQueryService(tabella).generateTemplate();
 				new TemplateMapperService(tabella).generateTemplate();
 				new TemplateServiceDTO(tabella).generateTemplate();
-				new TemplateServiceCriteria(this, tabella).generateTemplate(); 				//TODO Add enumeration management
+				new TemplateServiceCriteria(this, tabella).generateTemplate(); 				//Added enumeration management
 				new TemplateResource(tabella).generateTemplate();
-				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//TODO COMPLETE THIS  !!
+				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//Review/COMPLETE THIS  !!
 				if (Utils.havingConstraints(config, tabella)) {
-					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate();	//TODO COMPLETE THIS  !!
+					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate();	//Review/COMPLETE THIS  !!
 				}
-				//new TemplateIntTest(tabella).generateTemplate(); 							//TODO FIXME TEST - COMPLETE THIS  !!
+				//new TemplateIntTest(tabella).generateTemplate(); 							//TODO FIXME TEST - DEVELOP THIS  !!
 				
 				//MultiLanguages
 				for(String languageCode: config.getLanguages()) {
@@ -640,7 +651,7 @@ public class DataBase {
 				new TemplateEntityModuleIonic(tabella).generateTemplate(); 
 				new TemplateEntityServiceIonic(tabella).generateTemplate();  			
 				new TemplateEntityTsIonic(tabella).generateTemplate();  		
-				//new TemplateEntityDetailModuleIonic(tabella).generateTemplate();  //Commented to build apk in production 	
+				//new TemplateEntityDetailModuleIonic(tabella).generateTemplate();  //Commented to build Apk in production 	
 				new TemplateEntityDetailIonic(tabella).generateTemplate();  		
 				new TemplateEntityHtmlIonic(tabella).generateTemplate(); 
 				new TemplateEntityDetailHtmlIonic(tabella).generateTemplate(); 
