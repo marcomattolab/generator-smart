@@ -41,10 +41,13 @@ public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 			int k=0;
 			for (Column column: tabella.getColumns()) {
 				String ctype = column.getLabelType().toLowerCase();
+				System.out.println(" ======================>>> ctype: "+ctype);
 				if("string".equals(ctype)) {
 					body += Utils.getRandomString();
+				} else if ("integer".equals(ctype)) {
+					body += a+1;
 				} else if ("numeric".equals(ctype)) {
-					body += Utils.getRandomNumber();
+					body += a+101;
 				} else if ("boolean".equals(ctype)) {
 					body += Utils.getRandomBoolean();
 				} else if ("date".equals(ctype)) {
