@@ -1338,7 +1338,7 @@ public class Utils {
 	public static String getRandomString(Column column) {
 		String[] mail = {"mail", "email"};
 		String[] phone = {"phone", "telephone", "telefono", "cellulare", "mobile"};
-		String[] name = {"nome", "name", "surname", "cognome"};
+		String[] name = {"firstname", "nome", "name", "surname", "cognome"};
 		String[] city = {"city", "città"};
 		String[] province = {"province", "provincia"};
 		String[] region = {"region", "regione"};
