@@ -58,6 +58,7 @@ public class ConfigCreateProject {
 	private String resConfigTksFolder = "config.tls";
 	private String resConfigLiquibaseFolder = "config.liquibase";
 	private String resConfigLiquibaseChangelogFolder = "config.liquibase.changelog";
+	private String resConfigLiquibaseDataFolder = "config.liquibase.data";
 	
 	private String projectName;
 	private String[] languages;
@@ -520,6 +521,14 @@ public class ConfigCreateProject {
 		this.profiles = profiles;
 	}
 
+	public String getResConfigLiquibaseDataFolder() {
+		return resConfigLiquibaseDataFolder;
+	}
+
+	public void setResConfigLiquibaseDataFolder(String resConfigLiquibaseDataFolder) {
+		this.resConfigLiquibaseDataFolder = resConfigLiquibaseDataFolder;
+	}
+	
 	public String toString() {
 		String ret = "";
 		ret+="\nURL CONNECTION:"+urlConnection;

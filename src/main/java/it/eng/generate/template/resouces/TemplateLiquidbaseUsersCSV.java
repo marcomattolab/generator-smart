@@ -13,7 +13,7 @@ public class TemplateLiquidbaseUsersCSV extends AbstractResourceTemplate{
 	}
 
 	public String getTypeTemplate() {
-		String typeTemplate = Utils.replace(ConfigCreateProject.getIstance().getResConfigLiquidbaseFolder(),".","/");
+		String typeTemplate = Utils.replace(ConfigCreateProject.getIstance().getResConfigLiquibaseDataFolder(),".","/");
 		return typeTemplate;
 	}
 	
@@ -65,7 +65,7 @@ public class TemplateLiquidbaseUsersCSV extends AbstractResourceTemplate{
 	}
 	
 	public String getSourceFolder() {
-		return "src/main/resources";
+		return "src/main/resources/";
 	}
 
 }

@@ -96,7 +96,7 @@ public class TemplateLiquidbaseMasterInitialSchema extends AbstractResourceTempl
 		"                                columnDataType=\"varchar(60)\"\r\n" +
 		"                                tableName=\"jhi_user\"/>\r\n" +
 		"        <loadData encoding=\"UTF-8\"\r\n" +
-		"                  file=\"config/liquibase/users.csv\"\r\n" +
+		"                  file=\"config/liquibase/data/users.csv\"\r\n" +
 		"                  separator=\";\"\r\n" +
 		"                  tableName=\"jhi_user\">\r\n" +
 		"            <column name=\"activated\" type=\"boolean\"/>\r\n" +
@@ -104,11 +104,11 @@ public class TemplateLiquidbaseMasterInitialSchema extends AbstractResourceTempl
 		"        </loadData>\r\n" +
 		"        <dropDefaultValue tableName=\"jhi_user\" columnName=\"created_date\" columnDataType=\"datetime\"/>\r\n" +
 		"        <loadData encoding=\"UTF-8\"\r\n" +
-		"                  file=\"config/liquibase/authorities.csv\"\r\n" +
+		"                  file=\"config/liquibase/data/authorities.csv\"\r\n" +
 		"                  separator=\";\"\r\n" +
 		"                  tableName=\"jhi_authority\"/>\r\n" +
 		"        <loadData encoding=\"UTF-8\"\r\n" +
-		"                  file=\"config/liquibase/users_authorities.csv\"\r\n" +
+		"                  file=\"config/liquibase/data/users_authorities.csv\"\r\n" +
 		"                  separator=\";\"\r\n" +
 		"                  tableName=\"jhi_user_authority\"/>\r\n" +
 		"        <createTable tableName=\"jhi_persistent_audit_event\">\r\n" +
