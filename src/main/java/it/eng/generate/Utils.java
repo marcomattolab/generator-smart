@@ -1300,4 +1300,34 @@ public class Utils {
 		return result;
 	}
 	
+	public static boolean getRandomBoolean() {
+        return Math.random() < 0.5;
+    }
+	
+	public static double getRandomNumber() {
+		if (getRandomBoolean()) {
+			return Math.random();
+		} else {
+			return Math.random();
+		}
+	}
+
+	public static Date getRandomDate() {
+		if (getRandomBoolean()) {
+			return new Date(2020,3,22);
+		} else {
+			return new Date(2019,1,5);
+		}
+	}
+	
+	public static String getRandomString() {
+		if (getRandomBoolean()) {
+			//return "Smart generator is a usefull tool to generate application with spring angular etc";
+			return "Demo test1";
+		} else {
+			return "Demo Test2";
+			//return "This is a demo test for build data fake application.";
+		}
+	}
+	
 }

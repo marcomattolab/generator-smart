@@ -134,6 +134,7 @@ import it.eng.generate.template.resouces.TemplateI18N;
 import it.eng.generate.template.resouces.TemplateLiquidbaseAuthoritiesCSV;
 import it.eng.generate.template.resouces.TemplateLiquidbaseChangelog;
 import it.eng.generate.template.resouces.TemplateLiquidbaseChangelogConstraint;
+import it.eng.generate.template.resouces.TemplateLiquidbaseData;
 import it.eng.generate.template.resouces.TemplateLiquidbaseEntityAudit;
 import it.eng.generate.template.resouces.TemplateLiquidbaseMaster;
 import it.eng.generate.template.resouces.TemplateLiquidbaseMasterInitialSchema;
@@ -639,6 +640,7 @@ public class DataBase {
 				new TemplateServiceDTO(tabella).generateTemplate();
 				new TemplateServiceCriteria(this, tabella).generateTemplate(); 				//Added enumeration management
 				new TemplateResource(tabella).generateTemplate();
+				new TemplateLiquidbaseData(tabella).generateTemplate(); 						//DATA CSV
 				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//Review/COMPLETE THIS  !!
 				if (Utils.havingConstraints(config, tabella)) {
 					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate();	//Review/COMPLETE THIS  !!
