@@ -538,7 +538,7 @@ public class DataBase {
 			new TemplateLiquidbaseMaster(this).generateTemplate(); 					
 			new TemplateMessage(this).generateTemplate();
 
-			//Resource Liquibase CSV
+			//Resource Liquibase Data CSV
 			new TemplateLiquidbaseAuthoritiesCSV(this).generateTemplate(); 					
 			new TemplateLiquidbaseUsersCSV(this).generateTemplate(); 					
 			new TemplateLiquidbaseUsersAuthoritiesCSV(this).generateTemplate(); 					
