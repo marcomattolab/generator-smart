@@ -20,7 +20,6 @@
 	- LOW - BUG in IONIC (autenticazione FE JWT see Bearer not found!)
   	- LOW - Inserire controllo Pattern | MinSize | MaxSize lato backend / Hibernate
 	
-	- LOW - ==> CSV con i dati liquibase!!
 	- LOW - ==> Integrare da IONIC/Mobile le librerie camera / google-map
 	- LOW - ==> Creare dahboard generata dynamicamente
 	- LOW - ==> Inserire pulsanti Login nella webapp 

@@ -1299,11 +1299,17 @@ public class Utils {
 		}
 		return result;
 	}
-	
+
+	/**
+	 * @return Random Boolean
+	 */
 	public static boolean getRandomBoolean() {
         return Math.random() < 0.5;
     }
 	
+	/**
+	 * @return Random Number
+	 */
 	public static double getRandomNumber() {
 		if (getRandomBoolean()) {
 			return Math.random();
@@ -1312,22 +1318,83 @@ public class Utils {
 		}
 	}
 
-	public static Date getRandomDate() {
+	/**
+	 * @return Random Date
+	 */
+	public static String getRandomDate() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN);
 		if (getRandomBoolean()) {
-			return new Date(2020,3,22);
+			return simpleDateFormat.format(new Date());
 		} else {
-			return new Date(2019,1,5);
+			return simpleDateFormat.format(new Date());
 		}
 	}
 	
-	public static String getRandomString() {
-		if (getRandomBoolean()) {
-			//return "Smart generator is a usefull tool to generate application with spring angular etc";
-			return "Demo test1";
-		} else {
-			return "Demo Test2";
-			//return "This is a demo test for build data fake application.";
+	/**
+	 * Generate a randm String - TODO ADD PATTERN VALIDATION
+	 * @param column Column
+	 * @return String 
+	 */
+	public static String getRandomString(Column column) {
+		String[] mail = {"mail", "email"};
+		String[] phone = {"phone", "telephone", "telefono", "cellulare", "mobile"};
+		String[] name = {"nome", "name", "surname", "cognome"};
+		String[] city = {"city", "città"};
+		String[] province = {"province", "provincia"};
+		String[] region = {"region", "regione"};
+		
+		if ( Arrays.asList(mail).contains(column.getName().toLowerCase()) ) {
+			return getRandomBoolean() ? "mail@libero.it": "email@gmail.com";
 		}
+		if ( Arrays.asList(phone).contains(column.getName().toLowerCase()) ) {
+			return getRandomBoolean() ? "+39 3201271829": "091 78291279";
+		}
+		if ( Arrays.asList(name).contains(column.getName().toLowerCase()) ) {
+			return getRandomBoolean() ? "Marco": "Alessia";
+		}
+		if ( Arrays.asList(city).contains(column.getName().toLowerCase()) ) {
+			return getRandomBoolean() ? "Palermo": "Torino";
+		}
+		if ( Arrays.asList(region).contains(column.getName().toLowerCase()) ) {
+			return getRandomBoolean() ? "Sicilia": "Piemonte";
+		}
+		if ( Arrays.asList(province).contains(column.getName().toLowerCase()) ) {
+			return getRandomBoolean() ? "PA": "TO";
+		}
+		return getRandomBoolean() ? "Demo test1": "Demo Test2";
+	}
+	
+	/**
+	 * @param max
+	 * @return A Random Number from 1 to max
+	 */
+	public static int getRandomMax(int max){
+        return (int) (Math.random()*max);
+	}
+	
+	/**
+	 * @param column
+	 * @param table
+	 * @param db
+	 * @return Random Enumeration
+	 */
+	public static String getRandomEnumeration(Column column, Table table, DataBase db) {
+		String res = null;
+		List<Enumeration> enumList = Utils.getEnumerationsByDbAndTable(db, table);
+		int enumSize = enumList.size();
+		int random = getRandomMax(enumSize+1);
+		int k = 1;
+		for(Enumeration e: enumList) {
+			if ( column.getEnumeration()!=null && column.getEnumeration().equals(e.getNomeEnumeration()) ) { 
+				for(String vEnum : e.getValoriEnumeration()) {
+					if (random+1 == k) {
+						res = vEnum;
+					}
+					k++;
+				}
+			}
+		}
+		return res;
 	}
 	
 }

@@ -118,11 +118,16 @@ public class Column {
 		String classes = typeColumn.getName();
 		if (classes.equals("java.lang.Integer")||classes.equals("java.lang.Long")||classes.equals("java.lang.Short"))
 			return "Integer";
-		else if (classes.equals("java.math.BigDecimal")||classes.equals("java.lang.Double")||classes.equals("java.lang.Float"))
+		else if (classes.equals("java.math.BigDecimal")
+				||classes.equals("java.lang.Double")
+				||classes.equals("java.lang.Float"))
 			return "Numeric";
 		else if (classes.equals("java.lang.Boolean"))
 			return "Boolean";
-		else if (classes.equals("java.sql.Date")||classes.equals("java.sql.Timestamp")||classes.equals("java.util.Date"))
+		else if (classes.equals("java.sql.Date")
+				||classes.equals("java.sql.Timestamp")
+				||classes.equals("java.time.LocalDate") //fix
+				||classes.equals("java.util.Date"))
 			return "Date";
 		else
 			return "String";

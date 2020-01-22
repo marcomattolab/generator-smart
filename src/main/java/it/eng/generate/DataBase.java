@@ -640,7 +640,7 @@ public class DataBase {
 				new TemplateServiceDTO(tabella).generateTemplate();
 				new TemplateServiceCriteria(this, tabella).generateTemplate(); 				//Added enumeration management
 				new TemplateResource(tabella).generateTemplate();
-				new TemplateLiquidbaseData(tabella).generateTemplate(); 						//DATA CSV
+				new TemplateLiquidbaseData(this, tabella).generateTemplate(); 						//DATA CSV
 				new TemplateLiquidbaseChangelog(tabella).generateTemplate(); 	 			//Review/COMPLETE THIS  !!
 				if (Utils.havingConstraints(config, tabella)) {
 					new TemplateLiquidbaseChangelogConstraint(tabella).generateTemplate();	//Review/COMPLETE THIS  !!
