@@ -41,8 +41,10 @@ public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 			int k=0;
 			for (Column column: tabella.getColumns()) {
 				String ctype = column.getLabelType().toLowerCase();
-				System.out.println(" ======================>>> ctype: "+ctype);
-				if("string".equals(ctype)) {
+				//TODO DEVELOP THIS!
+				if ("date".equals(ctype)) {
+			    		body += Utils.getRandomDate();
+			    	} else if("string".equals(ctype)) {
 					body += Utils.getRandomString();
 				} else if ("integer".equals(ctype)) {
 					body += a+1;
@@ -50,8 +52,6 @@ public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 					body += a+101;
 				} else if ("boolean".equals(ctype)) {
 					body += Utils.getRandomBoolean();
-				} else if ("date".equals(ctype)) {
-					body += Utils.getRandomDate();
 				}
 				body += (k+1) < tabella.getColumns().size() ? ";" : "";
 				k++;
