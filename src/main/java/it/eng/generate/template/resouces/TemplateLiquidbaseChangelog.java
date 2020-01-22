@@ -63,8 +63,7 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 			
 			//boolean isPrimaryKey = column.isKey();
 			
-			//String nomeColonna = Utils.getFieldName(column);  	// dataNascita
-			String nomeColonna = column.getName();				// data_nascita
+			String nomeColonna = column.getName();
 			int sizeColumn = column.getColumnSize();
 			
 			if( Utils.isPrimaryKeyID(column) ) {
@@ -211,7 +210,6 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			Class<?> filterType = column.getTypeColumn();
-			//String nomeColonna = Utils.getFieldName(column);	//dataNascita
 			String nomeColonna = column.getName();				// data_nascita
 			
 			if(filterType.getName().equals("java.sql.Timestamp") 
@@ -246,16 +244,30 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 		"    </changeSet>\r\n\n" + 
 		//Audit
 		
+		
 		//Riempimento Dati tramite file CSV
-		"    <!--\n" +
-		"    <changeSet id=\""+Utils.getCurrentDate(tabella.getSort())+"-audit-91\" author=\"smart\">\n" +
+		"   <!--\r\n" + 
+		"        Load sample data generated with Faker.js\r\n" + 
+		"        - This data can be easily edited using a CSV editor (or even MS Excel) and\r\n" + 
+		"          is located in the 'src/main/resources/config/liquibase/data' directory\r\n" + 
+		"        - By default this data is applied when running with 'dev' profile.\r\n" + 
+		"          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'\r\n" + 
+		"          Spring Boot configuration key.\r\n" + 
+		"    -->\r\n" + 
+		"    <changeSet id=\""+Utils.getCurrentDate(tabella.getSort())+"-audit-91\" author=\"smart\" context=\"faker\">\n" +
 		"     	<loadData encoding=\"UTF-8\"\n" + 
-		"                  file=\"config/liquibase/"+entityname+"s.csv\"\n" +
+		"                  file=\"config/liquibase/data/"+entityname+"s.csv\"\n" +
 		"                  separator=\";\"\n" +
-		"                  tableName=\""+entityname+"\">\n" +
+		"                  tableName=\""+entityname+"\">\n";
+		for (Column column : tabella.getColumns()) {
+			Class<?> filterType = column.getTypeColumn();
+			String nomeColonna = column.getName();
+			String ctype = column.getLabelType().toLowerCase();
+			body += "            <column name=\""+nomeColonna+"\" type=\""+ctype+"\"/>\n";
+		}
+		body +=
 		"        </loadData>\n" +
-		"    </changeSet>\n" +
-		"    -->\n\n" +
+		"    </changeSet>\n\n" +
 		
 		"</databaseChangeLog>\r\n";
 		return body;
