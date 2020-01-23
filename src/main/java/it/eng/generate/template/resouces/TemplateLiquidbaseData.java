@@ -45,6 +45,7 @@ public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 			for (Column column: tabella.getColumns()) {
 				String ctype = column.getLabelType().toLowerCase();
 				String classes = column.getTypeColumn().getName();
+				
 				//TODO ADD PATTERN VALIDATION
 				if ("date".equals(ctype)) {
 			    		body += Utils.getRandomDate();
@@ -62,7 +63,7 @@ public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 				body += (k+1) < tabella.getColumns().size() ? ";" : ";";
 				k++;
 			}
-			body += "user;2020-02-01\n";
+			body += "user;2020-02-01\n"; //TODO MANAGE create_by, create_date
 		}
 
 		return body;

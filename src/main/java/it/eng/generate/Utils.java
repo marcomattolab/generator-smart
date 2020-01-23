@@ -1337,6 +1337,7 @@ public class Utils {
 	 * @return String 
 	 */
 	public static String getRandomString(Column column) {
+		String result = "";
 		String[] mail = {"mail", "email"};
 		String[] phone = {"phone", "telephone", "telefono", "cellulare", "mobile"};
 		String[] name = {"firstname", "nome", "name", "surname", "cognome"};
@@ -1345,24 +1346,30 @@ public class Utils {
 		String[] region = {"region", "regione"};
 		
 		if ( Arrays.asList(mail).contains(column.getName().toLowerCase()) ) {
-			return getRandomBoolean() ? "mail@libero.it": "email@gmail.com";
+			result = getRandomBoolean() ? "mail@libero.it": "email@gmail.com";
 		}
-		if ( Arrays.asList(phone).contains(column.getName().toLowerCase()) ) {
-			return getRandomBoolean() ? "+39 3201271829": "091 78291279";
+		else if ( Arrays.asList(phone).contains(column.getName().toLowerCase()) ) {
+			result = getRandomBoolean() ? "+39 3201271829": "091 78291279";
 		}
-		if ( Arrays.asList(name).contains(column.getName().toLowerCase()) ) {
-			return getRandomBoolean() ? "Marco": "Alessia";
+		else if ( Arrays.asList(name).contains(column.getName().toLowerCase()) ) {
+			result = getRandomBoolean() ? "Marco": "Alessia";
 		}
-		if ( Arrays.asList(city).contains(column.getName().toLowerCase()) ) {
-			return getRandomBoolean() ? "Palermo": "Torino";
+		else if ( Arrays.asList(city).contains(column.getName().toLowerCase()) ) {
+			result = getRandomBoolean() ? "Palermo": "Torino";
 		}
-		if ( Arrays.asList(region).contains(column.getName().toLowerCase()) ) {
-			return getRandomBoolean() ? "Sicilia": "Piemonte";
+		else if ( Arrays.asList(region).contains(column.getName().toLowerCase()) ) {
+			result = getRandomBoolean() ? "Sicilia": "Piemonte";
 		}
-		if ( Arrays.asList(province).contains(column.getName().toLowerCase()) ) {
-			return getRandomBoolean() ? "PA": "TO";
+		else if ( Arrays.asList(province).contains(column.getName().toLowerCase()) ) {
+			result = getRandomBoolean() ? "PA": "TO";
 		}
-		return getRandomBoolean() ? "Demo test1": "Demo Test2";
+		else {
+			result = getRandomBoolean() ? "Demo test1": "Demo Test2";
+		}
+		if (column.getColumnMaxSize()!=null && result.length() > column.getColumnMaxSize()) {
+			result = result.substring(0, column.getColumnMaxSize()-1);
+		}
+		return result;
 	}
 	
 	/**
