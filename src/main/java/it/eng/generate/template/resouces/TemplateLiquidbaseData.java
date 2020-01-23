@@ -33,10 +33,11 @@ public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 		int s = tabella.getColumns().size();
 		for (Column column: tabella.getColumns()) {
 			String nomeColonna = column.getName();
-			body += nomeColonna + (i+1<s ? ";" : "");
+			body += nomeColonna + (i+1<s ? ";" : ";");
 			i++;
 		}
-		body += "\n";
+		body += "created_by;created_date\n";
+
 		
 		//Rows CSV
 		for(int a=0; a<ITERATION_COUNT; a++) {
@@ -58,10 +59,10 @@ public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 				} else if ("boolean".equals(ctype)) {
 					body += Utils.getRandomBoolean();
 				}
-				body += (k+1) < tabella.getColumns().size() ? ";" : "";
+				body += (k+1) < tabella.getColumns().size() ? ";" : ";";
 				k++;
 			}
-			body += "\n";
+			body += "user;2020-02-01\n";
 		}
 
 		return body;

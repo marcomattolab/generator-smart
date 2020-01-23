@@ -60,9 +60,7 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 			String key = (String) iter.next();
 			Column column = tabella.getColumn(key);
 			Class<?> filterType = column.getTypeColumn();
-			
 			//boolean isPrimaryKey = column.isKey();
-			
 			String nomeColonna = column.getName();
 			int sizeColumn = column.getColumnSize();
 			
@@ -260,10 +258,13 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 		"                  separator=\";\"\n" +
 		"                  tableName=\""+entityname+"\">\n";
 		for (Column column : tabella.getColumns()) {
-			Class<?> filterType = column.getTypeColumn();
 			String nomeColonna = column.getName();
 			String ctype = column.getLabelType().toLowerCase();
-			body += "            <column name=\""+nomeColonna+"\" type=\""+ctype+"\"/>\n";
+			if( Utils.isPrimaryKeyID(column) ) {
+				body += "            <column name=\""+nomeColonna+"\" type=\"numeric\"/>\n";
+			} else {
+				body += "            <column name=\""+nomeColonna+"\" type=\""+ctype+"\"/>\n";
+			}
 		}
 		body +=
 		"        </loadData>\n" +

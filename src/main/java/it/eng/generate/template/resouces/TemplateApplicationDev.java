@@ -77,7 +77,8 @@ public class TemplateApplicationDev extends AbstractResourceTemplate{
 		"            hibernate.cache.use_query_cache: false\r\n" +
 		"            hibernate.generate_statistics: true\r\n" +
 		"    liquibase:\r\n" +
-		"        contexts: dev\r\n" +
+		"    # Remove 'faker' if you do not want the sample data to be loaded automatically\n" +
+		"        contexts: dev, faker\n" +
 		"    mail:\r\n" +
 		"        host: localhost\r\n" +
 		"        port: 25\r\n" +
@@ -105,11 +106,6 @@ public class TemplateApplicationDev extends AbstractResourceTemplate{
 		"        exposed-headers: \"Link,X-Total-Count\"\r\n" +
 		"        allow-credentials: true\r\n" +
 		"        max-age: 1800\r\n" +
-		
-//		"    security:\r\n" +
-//		"        remember-me:\r\n" +
-//		"            # security key (this key should be unique for your application, and kept secret)\r\n" +
-//		"            key: b00e7c2b52803fb2a2cebcde07e02db45f1c50baf36a4f9d0847463554741a4f1f87bca18547760efff6d5061e3f79ce0886\r\n" +
 		"    security:\r\n" +
 		"       authentication:\r\n" +
 		"         jwt:\r\n" +

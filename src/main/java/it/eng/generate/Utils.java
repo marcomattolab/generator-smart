@@ -21,6 +21,7 @@ public class Utils {
 	
 	public static String APICE = "'";
 	public static String DATE_PATTERN = "DD/MM/YYYY"; //TODO MOVE INTO PROPERTY
+	public static String DATE_PATTERN_LIQUIBASE = "YYYY-MM-DD"; //TODO MOVE INTO PROPERTY
 	
 	public static String getServiceClassName(Table table){
 		return getEntityName(table)+"Service"; 
@@ -1322,7 +1323,7 @@ public class Utils {
 	 * @return Random Date
 	 */
 	public static String getRandomDate() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN_LIQUIBASE);
 		if (getRandomBoolean()) {
 			return simpleDateFormat.format(new Date());
 		} else {
