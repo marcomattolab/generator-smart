@@ -262,6 +262,8 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 			String ctype = column.getLabelType().toLowerCase();
 			if( Utils.isPrimaryKeyID(column) ) {
 				body += "            <column name=\""+nomeColonna+"\" type=\"numeric\"/>\n";
+			} else if( Utils.isNumericField(column) ) {
+				body += "            <column name=\""+nomeColonna+"\" type=\"numeric\"/>\n";
 			} else {
 				body += "            <column name=\""+nomeColonna+"\" type=\""+ctype+"\"/>\n";
 			}
