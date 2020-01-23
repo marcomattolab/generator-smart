@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 public class Utils {
+	public static boolean LOG_DEBUG_GENERATOR = false;
 	public static String OneToOne = "OneToOne";
 	public static String ManyToMany = "ManyToMany";
 	public static String OneToMany = "OneToMany";
@@ -492,8 +493,9 @@ public class Utils {
 		if (column.getEnumeration()!=null && column.getEnumeration().length()>0) {
 			//Done Enumeration type
 			filterTypology = column.getEnumeration()+"Filter"; 
-			System.out.println("- filterType: "+filterType + " enumeration: "+ column.getEnumeration());
-			
+			if (Utils.LOG_DEBUG_GENERATOR) {
+				System.out.println("- filterType: "+filterType + " enumeration: "+ column.getEnumeration());
+			}
 		} else if (filterType.getName().equals("java.lang.String")) {
 			filterTypology = "StringFilter";
 		} else if(filterType.getName().equals("java.lang.Long")) {
@@ -719,7 +721,9 @@ public class Utils {
 			}
 		}
 		if (enumList.size()>0) {
-			System.out.println("## Entity/Shared - Enumeration for table: " + tabella.getNomeTabella() +"  _Size: "+enumList.size());
+			if (Utils.LOG_DEBUG_GENERATOR) {
+				System.out.println("## Entity/Shared - Enumeration for table: " + tabella.getNomeTabella() +"  _Size: "+enumList.size());
+			}
 		}
 		return enumList;
 	}
@@ -1141,7 +1145,9 @@ public class Utils {
 			}
 		}
 		if(result.size()>0) {
-			System.out.println("- NameTable.ColumnName: "+nameTable+"."+columnName+" - Build enums with Size>0 ==> " + result.size());
+			if (Utils.LOG_DEBUG_GENERATOR) {
+				System.out.println("- NameTable.ColumnName: "+nameTable+"."+columnName+" - Build enums with Size>0 ==> " + result.size());
+			}
 		}
 		return result;
 	}

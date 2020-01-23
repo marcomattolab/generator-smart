@@ -24,7 +24,7 @@
 	- LOW - ==> Creare dahboard generata dynamicamente
 	- LOW - ==> Inserire pulsanti Login nella webapp 
 	- LOW - ==> Classi di test sviluppo
-
+ 
 ## Migliorie / Plugin / OpenPoint
 	- LOW - Inserire motore di workflow (Activity BPS, Spring workflow ....)
 	- MED - Inserire vari tipi DB => Oracle!, Mysql, nosql Mongodb

@@ -737,7 +737,9 @@ public class DataBase {
 				Column column = tabella.getColumn(columnName);
 				String enumeration = findEnumerationName(tabellaName, columnName);
 				if(enumeration!=null && enumeration.length()>0) {
-					System.out.println("@ Added Enum tabellaName.columnName.enum ===> "+tabellaName+"."+columnName+"."+enumeration);
+					if (Utils.LOG_DEBUG_GENERATOR) {
+						System.out.println("@ Added Enum tabellaName.columnName.enum ===> "+tabellaName+"."+columnName+"."+enumeration);
+					}
 					column.setEnumeration(enumeration);
 				}
 			}

@@ -14,9 +14,10 @@
   "projectName" : "demogenerated",
   "urlConnection" : "jdbc:mysql://127.0.0.1:3306/angulardb?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=true&serverTimezone=UTC",
   "languages" : [ "it", "en", "fr", "de" ],
-  "profiles" : [ "ROLE_ADMIN", "ROLE_USER", "ROLE_ANONYMOUS", "ROLE_OPERATOR" ],
+  "profiles" : [ "ROLE_ADMIN", "ROLE_USER", "ROLE_ANONYMOUS", "ROLE_OPERATOR" , "ROLE_BENNY"],
   "enumerations" : [ {"name":"TipoCliente", "values":"CLIENTE#ACQUIRENTE"},
 					 {"name":"BooleanStatus", "values":"SI#NO"},
+					 {"name":"SessoType", "values":"MALE#FEMALE"},
 					 {"name":"EsitoStatus", "values":"OK#KO"},
 					 {"name":"CanaleTrasmissione", "values":"MAIL#SMS#FACEBOOK#TWITTER#INSTAGRAM"},
 					 {"name":"TipoTrattativa", "values":"COMPRAVENDITA#LOCAZIONE"}
@@ -26,10 +27,10 @@
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
   			{"fname":"nome", "ftype":"String", "frequired":true, "fsize":150}, 
   			{"fname":"cognome", "ftype":"String", "frequired":false, "fsize":150}, 
-  			{"fname":"sesso", "ftype":"String", "frequired":false, "fsize":10}, 
+  			{"fname":"sesso", "ftype":"SessoType", "frequired":false, "fsize":10}, 
   			{"fname":"datanascita", "ftype":"LocalDate", "frequired":false, "fsize":null}, 
   			{"fname":"note", "ftype":"String", "frequired":false, "fsize":1000}
-  	], "profiles" : [ "ROLE_ADMIN", "ROLE_USER", "ROLE_ANONYMOUS", "ROLE_OPERATOR" ]},
+  	], "profiles" : [ "ROLE_ADMIN", "ROLE_USER", "ROLE_ANONYMOUS", "ROLE_OPERATOR", "ROLE_BENNY" ]},
   	{"name":"Libro", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
   			{"fname":"isbn", "ftype":"String", "frequired":true, "fsize":150}, 

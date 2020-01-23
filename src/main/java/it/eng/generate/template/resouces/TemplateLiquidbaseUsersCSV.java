@@ -37,6 +37,7 @@ public class TemplateLiquidbaseUsersCSV extends AbstractResourceTemplate{
 
 	private String buildProfiles(String[] profiles) {
 		String res = "";
+		System.out.println("\n\nCredential generation");
 		System.out.println("----- Credential Section Start --------");
 		for (int id = 0; id < profiles.length; id++) {
 			String profileRole = profiles[id];
@@ -47,7 +48,7 @@ public class TemplateLiquidbaseUsersCSV extends AbstractResourceTemplate{
 					
 			res+= (id+1)+";"+profile+";"+passwordHash+";"+Profile+";"+Profile+";"+profile+"@localhost;;true;it;system;system\n";
 		}
-		System.out.println("----- Credential Section End --------");
+		System.out.println("----- Credential Section End --------\n\n");
 		return res;
 	}
 

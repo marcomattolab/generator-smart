@@ -65,7 +65,9 @@ public class TemplateCacheConfiguration extends AbstractTemplate {
 		for (Table tabella: tabelle) {
 			String NomeTabella = Utils.getEntityName(tabella); 
 			String nometabella = Utils.getClassNameLowerCase(tabella); 
-			System.out.println("CACHE nometabella : "+nometabella + "  NomeTabella: " + NomeTabella);
+			if (Utils.LOG_DEBUG_GENERATOR) {
+				System.out.println("CACHE nometabella: "+nometabella + "  NomeTabella: " + NomeTabella);
+			}
 			body += "\t\tcm.createCache("+conf.getPackageclass() + "." + conf.getSrcDomainFolder()+"."+NomeTabella+".class.getName(), jcacheConfiguration);\r\n";
 		}
 		
