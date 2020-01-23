@@ -1366,8 +1366,8 @@ public class Utils {
 		else {
 			result = getRandomBoolean() ? "Demo test1": "Demo Test2";
 		}
-		if (column.getColumnMaxSize()!=null && result.length() > column.getColumnMaxSize()) {
-			result = result.substring(0, column.getColumnMaxSize()-1);
+		if (result.length() > column.getColumnSize()) {
+			result = result.substring(0, column.getColumnSize());
 		}
 		return result;
 	}
