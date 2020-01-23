@@ -40,7 +40,7 @@
   	{"name":"Collana", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
   			{"fname":"nome", "ftype":"String", "frequired":true, "fsize":500}
-  	], "profiles" : [ "ROLE_OPERATOR" ]},
+  	], "profiles" : [ "ROLE_OPERATOR", "ROLE_USER" ]},
   	{"name":"Cliente", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
   			{"fname":"firstname", "ftype":"String", "frequired":true, "fsize":500}, 
