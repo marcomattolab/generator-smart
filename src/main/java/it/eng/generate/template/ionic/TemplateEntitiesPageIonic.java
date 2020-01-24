@@ -33,7 +33,8 @@ public class TemplateEntitiesPageIonic extends AbstractResourceTemplate {
         
 		String body = 
 		"import {Component} from '@angular/core';\r\n" +
-		"import {NavController} from '@ionic/angular';\r\n" +
+		"import {NavController, Platform} from '@ionic/angular';\n"+
+		"import {Subscription} from 'rxjs';\n"+
 		"import {UserRole} from '../../services/user/user.model';\r\n\n" +
 		"interface EntityItem {\r\n" +
 		"  labelKey: string;\r\n" +
@@ -74,12 +75,26 @@ public class TemplateEntitiesPageIonic extends AbstractResourceTemplate {
 		}
 		body +=
 		"  ];\r\n\n" +
-		"  constructor(public navController: NavController) {\r\n" +
-		"  }\r\n" +
+		
+		"  private backButtonSubscription: Subscription;\n\n"+		
+		//"  constructor(public navController: NavController) {\n" +
+		//"  }\n" +
+		"  constructor(\n" + 
+		"    public navController: NavController,\n" + 
+		"    private platform: Platform) {\n" + 
+		"  }\n\n"+
 		"  openPage(page) {\r\n" +
-		"    this.navController.navigateForward('/tabs/entities/' + page.route);\r\n" +
-		"  }\r\n" +
-		"}\r\n";
+		"    this.navController.navigateForward('/tabs/entities/' + page.route);\n" +
+		"  }\n\n" +
+		"  ionViewDidEnter() {\n" + 
+		"    this.backButtonSubscription = this.platform.backButton.subscribe(async () => {\n" + 
+		"      this.navController.navigateRoot('/tabs/home');\n" + 
+		"    });\n" + 
+		"  }\n\n" + 
+		"  ionViewWillLeave() {\n" + 
+		"    this.backButtonSubscription.unsubscribe();\n" + 
+		"  }\n"+
+		"}\n";
 		return body;
 	}
 	

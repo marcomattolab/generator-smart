@@ -1,0 +1,11 @@
+<div class="picker">
+  <img class="image" [src]="selectedImage" *ngIf="selectedImage && attachMent" alt="giustificativo image"
+       (click)="onPickImage()"/>
+
+  <ion-button color="primary" (click)="onPickImage()" *ngIf="!selectedImage || !attachMent">
+    <ion-icon name="camera" slot="start"></ion-icon>
+    <ion-label>{{'TAKE_PICTURE' | translate}}</ion-label>
+  </ion-button>
+</div>
+
+<input type="file" accept="image/jpeg" *ngIf="usePicker" #filePicker (change)="onFileChosen($event)"/>

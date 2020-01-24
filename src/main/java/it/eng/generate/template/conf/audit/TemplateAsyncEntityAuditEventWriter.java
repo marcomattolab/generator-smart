@@ -28,6 +28,7 @@ public class TemplateAsyncEntityAuditEventWriter extends AbstractTemplate {
 		"import org.slf4j.LoggerFactory;\r\n" +
 		"import org.springframework.scheduling.annotation.Async;\r\n" +
 		"import org.springframework.stereotype.Component;\r\n" +
+		"import java.time.Instant;\n" +
 		"import java.io.IOException;\r\n" +
 		"import java.lang.reflect.Field;\r\n\n" +
 		"/**\r\n" +
@@ -94,7 +95,9 @@ public class TemplateAsyncEntityAuditEventWriter extends AbstractTemplate {
 		"            auditedEntity.setCommitVersion(1);\r\n" +
 		"        } else {\r\n" +
 		"            auditedEntity.setModifiedBy(abstractAuditEntity.getLastModifiedBy());\r\n" +
-		"            auditedEntity.setModifiedDate(abstractAuditEntity.getLastModifiedDate());\r\n" +
+	  //"            auditedEntity.setModifiedDate(abstractAuditEntity.getLastModifiedDate());\r\n" +
+		"            auditedEntity.setModifiedDate(abstractAuditEntity.getLastModifiedDate() != null ?\n" + 
+		"                  abstractAuditEntity.getLastModifiedDate(): Instant.now());\n" +
 		"            calculateVersion(auditedEntity);\r\n" +
 		"        }\r\n" +
 		"        log.trace(\"Audit Entity --> {} \", auditedEntity.toString());\r\n" +

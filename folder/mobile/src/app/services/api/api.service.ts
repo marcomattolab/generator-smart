@@ -8,7 +8,12 @@ import { environment } from 'src/environments/environment';
 export class ApiService {
   public static API_URL = environment.apiUrl;
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) {
+  }
+
+  setApiUrl(newUrl: string) {
+    ApiService.API_URL = newUrl;
+  }
 
   get(endpoint: string, params?: any, reqOpts?: any) {
     if (!reqOpts) {

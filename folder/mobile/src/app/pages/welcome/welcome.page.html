@@ -7,14 +7,17 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <span class="hipster">
+  <!--  <span class="hipster">-->
+  <div class="logo">
+    <ion-button expand="block" routerLink="/login" id="signIn" color="secondary">
+      {{ 'LOGIN' | translate }}</ion-button>
+
+    <ion-button *ngIf="isDevelopmentMode()" expand="block" routerLink="/settings" id="settings" color="tertiary">
+      {{ 'SETTINGS_TITLE' | translate }}</ion-button>
+
     <span class="hidden-api-url" (click)="multipleTapToShowInfos()"></span>
-  </span>
-  <div>
-      <ion-button expand="block" routerLink="/login" id="signIn">{{ 'LOGIN' | translate }}</ion-button>
-	  <!--      
-	  <p>{{ 'NO_ACCOUNT_MESSAGE' | translate }}</p>
-	  <ion-button expand="block" routerLink="/signup">{{ 'SIGNUP' | translate }}</ion-button>
-      -->
+
+    <!--      <p>{{ 'NO_ACCOUNT_MESSAGE' | translate }}</p>-->
+    <!--      <ion-button expand="block" routerLink="/signup">{{ 'SIGNUP' | translate }}</ion-button>-->
   </div>
 </ion-content>

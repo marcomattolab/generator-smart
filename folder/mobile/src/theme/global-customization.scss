@@ -1,5 +1,34 @@
+// Overwrite variabili
+:root {
+  /** primary **/
+  --ion-color-primary: #0d5973;
+  /** secondary **/
+  --ion-color-secondary: #3b788d;
+  /** danger **/
+  --ion-color-danger: #e85212;
+  /** danger **/
+  --exprivia-color-selected: #66a8cc;
+}
+
 // Tutte le toolbar prendono il colore "primary"
- ion-toolbar{
+ion-toolbar {
   --background: var(--ion-color-primary);
   --color: var(--ion-color-primary-contrast);
- }
+
+  ion-button, ion-back-button {
+    span {
+      color: var(--ion-color-primary-contrast);
+    }
+  }
+}
+
+$select-modal-width: 90%;
+.alert-wrapper.sc-ion-alert-md {
+  width: $select-modal-width;
+  max-width: $select-modal-width;
+}
+
+// selected tab button used for Home, Entities and Account
+ion-tab-button {
+  --color-selected: var(--exprivia-color-selected);
+}

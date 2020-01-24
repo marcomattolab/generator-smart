@@ -42,3 +42,17 @@
  - ionic cordova build android --prod
  - ionic cordova build android --dev
 
+
+COMMIT:
+- Files: account.pages.ts, entities.page.ts => If Android Back button is pressed from Account and Entities pages then the navigation is forwarded to Home page
+- Files: pachake.json, index.html => Added mobile camera functionality
+- Files: welcome.page.ts => Automatic redirect if the logged user token is present
+- Files: global-customization.scss => Changed default selected tab button
+- Files: AsyncEntityAuditEventWriter => Fix missing modified date on Audit interceptor
+- Files: environment.ts => Added mock googleMapsAPIKey
+- Files: welcome.page ts/html => added SettingsPage that gives access to API url change for development purposes.
+
+TODO ==> replaced simple spinner with centered loading spinner
+
+
+
