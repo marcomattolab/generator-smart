@@ -632,6 +632,7 @@ public class DataBase {
 			for(String languageCode: config.getLanguages()) {
 				new TemplateEntityIonicI18N(this, languageCode).generateTemplate();  
 			}
+			
 
 			//All Other Level (dynamics) 
 			System.out.println("Creating table dynamics in progress... ");

@@ -7,6 +7,15 @@
   background-size: contain;
 }
 
+.logo {
+  background: url('src/assets/appIcon.svg') no-repeat center top;
+  display: inline-block;
+  background-color: var(--ion-color-primary);
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (min--moz-device-pixel-ratio: 2),

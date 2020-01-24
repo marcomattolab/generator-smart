@@ -68,16 +68,16 @@ public class TemplateEntityIonicI18N extends AbstractResourceTemplate {
 		"  \"SIGNUP_ERROR\": \"Non e' possibile creare l'utente. Assicurarsi di aver inserito le informazioni utente correttamente e poi riprovare.\",\r\n" + 
 		"  \"SIGNUP_SUCCESS\": \"Registrazione salvata! Verifica sulla tua mail per conferma.\",\r\n" + 
 		"  \"SIGNUP_TITLE\": \"Registrazione\",\r\n" + 
-		"  \"TAB1_TITLE\": \"Elenco\",\r\n" + 
-		"  \"TAB2_TITLE\": \"Ricerca\",\r\n" + 
-		"  \"TAB3_TITLE\": \"Utente\",\r\n" + 
+		"  \"TAB_HOME\": \"Elenco\",\r\n" + 
+		"  \"TAB_LIST\": \"Ricerca\",\r\n" + 
+		"  \"TAB_USER\": \"Utente\",\r\n" + 
 		"  \"FIELD_REQUIRED\": \"Campo obbligatorio.\",\r\n" + 
 		
 		buildTables(conf) +
 		
 		"  \"TUTORIAL_CONTINUE_BUTTON\": \"Continua\",\r\n" + 
 		"  \"TUTORIAL_SKIP_BUTTON\": \"Salta\",\r\n" + 
-		"  \"TUTORIAL_SLIDE1_DESCRIPTION\": \"<b>Ionic Super Starter</b> E' un applicazione di partenza per Ionic che contiene molte pagine di esempio gia'  pronte realizzate seguendo delle best practices.\",\r\n" + 
+		"  \"TUTORIAL_SLIDE1_DESCRIPTION\": \"<b>Ionic Super Starter</b> E' un applicazione di partenza per Ionic che contiene molte pagine di esempio gia' pronte realizzate seguendo delle best practices.\",\r\n" + 
 		"  \"TUTORIAL_SLIDE1_TITLE\": \"Benvenuti in Ionic Super Starter\",\r\n" + 
 		"  \"TUTORIAL_SLIDE2_DESCRIPTION\": \"Mantenete le pagine che volete e rimuovete quelle che non vi servono. Troverete diverse pagine di uso comune in questa applicazione come le pagine per il login e la registrazione, layout con tabs, e questa pagina di tutorial.\",\r\n" + 
 		"  \"TUTORIAL_SLIDE2_TITLE\": \"Come usare Super Starter\",\r\n" + 
