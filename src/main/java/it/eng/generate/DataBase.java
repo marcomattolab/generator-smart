@@ -165,6 +165,7 @@ import it.eng.generate.template.service.TemplateUserDTO;
 import it.eng.generate.template.service.TemplateUserMapperService;
 import it.eng.generate.template.service.TemplateUserService;
 import it.eng.generate.template.test.TemplateAccountResourceIntTest;
+import it.eng.generate.template.test.TemplateApplicationYamlTest;
 import it.eng.generate.template.test.TemplateAuditResourceIntTest;
 import it.eng.generate.template.test.TemplateCustomAuditEventRepositoryIntTest;
 import it.eng.generate.template.test.TemplateDateTimeWrapper;
@@ -597,6 +598,7 @@ public class DataBase {
 			
 			//TEST BE Classes
 			if (config.isGenerateTest()) {
+				new TemplateApplicationYamlTest(this).generateTemplate();
 				new TemplateWebConfigurerTest(this).generateTemplate();
 				new TemplateWebConfigurerTestController(this).generateTemplate();
 				new TemplateHibernateTimeZoneTest(this).generateTemplate();
@@ -677,7 +679,6 @@ public class DataBase {
 				new TemplateEntityModuleIonic(tabella).generateTemplate(); 
 				new TemplateEntityServiceIonic(tabella).generateTemplate();  			
 				new TemplateEntityTsIonic(tabella).generateTemplate();  		
-				//new TemplateEntityDetailModuleIonic(tabella).generateTemplate();  //Commented to build Apk in production 	
 				new TemplateEntityDetailIonic(tabella).generateTemplate();  		
 				new TemplateEntityHtmlIonic(tabella).generateTemplate(); 
 				new TemplateEntityDetailHtmlIonic(tabella).generateTemplate(); 

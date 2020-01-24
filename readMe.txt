@@ -23,7 +23,7 @@
 	- LOW - ==> Integrare da IONIC/Mobile le librerie camera / google-map
 	- LOW - ==> Creare dahboard generata dynamicamente
 	- LOW - ==> Inserire pulsanti Login nella webapp 
-	- LOW - ==> Classi di test sviluppo
+	- LOW - ==> Classi di test sviluppo BE / FE
  
 ## Migliorie / Plugin / OpenPoint
 	- LOW - Inserire motore di workflow (Activity BPS, Spring workflow ....)
