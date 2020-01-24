@@ -23,7 +23,10 @@ public class TemplateMailServiceIntTest extends AbstractTemplate{
 	public String getBody() {
 		//https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcServiceFolder()+";\r\n\n" +
+		String mailAddress = "test"; //FIXME => conf.getProjectName().toLowerCase();
+		
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcServiceFolder()+";\r\n\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcConfigFolder()+".Constants;\r\n\n" +
 		"import "+ conf.getPackageclass() + "." + Utils.getClassNameCamelCase(conf.getProjectName()) + conf.getApp() + ";\r\n\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".User;\r\n\n" +
@@ -77,7 +80,7 @@ public class TemplateMailServiceIntTest extends AbstractTemplate{
 		"        MimeMessage message = messageCaptor.getValue();\r\n" +
 		"        assertThat(message.getSubject()).isEqualTo(\"testSubject\");\r\n" +
 		"        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(\"john.doe@example.com\");\r\n" +
-		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\"test@localhost\");\r\n" +
+		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\""+mailAddress+"@"+"localhost\");\r\n" +
 		"        assertThat(message.getContent()).isInstanceOf(String.class);\r\n" +
 		"        assertThat(message.getContent().toString()).isEqualTo(\"testContent\");\r\n" +
 		"        assertThat(message.getDataHandler().getContentType()).isEqualTo(\"text/plain; charset=UTF-8\");\r\n" +
@@ -89,7 +92,7 @@ public class TemplateMailServiceIntTest extends AbstractTemplate{
 		"        MimeMessage message = messageCaptor.getValue();\r\n" +
 		"        assertThat(message.getSubject()).isEqualTo(\"testSubject\");\r\n" +
 		"        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(\"john.doe@example.com\");\r\n" +
-		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\"test@localhost\");\r\n" +
+		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\""+mailAddress+"@"+"localhost\");\r\n" +
 		"        assertThat(message.getContent()).isInstanceOf(String.class);\r\n" +
 		"        assertThat(message.getContent().toString()).isEqualTo(\"testContent\");\r\n" +
 		"        assertThat(message.getDataHandler().getContentType()).isEqualTo(\"text/html;charset=UTF-8\");\r\n" +
@@ -105,7 +108,7 @@ public class TemplateMailServiceIntTest extends AbstractTemplate{
 		"        part.writeTo(aos);\r\n" +
 		"        assertThat(message.getSubject()).isEqualTo(\"testSubject\");\r\n" +
 		"        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(\"john.doe@example.com\");\r\n" +
-		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\"test@localhost\");\r\n" +
+		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\""+mailAddress+"@"+"localhost\");\r\n" +
 		"        assertThat(message.getContent()).isInstanceOf(Multipart.class);\r\n" +
 		"        assertThat(aos.toString()).isEqualTo(\"\\r\\ntestContent\");\r\n" +
 		"        assertThat(part.getDataHandler().getContentType()).isEqualTo(\"text/plain; charset=UTF-8\");\r\n" +
@@ -121,7 +124,7 @@ public class TemplateMailServiceIntTest extends AbstractTemplate{
 		"        part.writeTo(aos);\r\n" +
 		"        assertThat(message.getSubject()).isEqualTo(\"testSubject\");\r\n" +
 		"        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(\"john.doe@example.com\");\r\n" +
-		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\"test@localhost\");\r\n" +
+		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\""+mailAddress+"@"+"localhost\");\r\n" +
 		"        assertThat(message.getContent()).isInstanceOf(Multipart.class);\r\n" +
 		"        assertThat(aos.toString()).isEqualTo(\"\\r\\ntestContent\");\r\n" +
 		"        assertThat(part.getDataHandler().getContentType()).isEqualTo(\"text/html;charset=UTF-8\");\r\n" +
@@ -137,7 +140,7 @@ public class TemplateMailServiceIntTest extends AbstractTemplate{
 		"        MimeMessage message = messageCaptor.getValue();\r\n" +
 		"        assertThat(message.getSubject()).isEqualTo(\"test title\");\r\n" +
 		"        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());\r\n" +
-		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\"test@localhost\");\r\n" +
+		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\""+mailAddress+"@"+"localhost\");\r\n" +
 		"        assertThat(message.getContent().toString()).isEqualToNormalizingNewlines(\"<html>test title, http://127.0.0.1:8080, john</html>\\n\");\r\n" +
 		"        assertThat(message.getDataHandler().getContentType()).isEqualTo(\"text/html;charset=UTF-8\");\r\n" +
 		"    }\r\n\n" +
@@ -151,7 +154,7 @@ public class TemplateMailServiceIntTest extends AbstractTemplate{
 		"        verify(javaMailSender).send(messageCaptor.capture());\r\n" +
 		"        MimeMessage message = messageCaptor.getValue();\r\n" +
 		"        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());\r\n" +
-		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\"test@localhost\");\r\n" +
+		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\""+mailAddress+"@"+"localhost\");\r\n" +
 		"        assertThat(message.getContent().toString()).isNotEmpty();\r\n" +
 		"        assertThat(message.getDataHandler().getContentType()).isEqualTo(\"text/html;charset=UTF-8\");\r\n" +
 		"    }\r\n\n" +
@@ -165,7 +168,7 @@ public class TemplateMailServiceIntTest extends AbstractTemplate{
 		"        verify(javaMailSender).send(messageCaptor.capture());\r\n" +
 		"        MimeMessage message = messageCaptor.getValue();\r\n" +
 		"        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());\r\n" +
-		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\"test@localhost\");\r\n" +
+		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\""+mailAddress+"@"+"localhost\");\r\n" +
 		"        assertThat(message.getContent().toString()).isNotEmpty();\r\n" +
 		"        assertThat(message.getDataHandler().getContentType()).isEqualTo(\"text/html;charset=UTF-8\");\r\n" +
 		"    }\r\n\n" +
@@ -179,7 +182,7 @@ public class TemplateMailServiceIntTest extends AbstractTemplate{
 		"        verify(javaMailSender).send(messageCaptor.capture());\r\n" +
 		"        MimeMessage message = messageCaptor.getValue();\r\n" +
 		"        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());\r\n" +
-		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\"test@localhost\");\r\n" +
+		"        assertThat(message.getFrom()[0].toString()).isEqualTo(\""+mailAddress+"@"+"localhost\");\r\n" +
 		"        assertThat(message.getContent().toString()).isNotEmpty();\r\n" +
 		"        assertThat(message.getDataHandler().getContentType()).isEqualTo(\"text/html;charset=UTF-8\");\r\n" +
 		"    }\r\n\n" +

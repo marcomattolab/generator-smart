@@ -176,6 +176,8 @@ import it.eng.generate.template.test.TemplateHibernateTimeZoneTest;
 import it.eng.generate.template.test.TemplateLogsResourceIntTest;
 import it.eng.generate.template.test.TemplateMailServiceIntTest;
 import it.eng.generate.template.test.TemplatePaginationUtilUnitTest;
+import it.eng.generate.template.test.TemplateSecurityJWTFilterTest;
+import it.eng.generate.template.test.TemplateSecurityTokenProviderTest;
 import it.eng.generate.template.test.TemplateSecurityUtilsUnitTest;
 import it.eng.generate.template.test.TemplateTestUtil;
 import it.eng.generate.template.test.TemplateUserResourceIntTest;
@@ -593,7 +595,7 @@ public class DataBase {
 			new TemplateAccountModuleIonic(this).generateTemplate(); 	
 			
 			
-			//TEST Classes - TODO DEVELOP THIS!!
+			//TEST BE Classes
 			if (config.isGenerateTest()) {
 				new TemplateWebConfigurerTest(this).generateTemplate();
 				new TemplateWebConfigurerTestController(this).generateTemplate();
@@ -601,6 +603,8 @@ public class DataBase {
 				new TemplateCustomAuditEventRepositoryIntTest(this).generateTemplate();
 				new TemplateDateTimeWrapperRepository(this).generateTemplate();
 				new TemplateDateTimeWrapper(this).generateTemplate();
+				new TemplateSecurityJWTFilterTest(this).generateTemplate();
+				new TemplateSecurityTokenProviderTest(this).generateTemplate();
 				new TemplateSecurityUtilsUnitTest(this).generateTemplate();
 				new TemplateDomainUserDetailsServiceIntTest(this).generateTemplate();
 				new TemplateMailServiceIntTest(this).generateTemplate();

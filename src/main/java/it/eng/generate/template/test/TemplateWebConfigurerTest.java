@@ -23,7 +23,8 @@ public class TemplateWebConfigurerTest extends AbstractTemplate{
 	public String getBody() {
 		//https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcConfigFolder()+";\r\n\n" +
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcConfigFolder()+";\r\n\n" +
 		"import com.codahale.metrics.MetricRegistry;\r\n" +
 		"import com.codahale.metrics.servlet.InstrumentedFilter;\r\n" +
 		"import com.codahale.metrics.servlets.MetricsServlet;\r\n" +

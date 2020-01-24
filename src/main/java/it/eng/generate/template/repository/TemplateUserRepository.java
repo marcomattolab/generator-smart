@@ -43,21 +43,21 @@ public class TemplateUserRepository extends AbstractTemplate{
 		"public interface UserRepository extends JpaRepository<User, Long> {\r\n" +
 		"    String USERS_BY_LOGIN_CACHE = \"usersByLogin\";\r\n" +
 		"    String USERS_BY_EMAIL_CACHE = \"usersByEmail\";\r\n\n" +
-		"    Optional<User> findOneByActivationKey(String activationKey);\r\n" +
-		"    Optional<User> findOneByResetKey(String resetKey);\r\n" +
-		"    Optional<User> findOneByEmailIgnoreCase(String email);\r\n" +
-		"    Optional<User> findOneByLogin(String login);\r\n" +
-	  //"    List<User> findAllByActivatedIsFalseAndCreatedDateBefore(Instant dateTime);\r\n" +
-		"    List<User> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant dateTime);\r\n" +
+		"    Optional<User> findOneByActivationKey(String activationKey);\r\n\n" +
+		"    Optional<User> findOneByResetKey(String resetKey);\r\n\n" +
+		"    Optional<User> findOneByEmailIgnoreCase(String email);\r\n\n" +
+		"    Optional<User> findOneByLogin(String login);\r\n\n" +
+		"    List<User> findAllByActivatedIsFalseAndCreatedDateBefore(Instant dateTime);\n\n"+
+		"    List<User> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant dateTime);\r\n\n" +
 		"    @EntityGraph(attributePaths = \"authorities\")\r\n" +
-		"    Optional<User> findOneWithAuthoritiesById(Long id);\r\n" +
+		"    Optional<User> findOneWithAuthoritiesById(Long id);\r\n\n" +
 		"    @EntityGraph(attributePaths = \"authorities\")\r\n" +
 		"    @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)\r\n" +
-		"    Optional<User> findOneWithAuthoritiesByLogin(String login);\r\n" +
+		"    Optional<User> findOneWithAuthoritiesByLogin(String login);\r\n\n" +
 		"    @EntityGraph(attributePaths = \"authorities\")\r\n" +
 		"    @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)\r\n" +
-		"    Optional<User> findOneWithAuthoritiesByEmail(String email);\r\n" +
-		"    Page<User> findAllByLoginNot(Pageable pageable, String login);\r\n" +
+		"    Optional<User> findOneWithAuthoritiesByEmail(String email);\r\n\n" +
+		"    Page<User> findAllByLoginNot(Pageable pageable, String login);\r\n\n" +
 		"}\r\n";
 		return body;
 	}

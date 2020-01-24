@@ -82,9 +82,12 @@ jhipster:
         from: test@localhost
         base-url: http://127.0.0.1:8080
     security:
-        remember-me:
-            # security key (this key should be unique for your application, and kept secret)
-            key: b00e7c2b52803fb2a2cebcde07e02db45f1c50baf36a4f9d0847463554741a4f1f87bca18547760efff6d5061e3f79ce0886
+        authentication:
+            jwt:
+                # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
+                base64-secret: NmQzZTkyYjllZmMzM2Y2ZGFmZWJjNGE3ZGE0ZGNjZWJhZTE0ODNiODQ3ZGZlZDQ3MWUxNThhNjFhZTQ3NWEwMDdiODI2ZTdhOTNkYmNiMzIzOGQyZTUzNDY5ZTgzNWJjOWMzZDhkN2Y5Y2Q1MmU2ZDMzNTRkZjZhN2EyNzNkMzI=
+                # Token is valid 24 hours
+                token-validity-in-seconds: 86400
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         logs: # Reports Dropwizard metrics in the logs

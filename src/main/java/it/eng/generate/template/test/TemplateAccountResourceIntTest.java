@@ -23,14 +23,13 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 	public String getBody() {
 		//https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcWebRestFolder()+";\r\n\n" +
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestFolder()+";\r\n\n" +
 		"import "+ conf.getPackageclass() + "."+Utils.getClassNameCamelCase(conf.getProjectName()) + conf.getApp() +";\r\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcConfigFolder()+".Constants;\r\n"+
 		"import "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".Authority;\r\n"+
-		"import "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".PersistentToken;\r\n"+
 		"import "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".User;\r\n"+
 		"import "+ conf.getPackageclass() + "." + conf.getSrcRepositoryFolder()+".AuthorityRepository;\r\n"+
-		"import "+ conf.getPackageclass() + "." + conf.getSrcRepositoryFolder()+".PersistentTokenRepository;\r\n"+
 		"import "+ conf.getPackageclass() + "." + conf.getSrcRepositoryFolder()+".UserRepository;\r\n"+
 		"import "+ conf.getPackageclass() + "." + conf.getSrcSecurityFolder()+".AuthoritiesConstants;\r\n"+
 		"import "+ conf.getPackageclass() + "." + conf.getSrcServiceFolder()+".MailService;\r\n"+
@@ -76,22 +75,21 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"    @Autowired private UserRepository userRepository;\r\n" +
 		"    @Autowired private AuthorityRepository authorityRepository;\r\n" +
 		"    @Autowired private UserService userService;\r\n" +
-		"    @Autowired private PersistentTokenRepository persistentTokenRepository;\r\n" +
 		"    @Autowired private PasswordEncoder passwordEncoder;\r\n" +
 		"    @Autowired private HttpMessageConverter<?>[] httpMessageConverters;\r\n" +
 		"    @Autowired private ExceptionTranslator exceptionTranslator;\r\n" +
 		"    @Mock private UserService mockUserService;\r\n" +
 		"    @Mock private MailService mockMailService;\r\n" +
 		"    private MockMvc restMvc;\r\n" +
-		"    private MockMvc restUserMockMvc;\r\n" +
+		"    private MockMvc restUserMockMvc;\r\n\n" +
 		"    @Before\r\n" +
 		"    public void setup() {\r\n" +
 		"        MockitoAnnotations.initMocks(this);\r\n" +
 		"        doNothing().when(mockMailService).sendActivationEmail(any());\r\n" +
 		"        AccountResource accountResource =\r\n" +
-		"            new AccountResource(userRepository, userService, mockMailService, persistentTokenRepository);\r\n" +
+		"            new AccountResource(userRepository, userService, mockMailService);\r\n" +
 		"        AccountResource accountUserMockResource =\r\n" +
-		"            new AccountResource(userRepository, mockUserService, mockMailService, persistentTokenRepository);\r\n" +
+		"            new AccountResource(userRepository, mockUserService, mockMailService);\r\n" +
 		"        this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)\r\n" +
 		"            .setMessageConverters(httpMessageConverters)\r\n" +
 		"            .setControllerAdvice(exceptionTranslator)\r\n" +
@@ -99,14 +97,14 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"        this.restUserMockMvc = MockMvcBuilders.standaloneSetup(accountUserMockResource)\r\n" +
 		"            .setControllerAdvice(exceptionTranslator)\r\n" +
 		"            .build();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    public void testNonAuthenticatedUser() throws Exception {\r\n" +
 		"        restUserMockMvc.perform(get(\"/api/authenticate\")\r\n" +
 		"            .accept(MediaType.APPLICATION_JSON))\r\n" +
 		"            .andExpect(status().isOk())\r\n" +
 		"            .andExpect(content().string(\"\"));\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    public void testAuthenticatedUser() throws Exception {\r\n" +
 		"        restUserMockMvc.perform(get(\"/api/authenticate\")\r\n" +
@@ -117,7 +115,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .accept(MediaType.APPLICATION_JSON))\r\n" +
 		"            .andExpect(status().isOk())\r\n" +
 		"            .andExpect(content().string(\"test\"));\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    public void testGetExistingAccount() throws Exception {\r\n" +
 		"        Set<Authority> authorities = new HashSet<>();\r\n" +
@@ -144,14 +142,14 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(jsonPath(\"$.imageUrl\").value(\"http://placehold.it/50x50\"))\r\n" +
 		"            .andExpect(jsonPath(\"$.langKey\").value(\"en\"))\r\n" +
 		"            .andExpect(jsonPath(\"$.authorities\").value(AuthoritiesConstants.ADMIN));\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    public void testGetUnknownAccount() throws Exception {\r\n" +
 		"        when(mockUserService.getUserWithAuthorities()).thenReturn(Optional.empty());\r\n" +
 		"        restUserMockMvc.perform(get(\"/api/account\")\r\n" +
 		"            .accept(MediaType.APPLICATION_PROBLEM_JSON))\r\n" +
 		"            .andExpect(status().isInternalServerError());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testRegisterValid() throws Exception {\r\n" +
@@ -171,7 +169,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"                .content(TestUtil.convertObjectToJsonBytes(validUser)))\r\n" +
 		"            .andExpect(status().isCreated());\r\n" +
 		"        assertThat(userRepository.findOneByLogin(\"test-register-valid\").isPresent()).isTrue();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testRegisterInvalidLogin() throws Exception {\r\n" +
@@ -192,7 +190,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isBadRequest());\r\n" +
 		"        Optional<User> user = userRepository.findOneByEmailIgnoreCase(\"funky@example.com\");\r\n" +
 		"        assertThat(user.isPresent()).isFalse();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testRegisterInvalidEmail() throws Exception {\r\n" +
@@ -213,7 +211,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isBadRequest());\r\n" +
 		"        Optional<User> user = userRepository.findOneByLogin(\"bob\");\r\n" +
 		"        assertThat(user.isPresent()).isFalse();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testRegisterInvalidPassword() throws Exception {\r\n" +
@@ -234,7 +232,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isBadRequest());\r\n" +
 		"        Optional<User> user = userRepository.findOneByLogin(\"bob\");\r\n" +
 		"        assertThat(user.isPresent()).isFalse();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testRegisterNullPassword() throws Exception {\r\n" +
@@ -255,7 +253,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isBadRequest());\r\n" +
 		"        Optional<User> user = userRepository.findOneByLogin(\"bob\");\r\n" +
 		"        assertThat(user.isPresent()).isFalse();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testRegisterDuplicateLogin() throws Exception {\r\n" +
@@ -305,7 +303,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"                .contentType(TestUtil.APPLICATION_JSON_UTF8)\r\n" +
 		"                .content(TestUtil.convertObjectToJsonBytes(secondUser)))\r\n" +
 		"            .andExpect(status().is4xxClientError());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testRegisterDuplicateEmail() throws Exception {\r\n" +
@@ -375,7 +373,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"                .contentType(TestUtil.APPLICATION_JSON_UTF8)\r\n" +
 		"                .content(TestUtil.convertObjectToJsonBytes(secondUser)))\r\n" +
 		"            .andExpect(status().is4xxClientError());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testRegisterAdminIsIgnored() throws Exception {\r\n" +
@@ -398,7 +396,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"        assertThat(userDup.isPresent()).isTrue();\r\n" +
 		"        assertThat(userDup.get().getAuthorities()).hasSize(1)\r\n" +
 		"            .containsExactly(authorityRepository.findById(AuthoritiesConstants.USER).get());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testActivateAccount() throws Exception {\r\n" +
@@ -414,13 +412,13 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isOk());\r\n" +
 		"        user = userRepository.findOneByLogin(user.getLogin()).orElse(null);\r\n" +
 		"        assertThat(user.getActivated()).isTrue();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testActivateAccountWithWrongKey() throws Exception {\r\n" +
 		"        restMvc.perform(get(\"/api/activate?key=wrongActivationKey\"))\r\n" +
 		"            .andExpect(status().isInternalServerError());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    @WithMockUser(\"save-account\")\r\n" +
@@ -454,7 +452,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"        assertThat(updatedUser.getImageUrl()).isEqualTo(userDTO.getImageUrl());\r\n" +
 		"        assertThat(updatedUser.getActivated()).isEqualTo(true);\r\n" +
 		"        assertThat(updatedUser.getAuthorities()).isEmpty();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    @WithMockUser(\"save-invalid-email\")\r\n" +
@@ -480,7 +478,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"                .content(TestUtil.convertObjectToJsonBytes(userDTO)))\r\n" +
 		"            .andExpect(status().isBadRequest());\r\n" +
 		"        assertThat(userRepository.findOneByEmailIgnoreCase(\"invalid email\")).isNotPresent();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    @WithMockUser(\"save-existing-email\")\r\n" +
@@ -513,7 +511,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isBadRequest());\r\n" +
 		"        User updatedUser = userRepository.findOneByLogin(\"save-existing-email\").orElse(null);\r\n" +
 		"        assertThat(updatedUser.getEmail()).isEqualTo(\"save-existing-email@example.com\");\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    @WithMockUser(\"save-existing-email-and-login\")\r\n" +
@@ -540,7 +538,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isOk());\r\n" +
 		"        User updatedUser = userRepository.findOneByLogin(\"save-existing-email-and-login\").orElse(null);\r\n" +
 		"        assertThat(updatedUser.getEmail()).isEqualTo(\"save-existing-email-and-login@example.com\");\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    @WithMockUser(\"change-password-wrong-existing-password\")\r\n" +
@@ -558,7 +556,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"        User updatedUser = userRepository.findOneByLogin(\"change-password-wrong-existing-password\").orElse(null);\r\n" +
 		"        assertThat(passwordEncoder.matches(\"new password\", updatedUser.getPassword())).isFalse();\r\n" +
 		"        assertThat(passwordEncoder.matches(currentPassword, updatedUser.getPassword())).isTrue();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    @WithMockUser(\"change-password\")\r\n" +
@@ -575,7 +573,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isOk());\r\n" +
 		"        User updatedUser = userRepository.findOneByLogin(\"change-password\").orElse(null);\r\n" +
 		"        assertThat(passwordEncoder.matches(\"new password\", updatedUser.getPassword())).isTrue();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    @WithMockUser(\"change-password-too-small\")\r\n" +
@@ -592,7 +590,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isBadRequest());\r\n" +
 		"        User updatedUser = userRepository.findOneByLogin(\"change-password-too-small\").orElse(null);\r\n" +
 		"        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    @WithMockUser(\"change-password-too-long\")\r\n" +
@@ -609,7 +607,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isBadRequest());\r\n" +
 		"        User updatedUser = userRepository.findOneByLogin(\"change-password-too-long\").orElse(null);\r\n" +
 		"        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    @WithMockUser(\"change-password-empty\")\r\n" +
@@ -623,53 +621,53 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isBadRequest());\r\n" +
 		"        User updatedUser = userRepository.findOneByLogin(\"change-password-empty\").orElse(null);\r\n" +
 		"        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());\r\n" +
-		"    }\r\n" +
-		"    @Test\r\n" +
-		"    @Transactional\r\n" +
-		"    @WithMockUser(\"current-sessions\")\r\n" +
-		"    public void testGetCurrentSessions() throws Exception {\r\n" +
-		"        User user = new User();\r\n" +
-		"        user.setPassword(RandomStringUtils.random(60));\r\n" +
-		"        user.setLogin(\"current-sessions\");\r\n" +
-		"        user.setEmail(\"current-sessions@example.com\");\r\n" +
-		"        userRepository.saveAndFlush(user);\r\n" +
-		"        PersistentToken token = new PersistentToken();\r\n" +
-		"        token.setSeries(\"current-sessions\");\r\n" +
-		"        token.setUser(user);\r\n" +
-		"        token.setTokenValue(\"current-session-data\");\r\n" +
-		"        token.setTokenDate(LocalDate.of(2017, 3, 23));\r\n" +
-		"        token.setIpAddress(\"127.0.0.1\");\r\n" +
-		"        token.setUserAgent(\"Test agent\");\r\n" +
-		"        persistentTokenRepository.saveAndFlush(token);\r\n" +
-		"        restMvc.perform(get(\"/api/account/sessions\"))\r\n" +
-		"            .andExpect(status().isOk())\r\n" +
-		"            .andExpect(jsonPath(\"$.[*].series\").value(hasItem(token.getSeries())))\r\n" +
-		"            .andExpect(jsonPath(\"$.[*].ipAddress\").value(hasItem(token.getIpAddress())))\r\n" +
-		"            .andExpect(jsonPath(\"$.[*].userAgent\").value(hasItem(token.getUserAgent())))\r\n" +
-		"            .andExpect(jsonPath(\"$.[*].tokenDate\").value(hasItem(token.getTokenDate().toString())));\r\n" +
-		"    }\r\n" +
-		"    @Test\r\n" +
-		"    @Transactional\r\n" +
-		"    @WithMockUser(\"invalidate-session\")\r\n" +
-		"    public void testInvalidateSession() throws Exception {\r\n" +
-		"        User user = new User();\r\n" +
-		"        user.setPassword(RandomStringUtils.random(60));\r\n" +
-		"        user.setLogin(\"invalidate-session\");\r\n" +
-		"        user.setEmail(\"invalidate-session@example.com\");\r\n" +
-		"        userRepository.saveAndFlush(user);\r\n" +
-		"        PersistentToken token = new PersistentToken();\r\n" +
-		"        token.setSeries(\"invalidate-session\");\r\n" +
-		"        token.setUser(user);\r\n" +
-		"        token.setTokenValue(\"invalidate-data\");\r\n" +
-		"        token.setTokenDate(LocalDate.of(2017, 3, 23));\r\n" +
-		"        token.setIpAddress(\"127.0.0.1\");\r\n" +
-		"        token.setUserAgent(\"Test agent\");\r\n" +
-		"        persistentTokenRepository.saveAndFlush(token);\r\n" +
-		"        assertThat(persistentTokenRepository.findByUser(user)).hasSize(1);\r\n" +
-		"        restMvc.perform(delete(\"/api/account/sessions/invalidate-session\"))\r\n" +
-		"            .andExpect(status().isOk());\r\n" +
-		"        assertThat(persistentTokenRepository.findByUser(user)).isEmpty();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
+//		"    @Test\r\n" +
+//		"    @Transactional\r\n" +
+//		"    @WithMockUser(\"current-sessions\")\r\n" +
+//		"    public void testGetCurrentSessions() throws Exception {\r\n" +
+//		"        User user = new User();\r\n" +
+//		"        user.setPassword(RandomStringUtils.random(60));\r\n" +
+//		"        user.setLogin(\"current-sessions\");\r\n" +
+//		"        user.setEmail(\"current-sessions@example.com\");\r\n" +
+//		"        userRepository.saveAndFlush(user);\r\n" +
+//		"        PersistentToken token = new PersistentToken();\r\n" +
+//		"        token.setSeries(\"current-sessions\");\r\n" +
+//		"        token.setUser(user);\r\n" +
+//		"        token.setTokenValue(\"current-session-data\");\r\n" +
+//		"        token.setTokenDate(LocalDate.of(2017, 3, 23));\r\n" +
+//		"        token.setIpAddress(\"127.0.0.1\");\r\n" +
+//		"        token.setUserAgent(\"Test agent\");\r\n" +
+//		"        persistentTokenRepository.saveAndFlush(token);\r\n" +
+//		"        restMvc.perform(get(\"/api/account/sessions\"))\r\n" +
+//		"            .andExpect(status().isOk())\r\n" +
+//		"            .andExpect(jsonPath(\"$.[*].series\").value(hasItem(token.getSeries())))\r\n" +
+//		"            .andExpect(jsonPath(\"$.[*].ipAddress\").value(hasItem(token.getIpAddress())))\r\n" +
+//		"            .andExpect(jsonPath(\"$.[*].userAgent\").value(hasItem(token.getUserAgent())))\r\n" +
+//		"            .andExpect(jsonPath(\"$.[*].tokenDate\").value(hasItem(token.getTokenDate().toString())));\r\n" +
+//		"    }\r\n\n" +
+//		"    @Test\r\n" +
+//		"    @Transactional\r\n" +
+//		"    @WithMockUser(\"invalidate-session\")\r\n" +
+//		"    public void testInvalidateSession() throws Exception {\r\n" +
+//		"        User user = new User();\r\n" +
+//		"        user.setPassword(RandomStringUtils.random(60));\r\n" +
+//		"        user.setLogin(\"invalidate-session\");\r\n" +
+//		"        user.setEmail(\"invalidate-session@example.com\");\r\n" +
+//		"        userRepository.saveAndFlush(user);\r\n" +
+//		"        PersistentToken token = new PersistentToken();\r\n" +
+//		"        token.setSeries(\"invalidate-session\");\r\n" +
+//		"        token.setUser(user);\r\n" +
+//		"        token.setTokenValue(\"invalidate-data\");\r\n" +
+//		"        token.setTokenDate(LocalDate.of(2017, 3, 23));\r\n" +
+//		"        token.setIpAddress(\"127.0.0.1\");\r\n" +
+//		"        token.setUserAgent(\"Test agent\");\r\n" +
+//		"        persistentTokenRepository.saveAndFlush(token);\r\n" +
+//		"        assertThat(persistentTokenRepository.findByUser(user)).hasSize(1);\r\n" +
+//		"        restMvc.perform(delete(\"/api/account/sessions/invalidate-session\"))\r\n" +
+//		"            .andExpect(status().isOk());\r\n" +
+//		"        assertThat(persistentTokenRepository.findByUser(user)).isEmpty();\r\n" +
+//		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testRequestPasswordReset() throws Exception {\r\n" +
@@ -682,7 +680,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"        restMvc.perform(post(\"/api/account/reset-password/init\")\r\n" +
 		"            .content(\"password-reset@example.com\"))\r\n" +
 		"            .andExpect(status().isOk());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testRequestPasswordResetUpperCaseEmail() throws Exception {\r\n" +
@@ -695,14 +693,14 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"        restMvc.perform(post(\"/api/account/reset-password/init\")\r\n" +
 		"            .content(\"password-reset@EXAMPLE.COM\"))\r\n" +
 		"            .andExpect(status().isOk());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    public void testRequestPasswordResetWrongEmail() throws Exception {\r\n" +
 		"        restMvc.perform(\r\n" +
 		"            post(\"/api/account/reset-password/init\")\r\n" +
 		"                .content(\"password-reset-wrong-email@example.com\"))\r\n" +
 		"            .andExpect(status().isBadRequest());\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testFinishPasswordReset() throws Exception {\r\n" +
@@ -723,7 +721,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isOk());\r\n" +
 		"        User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);\r\n" +
 		"        assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isTrue();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testFinishPasswordResetTooSmall() throws Exception {\r\n" +
@@ -744,7 +742,7 @@ public class TemplateAccountResourceIntTest extends AbstractTemplate{
 		"            .andExpect(status().isBadRequest());\r\n" +
 		"        User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);\r\n" +
 		"        assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isFalse();\r\n" +
-		"    }\r\n" +
+		"    }\r\n\n" +
 		"    @Test\r\n" +
 		"    @Transactional\r\n" +
 		"    public void testFinishPasswordResetWrongKey() throws Exception {\r\n" +

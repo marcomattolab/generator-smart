@@ -369,7 +369,7 @@ public class Utils {
 	}
 	
 	public static String setGenericValue(Table tabella,String label,boolean isKey,boolean allField) {
-		String ret ="";
+		String ret = "";
 		Set<?> set = tabella.getColumnNames();
 		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
 			String columnName = (String) iter.next();
