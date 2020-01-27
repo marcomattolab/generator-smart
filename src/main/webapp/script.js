@@ -16,13 +16,18 @@
           },
           {
             step: 2,
-            name: "Profile & Langages",
+            name: "Profili e Lingue",
             template: "step2.html"
           },   
           {
             step: 3,
-            name: "Third step",
+            name: "Entita'",
             template: "step3.html"
+          },             
+          {
+        	  step: 4,
+        	  name: "Relazioni",
+        	  template: "step4.html"
           },             
         ];
         vm.user = {};
@@ -43,6 +48,8 @@
         vm.save = function() {
           alert(
             "Saving form... \n\n" + 
+
+            //Step 1
             "generateTest: " + vm.user.generateTest + "\n" + 
             "owner: " + vm.user.owner + "\n" + 
             "tablePartName: " + vm.user.tablePartName + "\n" + 
@@ -57,9 +64,16 @@
             "projectName: " + vm.user.projectName + "\n" + 
             "urlConnection: " + vm.user.urlConnection + "\n" + 
             
-            
-            "Email: " + vm.user.email + "\n" + 
-            "Age: " + vm.user.age);
+            //Step 2
+            "languages: " + vm.user.languages + "\n" + 
+            "profiles: " + vm.user.profiles + "\n" + 
+            "enumerations: " + vm.user.enumerations + "\n" + 
+
+            //Step 3
+            "entities: " + vm.user.entities + "\n" + 
+
+            //Step 4
+            "relations: " + vm.user.relations);
         }
     }
     
