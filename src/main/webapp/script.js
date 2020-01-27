@@ -11,12 +11,12 @@
         vm.steps = [
           {
             step: 1,
-            name: "First step",
+            name: "Configurazione",
             template: "step1.html"
           },
           {
             step: 2,
-            name: "Second step",
+            name: "Profile & Langages",
             template: "step2.html"
           },   
           {
@@ -43,7 +43,21 @@
         vm.save = function() {
           alert(
             "Saving form... \n\n" + 
-            "Name: " + vm.user.name + "\n" + 
+            "generateTest: " + vm.user.generateTest + "\n" + 
+            "owner: " + vm.user.owner + "\n" + 
+            "tablePartName: " + vm.user.tablePartName + "\n" + 
+            "app: " + vm.user.app + "\n" + 
+            "enableReverseEngineeringDB: " + vm.user.enableReverseEngineeringDB + "\n" + 
+            "driver: " + vm.user.driver + "\n" + 
+            "dataBaseName: " + vm.user.dataBaseName + "\n" + 
+            "packageclass: " + vm.user.packageclass + "\n" + 
+            "password: " + vm.user.password + "\n" + 
+            "pathname: " + vm.user.pathname + "\n" + 
+            "pathnameEnvB: " + vm.user.pathnameEnvB + "\n" + 
+            "projectName: " + vm.user.projectName + "\n" + 
+            "urlConnection: " + vm.user.urlConnection + "\n" + 
+            
+            
             "Email: " + vm.user.email + "\n" + 
             "Age: " + vm.user.age);
         }

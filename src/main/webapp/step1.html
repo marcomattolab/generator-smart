@@ -1,5 +1,56 @@
 <h2>Step1 content</h2>
 <div class="form-group">
-  <label>Name</label>
-  <input type="text" class="form-control" name="name" ng-model="vm.user.name" required />
+  <label>Generate Test</label>
+  <select class="form-control" name="generateTest" ng-model="vm.user.generateTest">
+	  <option value="true">SI</option>
+	  <option value="false">NO</option>
+  </select>
+
+  <label>Owner</label>
+  <input type="text" class="form-control" name="owner" ng-model="vm.user.owner" />
+
+  <label>TablePartName</label>
+  <input type="text" class="form-control" name="tablePartName" ng-model="vm.user.tablePartName" />
+
+  <label>App</label>
+  <input type="text" class="form-control" name="app" ng-model="vm.user.app" />
+
+  <label>ReverseEngineeringDB</label>
+  <select class="form-control" name="enableReverseEngineeringDB" ng-model="vm.user.enableReverseEngineeringDB">
+	  <option value="true">SI</option>
+	  <option value="false">NO</option>
+  </select>
+  
+  <label>Driver</label>
+  <!-- <input type="text" class="form-control" name="driver" ng-model="vm.user.driver" />  -->
+  <select class="form-control" name="driver" ng-model="vm.user.driver">
+	  <option value="true">com.mysql.jdbc.Driver</option>
+  </select>
+  
+  <label>DataBaseName</label>
+  <input type="text" class="form-control" name="dataBaseName" ng-model="vm.user.dataBaseName" />
+  
+  <label>Packageclass</label>
+  <input type="text" class="form-control" name="packageclass" ng-model="vm.user.packageclass" />
+  
+  <label>Username</label>
+  <input type="text" class="form-control" name="username" ng-model="vm.user.username" />
+  
+  <label>Password</label>
+  <input type="text" class="form-control" name="password" ng-model="vm.user.password" />
+  
+  <label>Pathname</label>
+  <input type="text" class="form-control" name="pathname" ng-model="vm.user.pathname" />
+  
+  <label>PathnameEnvB</label>
+  <input type="text" class="form-control" name="pathnameEnvB" ng-model="vm.user.pathnameEnvB" />
+
+  <label>ProjectName</label>
+  <input type="text" class="form-control" name="projectName" ng-model="vm.user.projectName" />
+  
+  <label>UrlConnection</label>
+  <input type="text" class="form-control" name="urlConnection" ng-model="vm.user.urlConnection" />
+  
+  
 </div>
+  
