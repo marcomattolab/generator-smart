@@ -3,10 +3,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Smart Generator</title>
+        <title>Smart Generator :-)</title>
     </head>
     <body>
         <h1>Smart Generator</h1>
-        <p>This is the Smart Generator homepage!</p>
+        <p>This is the Smart Generator homepage :-)!</p>
     </body>
 </html>
