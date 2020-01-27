@@ -3,6 +3,7 @@
     angular.module('app', []);
     angular.module('app').controller("WizardController", [wizardController]);
 
+    
     function wizardController() {
         var vm = this;
         
@@ -31,6 +32,15 @@
           },             
         ];
         
+        //Languages
+        vm.currentlang = '';
+        vm.languages = ["it", "en"];
+        vm.add = function() {
+        		if(!!vm.currentlang){
+        			vm.languages.push(vm.currentlang);
+        			vm.currentlang = '';
+        		}
+        }
         
         //INIZIALIZATION SMART
         //vm.user = {};
@@ -50,7 +60,7 @@
         	  "pathnameEnvB" : "/Users/marco/eclipse-workspace/",
         	  "projectName" : "demogenerated",
         	  "urlConnection" : "jdbc:mysql://127.0.0.1:3306/angulardb?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=true&serverTimezone=UTC",
-        	  "languages" : [ "it", "en", "fr", "de" ],
+        	  "languages" : vm.languages,
         	  "profiles" : [ "ROLE_ADMIN", "ROLE_USER", "ROLE_ANONYMOUS", "ROLE_OPERATOR"],
         	  "enumerations" : [ {"name":"TipoCliente", "values":"CLIENTE#ACQUIRENTE"},
         						 {"name":"BooleanStatus", "values":"SI#NO"},

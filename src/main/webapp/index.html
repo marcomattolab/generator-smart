@@ -24,9 +24,6 @@
 						<ul class="nav nav-pills nav-justified">
 							<li ng-repeat="step in vm.steps"
 								ng-class="{'active':step.step == vm.currentStep}">
-								<!-- 
-								<a ng-click="vm.gotoStep(step.step)" href="">{{step.step}}.{{step.name}}</a>
-								 -->
 								<a ng-click="vm.gotoStep(step.step)" href="">{{step.name}}</a>
 							</li>
 						</ul>
