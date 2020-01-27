@@ -20,17 +20,17 @@ public class TemplateBanner extends AbstractResourceTemplate{
 	}
 
 	public String getBody() {
-		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
+		// ConfigCreateProject conf = ConfigCreateProject.getIstance();
+		//String body = "";
 		String body = "\r\n" + 
-				"  ${AnsiColor.GREEN}      ██╗${AnsiColor.RED}   ██████╗ ████████╗ ████████╗ ███████╗\r\n" + 
-				"  ${AnsiColor.GREEN}      ██║${AnsiColor.RED}  ██╔════╝ ╚══██╔══╝ ██╔═════╝ ██╔═══██╗\r\n" + 
-				"  ${AnsiColor.GREEN}      ██║${AnsiColor.RED}  ╚█████╗     ██║    ██████╗   ███████╔╝\r\n" + 
-				"  ${AnsiColor.GREEN}██╗   ██║${AnsiColor.RED}   ╚═══██╗    ██║    ██╔═══╝   ██╔══██║\r\n" + 
-				"  ${AnsiColor.GREEN}╚██████╔╝${AnsiColor.RED}  ██████╔╝    ██║    ████████╗ ██║  ╚██╗\r\n" + 
-				"  ${AnsiColor.GREEN} ╚═════╝ ${AnsiColor.RED}  ╚═════╝     ╚═╝    ╚═══════╝ ╚═╝   ╚═╝\r\n" + 
-				"\r\n" + 
-				"${AnsiColor.BRIGHT_BLUE}:: JSter 🤓  :: Running Spring Boot ${spring-boot.version} ::\r\n" + 
+				"  ${AnsiColor.GREEN}      ██╗${AnsiColor.RED}   ██████╗\r\n" + 
+				"  ${AnsiColor.GREEN}      ██║${AnsiColor.RED}  ██╔════╝\r\n" + 
+				"  ${AnsiColor.GREEN}      ██║${AnsiColor.RED}  ╚█████╗ \r\n" + 
+				"  ${AnsiColor.GREEN}██╗   ██║${AnsiColor.RED}   ╚═══██╗\r\n" + 
+				"  ${AnsiColor.GREEN}╚██████╔╝${AnsiColor.RED}  ██████╔╝\r\n" + 
+				"  ${AnsiColor.GREEN} ╚═════╝ ${AnsiColor.RED}  ╚═════╝ \r\n\n" + 
+				"  ${AnsiColor.BRIGHT_BLUE}:: JSter 🤓  :: Running Spring Boot ${spring-boot.version} ::\r\n" + 
 				":: https://github.com/marcomattolab/smart ::${AnsiColor.DEFAULT}\r\n";
 		return body;
 	}
