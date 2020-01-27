@@ -6,7 +6,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>generator</name>
-	<url>http://maven.apache.org</url>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -53,8 +52,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
-
 		<!-- Servlet Spec -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
