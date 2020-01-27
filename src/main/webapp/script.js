@@ -42,6 +42,18 @@
         		}
         }
         
+        //Profiles
+        vm.currentprofile = '';
+        vm.profiles = ["ROLE_ADMIN", "ROLE_USER"];
+        vm.addprofile = function() {
+        	if(!!vm.currentprofile){
+        		vm.profiles.push(vm.currentprofile);
+        		vm.currentprofile = '';
+        	}
+        }
+        
+        
+        
         //INIZIALIZATION SMART
         //vm.user = {};
         vm.user = 
@@ -61,7 +73,7 @@
         	  "projectName" : "demogenerated",
         	  "urlConnection" : "jdbc:mysql://127.0.0.1:3306/angulardb?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=true&serverTimezone=UTC",
         	  "languages" : vm.languages,
-        	  "profiles" : [ "ROLE_ADMIN", "ROLE_USER", "ROLE_ANONYMOUS", "ROLE_OPERATOR"],
+        	  "profiles" : vm.profiles,
         	  "enumerations" : [ {"name":"TipoCliente", "values":"CLIENTE#ACQUIRENTE"},
         						 {"name":"BooleanStatus", "values":"SI#NO"},
         						 {"name":"SessoType", "values":"MALE#FEMALE"},

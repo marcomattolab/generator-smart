@@ -1,10 +1,6 @@
 <h2>Profili e Lingue</h2>
 <div class="form-group">
 
-  <!--  
-  <label>Languages</label>
-  <input type="text" class="form-control" name="languages" ng-model="vm.user.languages" placeholder=""/>
-  -->
   <label>Languages</label>
   <div>
      <input type="text" name="currentlang" ng-model="vm.currentlang" />
@@ -15,8 +11,14 @@
   </div>
 
   <label>Profiles</label>
-  <input type="text" class="form-control" name="profiles" ng-model="vm.user.profiles" placeholder="ROLE_ADMIN"/>
-
+  <div>
+     <input type="text" name="currentprofile" ng-model="vm.currentprofile" placeholder="ROLE_ANONYMOUS"/>
+     <button ng-click="vm.addprofile()">Add</button>
+     <ul>
+        <li ng-repeat="item in vm.profiles">{{item}}</li>
+     </ul>
+  </div>
+  
   <label>Enumerations</label>
   <input type="text" class="form-control" name="enumerations" ng-model="vm.user.enumerations" placeholder="enumerations"/>
 
