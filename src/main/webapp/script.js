@@ -37,7 +37,7 @@
         vm.languages = ["it"];
         
     	vm.addLanguage = function() {
-    		if(!!vm.currentlang && vm.languages.indexOf(vm.currentlang) == -1){
+    		if(!!vm.currentlang && vm.languages.indexOf(vm.currentlang) == -1) {
     			vm.languages.push(vm.currentlang);
     			vm.currentlang = '';
     		}
@@ -53,15 +53,28 @@
         
         
         //Profiles
-        vm.currentprofile = '';
+        vm.currentProfile = '';
         vm.profiles = ["ROLE_ADMIN", "ROLE_USER"];
         vm.addProfile = function() {
-        	if(!!vm.currentprofile){
-        		vm.profiles.push(vm.currentprofile);
-        		vm.currentprofile = '';
+        	if(!!vm.currentProfile) {
+        		vm.profiles.push(vm.currentProfile);
+        		vm.currentProfile = '';
         	}
         }
         
+        
+        //Enumerations
+        vm.currentEnumName = '';
+        vm.currentEnumValue = '';
+        vm.enumerations = [];
+        vm.addEnumeration = function() {
+        	if(!!vm.currentEnumName && !!vm.currentEnumValue) {
+        		var cEnum = {"name" : vm.currentEnumName, "values" : vm.currentEnumValue };
+        		vm.enumerations.push(cEnum);
+        		vm.currentEnumName = '';
+        		vm.currentEnumValue = '';
+        	}
+        }
         
         
         //INIZIALIZATION SMART
@@ -84,13 +97,7 @@
         	  "urlConnection" : "jdbc:mysql://127.0.0.1:3306/angulardb?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=true&serverTimezone=UTC",
         	  "languages" : vm.languages,
         	  "profiles" : vm.profiles,
-        	  "enumerations" : [ {"name":"TipoCliente", "values":"CLIENTE#ACQUIRENTE"},
-        						 {"name":"BooleanStatus", "values":"SI#NO"},
-        						 {"name":"SessoType", "values":"MALE#FEMALE"},
-        						 {"name":"EsitoStatus", "values":"OK#KO"},
-        						 {"name":"CanaleTrasmissione", "values":"MAIL#SMS#FACEBOOK#TWITTER#INSTAGRAM"},
-        						 {"name":"TipoTrattativa", "values":"COMPRAVENDITA#LOCAZIONE"}
-        					 ],	 
+        	  "enumerations" : vm.enumerations,
         	  "entities" : [ 
         	  	{"name":"Autore", "fields": [
         	  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
@@ -160,11 +167,9 @@
         }
         
         vm.save = function() {
-          alert(
-            "Saving form... \n\n" + 
-
-            //Step 1
-            "generateTest: " + vm.user.generateTest + "\n" + 
+        	var saved =  
+        	"Saving form... \n\n" + 
+        	"generateTest: " + vm.user.generateTest + "\n" + 
             "owner: " + vm.user.owner + "\n" + 
             "tablePartName: " + vm.user.tablePartName + "\n" + 
             "app: " + vm.user.app + "\n" + 
@@ -177,17 +182,13 @@
             "pathnameEnvB: " + vm.user.pathnameEnvB + "\n" + 
             "projectName: " + vm.user.projectName + "\n" + 
             "urlConnection: " + vm.user.urlConnection + "\n" + 
-            
-            //Step 2
             "languages: " + vm.user.languages + "\n" + 
             "profiles: " + vm.user.profiles + "\n" + 
-            "enumerations: " + vm.user.enumerations + "\n" + 
-
-            //Step 3
-            "entities: " + vm.user.entities + "\n" + 
-
-            //Step 4
-            "relations: " + vm.user.relations);
+            "enumerations: " + JSON.stringify(vm.user.enumerations) + "\n" + 
+            "entities: " + JSON.stringify(vm.user.entities) + "\n" + 
+            "relations: " + JSON.stringify(vm.user.relations) ;
+            console.log(saved);
+        	alert(saved);
         }
     }
     
