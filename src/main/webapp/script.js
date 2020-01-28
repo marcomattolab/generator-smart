@@ -17,7 +17,7 @@
           },
           {
             step: 2,
-            name: "Profili e Lingue",
+            name: "Linguaggio e Profilazione",
             template: "step2.html"
           },   
           {
