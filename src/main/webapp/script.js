@@ -34,18 +34,28 @@
         
         //Languages
         vm.currentlang = '';
-        vm.languages = ["it", "en"];
-        vm.add = function() {
-        		if(!!vm.currentlang){
-        			vm.languages.push(vm.currentlang);
-        			vm.currentlang = '';
-        		}
+        vm.languages = ["it"];
+        
+    	vm.addLanguage = function() {
+    		if(!!vm.currentlang && vm.languages.indexOf(vm.currentlang) == -1){
+    			vm.languages.push(vm.currentlang);
+    			vm.currentlang = '';
+    		}
         }
+
+        vm.removeLanguage = function(item) {
+        	while (!!item && vm.languages.indexOf(item) !== -1) {
+        		  delete vm.languages[vm.languages.indexOf(item)];
+        		  //document.getElementById('language_'+item).remove();
+        		  //document.getElementById('language_').remove();
+    		}
+        }
+        
         
         //Profiles
         vm.currentprofile = '';
         vm.profiles = ["ROLE_ADMIN", "ROLE_USER"];
-        vm.addprofile = function() {
+        vm.addProfile = function() {
         	if(!!vm.currentprofile){
         		vm.profiles.push(vm.currentprofile);
         		vm.currentprofile = '';

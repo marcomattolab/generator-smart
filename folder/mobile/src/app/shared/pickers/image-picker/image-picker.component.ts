@@ -15,6 +15,11 @@ export class ImagePickerComponent implements OnInit {
   @Input() attachMent: { format?, content? } = null;
   selectedImage: string;
   usePicker = false;
+  private isMobile = false;
+  private isHybrid = false;
+  private isDesktop = false;
+  private isAndroid = false;
+  private capacitorCameraAvailable = false;
 
   constructor(
     private platform: Platform,
@@ -24,9 +29,13 @@ export class ImagePickerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isMobile = this.platform.is('mobile');
+    this.isHybrid = this.platform.is('hybrid');
+    this.isDesktop = this.platform.is('desktop');
+    this.isAndroid = this.platform.is('android');
+
     if (
-      (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
-      this.platform.is('desktop')
+      (this.isMobile && !this.isHybrid) || this.isDesktop
     ) {
       this.usePicker = true;
     }
@@ -47,45 +56,35 @@ export class ImagePickerComponent implements OnInit {
   }
 
   onPickImage() {
-    if (!Capacitor.isPluginAvailable('Camera')) {
+    this.capacitorCameraAvailable = Capacitor.isPluginAvailable('Camera');
+    if (!this.capacitorCameraAvailable) {
       this.filePickerRef.nativeElement.click();
       return;
     }
 
-    if (this.platform.is('android')) {
+    if (this.isAndroid) {
       this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
-        result => this.openCamera(), // permission granted
-        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA)
+        result => this.openAndroidCamera(), // permission granted
+        err => {
+          try {
+            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA);
+          } catch (e) {
+          }
+        }
       );
     } else {
-      this.openCamera();
+      this.openAndroidCamera();
     }
   }
 
-  private openCamera() {
-    // Plugins.Camera.getPhoto({
-    //   quality: 25,
-    //   source: CameraSource.Prompt,
-    //   correctOrientation: true,
-    //   // height: 320,
-    //   width: 300,
-    //   resultType: CameraResultType.Base64
-    // }).then(image => {
-    //   this.setImage('image/' + image.format, image.base64String);
-    //   this.imagePick.emit(image.base64String);
-    // }).catch(error => {
-    //   console.log(error);
-    //   if (this.usePicker) {
-    //     this.filePickerRef.nativeElement.click();
-    //   }
-    //   return false;
-    // });
-
-    if (Camera.installed()) {
+  private openAndroidCamera() {
+    const cameraIsInstalled = Camera.installed();
+    console.log('camera is installed: ', cameraIsInstalled);
+    if (cameraIsInstalled) {
       const cameraOptions = {
         quality: 100,
-        targetWidth: 900,
-        targetHeight: 600,
+        // targetWidth: 900,
+        // targetHeight: 600,
         destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
@@ -95,7 +94,7 @@ export class ImagePickerComponent implements OnInit {
       };
 
       this.camera.getPicture(cameraOptions).then((data) => {
-        // console.log('camera getPicture');
+        console.log('camera getPicture');
         const JPEG = 'jpeg';
         const JPEGImageFormat = 'image/' + JPEG;
 
@@ -109,6 +108,24 @@ export class ImagePickerComponent implements OnInit {
         });
         toast.present();
         alert('Unable to take photo');
+      });
+    } else if (this.capacitorCameraAvailable) {
+      Plugins.Camera.getPhoto({
+        quality: 25,
+        source: CameraSource.Prompt,
+        correctOrientation: true,
+        // height: 320,
+        width: 300,
+        resultType: CameraResultType.Base64
+      }).then(image => {
+        this.setImage('image/' + image.format, image.base64String);
+        this.imagePick.emit(image.base64String);
+      }).catch(error => {
+        console.log(error);
+        if (this.usePicker) {
+          this.filePickerRef.nativeElement.click();
+        }
+        return false;
       });
     } else {
       if (this.usePicker) {

@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavController, Platform, ToastController} from '@ionic/angular';
 import {ApiService} from '../../services/api/api.service';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {environment} from '../../../environments/environment';
 import {AuthServerProvider} from '../../services/auth/auth-jwt.service';
+import {AccountService} from '../../services/auth/account.service';
+import {LoginService} from '../../services/login/login.service';
 
 @Component({
   selector: 'app-welcome',
@@ -16,6 +18,9 @@ export class WelcomePage implements OnInit {
   private backButtonSubscription: Subscription;
   private exitAlertIsShown = false;
   private exitQuestion = '';
+  private accountServiceSubscription: Subscription;
+
+  pageLoaded = false;
 
   private static getInfos(): string {
     return `api url: ${ApiService.API_URL} ;
@@ -27,6 +32,8 @@ export class WelcomePage implements OnInit {
     private platform: Platform,
     private authServerProvider: AuthServerProvider,
     private navController: NavController,
+    private accountService: AccountService,
+    private loginService: LoginService,
     private toastController: ToastController
   ) {
   }
@@ -35,13 +42,26 @@ export class WelcomePage implements OnInit {
     this.translateService.get('EXIT_ASK').subscribe(value => {
       this.exitQuestion = value;
     });
-
-    if (this.authServerProvider.getToken()) {
-      this.navController.navigateRoot('/tabs');
-    }
   }
 
   ionViewDidEnter() {
+    this.pageLoaded = false;
+
+    if (this.authServerProvider.getToken()) {
+      this.navController.navigateRoot('/tabs');
+    } else {
+      setTimeout(() => this.pageLoaded = true);
+    }
+
+    this.accountServiceSubscription = this.accountService.getAuthenticationState().subscribe(
+      (identity) => {
+        if (!identity) {
+          this.pageLoaded = true;
+        }
+      }, error => {
+        console.error(error);
+      });
+
     this.backButtonSubscription = this.platform.backButton.subscribe(async () => {
       if (this.exitAlertIsShown) {
         const app = 'app';
@@ -66,6 +86,7 @@ export class WelcomePage implements OnInit {
   }
 
   ionViewWillLeave() {
+    this.accountServiceSubscription.unsubscribe();
     this.backButtonSubscription.unsubscribe();
   }
 
@@ -89,5 +110,4 @@ export class WelcomePage implements OnInit {
   isDevelopmentMode() {
     return !environment.production;
   }
-
 }
