@@ -45,9 +45,9 @@
 
         vm.removeLanguage = function(item) {
         	while (!!item && vm.languages.indexOf(item) !== -1) {
-        		  delete vm.languages[vm.languages.indexOf(item)];
-        		  //document.getElementById('language_'+item).remove();
-        		  //document.getElementById('language_').remove();
+    		  delete vm.languages[vm.languages.indexOf(item)];
+    		  //document.getElementById('language_'+item).remove();
+    		  //document.getElementById('language_').remove();
     		}
         }
         
@@ -169,24 +169,24 @@
         vm.save = function() {
         	var saved =  
         	"Saving form... \n\n" + 
-        	"generateTest: " + vm.user.generateTest + "\n" + 
-            "owner: " + vm.user.owner + "\n" + 
-            "tablePartName: " + vm.user.tablePartName + "\n" + 
-            "app: " + vm.user.app + "\n" + 
-            "enableReverseEngineeringDB: " + vm.user.enableReverseEngineeringDB + "\n" + 
-            "driver: " + vm.user.driver + "\n" + 
-            "dataBaseName: " + vm.user.dataBaseName + "\n" + 
-            "packageclass: " + vm.user.packageclass + "\n" + 
-            "password: " + vm.user.password + "\n" + 
-            "pathname: " + vm.user.pathname + "\n" + 
-            "pathnameEnvB: " + vm.user.pathnameEnvB + "\n" + 
-            "projectName: " + vm.user.projectName + "\n" + 
-            "urlConnection: " + vm.user.urlConnection + "\n" + 
-            "languages: " + vm.user.languages + "\n" + 
-            "profiles: " + vm.user.profiles + "\n" + 
-            "enumerations: " + JSON.stringify(vm.user.enumerations) + "\n" + 
-            "entities: " + JSON.stringify(vm.user.entities) + "\n" + 
-            "relations: " + JSON.stringify(vm.user.relations) ;
+	        	"generateTest: " + vm.user.generateTest + "\n" + 
+	            "owner: " + vm.user.owner + "\n" + 
+	            "tablePartName: " + vm.user.tablePartName + "\n" + 
+	            "app: " + vm.user.app + "\n" + 
+	            "enableReverseEngineeringDB: " + vm.user.enableReverseEngineeringDB + "\n" + 
+	            "driver: " + vm.user.driver + "\n" + 
+	            "dataBaseName: " + vm.user.dataBaseName + "\n" + 
+	            "packageclass: " + vm.user.packageclass + "\n" + 
+	            "password: " + vm.user.password + "\n" + 
+	            "pathname: " + vm.user.pathname + "\n" + 
+	            "pathnameEnvB: " + vm.user.pathnameEnvB + "\n" + 
+	            "projectName: " + vm.user.projectName + "\n" + 
+	            "urlConnection: " + vm.user.urlConnection + "\n" + 
+	            "languages: " + vm.user.languages + "\n" + 
+	            "profiles: " + vm.user.profiles + "\n" + 
+	            "enumerations: " + JSON.stringify(vm.user.enumerations) + "\n" + 
+	            "entities: " + JSON.stringify(vm.user.entities) + "\n" + 
+	            "relations: " + JSON.stringify(vm.user.relations) ;
             console.log(saved);
         	alert(saved);
         }
