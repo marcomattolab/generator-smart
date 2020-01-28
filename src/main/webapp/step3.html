@@ -1,7 +1,32 @@
 <h2>Entita'</h2>
 <div class="form-group">
  
+ <!-- 
   <label>Entities</label>
   <input type="text" class="form-control" name="entities" ng-model="vm.user.entities" required />
+ -->
 
+  <label>Entities</label>
+  <br/>
+  Name: <input type="text" name="currentEntityName" ng-model="vm.currentEntityName"/>
+  <button ng-click="vm.addEntity()">Add</button>
+  <br/>
+  
+  Profiles:<input type="text" name="entityProfile" ng-model="vm.entityProfile"/>
+  <button ng-click="vm.addEntityProfile()">Add</button>
+  <ul>
+     <li ng-repeat="item in vm.entityProfiles">{{item}}</li>
+  </ul>
+     
+  Field Name: <input type="text" name="currentFieldName" ng-model="vm.currentFieldName"/><br/>
+  Field Type: <input type="text" name="currentFieldType" ng-model="vm.currentFieldType"/><br/>
+  Field Required: <input type="text" name="currentFieldRequired" ng-model="vm.currentFieldRequired"/><br/>
+  Field Size: <input type="text" name="currentFieldSize" ng-model="vm.currentFieldSize"/><br/>
+  <button ng-click="vm.addField()">Add</button>
+
+  <ul>
+       <li ng-repeat="item in vm.currentEntities">Name: {{item.name}}  - Fields: {{item.fields}}</li>
+  </ul>
+  
+  
 </div>

@@ -36,19 +36,19 @@
         vm.currentlang = '';
         vm.languages = ["it"];
         
-    	vm.addLanguage = function() {
-    		if(!!vm.currentlang && vm.languages.indexOf(vm.currentlang) == -1) {
-    			vm.languages.push(vm.currentlang);
-    			vm.currentlang = '';
-    		}
+	    	vm.addLanguage = function() {
+	    		if(!!vm.currentlang && vm.languages.indexOf(vm.currentlang) == -1) {
+	    			vm.languages.push(vm.currentlang);
+	    			vm.currentlang = '';
+	    		}
         }
 
         vm.removeLanguage = function(item) {
-        	while (!!item && vm.languages.indexOf(item) !== -1) {
-    		  delete vm.languages[vm.languages.indexOf(item)];
-    		  //document.getElementById('language_'+item).remove();
-    		  //document.getElementById('language_').remove();
-    		}
+	        	while (!!item && vm.languages.indexOf(item) !== -1) {
+	    		  delete vm.languages[vm.languages.indexOf(item)];
+	    		  //document.getElementById('language_'+item).remove();
+	    		  //document.getElementById('language_').remove();
+	    		}
         }
         
         
@@ -56,10 +56,10 @@
         vm.currentProfile = '';
         vm.profiles = ["ROLE_ADMIN", "ROLE_USER"];
         vm.addProfile = function() {
-        	if(!!vm.currentProfile) {
-        		vm.profiles.push(vm.currentProfile);
-        		vm.currentProfile = '';
-        	}
+        		if(!!vm.currentProfile) {
+        			vm.profiles.push(vm.currentProfile);
+        			vm.currentProfile = '';
+        		}
         }
         
         
@@ -68,13 +68,61 @@
         vm.currentEnumValue = '';
         vm.enumerations = [];
         vm.addEnumeration = function() {
-        	if(!!vm.currentEnumName && !!vm.currentEnumValue) {
-        		var cEnum = {"name" : vm.currentEnumName, "values" : vm.currentEnumValue };
-        		vm.enumerations.push(cEnum);
-        		vm.currentEnumName = '';
-        		vm.currentEnumValue = '';
-        	}
+	        	if(!!vm.currentEnumName && !!vm.currentEnumValue) {
+	        		var cEnum = {"name" : vm.currentEnumName, "values" : vm.currentEnumValue };
+	        		vm.enumerations.push(cEnum);
+	        		vm.currentEnumName = '';
+	        		vm.currentEnumValue = '';
+	        	}
         }
+        
+        
+        //Entities
+        vm.currentEntityName = '';
+        vm.currentEntityFields = [];
+        vm.currentFieldName = '';
+        vm.currentFieldType = '';
+        vm.currentFieldRequired = '';
+        vm.currentFieldSize = '';
+        vm.entityProfiles = [];
+        vm.currentEntities = [];
+
+        vm.addField = function() {
+	        	if(!!vm.currentFieldName && !!vm.currentFieldType) {
+	        		var cField = { "fname": vm.currentFieldName, 
+	        					   "ftype": vm.currentFieldType, 
+	        					   "frequired": vm.currentFieldRequired, 
+	        					   "fsize": vm.currentFieldSize };
+	        		vm.currentEntityFields.push(cField);
+	        		vm.currentFieldName = '';
+	        	    vm.currentFieldType = '';
+	        	    vm.currentFieldRequired = '';
+	        	    vm.currentFieldSize = '';
+	        	}
+	    }
+        
+        vm.addEntity = function() {
+        	if(!!vm.currentEntityName && !!vm.currentEntityFields) {
+        		var cEntity = { "name": vm.currentEntityName, 
+        						"fields": vm.currentEntityFields, 
+        						"profiles": vm.entityProfiles };
+        		vm.currentEntities.push(cEntity);
+        		vm.currentEntityName = '';
+        		vm.currentEntityFields = [];
+        		vm.entityProfiles = [];
+        		}
+        }
+	    
+        
+        vm.entityProfile = '';
+        vm.entityProfiles = vm.profiles;
+        vm.addEntityProfile = function() {
+        		if(!!vm.entityProfile) {
+        			vm.entityProfiles.push(vm.entityProfile);
+        			vm.entityProfile = '';
+        		}
+        }
+        
         
         
         //INIZIALIZATION SMART
@@ -98,48 +146,8 @@
         	  "languages" : vm.languages,
         	  "profiles" : vm.profiles,
         	  "enumerations" : vm.enumerations,
-        	  "entities" : [ 
-        	  	{"name":"Autore", "fields": [
-        	  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
-        	  			{"fname":"nome", "ftype":"String", "frequired":true, "fsize":150}, 
-        	  			{"fname":"cognome", "ftype":"String", "frequired":false, "fsize":150}, 
-        	  			{"fname":"sesso", "ftype":"SessoType", "frequired":false, "fsize":10}, 
-        	  			{"fname":"datanascita", "ftype":"LocalDate", "frequired":false, "fsize":null}, 
-        	  			{"fname":"note", "ftype":"String", "frequired":false, "fsize":1000}
-        	  	], "profiles" : [ "ROLE_ADMIN", "ROLE_USER", "ROLE_ANONYMOUS", "ROLE_OPERATOR" ]},
-        	  	{"name":"Libro", "fields": [
-        	  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
-        	  			{"fname":"isbn", "ftype":"String", "frequired":true, "fsize":150}, 
-        	  			{"fname":"name", "ftype":"String", "frequired":true, "fsize":500}, 
-        	  			{"fname":"publishyear", "ftype":"String", "frequired":false, "fsize":4}, 
-        	  			{"fname":"copies", "ftype":"Integer", "frequired":false, "fsize":21}
-        	  	],"profiles" : [ "ROLE_ADMIN" ]},
-        	  	{"name":"Collana", "fields": [
-        	  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
-        	  			{"fname":"nome", "ftype":"String", "frequired":true, "fsize":500}
-        	  	], "profiles" : [ "ROLE_OPERATOR", "ROLE_USER" ]},
-        	  	{"name":"Cliente", "fields": [
-        	  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
-        	  			{"fname":"firstname", "ftype":"String", "frequired":true, "fsize":500}, 
-        	  			{"fname":"lastname", "ftype":"String", "frequired":true, "fsize":500}, 
-        	  			{"fname":"type", "ftype":"TipoCliente", "frequired":false, "fsize":500}, 
-        	  			{"fname":"email", "ftype":"String", "frequired":false, "fsize":500}, 
-        	  			{"fname":"address", "ftype":"String", "frequired":false, "fsize":600}
-        	  	],"profiles" : [ "ROLE_USER" ]},
-        	  	{"name":"Azienda", "fields": [
-        	  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
-        	  			{"fname":"codice", "ftype":"String", "frequired":true, "fsize":10, "fminlength": 3, "fmaxlength": 10},
-        	  			{"fname":"nominativo", "ftype":"String", "frequired":true, "fsize":1000},
-        	  			{"fname":"mail", "ftype":"String", "frequired":true, "fsize":1000, "fpattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"},
-        	  			{"fname":"canale", "ftype":"CanaleTrasmissione", "frequired":true, "fsize":500}
-        	  	]},
-        	  	{"name":"Settore", "fields": [
-        	  			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
-        	  			{"fname":"code", "ftype":"String", "frequired":true, "fsize":100},
-        	  			{"fname":"name", "ftype":"String", "frequired":true, "fsize":100}
-        		]}
-        	  ],
-        	 "relations" : [
+        	  "entities" : vm.currentEntities,
+        	  "relations" : [
         		{"type":"OneToOne", "sxTable":"Autore", "sxName":"bestseller", "sxSelect":"isbn" , "dxTable":"Libro", "dxName":"writer", "dxSelect":"cognome"},
         		{"type":"ManyToMany", "sxTable":"Azienda", "sxName":"mysector", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myazienda", "dxSelect":"nominativo"},
         		{"type":"ManyToMany", "sxTable":"Azienda", "sxName":"mysector2", "sxSelect":"code" , "dxTable":"Settore", "dxName":"myazienda2", "dxSelect":"nominativo"},
