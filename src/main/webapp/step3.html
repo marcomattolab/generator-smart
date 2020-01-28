@@ -18,10 +18,29 @@
      <li ng-repeat="item in vm.entityProfiles">{{item}}</li>
   </ul>
      
-  Field Name: <input type="text" name="currentFieldName" ng-model="vm.currentFieldName"/><br/>
-  Field Type: <input type="text" name="currentFieldType" ng-model="vm.currentFieldType"/><br/>
-  Field Required: <input type="text" name="currentFieldRequired" ng-model="vm.currentFieldRequired"/><br/>
-  Field Size: <input type="text" name="currentFieldSize" ng-model="vm.currentFieldSize"/><br/>
+  Field Name: <input type="text" name="currentFieldName" ng-model="vm.currentFieldName"/>
+  <br/>
+  Field Type: 
+  <select name="currentFieldType" ng-model="vm.currentFieldType">
+	  <option value="String">String</option>
+	  <option value="Long">Long</option>
+	  <option value="Integer">Integer</option>
+	  <option value="Double">Double</option>
+	  <option value="Boolean">Boolean</option>
+	  <option value="Date">Date</option>
+	  <option value="LocalDate">LocalDate</option>
+  </select>
+  <br/>
+  
+  Field Required: 
+  <select name="currentFieldRequired" ng-model="vm.currentFieldRequired">
+	  <option value="true">true</option>
+	  <option value="false">false</option>
+  </select>
+  <br/>
+  
+  Field Size: <input type="number" name="currentFieldSize" ng-model="vm.currentFieldSize"/>
+  <br/>
   <button ng-click="vm.addField()">Add</button>
 
   <ul>
