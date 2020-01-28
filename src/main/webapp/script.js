@@ -87,6 +87,17 @@
         vm.entityProfiles = [];
         vm.currentEntities = [];
 
+        
+        
+        vm.entityProfile = '';
+        vm.entityProfiles = vm.profiles;
+        vm.addEntityProfile = function() {
+        		if(!!vm.entityProfile) {
+        			vm.entityProfiles.push(vm.entityProfile);
+        			vm.entityProfile = '';
+        		}
+        }
+        
         vm.addField = function() {
 	        	if(!!vm.currentFieldName && !!vm.currentFieldType) {
 	        		var cField = { "fname": vm.currentFieldName, 
@@ -109,19 +120,10 @@
         		vm.currentEntities.push(cEntity);
         		vm.currentEntityName = '';
         		vm.currentEntityFields = [];
-        		vm.entityProfiles = [];
+        		//vm.entityProfiles = [];  //FIXME
         		}
         }
-	    
         
-        vm.entityProfile = '';
-        vm.entityProfiles = vm.profiles;
-        vm.addEntityProfile = function() {
-        		if(!!vm.entityProfile) {
-        			vm.entityProfiles.push(vm.entityProfile);
-        			vm.entityProfile = '';
-        		}
-        }
         
         
         
