@@ -50,7 +50,7 @@ public class TemplateGlobalI18N extends AbstractResourceTemplate{
 		"                \"radarchart\": \"RadarChart\"\r\n" +
 		"            },\r\n"+
 
-		"            \"jhipster-needle-menu-add-element\": \"JHipster will add additional menu entries here (do not translate!)\",\r\n" +
+		"            \"jhipster-needle-menu-add-element\": \"JH will add additional menu entries here (do not translate!)\",\r\n" +
 		"            \"entities\": {\r\n" ;
 		
 		List<Table> tabelle = Utils.getTables(database);
@@ -62,7 +62,7 @@ public class TemplateGlobalI18N extends AbstractResourceTemplate{
 		body += "\t\t\t\t\"main\": \"Entità\",\r\n";
 		
 		body +=
-		"                \"jhipster-needle-menu-add-entry\": \"JHipster will add additional entities here (do not translate!)\"\r\n" +
+		"                \"jhipster-needle-menu-add-entry\": \"JH will add additional entities here (do not translate!)\"\r\n" +
 		"            },\r\n" +
 		"            \"account\": {\r\n" +
 		"                \"main\": \"Utente\",\r\n" +
@@ -85,7 +85,7 @@ public class TemplateGlobalI18N extends AbstractResourceTemplate{
 		"                \"apidocs\": \"API\",\r\n" +
 		"                \"database\": \"Database\",\r\n" +
 		"                \"entity-audit\": \"Entity Audit\",\r\n" +
-		"                \"jhipster-needle-menu-add-admin-element\": \"JHipster will add additional menu entries here (do not translate!)\"\r\n" +
+		"                \"jhipster-needle-menu-add-admin-element\": \"JH will add additional menu entries here (do not translate!)\"\r\n" +
 		"            },\r\n" +
 		"            \"language\": \"Lingua\"\r\n" +
 		"        },\r\n" +
