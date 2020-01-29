@@ -345,7 +345,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		String res = "";
 
 		//Relations management
-		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && conf.isPrintRelation()) {
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) ) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();

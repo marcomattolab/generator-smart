@@ -150,7 +150,7 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 			}
 		}
 		
-		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && conf.isPrintRelation()) {
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) ) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();

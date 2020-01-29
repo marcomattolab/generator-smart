@@ -6,11 +6,8 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConfigCreateProject {
-	//FIXME CHANGE_ME To Modify Destination Path about generated code!!!
-	//private static final boolean USE_PATHNAME_ENV_B = true; //APPLE
-	private static final boolean USE_PATHNAME_ENV_B = false; //WINDOWS
-	
-	private static final boolean printRelationMobile = true; //TODO ENABLE/DISABLE Relation Print on Mobile
+	//FIXME CHANGE_ME
+	private static final boolean USE_PATHNAME_ENV_B=true; // true=>APPLE  false=>WINDOWS
 	
 	private boolean isOracle;
 	private boolean isMysql;
@@ -508,10 +505,6 @@ public class ConfigCreateProject {
 
 	public void setMysql(boolean isMysql) {
 		this.isMysql = isMysql;
-	}
-
-	public boolean isPrintRelation() {
-		return printRelationMobile;
 	}
 
 	public String[] getProfiles() {

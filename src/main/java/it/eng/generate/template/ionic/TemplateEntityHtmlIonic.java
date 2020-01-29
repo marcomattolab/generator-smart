@@ -48,7 +48,7 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		
 		// CICLE Columns
 		for (Column column : tabella.getSortedColumns()) {
-			String ColumnName = Utils.getFieldNameForMethod(column);
+			//String ColumnName = Utils.getFieldNameForMethod(column);
 			String columnname = Utils.getFieldName(column);
 			if(Utils.isPrimaryKeyID(column) ) {
 				//System.out.println("#Skip generation for Primary Key ID..");
@@ -59,7 +59,7 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		}
 		
 		//CICLE Relations
-		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) && conf.isPrintRelation()) {
+		if(!CollectionUtils.isEmpty(conf.getProjectRelations()) ) {
 			for(ProjectRelation rel: conf.getProjectRelations()) {
 				String relationType = rel.getType();
 				String nomeTabellaSx = rel.getSxTable();
