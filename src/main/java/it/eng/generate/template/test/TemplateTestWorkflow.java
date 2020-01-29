@@ -29,6 +29,8 @@ public class TemplateTestWorkflow extends AbstractTemplate{
 		"import java.util.Map;\n" + 
 		"import junit.framework.TestCase;\n" + 
 		"import org.junit.Test;\n" + 
+		"import org.springframework.boot.test.context.SpringBootTest;\n" + 
+		"import org.springframework.test.context.junit4.SpringRunner;\n"+
 		"import org.junit.runner.RunWith;\n" + 
 		"import org.junit.runners.JUnit4;\n" + 
 		"import "+ conf.getPackageclass() + "." + conf.getSrcWorkflowFolder()+".Workflow;\n\n" + 
