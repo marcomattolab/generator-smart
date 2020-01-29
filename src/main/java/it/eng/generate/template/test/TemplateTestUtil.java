@@ -23,7 +23,8 @@ public class TemplateTestUtil extends AbstractTemplate{
 	public String getBody() {
 		//https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcWebRestFolder()+";\r\n\n" +
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcWebRestFolder()+";\r\n\n" +
 		"import com.fasterxml.jackson.annotation.JsonInclude;\r\n" +
 		"import com.fasterxml.jackson.databind.ObjectMapper;\r\n" +
 		"import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;\r\n" +

@@ -181,6 +181,7 @@ import it.eng.generate.template.test.TemplateSecurityJWTFilterTest;
 import it.eng.generate.template.test.TemplateSecurityTokenProviderTest;
 import it.eng.generate.template.test.TemplateSecurityUtilsUnitTest;
 import it.eng.generate.template.test.TemplateTestUtil;
+import it.eng.generate.template.test.TemplateTestWorkflow;
 import it.eng.generate.template.test.TemplateUserResourceIntTest;
 import it.eng.generate.template.test.TemplateUserServiceIntTest;
 import it.eng.generate.template.test.TemplateWebConfigurerTest;
@@ -211,6 +212,7 @@ import it.eng.generate.template.web.vm.TemplateKeyAndPasswordVM;
 import it.eng.generate.template.web.vm.TemplateLoggerVM;
 import it.eng.generate.template.web.vm.TemplateLoginVM;
 import it.eng.generate.template.web.vm.TemplateManagedUserVM;
+import it.eng.generate.template.workflow.TemplateWorkflow;
 
 public class DataBase {
 	public Map<String, Table> tabelle;
@@ -476,7 +478,10 @@ public class DataBase {
 			for (Enumeration cEnum : enumerations) {
 				new TemplateDomainEnumeration(cEnum).generateTemplate();
 			}
-
+			
+			//Workflow (statics)
+			new TemplateWorkflow(this).generateTemplate();
+			
 			//Security (statics)
 			new TemplateAuthoritiesConstants(this).generateTemplate();
 			new TemplateDomainUserDetailsService(this).generateTemplate();
@@ -619,6 +624,7 @@ public class DataBase {
 				new TemplateAuditResourceIntTest(this).generateTemplate();
 				new TemplateLogsResourceIntTest(this).generateTemplate();
 				new TemplateUserResourceIntTest(this).generateTemplate();
+				new TemplateTestWorkflow(this).generateTemplate();
 			}
 
 			//Building Data of All Enumerations - CHECK OR REMOVE THIS FIXME!

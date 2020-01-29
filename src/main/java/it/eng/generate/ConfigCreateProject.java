@@ -38,6 +38,7 @@ public class ConfigCreateProject {
 	private String srcDomainEnumerationFolder = "domain.enumeration";
 	private String srcRepositoryFolder = "repository";
 	private String srcRepositoryTimezoneFolder = "repository.timezone";
+	private String srcWorkflowFolder = "workflow";
 	private String srcSecurityFolder = "security";
 	private String srcSecurityJWTFolder = "security.jwt";
 	private String srcServiceFolder = "service";
@@ -529,6 +530,14 @@ public class ConfigCreateProject {
 		this.resConfigLiquibaseDataFolder = resConfigLiquibaseDataFolder;
 	}
 	
+	public String getSrcWorkflowFolder() {
+		return srcWorkflowFolder;
+	}
+
+	public void setSrcWorkflowFolder(String srcWorkflowFolder) {
+		this.srcWorkflowFolder = srcWorkflowFolder;
+	}
+
 	public String toString() {
 		String ret = "";
 		ret+="\nURL CONNECTION:"+urlConnection;
