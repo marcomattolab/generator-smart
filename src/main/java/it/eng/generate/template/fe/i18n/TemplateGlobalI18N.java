@@ -30,7 +30,7 @@ public class TemplateGlobalI18N extends AbstractResourceTemplate{
 
 	public String getBody() {
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		//https://www.buildmystring.com/
+		List<String> authorities = Utils.getGlobalAuthoritiesCredential(conf);
 		String body = 
 		"{\r\n" +
 		"    \"global\": {\r\n" +
@@ -111,8 +111,17 @@ public class TemplateGlobalI18N extends AbstractResourceTemplate{
 		"                \"authenticated\": {\r\n" +
 		"                    \"prefix\": \"Se vuoi \",\r\n" +
 		"                    \"link\": \"accedere\",\r\n" +
-		"                    \"suffix\":\r\n" +
-		"                        \", puoi provare gli account di default: <br/> - Amministratore (user = \\\"admin\\\" e la password = \\\"admin\\\") <br/> - utente (user = \\\"user\\\" e la password = \\\"user\\\")\"\r\n" +
+		"                    \"suffix\":\r\n"+
+
+		
+		"                        \", puoi provare gli account di default:";
+		for(String credential: authorities) {
+			body+= "<br/>- "+Utils.getFirstUpperCase(credential)+" (login='"+credential+"' and password='"+credential+"') ";
+		}
+		body+= "\"\n";
+		
+		
+		body+=
 		"                },\r\n" +
 		"                \"register\": {\r\n" +
 		"                    \"noaccount\": \"Non hai ancora un account?\",\r\n" +

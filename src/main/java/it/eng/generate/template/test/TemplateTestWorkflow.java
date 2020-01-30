@@ -33,6 +33,7 @@ public class TemplateTestWorkflow extends AbstractTemplate{
 		"import org.springframework.test.context.junit4.SpringRunner;\n"+
 		"import org.junit.runner.RunWith;\n" + 
 		"import org.junit.runners.JUnit4;\n" + 
+		"import "+ conf.getPackageclass()+"."+Utils.getClassNameCamelCase(conf.getProjectName()) + conf.getApp()+";\n" + 
 		"import "+ conf.getPackageclass() + "." + conf.getSrcWorkflowFolder()+".Workflow;\n\n" + 
 		
 		//TODO TEST THIS!
