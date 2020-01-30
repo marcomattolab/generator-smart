@@ -14,7 +14,6 @@
 	- LOW - Bug filtri Ricerca => Non funzionano i filtri RANGE sui Numerici, non vengono elaborati da BE (id.greatherThan non funge!)
 	- LOW - Add filtri rierca relazioni ManyToMany
 	- LOW - Ottimizzazione: Implementare filtro di ricerca come imprendocasa (select dinamiche)
-==> home.component.html add security user/pwd!!!
 			
 ## BUG e/o Altre Migliorie
 	- HIG - @Gestire i campi BLOB / CLOB - Add altri tipologie: ImageBlob, Blob, BigDecimal, Double etc
@@ -44,8 +43,5 @@
  - ionic cordova build android --dev
 
 
-
 TODO ==> replaced simple spinner with centered loading spinner
-
-
 
