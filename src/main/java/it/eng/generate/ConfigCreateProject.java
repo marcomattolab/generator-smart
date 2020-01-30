@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConfigCreateProject {
 	//FIXME CHANGE_ME
-	private static final boolean USE_PATHNAME_ENV_B=true; // true=>APPLE  false=>WINDOWS
+	private static final boolean USE_PATHNAME_ENV_B=false; // true=>APPLE  false=>WINDOWS
 	
 	private boolean isOracle;
 	private boolean isMysql;

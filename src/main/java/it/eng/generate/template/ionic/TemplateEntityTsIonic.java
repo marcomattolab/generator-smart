@@ -33,7 +33,8 @@ public class TemplateEntityTsIonic extends AbstractResourceTemplate {
 		"    templateUrl: '"+nometabella+".html'\r\n" +
 		"})\r\n" +
 		"export class "+Nometabella+"Page {\r\n" +
-		"    "+nometabella+"s: "+Nometabella+"[];\r\n\n" +
+		"    "+nometabella+"s: "+Nometabella+"[];\n" +
+		"    inputSearch = '';\n\n"+
 		"    // todo: add pagination\r\n\n" +
 		"    constructor(\r\n" +
 		"        private navController: NavController,\r\n" +
@@ -72,6 +73,20 @@ public class TemplateEntityTsIonic extends AbstractResourceTemplate {
 		"    new() {\r\n" +
 		"        this.navController.navigateForward('/tabs/entities/"+nometabella+"/new');\r\n" +
 		"    }\r\n\n" +
+		
+		"    /** Searchfilter: Get Filtered "+Nometabella+"  **/\n"+
+		"    /** TODO Add fields for search filter   **/\n"+ 
+		"    getFiltered"+Nometabella+"s() {\r\n" + 
+		"       return this."+nometabella+"s.filter(item => {\r\n" + 
+		"          const inputSearch = this.inputSearch.toLowerCase();\r\n" + 
+		"          //const field1 = item.codice.toLowerCase();\r\n" + 
+		"          //const field2 = item.descrizione.toLowerCase();\r\n" + 
+		"          //return field1.indexOf(inputSearch) > -1 || field2.indexOf(inputSearch) > -1 ;\n" + 
+		"          const field1 = item.id;\n" + 
+		"          return inputSearch.indexOf(''+field1) > -1;\n" + 
+		"         });\r\n" + 
+		"     }\n\n" +
+		
 		"    edit(item: IonItemSliding, "+nometabella+": "+Nometabella+") {\r\n" +
 		"        this.navController.navigateForward('/tabs/entities/"+nometabella+"/' + "+nometabella+".id + '/edit');\r\n" +
 		"        item.close();\r\n" +

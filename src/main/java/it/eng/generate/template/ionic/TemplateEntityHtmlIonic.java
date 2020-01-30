@@ -38,10 +38,13 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		"<ion-content padding>\r\n" +
 		"    <ion-refresher [disabled]=\"plt.is('desktop')\" slot=\"fixed\" (ionRefresh)=\"loadAll($event)\">\r\n" +
 		"        <ion-refresher-content></ion-refresher-content>\r\n" +
-		"    </ion-refresher>\r\n" +
+		"    </ion-refresher>\r\n\n" +
+		
+		"    <ion-searchbar [(ngModel)]=\"inputSearch\"></ion-searchbar>\n\n" +
 		
 		"    <ion-list>\r\n" +
-		"        <ion-item-sliding *ngFor=\"let "+nometabella+" of "+nometabella+"s; trackBy: trackId\" #slidingItem>\r\n" +
+//		"        <ion-item-sliding *ngFor=\"let "+nometabella+" of "+nometabella+"s; trackBy: trackId\" #slidingItem>\r\n" +
+		"        <ion-item-sliding *ngFor=\"let "+nometabella+" of getFiltered"+Nometabella+"s; trackBy: trackId\" #slidingItem>\r\n" +
 		"            <ion-item (click)=\"view("+nometabella+")\">\r\n" +
 		"              <ion-label text-wrap>\r\n";
 		
