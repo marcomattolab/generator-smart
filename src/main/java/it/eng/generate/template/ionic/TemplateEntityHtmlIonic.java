@@ -43,8 +43,7 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 		"    <ion-searchbar [(ngModel)]=\"inputSearch\"></ion-searchbar>\n\n" +
 		
 		"    <ion-list>\r\n" +
-//		"        <ion-item-sliding *ngFor=\"let "+nometabella+" of "+nometabella+"s; trackBy: trackId\" #slidingItem>\r\n" +
-		"        <ion-item-sliding *ngFor=\"let "+nometabella+" of getFiltered"+Nometabella+"s; trackBy: trackId\" #slidingItem>\r\n" +
+		"        <ion-item-sliding *ngFor=\"let "+nometabella+" of getFiltered"+Nometabella+"s(); trackBy: trackId\" #slidingItem>\r\n" +
 		"            <ion-item (click)=\"view("+nometabella+")\">\r\n" +
 		"              <ion-label text-wrap>\r\n";
 		

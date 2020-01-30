@@ -1,5 +1,6 @@
 package it.eng.generate.template.ionic;
 
+import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.Table;
 import it.eng.generate.Utils;
@@ -72,20 +73,31 @@ public class TemplateEntityTsIonic extends AbstractResourceTemplate {
 		"    }\r\n\n" +
 		"    new() {\r\n" +
 		"        this.navController.navigateForward('/tabs/entities/"+nometabella+"/new');\r\n" +
-		"    }\r\n\n" +
+		"    }\r\n\n";
 		
-		"    /** Searchfilter: Get Filtered "+Nometabella+"  **/\n"+
-		"    /** TODO Add fields for search filter   **/\n"+ 
+		body+=
 		"    getFiltered"+Nometabella+"s() {\r\n" + 
 		"       return this."+nometabella+"s.filter(item => {\r\n" + 
-		"          const inputSearch = this.inputSearch.toLowerCase();\r\n" + 
-		"          //const field1 = item.codice.toLowerCase();\r\n" + 
-		"          //const field2 = item.descrizione.toLowerCase();\r\n" + 
-		"          //return field1.indexOf(inputSearch) > -1 || field2.indexOf(inputSearch) > -1 ;\n" + 
-		"          const field1 = item.id;\n" + 
-		"          return inputSearch.indexOf(''+field1) > -1;\n" + 
+		"          const inputSearch = this.inputSearch.toLowerCase();\r\n";
+		String definitionConst = "";
+		String returnValue = "";
+		int k = 1;
+		for (Column column : tabella.getSortedColumns()) {
+			String columnname = Utils.getFieldName(column);
+			if( Utils.isTextField(column) ) {
+				definitionConst 	+= "          const "+columnname+" = item."+columnname+" ? item."+columnname+".toLowerCase() : '';\n";
+				returnValue 		+= (k>1?"\n                 || ":" ")+columnname+".indexOf(inputSearch) > -1";
+				k++;
+			}
+		}
+		body+= "" + definitionConst + "\n";
+		body+= "          return"+ returnValue + " ;\n";
+		body+=
 		"         });\r\n" + 
 		"     }\n\n" +
+		
+		
+		
 		
 		"    edit(item: IonItemSliding, "+nometabella+": "+Nometabella+") {\r\n" +
 		"        this.navController.navigateForward('/tabs/entities/"+nometabella+"/' + "+nometabella+".id + '/edit');\r\n" +
