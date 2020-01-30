@@ -92,6 +92,7 @@ import it.eng.generate.template.fe.entities.TemplateEntityService;
 import it.eng.generate.template.fe.entities.TemplateEntityUpdateComponentHtml;
 import it.eng.generate.template.fe.entities.TemplateEntityUpdateComponentTs;
 import it.eng.generate.template.fe.entities.TemplateModule;
+import it.eng.generate.template.fe.home.TemplateHomeComponentHtml;
 import it.eng.generate.template.fe.home.TemplateHomeModule;
 import it.eng.generate.template.fe.i18n.TemplateEntityI18N;
 import it.eng.generate.template.fe.i18n.TemplateEnumerationsI18N;
@@ -584,6 +585,7 @@ public class DataBase {
 			new TemplateCoreModule(this).generateTemplate(); 
 			new TemplateLanguageHelper(this).generateTemplate(); 
 			new TemplateHomeModule(this).generateTemplate(); 
+			new TemplateHomeComponentHtml(this).generateTemplate(); 
 			new TemplateNavbarComponent(this).generateTemplate(); 				//Cicle Entities Done
 			new TemplateMainComponent(this).generateTemplate(); 
 			new TemplateSharedModule(this).generateTemplate(); 

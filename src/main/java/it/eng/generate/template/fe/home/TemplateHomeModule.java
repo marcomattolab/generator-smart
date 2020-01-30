@@ -18,7 +18,8 @@ public class TemplateHomeModule extends AbstractResourceTemplate {
 	public String getBody(){
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
 		// https://www.buildmystring.com/
-		String body = "import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\r\n" +
+		String body = 
+		"import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';\r\n" +
 		"import { RouterModule } from '@angular/router';\r\n" +
 		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"SharedModule } from 'app/shared';\r\n" +
 		"import { HOME_ROUTE, HomeComponent } from './';\r\n" +
