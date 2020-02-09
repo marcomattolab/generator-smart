@@ -61,17 +61,11 @@ public class TemplateDomain extends AbstractTemplate{
 		"public class "+getClassName()+" extends AbstractAuditingEntity implements Serializable  {\r\n" +
 		"\tprivate static final long serialVersionUID = 1L;\r\n";
 		
-		Set<?> set = tabella.getColumnNames();
-		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for (Column column: tabella.getSortedColumns()) {
 			body += Utils.generaFieldExt(column)+"\n";
 		}
 		
-		set = tabella.getColumnNames();
-		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for (Column column: tabella.getSortedColumns()) {
 			body += Utils.generaGetAndSetForBeanExt(column, getClassName());
 		}
 		
@@ -290,14 +284,12 @@ public class TemplateDomain extends AbstractTemplate{
 		body += "\n\tpublic String toString(){";
 		body += "\n\t\treturn this.getClass().getName()+\":{";
 		boolean isFirst = true;
-		for (Iterator<?> iter = set.iterator(); iter.hasNext();) {
-			String key = (String) iter.next();
-			Column column = tabella.getColumn(key);
+		for (Column column: tabella.getSortedColumns()) {
 			if(isFirst){
 				body += Utils.generaToString(column);
 				isFirst = false;
 			}else{
-				body += ","+Utils.generaToString(column);
+				body += ", "+Utils.generaToString(column);
 			}
 		}
 		body += "}\";";
@@ -315,26 +307,4 @@ public class TemplateDomain extends AbstractTemplate{
 		return "src/main/java";
 	}
 
-	/**
-  		JDL - Defining multiple oneToOne relationships
-		
-		relationship OneToOne {
-			Immobile{geolocalizzazione(immobile)} to Geolocalizzazione{posizione(codice)}
-		}
-                    
-		relationship ManyToOne {
-			Partner{professione(denominazione)} to Professione
-		}
-		
-		relationship OneToMany {
-			Incarico{listaContatti(esito)} to ListaContatti{incarico(riferimento)}
-		}
-		
-		relationship ManyToMany {
-			Candidate{language(languageCode)} to LanguageSkill{candidateName(lastName)},
-			Company{myKeyword(keywordCode)} to CompanyKeyword{myCompany(companyName)}
-		}
-
-	 **/
-	
 }
