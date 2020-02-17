@@ -421,13 +421,13 @@ public class Utils {
 		String ret = "";
 		ret += generaAddForBeanSimple(column, className);
 		if( isBlob(column) ) {
-			ret += "\n\tpublic "+ className + " " + getFieldNameForMethodReplace(column.getName(), true)+"("+" byte[] "+getFieldNameForMethodReplace(column.getName(), true)+"){";
+			ret += "\n\tpublic "+ className + " " + getFieldNameForMethodReplace(column.getName(), true)+"("+"byte[] "+getFieldNameForMethodReplace(column.getName(), true)+"){";
 			ret += "\n\t\tthis."+getFieldNameForMethodReplace(column.getName(), true)+" = "+getFieldNameForMethodReplace(column.getName(), true)+";";
 			ret += "\n\t\treturn this;";
 			ret += "\n\t}";
 			ret += "\n";
-			ret += "\n\tpublic "+ className + " " + getFieldNameForMethodReplace(column.getName(),true)+"("+" String "+getFieldNameForMethodReplace(column.getName(),true)+"){";
-			ret += "\n\t\tthis."+getFieldNameForMethodReplace(column.getName(),true)+" = "+getFieldNameForMethodReplace(column.getName(),true)+";";
+			ret += "\n\tpublic "+ className + " " + getFieldNameForMethodReplace(column.getName(), true)+"ContentType("+"String "+getFieldNameForMethodReplace(column.getName(),true)+"ContentType){";
+			ret += "\n\t\tthis."+getFieldNameForMethodReplace(column.getName(), true)+"ContentType = "+getFieldNameForMethodReplace(column.getName(), true)+"ContentType;";
 			ret += "\n\t\treturn this;";
 			ret += "\n\t}";
 			ret += "\n";

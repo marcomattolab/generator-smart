@@ -24,7 +24,7 @@
   			{"fname":"amount", "ftype":"String", "frequired":false, "fsize":100}, 
   			{"fname":"name", "ftype":"String", "frequired":false, "fsize":150}, 
   			{"fname":"link", "ftype":"String", "frequired":false, "fsize":500}, 
-  			{"fname":"content", "ftype":"String", "frequired":false, "fsize":1000}
+  			{"fname":"allegato", "ftype":"ImageBlob", "frequired":false, "fsize":1000}
   	], "profiles" : [ "ROLE_ADMIN", "ROLE_USER", "ROLE_ANONYMOUS" ]},
   	{"name":"Certification", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 

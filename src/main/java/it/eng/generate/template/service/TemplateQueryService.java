@@ -113,7 +113,9 @@ public class TemplateQueryService extends AbstractTemplate{
 			Class<?> filterType = column.getTypeColumn();
 			boolean isEnumeration = column.getEnumeration()!=null ? true : false;
 			
-			if ( Utils.isDateField(column) || (Utils.isNumericField(column) && !Utils.isPrimaryKeyID(column) ) ) {
+			if (  Utils.isBlob(column) || Utils.isClob(column) ) {
+				System.out.println("  --- TemplateQuery for table "+tabella.getNomeTabella()+" skip column "+column.getName()+ " cause is BLOB/CLOB.");
+			} else if ( Utils.isDateField(column) || (Utils.isNumericField(column) && !Utils.isPrimaryKeyID(column) ) ) {
 			body +=	"            if (criteria.get"+Utils.getFieldNameForMethod(column)+"() != null) {\r\n"+
 					"                specification = specification.and(buildRangeSpecification(criteria.get"+Utils.getFieldNameForMethod(column)+"(), "+Utils.getEntityName(tabella)+"_."+ Utils.getFieldNameForMethodReplace(column.getName(), true)  +"));\r\n" +
 					"            }\r\n";

@@ -79,7 +79,7 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 		}
 		
 		//Before RelationsStore Original List
-		List<Column> extendedList = new ArrayList<>(tabella.getColumns());
+		List<Column> extendedListCopy = new ArrayList<>(tabella.getColumns());
 		
 		//[Manage Relations]
 		if(!CollectionUtils.isEmpty(conf.getProjectRelations())) {
@@ -97,7 +97,7 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 							Column columnId = new Column();
 							columnId.setName(nomeRelazioneSx+"Id");
 							columnId.setTypeColumn(Column.corvertModelType("Long"));
-							extendedList.add(columnId);
+							extendedListCopy.add(columnId);
 						}
 						
 					}else if (relationType.equals(Utils.ManyToMany)) {
@@ -105,13 +105,13 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 							Column columnId = new Column();
 							columnId.setName(nomeRelazioneSx+"Id");
 							columnId.setTypeColumn(Column.corvertModelType("Long"));
-							extendedList.add(columnId);
+							extendedListCopy.add(columnId);
 						}
 						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
 							Column columnId = new Column();
 							columnId.setName(nomeRelazioneDx+"Id");
 							columnId.setTypeColumn(Column.corvertModelType("Long"));
-							extendedList.add(columnId);
+							extendedListCopy.add(columnId);
 						}
 						
 					} else if (relationType.equals(Utils.OneToMany)) {
@@ -119,13 +119,13 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 							Column columnId = new Column();
 							columnId.setName(nomeRelazioneSx+"Id");
 							columnId.setTypeColumn(Column.corvertModelType("Long"));
-							extendedList.add(columnId);
+							extendedListCopy.add(columnId);
 						}
 						if(nomeTabellaDx.toLowerCase().equals(nomeTabella)) {
 							Column columnId = new Column();
 							columnId.setName(nomeRelazioneDx+"Id");
 							columnId.setTypeColumn(Column.corvertModelType("Long"));
-							extendedList.add(columnId);
+							extendedListCopy.add(columnId);
 						}
 					}
 				} 
@@ -133,6 +133,13 @@ public class TemplateServiceCriteria extends AbstractTemplate{
 		}
 		//[/Manage Relations]
 		 
+		//FIX - CLEAN LIST REMOVE BLOB/CLOB
+		List<Column> extendedList = new ArrayList<>();
+		for(Column column : extendedListCopy) {
+			if(!Utils.isBlob(column) && !Utils.isClob(column)) {
+				extendedList.add(column);
+			}
+		}
 		
 		body+=
 		"    private static final long serialVersionUID = 1L;\r\n";

@@ -23,7 +23,8 @@ public class TemplateRepository extends AbstractTemplate{
 	public String getBody() {
 		// https://www.buildmystring.com/
 		ConfigCreateProject conf = ConfigCreateProject.getIstance();
-		String body = "package "+ conf.getPackageclass() + "." + conf.getSrcRepositoryFolder()+";\r\n\n" +
+		String body = 
+		"package "+ conf.getPackageclass() + "." + conf.getSrcRepositoryFolder()+";\r\n\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder()+"."+Utils.getEntityName(tabella)+";\r\n" +
 		"import org.springframework.data.jpa.repository.*;\r\n" +
 		"import org.springframework.stereotype.Repository;\r\n\n" +

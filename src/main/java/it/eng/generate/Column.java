@@ -167,8 +167,10 @@ public class Column {
 	public static int corvertModelType(String cTypeColumn) {
 		if ("String".equals(cTypeColumn)) 
 			return Types.VARCHAR;
-		else if ("Blob".equals(cTypeColumn))
+		else if ("Blob".equals(cTypeColumn) || "ImageBlob".equals(cTypeColumn))
 			return Types.BLOB;
+		else if ("Clob".equals(cTypeColumn) || "ImageClob".equals(cTypeColumn))
+			return Types.CLOB;
 		else if ("Float".equals(cTypeColumn))
 			return Types.FLOAT;
 		else if ("Double".equals(cTypeColumn))

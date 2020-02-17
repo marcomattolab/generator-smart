@@ -44,4 +44,5 @@
 
 
 TODO ==> replaced simple spinner with centered loading spinner
+TODO ==> https://ovpv.me/open-pdf-ionic-4/   Add pdf viewer
 

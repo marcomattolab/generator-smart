@@ -262,6 +262,12 @@ public class TemplateLiquidbaseChangelog extends AbstractResourceTemplate{
 			String ctype = column.getLabelType().toLowerCase();
 			if( Utils.isPrimaryKeyID(column) ) {
 				body += "            <column name=\""+nomeColonna+"\" type=\"numeric\"/>\n";
+			} else if( Utils.isBlob(column) ) {
+	            body += "            <column name=\""+nomeColonna+"\" type=\""+"blob"+"\"/>\n";
+	            body += "            <column name=\""+nomeColonna+"_content_type"+"\" type=\""+"string"+"\"/>\n";
+			} else if( Utils.isClob(column) ) {
+				//TODO TEST
+				body += "            <column name=\""+nomeColonna+"\" type=\""+"clob"+"\"/>\n";
 			} else if( Utils.isNumericField(column) ) {
 				body += "            <column name=\""+nomeColonna+"\" type=\"numeric\"/>\n";
 			} else {
