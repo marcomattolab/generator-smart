@@ -9,6 +9,8 @@ import it.eng.generate.template.AbstractResourceTemplate;
 
 public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 	private static final int ITERATION_COUNT = 10; 
+	private static final String CREATE_DATE = "2020-02-01"; 
+	private static final String CREATE_USER = "user"; 
 	
 	public TemplateLiquidbaseData(DataBase database, Table tabella) {
 		super(database);
@@ -32,9 +34,17 @@ public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 		int i = 0;
 		int s = tabella.getColumns().size();
 		for (Column column: tabella.getColumns()) {
-			String nomeColonna = column.getName();
-			body += nomeColonna + (i+1<s ? ";" : ";");
-			i++;
+			if (Utils.isBlob(column) || Utils.isClob(column)) {
+				String nomeColonna = column.getName();
+				body += nomeColonna + (i+1<s ? ";" : ";");
+				body += nomeColonna+"_content_type" + (i+1<s ? ";" : ";");
+				i++;
+			} else {
+				String nomeColonna = column.getName();
+				body += nomeColonna + (i+1<s ? ";" : ";");
+				i++;
+			}
+			
 		}
 		body += "created_by;created_date\n";
 
@@ -47,7 +57,10 @@ public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 				String classes = column.getTypeColumn().getName();
 				
 				//TODO ADD PATTERN VALIDATION
-				if ("date".equals(ctype)) {
+				if (Utils.isBlob(column) || Utils.isClob(column)) {
+					body += Utils.getRandomBlob();
+					body += ";" + Utils.getRandomBlobContentType();
+				} else if ("date".equals(ctype)) {
 			    		body += Utils.getRandomDate();
 			    	} else if("string".equals(ctype)) {
 					body +=  column.getEnumeration()!=null
@@ -63,7 +76,7 @@ public class TemplateLiquidbaseData extends AbstractResourceTemplate{
 				body += (k+1) < tabella.getColumns().size() ? ";" : ";";
 				k++;
 			}
-			body += "user;2020-02-01\n"; //TODO MANAGE create_by, create_date
+			body += ""+CREATE_USER+";"+CREATE_DATE+"\n"; //TODO MANAGE create_by, create_date
 		}
 
 		return body;

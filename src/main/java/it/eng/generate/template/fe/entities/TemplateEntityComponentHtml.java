@@ -246,10 +246,13 @@ public class TemplateEntityComponentHtml extends AbstractResourceTemplate {
 				/**
 				 * Blob management
 				 */
-				body += "t\t\t<td>\r\n";
+				body += "\t\t\t<td>\r\n";
 				body += "\t\t\t    <a *ngIf=\""+nometabella+"."+ columnname +"\" (click)=\"openFile("+nometabella+"."+ columnname +"ContentType, "+nometabella+"."+ columnname +")\" jhiTranslate=\"entity.action.open\">open</a>\r\n" ;
+				body += "\t\t\t        <img [src]=\"'data:' + "+nometabella+"."+columnname+"ContentType + ';base64,' + "+nometabella+"."+columnname+"\" style=\"max-height: 30px;\" alt=\""+columnname+" image\"/>\n";
+				body += "\t\t\t    </a>\n";
+			  //body += "\t\t\t    <a *ngIf=\""+nometabella+"."+ columnname +"\" (click)=\"openFile("+nometabella+"."+ columnname +"ContentType, "+nometabella+"."+ columnname +")\" jhiTranslate=\"entity.action.open\">open</a>\r\n" ;
 				body += "\t\t\t    <span *ngIf=\""+nometabella+"."+ columnname +"\">{{"+nometabella+"."+ columnname +"ContentType}}, {{byteSize("+nometabella+"."+ columnname +")}}</span>\r\n" ;
-				body += "t\t\t</td>\r\n";
+				body += "\t\t\t</td>\r\n";
 
 			} else {
 				body += "\t\t\t<td>{{"+nometabella+"."+columnname+"}}</td>\r\n";

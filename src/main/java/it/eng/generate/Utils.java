@@ -1308,11 +1308,25 @@ public class Utils {
 	}
 
 	/**
+	 * @return Random Blob
+	 */
+	public static String getRandomBlob() {
+        return "../data/blob/hipster.png";
+    }
+	
+	/**
+	 * @return Random Blob Content Type
+	 */
+	public static String getRandomBlobContentType() {
+		return "image/png";
+	}
+	
+	/**
 	 * @return Random Boolean
 	 */
 	public static boolean getRandomBoolean() {
-        return Math.random() < 0.5;
-    }
+		return Math.random() < 0.5;
+	}
 	
 	/**
 	 * @return Random Number
