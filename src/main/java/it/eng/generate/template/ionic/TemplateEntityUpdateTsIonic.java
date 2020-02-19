@@ -3,6 +3,7 @@ package it.eng.generate.template.ionic;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.taglibs.standard.tag.common.core.Util;
 import org.springframework.util.CollectionUtils;
 
 import it.eng.generate.Column;
@@ -80,7 +81,8 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		// Type: Allegato - Clob/Blob
 		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) {
 			body+=  "    @ViewChild('fileInput', {static: true}) fileInput;\n"+ 
-					"    cameraOptions: CameraOptions;\n";
+					"    cameraOptions: CameraOptions;\n"+
+					"    imagePickerAttachment = null;\n";
 		}
 
 		body+=
@@ -204,8 +206,17 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		//body +="            structure: spesa.structureId,\n";
 		body += printRelations(conf, UPDATE_FORM);
 
-		body +=
-				"        });\r\n" +
+		body += "        });\r\n";
+		for (Column column : tabella.getSortedColumns()) {
+			String columnname = Utils.getFieldName(column);
+			if(Utils.isBlob(column) || Utils.isClob(column)){
+				body += "        this.imagePickerAttachment = "+nometabella+"."+columnname+" ? {\r\n" + 
+						"          content: "+nometabella+"."+columnname+",\r\n" + 
+						"          format: "+nometabella+"."+columnname+"ContentType\r\n" + 
+						"        } : {};\n";
+			}
+		}			
+				body +=
 				"    }\r\n\n" +
 
 
@@ -242,9 +253,35 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"        console.error(error);\r\n" +
 		"        const toast = await this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});\r\n" +
 		"        toast.present();\r\n" +
-		"    }\r\n\n" +
+		"    }\r\n\n";
 
-
+		for (Column column : tabella.getSortedColumns()) {
+			if (Utils.isBlob(column) || Utils.isBlob(column)) {
+				String columnname = Utils.getFieldName(column);
+				body+=
+					"  onImagePicked() {\r\n" + 
+					"    this.form.patchValue({\r\n" + 
+					"      "+columnname+": this.imagePickerAttachment.content,\r\n" + 
+					"      "+columnname+"ContentType: this.imagePickerAttachment.format\r\n" + 
+					"    });\r\n" + 
+					"  }\r\n" + 
+					"  clearImage() {\r\n" + 
+					"    this.imagePickerAttachment = null;\r\n" + 
+					"    this.form.patchValue({\r\n" + 
+					"      "+columnname+": [],\r\n" + 
+					"      "+columnname+"ContentType: []\r\n" + 
+					"    });\r\n" + 
+					"  }\r\n" + 
+					"  getContentInfos(): string {\r\n" + 
+					"    const contentType = this.form.get(['"+columnname+"ContentType']).value;\r\n" + 
+					"    const "+columnname+"Value = this.form.get(['"+columnname+"']).value;\r\n" + 
+					"    const byteValue = this.dataUtils.byteSize("+columnname+"Value);\r\n" + 
+					"    return contentType && contentType.length ? `${contentType}, ${byteValue}` : '';\r\n" + 
+					"  }\n";
+			}
+		}
+		
+		body+=
 		"    private createFromForm(): "+Nometabella+" {\r\n";
 		//TYPE DATE
 		for (Column column : tabella.getSortedColumns()) {

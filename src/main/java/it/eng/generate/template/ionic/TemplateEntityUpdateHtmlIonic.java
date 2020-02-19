@@ -129,24 +129,36 @@ public class TemplateEntityUpdateHtmlIonic extends AbstractResourceTemplate {
 						"            </ion-item>\n";
 		
 			} else if( filterType.getName().equals("java.sql.Blob") ||  filterType.getName().equals("java.sql.Clob") ) {
+//				body += "		      <ion-item>\r\n" + 
+//						"		        <div>\r\n" + 
+//						"		          <img [src]=\"'data:' + "+nometabella+"."+columnname+"ContentType + ';base64,' + "+nometabella+"."+columnname+"\"\r\n" + 
+//						"		               style=\"max-height: 100px;\" *ngIf=\""+nometabella+"?."+columnname+"\" alt=\""+nometabella+" image\"/>\r\n" + 
+//						"		          <div *ngIf=\""+nometabella+"."+columnname+"\">\r\n" + 
+//						"		            <p>{{"+nometabella+"."+columnname+"ContentType}}, {{byteSize("+nometabella+"."+columnname+")}}</p>\r\n" + 
+//						"		            <ion-button color=\"danger\" (click)=\"clearInputImage('"+columnname+"', '"+columnname+"ContentType', 'fileImage')\">\r\n" + 
+//						"		              <ion-icon name=\"trash\" slot=\"icon-only\"></ion-icon>\r\n" + 
+//						"		            </ion-button>\r\n" + 
+//						"		          </div>\r\n" + 
+//						"		          <input type=\"file\" #fileInput style=\"display: none\"\r\n" + 
+//						"		                 (change)=\"setFileData($event, "+nometabella+", '"+columnname+"', true)\" accept=\"image/*\"/>\r\n" + 
+//						"		          <ion-button *ngIf=\"!"+nometabella+"?."+columnname+"\" (click)=\"getPicture('"+columnname+"')\">\r\n" + 
+//						"		            <ion-icon name=\"add-circle\" slot=\"start\"></ion-icon>\r\n" + 
+//						"		            {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}\r\n" + 
+//						"		          </ion-button>\r\n" + 
+//						"		        </div>\r\n" + 
+//						"		      </ion-item>\r\n"; 
 				body += "		      <ion-item>\r\n" + 
-						"		        <div>\r\n" + 
-						"		          <img [src]=\"'data:' + "+nometabella+"."+columnname+"ContentType + ';base64,' + "+nometabella+"."+columnname+"\"\r\n" + 
-						"		               style=\"max-height: 100px;\" *ngIf=\""+nometabella+"?."+columnname+"\" alt=\""+nometabella+" image\"/>\r\n" + 
-						"		          <div *ngIf=\""+nometabella+"."+columnname+"\">\r\n" + 
-						"		            <p>{{"+nometabella+"."+columnname+"ContentType}}, {{byteSize("+nometabella+"."+columnname+")}}</p>\r\n" + 
-						"		            <ion-button color=\"danger\" (click)=\"clearInputImage('"+columnname+"', '"+columnname+"ContentType', 'fileImage')\">\r\n" + 
-						"		              <ion-icon name=\"trash\" slot=\"icon-only\"></ion-icon>\r\n" + 
-						"		            </ion-button>\r\n" + 
-						"		          </div>\r\n" + 
-						"		          <input type=\"file\" #fileInput style=\"display: none\"\r\n" + 
-						"		                 (change)=\"setFileData($event, "+nometabella+", '"+columnname+"', true)\" accept=\"image/*\"/>\r\n" + 
-						"		          <ion-button *ngIf=\"!"+nometabella+"?."+columnname+"\" (click)=\"getPicture('"+columnname+"')\">\r\n" + 
-						"		            <ion-icon name=\"add-circle\" slot=\"start\"></ion-icon>\r\n" + 
-						"		            {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}\r\n" + 
+						"		        <app-image-picker [attachMent]=\"imagePickerAttachment\" (imagePick)=\"onImagePicked()\"></app-image-picker>\r\n" + 
+						"		      </ion-item>\r\n" + 
+						"		      <ion-item *ngIf=\""+nometabella+"."+columnname+"\">\r\n" + 
+						" 		        <div>\r\n" + 
+						" 		          <p>{{getContentInfos()}}</p>\r\n" + 
+						" 		          <ion-button color=\"danger\" (click)=\"clearImage()\">\r\n" + 
+						"		             <ion-icon name=\"trash\" slot=\"icon-only\"></ion-icon>\r\n" + 
 						"		          </ion-button>\r\n" + 
-						"		        </div>\r\n" + 
-						"		      </ion-item>\r\n"; 
+						" 		        </div>\r\n" + 
+						"		      </ion-item>\n\n";
+				
 			}
 		}
 		
