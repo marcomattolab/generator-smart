@@ -55,6 +55,12 @@ public class TemplateEntityHtmlIonic extends AbstractResourceTemplate {
 			if(Utils.isPrimaryKeyID(column) ) {
 				//System.out.println("#Skip generation for Primary Key ID..");
 				body += "                <p>{{"+nometabella+"."+columnname+"}}</p>\r\n";
+			} else if(Utils.isBlob(column) || Utils.isClob(column)) {
+				body +=
+				"                <ion-avatar *ngIf=\""+nometabella+"."+columnname+"\">\r\n" + 
+				"		            <img [src]=\"'data:' + "+nometabella+"."+columnname+"ContentType + ';base64,' + "+nometabella+"."+columnname+"\"/>\r\n" + 
+				"		            <p *ngIf=\""+nometabella+"."+columnname+"\">{{"+nometabella+"."+columnname+"ContentType}}, {{byteSize("+nometabella+"."+columnname+")}}</p>\r\n" + 
+				"                </ion-avatar>\n";
 			} else {
 				body += "                <p>{{"+nometabella+"."+columnname+"}}</p>\r\n";
 			}

@@ -28,6 +28,7 @@ public class TemplateEntityTsIonic extends AbstractResourceTemplate {
 		"import { filter, map } from 'rxjs/operators';\r\n" +
 		"import { HttpResponse } from '@angular/common/http';\r\n" +
 		"import { "+Nometabella+" } from './"+nometabella+".model';\r\n" +
+		"import { JhiDataUtils } from 'ng-jhipster';\n" + 
 		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n\n" +
 		"@Component({\r\n" +
 		"    selector: 'page-"+nometabella+"',\r\n" +
@@ -41,6 +42,7 @@ public class TemplateEntityTsIonic extends AbstractResourceTemplate {
 		"        private navController: NavController,\r\n" +
 		"        private "+nometabella+"Service: "+Nometabella+"Service,\r\n" +
 		"        private toastCtrl: ToastController,\r\n" +
+		"        private dataUtils: JhiDataUtils,\n"+
 		"        public plt: Platform\r\n" +
 		"    ) {\r\n" +
 		"        this."+nometabella+"s = [];\r\n" +
@@ -114,6 +116,9 @@ public class TemplateEntityTsIonic extends AbstractResourceTemplate {
 		"    view("+nometabella+": "+Nometabella+") {\r\n" +
 		"        this.navController.navigateForward('/tabs/entities/"+nometabella+"/' + "+nometabella+".id + '/view');\r\n" +
 		"    }\r\n\n" +
+		"    byteSize(field) {\r\n" + 
+		"        return this.dataUtils.byteSize(field);\r\n" + 
+		"    }\n\n"+
 		
 		
 		"}\r\n";
