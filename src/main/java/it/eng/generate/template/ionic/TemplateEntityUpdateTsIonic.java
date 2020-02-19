@@ -38,13 +38,14 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 
 		String body = 
-		"import { Component, OnInit } from '@angular/core';\r\n" +
+		"import { Component, OnInit , ElementRef, ViewChild } from '@angular/core';\r\n" +
+		"import { JhiDataUtils } from 'ng-jhipster';\n"+
 		"import { FormBuilder, Validators } from '@angular/forms';\r\n" +
 		"import { NavController, Platform, ToastController } from '@ionic/angular';\r\n" +
 		"import { HttpResponse, HttpErrorResponse } from '@angular/common/http';\r\n" +
 		"import { ActivatedRoute } from '@angular/router';\r\n";
 		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) { //Type: Allegato - Clob/Blob
-			body+= "import {Camera, CameraOptions} from '@ionic-native/camera/ngx';\r\n";
+			body+= "import { Camera, CameraOptions } from '@ionic-native/camera/ngx';\r\n";
 		}
 		body+="import { Observable } from 'rxjs';\r\n" +
 			  "import { getMomentDateNoTZ } from '../../../shared/util/moment-util';\r\n";
@@ -130,6 +131,13 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"        protected formBuilder: FormBuilder,\r\n" +
 		"        protected platform: Platform,\r\n" +
 		"        protected toastCtrl: ToastController,\r\n" +
+		
+        ( Utils.hasColumnAttachment( tabella.getSortedColumns() ) 
+        		? "        private camera: Camera,\n"+
+        		  "        private dataUtils: JhiDataUtils,\n"+
+			  "        private elementRef: ElementRef,\n"
+        		: "") +
+		
 		"        private "+nometabella+"Service: "+Nometabella+"Service\r\n"+
 		"    ) {\r\n\n" +
 		"        // Watch the form for changes\r\n" +
@@ -140,18 +148,18 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 		//IF BLOB / CLOB 
 		if(Utils.hasColumnAttachment( tabella.getSortedColumns() )) {
-			body +=	"//Set the Camera options\n"+
-					"this.cameraOptions = {\n"+
-					"  quality: 100,\n"+
-					"  targetWidth: 900,\n"+
-					"  targetHeight: 600,\n"+
-					"  destinationType: this.camera.DestinationType.DATA_URL,\n"+
-					"  encodingType: this.camera.EncodingType.JPEG,\n"+
-					"  mediaType: this.camera.MediaType.PICTURE,\n"+
-					"  saveToPhotoAlbum: false,\n"+
-					"  allowEdit: true,\n"+
-					"  sourceType: 1\n"+
-					"};\n\n";
+			body +=	"        //Set the Camera options\n"+
+					"        this.cameraOptions = {\n"+
+					"          quality: 100,\n"+
+					"          targetWidth: 900,\n"+
+					"          targetHeight: 600,\n"+
+					"          destinationType: this.camera.DestinationType.DATA_URL,\n"+
+					"          encodingType: this.camera.EncodingType.JPEG,\n"+
+					"          mediaType: this.camera.MediaType.PICTURE,\n"+
+					"          saveToPhotoAlbum: false,\n"+
+					"          allowEdit: true,\n"+
+					"          sourceType: 1\n"+
+					"        };\n\n";
 		}
 
 		body +=	"    }\r\n\n" +
@@ -395,9 +403,9 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+COMPARE, 
-						"    compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaDx)+", second: "+Utils.getFirstUpperCase(nomeTabellaDx)+"): boolean {\n"+
-								"       return first && second ? first.id === second.id : first === second;\n"+
-						"    }\n\n");
+						"  compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaDx)+", second: "+Utils.getFirstUpperCase(nomeTabellaDx)+"): boolean {\n"+
+						"     return first && second ? first.id === second.id : first === second;\n"+
+						"  }\n\n");
 
 					}
 				}
@@ -440,9 +448,9 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 						
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaSx+COMPARE, 
-						"    compare"+Utils.getFirstUpperCase(nomeTabellaSx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaSx)+", second: "+Utils.getFirstUpperCase(nomeTabellaSx)+"): boolean {\n"+
-								"       return first && second ? first.id === second.id : first === second;\n"+
-						"    }\n\n");
+						"  compare"+Utils.getFirstUpperCase(nomeTabellaSx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaSx)+", second: "+Utils.getFirstUpperCase(nomeTabellaSx)+"): boolean {\n"+
+						"     return first && second ? first.id === second.id : first === second;\n"+
+						"  }\n\n");
 
 					}
 				}
@@ -486,9 +494,9 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 				
 					}else if(COMPARE.equals(section)) {
 						relMap.put(relationType+nomeTabellaDx+COMPARE, 
-						"    compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaDx)+", second: "+Utils.getFirstUpperCase(nomeTabellaDx)+"): boolean {\n"+
-								"       return first && second ? first.id === second.id : first === second;\n"+
-						"    }\n\n");
+						"  compare"+Utils.getFirstUpperCase(nomeTabellaDx)+"(first: "+Utils.getFirstUpperCase(nomeTabellaDx)+", second: "+Utils.getFirstUpperCase(nomeTabellaDx)+"): boolean {\n"+
+						"     return first && second ? first.id === second.id : first === second;\n"+
+						"  }\n\n");
 					}
 				}
 				//

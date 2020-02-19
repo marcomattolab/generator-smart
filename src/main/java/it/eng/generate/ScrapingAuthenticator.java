@@ -32,7 +32,7 @@ public class ScrapingAuthenticator {
             HtmlPage homepage = form.getInputByValue("Sign in").click();
             String loggedPage = homepage.getWebResponse().getContentAsString();
 
-            System.out.println("loggedPage: "+loggedPage);
+            System.out.println("## loggedPage: " + loggedPage);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

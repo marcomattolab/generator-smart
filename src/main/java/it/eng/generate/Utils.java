@@ -272,7 +272,7 @@ public class Utils {
 				body += "     public "+columnname+"?: "+typeColumnRel+"[]"+(!isLast?",":"")+"\r\n";
 			} else {
 				if( filterType.getName().equals("java.sql.Blob") ) {
-					body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+"\r\n";
+					body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+",\r\n";
 					body += "     public "+columnname+"ContentType?: string "+(!isLast?",":"")+"\r\n";
 				} else {
 					body += "     public "+columnname+"?: "+getIInterfaceTypology(column)+(!isLast?",":"")+"\r\n";
