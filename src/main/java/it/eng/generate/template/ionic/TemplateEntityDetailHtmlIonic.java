@@ -54,6 +54,20 @@ public class TemplateEntityDetailHtmlIonic extends AbstractResourceTemplate {
 				"                <span>{{"+nometabella+"."+columnname+"}}</span>\r\n" +
 				"            </div>\r\n" +
 				"        </ion-item>\r\n";
+			} else if (Utils.isBlob(column) || Utils.isClob(column)) {
+				body +=
+				"        <ion-item>\r\n" + 
+				"          <ion-label position=\"fixed\" color=\"disabled\">{{'ATTACHMENT' | translate}}</ion-label>\r\n" + 
+				"          <div item-content>\r\n" + 
+				"             <div *ngIf=\""+nometabella+"."+columnname+"\">\r\n" + 
+				"               <a (click)=\"openFile("+nometabella+"."+columnname+"ContentType, "+nometabella+"."+columnname+")\">\r\n" + 
+				"                <img [src]=\"'data:' + "+nometabella+"."+columnname+"ContentType + ';base64,' + "+nometabella+"."+columnname+"\"\r\n" + 
+				"                 style=\"max-width: 100%;\" alt=\""+nometabella+" image\"/>\r\n" + 
+				"               </a>\r\n" + 
+				"               {{"+nometabella+"."+columnname+"ContentType}}, {{byteSize("+nometabella+"."+columnname+")}}\r\n" + 
+				"             </div>\r\n" + 
+				"          </div>\r\n" + 
+				"        </ion-item>";
 			} else {
 				body +=
 				"        <ion-item>\r\n" +

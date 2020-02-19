@@ -26,6 +26,7 @@ public class TemplateEntityDetailIonic extends AbstractResourceTemplate {
 		"import { "+Nometabella+" } from './"+nometabella+".model';\r\n" +
 		"import { "+Nometabella+"Service } from './"+nometabella+".service';\r\n" +
 		"import { NavController, AlertController } from '@ionic/angular';\r\n" +
+		"import { JhiDataUtils } from 'ng-jhipster';\n"+
 		"import { ActivatedRoute } from '@angular/router';\r\n\n" +
 		"@Component({\r\n" +
 		"    selector: 'page-"+nometabella+"-detail',\r\n" +
@@ -34,6 +35,7 @@ public class TemplateEntityDetailIonic extends AbstractResourceTemplate {
 		"export class "+Nometabella+"DetailPage implements OnInit {\r\n" +
 		"    "+nometabella+": "+Nometabella+";\r\n\n" +
 		"    constructor(\r\n" +
+		"        private dataUtils: JhiDataUtils,\n"+
 		"        private navController: NavController,\r\n" +
 		"        private "+nometabella+"Service: "+Nometabella+"Service,\r\n" +
 		"        private activatedRoute: ActivatedRoute,\r\n" +
@@ -67,6 +69,12 @@ public class TemplateEntityDetailIonic extends AbstractResourceTemplate {
 		"        });\r\n" +
 		"        await alert.present();\r\n" +
 		"    }\r\n\n" +
+		"    byteSize(field) {\r\n" + 
+		"        return this.dataUtils.byteSize(field);\r\n" + 
+		"    }\n\n"+
+		"    openFile(contentType, field) {\r\n" + 
+		"        return this.dataUtils.openFile(contentType, field);\r\n" + 
+		"    }\n\n"+
 		"}\r\n";
 		return body;
 	}
