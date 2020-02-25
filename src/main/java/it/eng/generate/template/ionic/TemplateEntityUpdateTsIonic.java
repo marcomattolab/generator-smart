@@ -46,7 +46,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"import { HttpResponse, HttpErrorResponse } from '@angular/common/http';\r\n" +
 		"import { ActivatedRoute } from '@angular/router';\r\n";
 		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) { //Type: Allegato - Clob/Blob
-			body+= "import { Camera, CameraOptions } from '@ionic-native/camera/ngx';\r\n";
+			body+= "//import { Camera, CameraOptions } from '@ionic-native/camera/ngx';\r\n";
 		}
 		body+="import { Observable } from 'rxjs';\r\n" +
 			  "import { getMomentDateNoTZ } from '../../../shared/util/moment-util';\r\n";
@@ -81,7 +81,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		// Type: Allegato - Clob/Blob
 		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) {
 			body+=  "    @ViewChild('fileInput', {static: true}) fileInput;\n"+ 
-					"    cameraOptions: CameraOptions;\n"+
+					"    //cameraOptions: CameraOptions;\n"+
 					"    imagePickerAttachment = null;\n";
 		}
 
@@ -135,7 +135,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		"        protected toastCtrl: ToastController,\r\n" +
 		
         ( Utils.hasColumnAttachment( tabella.getSortedColumns() ) 
-        		? "        private camera: Camera,\n"+
+        		? "        //private camera: Camera,\n"+
         		  "        private dataUtils: JhiDataUtils,\n"+
 			  "        private elementRef: ElementRef,\n"
         		: "") +
@@ -150,18 +150,18 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 
 		//IF BLOB / CLOB 
 		if(Utils.hasColumnAttachment( tabella.getSortedColumns() )) {
-			body +=	"        //Set the Camera options\n"+
-					"        this.cameraOptions = {\n"+
-					"          quality: 100,\n"+
-					"          targetWidth: 900,\n"+
-					"          targetHeight: 600,\n"+
-					"          destinationType: this.camera.DestinationType.DATA_URL,\n"+
-					"          encodingType: this.camera.EncodingType.JPEG,\n"+
-					"          mediaType: this.camera.MediaType.PICTURE,\n"+
-					"          saveToPhotoAlbum: false,\n"+
-					"          allowEdit: true,\n"+
-					"          sourceType: 1\n"+
-					"        };\n\n";
+			body +=	"        ////Set the Camera options\n"+
+					"        //this.cameraOptions = {\n"+
+					"          //quality: 100,\n"+
+					"          //targetWidth: 900,\n"+
+					"          //targetHeight: 600,\n"+
+					"          //destinationType: this.camera.DestinationType.DATA_URL,\n"+
+					"          //encodingType: this.camera.EncodingType.JPEG,\n"+
+					"          //mediaType: this.camera.MediaType.PICTURE,\n"+
+					"          //saveToPhotoAlbum: false,\n"+
+					"          //allowEdit: true,\n"+
+					"          //sourceType: 1\n"+
+					"        //};\n\n";
 		}
 
 		body +=	"    }\r\n\n" +
@@ -197,6 +197,9 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 			String columnname = Utils.getFieldName(column);
 			if(Utils.isPrimaryKeyID(column) ) {
 				body +="            "+columnname+": "+nometabella+"."+columnname+",\r\n";
+			} else if(Utils.isBlob(column) || Utils.isClob(column)) {
+				body +="            "+columnname+": "+nometabella+"."+columnname+",\r\n";
+				body +="            "+columnname+"ContentType: "+nometabella+"."+columnname+"ContentType,\r\n";
 			} else {
 				body +="            "+columnname+": "+nometabella+"."+columnname+",\r\n";
 			}
@@ -275,7 +278,7 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 					"  getContentInfos(): string {\r\n" + 
 					"    const contentType = this.form.get(['"+columnname+"ContentType']).value;\r\n" + 
 					"    const "+columnname+"Value = this.form.get(['"+columnname+"']).value;\r\n" + 
-					"    const byteValue = this.dataUtils.byteSize("+columnname+"Value);\r\n" + 
+					"    const byteValue = this.dataUtils.byteSize("+columnname+"Value);\r\n\n" + 
 					"    return contentType && contentType.length ? `${contentType}, ${byteValue}` : '';\r\n" + 
 					"  }\n";
 			}
@@ -303,13 +306,16 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
 			} else if( Utils.isDateField(column) ) { //DATE FIELDS
 				body +="            "+columnname+": "+columnname+"Value,\r\n";
+			} else if( Utils.isBlob(column) || Utils.isClob(column) ) {
+				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
+				body +="            "+columnname+"ContentType: this.form.get(['"+columnname+"ContentType']).value,\r\n";
 			} else {
 				body +="            "+columnname+": this.form.get(['"+columnname+"']).value,\r\n";
 			}
 		}
 
 		//DONE Relations CREATE_FORM
-		//			collanaId: this.form.get(['collana']).value, 
+		//		collanaId: this.form.get(['collana']).value, 
 		//      	collana2Id: this.form.get(['collana2']).value,
 		body += printRelations(conf, CREATE_FORM);	
 		
@@ -321,18 +327,18 @@ public class TemplateEntityUpdateTsIonic extends AbstractResourceTemplate {
 		//IF BLOB / CLOB SECTION
 		if(Utils.hasColumnAttachment( tabella.getSortedColumns())) {
 			body += "  getPicture(fieldName) {\r\n" +
-					"    if (Camera.installed()) {\r\n" +
-					"      this.camera.getPicture(this.cameraOptions).then((data) => {\r\n" +
-					"        this."+nometabella+"[fieldName] = data;\r\n" +
-					"        this."+nometabella+"[fieldName + 'ContentType'] = 'image/jpeg';\r\n" +
-					"        this.form.patchValue({[fieldName]: data});\r\n" +
-					"        this.form.patchValue({[fieldName + 'ContentType']: 'image/jpeg'});\r\n" +
-					"      }, (err) => {\r\n" +
-					"        alert('Unable to take photo');\r\n" +
-					"      });\r\n" +
-					"    } else {\r\n" +
-					"      this.fileInput.nativeElement.click();\r\n" +
-					"    }\r\n" +
+					"    //if (Camera.installed()) {\r\n" +
+					"    //  this.camera.getPicture(this.cameraOptions).then((data) => {\r\n" +
+					"    //    this."+nometabella+"[fieldName] = data;\r\n" +
+					"    //    this."+nometabella+"[fieldName + 'ContentType'] = 'image/jpeg';\r\n" +
+					"    //    this.form.patchValue({[fieldName]: data});\r\n" +
+					"    //    this.form.patchValue({[fieldName + 'ContentType']: 'image/jpeg'});\r\n" +
+					"    //  }, (err) => {\r\n" +
+					"    //    alert('Unable to take photo');\r\n" +
+					"    //  });\r\n" +
+					"    //} else {\r\n" +
+					"    //  this.fileInput.nativeElement.click();\r\n" +
+					"    //}\r\n" +
 					"  }\r\n\n" +
 					"  processWebImage(event, fieldName) {\r\n" +
 					"    const reader = new FileReader();\r\n" +
