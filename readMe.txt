@@ -19,6 +19,7 @@
 	- HIG - @Gestire i campi BLOB / CLOB - Add altri tipologie: ImageBlob, Blob, BigDecimal, Double etc
 	- LOW - BUG in IONIC (autenticazione FE JWT see Bearer not found!)
   	- LOW - Inserire controllo Pattern | MinSize | MaxSize lato backend / Hibernate
+  	- HIG - Non funziona il download PDF/DOC/XLS
 	
 	- LOW - ==> Integrare da IONIC/Mobile le librerie camera / google-map
 	- LOW - ==> Creare dahboard generata dynamicamente
