@@ -33,6 +33,7 @@
 	- LOW - HA singleton e scalabilità
 	- LOW - JMS e code asincrone
 	- LOW - Big Data , ML / AI	
+	- LOW - Completare Wizard di generazione!
 
 ## Documentation Ideas         
 	- See https://www.jaxio.com/en/celerio.html
@@ -42,7 +43,7 @@
  - ionic cordova build android --prod
  - ionic cordova build android --dev
 
-
+TODO ==> Scraping Java (Billing Idea) : https://www.scrapingbee.com/blog/introduction-to-web-scraping-with-java/
 TODO ==> replaced simple spinner with centered loading spinner
 TODO ==> https://ovpv.me/open-pdf-ionic-4/   Add pdf viewer
 
