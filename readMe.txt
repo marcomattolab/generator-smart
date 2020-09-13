@@ -43,7 +43,8 @@
  - ionic cordova build android --prod
  - ionic cordova build android --dev
 
-TODO ==> Scraping Java (Billing Idea) : https://www.scrapingbee.com/blog/introduction-to-web-scraping-with-java/
+Done ==> Scraping Java (Billing Idea) : https://www.scrapingbee.com/blog/introduction-to-web-scraping-with-java/
+TODO ==> Spring Scheduler (Billing Idea) : load at startup/fixrate and save into DB
 TODO ==> replaced simple spinner with centered loading spinner
 TODO ==> https://ovpv.me/open-pdf-ionic-4/   Add pdf viewer
 

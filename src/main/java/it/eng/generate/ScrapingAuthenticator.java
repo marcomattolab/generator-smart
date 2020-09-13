@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -14,6 +15,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
+import it.exprivia.service.dto.PayslipDTO;
 
 public class ScrapingAuthenticator {
 
@@ -126,5 +129,72 @@ public class ScrapingAuthenticator {
         }
 	}
 	
+// //Processo Asyncrono di caricamento su DB	
+//	 public List<PayslipDTO> testScrapingExprivia(){
+// 		List<PayslipDTO> result = new ArrayList<PayslipDTO>();
+//		String cedoliniUrl = "https://intranet.exprivia.it/web/exprivia/cedolini"; 
+//		String loginUrl = "https://cas.exprivia.it/cas/login"; 
+//		String destinationPath = "/Users/marco/eclipse-workspace/exprivia-cedolini/";
+//		
+//		String username = "mmartorana";
+//		String password = "xxx";
+//		
+//		try {
+//			System.out.println("Input reads from " + cedoliniUrl);    
+//			System.out.println("Logged as username: " + username + "  password: " + password);    
+//
+//         WebClient webClient = new WebClient();
+//         webClient.getOptions().setThrowExceptionOnScriptError(false);
+//         webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+//         webClient.getOptions().setJavaScriptEnabled(false);
+//         
+//         //Login
+//         HtmlPage page = (HtmlPage) webClient.getPage(loginUrl);
+//     		HtmlForm form = page.getForms().get(1);
+//     		form.getInputByName("username").setValueAttribute(username);
+//         form.getInputByName("password").setValueAttribute(password);
+//         HtmlPage homepage = form.getInputByValue("LOGIN").click();
+//         String loggedPage = homepage.getWebResponse().getContentAsString();
+//         
+//         	//Cedolini
+//         HtmlPage pageCedolini = (HtmlPage) webClient.getPage(cedoliniUrl);
+//         String cedoliniPageLogged = pageCedolini.getWebResponse().getContentAsString();
+//         
+//         for(Object obj: (List<Object>) pageCedolini.getByXPath("//li[@class='pft-file ext-pdf']")) {
+//         		HtmlListItem listItem = ((HtmlListItem) obj);	
+//         		HtmlAnchor anchor = (HtmlAnchor) listItem.getFirstChild();
+//         		String hrefLink = anchor.getHrefAttribute();
+//         		String nameFile = anchor.getFirstChild().asXml().replace("\n", "").replace("\r", "");
+//         		String year = nameFile.substring(4, 8);
+//         		String month = nameFile.substring(9, 11);
+//         		boolean isTredicesima = nameFile.toUpperCase().contains("TREDICESIMA");
+//         		System.out.println(nameFile + " " + year + " " + month + (isTredicesima?" " + "TREDICESIMA" : "") );
+//         		
+//         		//Download as Anchor
+//         	    anchor.click();                                                                                    
+//         	    webClient.waitForBackgroundJavaScript(2000);                                                               
+//         	    com.gargoylesoftware.htmlunit.Page downloadPage = webClient.getCurrentWindow().getEnclosedPage();                                        
+//         	    File destFile = new File(destinationPath, nameFile);                                                            
+//         	    try (InputStream contentAsStream = downloadPage.getWebResponse().getContentAsStream()) {                   
+//         	        try (OutputStream out = new FileOutputStream(destFile)) {                                              
+//         	            IOUtils.copy(contentAsStream, out);                                                                
+//         	        }                                                                                                      
+//         	    }    
+//         	    
+//         	    PayslipDTO cur = new PayslipDTO();
+//         	    cur.setMonth(month);
+//         	    cur.setName(nameFile);
+//         	    cur.setYear(new Integer(year));
+//         	    cur.setLink(hrefLink);
+//         	    cur.setCompanyName("Exprivia");
+//				result.add(cur);
+//         	    System.out.println("Output written to " + destFile.getAbsolutePath());   
+//         	    
+//         }
+//     } catch (Exception ex) {
+//         ex.printStackTrace();
+//     }
+//		return result;
+//	}
 }
 
