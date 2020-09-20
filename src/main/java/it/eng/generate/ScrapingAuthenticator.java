@@ -16,8 +16,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-import it.exprivia.service.dto.PayslipDTO;
-
 public class ScrapingAuthenticator {
 
 	/**
@@ -41,7 +39,7 @@ public class ScrapingAuthenticator {
 		String destinationPath = "/Users/marco/eclipse-workspace/exprivia-cedolini/";
 		
 		String username = "mmartorana";
-		String password = "xxxxxxxx";
+		String password = "Settembre.2020";
 		
 		try {
 			System.out.println("Input reads from " + cedoliniUrl);    
@@ -68,6 +66,8 @@ public class ScrapingAuthenticator {
             HtmlPage pageCedolini = (HtmlPage) webClient.getPage(cedoliniUrl);
             String cedoliniPageLogged = pageCedolini.getWebResponse().getContentAsString();
             
+            System.out.println("amount;month;allegato;allegato_content_type;year;name;link;id;created_by;created_date");
+            int count = 1;
             for(Object obj: (List<Object>) pageCedolini.getByXPath("//li[@class='pft-file ext-pdf']")) {
             		HtmlListItem listItem = ((HtmlListItem) obj);	
             		HtmlAnchor anchor = (HtmlAnchor) listItem.getFirstChild();
@@ -77,8 +77,22 @@ public class ScrapingAuthenticator {
             		String year = nameFile.substring(4, 8);
             		String month = nameFile.substring(9, 11);
             		boolean isTredicesima = nameFile.toUpperCase().contains("TREDICESIMA");
-            		System.out.println(nameFile + " " + anchorFullLink);
-            		System.out.println(year + " " + month + (isTredicesima?" " + "TREDICESIMA" : "") );
+            		//System.out.println(nameFile + " " + anchorFullLink);
+            		//System.out.println(year + " " + month + (isTredicesima?" " + "TREDICESIMA" : "") );
+
+            		//amount;month;allegato;allegato_content_type;year;name;link;id;created_by;created_date
+            		System.out.println(
+            				year+"-"+month+";"+ //amount
+    						(isTredicesima?"13":month)+";"+ //month
+    						"../data/blob/mmartorana/"+nameFile+";"+ // allegato
+    						"application/pdf;"+ //allegato_content_type
+    						year+";"+
+    						nameFile+";"+
+    						anchorFullLink+";"+
+    						(count++)+";"+
+    						"admin"+";"+
+    						year+"-"+month+"-"+"01"+";"
+    				);
             		
             		//Download as Anchor
             	    anchor.click();                                                                                    
@@ -91,7 +105,7 @@ public class ScrapingAuthenticator {
             	        }                                                                                                      
             	    }      
             	    
-            	    System.out.println("Output written to " + destFile.getAbsolutePath());   
+            	    //System.out.println("Output written to " + destFile.getAbsolutePath());   
             	    
             }
         } catch (Exception ex) {

@@ -47,4 +47,5 @@ Done ==> Scraping Java (Billing Idea) : https://www.scrapingbee.com/blog/introdu
 TODO ==> Spring Scheduler (Billing Idea) : load at startup/fixrate and save into DB
 TODO ==> replaced simple spinner with centered loading spinner
 TODO ==> https://ovpv.me/open-pdf-ionic-4/   Add pdf viewer
-
+		 https://github.com/matheusabr/ionic-pdf/blob/master/src/pages/home/home.ts
+		 
