@@ -1,9 +1,10 @@
 package it.eng.generate.template.service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.util.CollectionUtils;
-
 import it.eng.generate.Column;
 import it.eng.generate.ConfigCreateProject;
 import it.eng.generate.ProjectRelation;
@@ -33,6 +34,7 @@ public class TemplateQueryService extends AbstractTemplate{
 		String body = 
 		"package "+ conf.getPackageclass() + "." + conf.getSrcServiceFolder()+";\r\n\n" +
 		"import java.util.List;\r\n" +
+		"import java.util.Optional;\r\n" + 
 		"import javax.persistence.criteria.JoinType;\r\n" +
 		"import org.slf4j.Logger;\r\n" +
 		"import org.slf4j.LoggerFactory;\r\n" +
@@ -42,12 +44,16 @@ public class TemplateQueryService extends AbstractTemplate{
 		"import org.springframework.stereotype.Service;\r\n" +
 		"import org.springframework.transaction.annotation.Transactional;\r\n" +
 		"import io.github.jhipster.service.QueryService;\r\n" +
+		"import io.github.jhipster.service.filter.StringFilter;\n"+
 		"import "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder()+"."+Utils.getEntityName(tabella) +";\r\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcDomainFolder()+".*; // for static metamodels\r\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcRepositoryFolder()+"."+Utils.getEntityName(tabella)+"Repository;\r\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder()+"."+Utils.getEntityName(tabella)+"Criteria;\r\n" +
 		"import "+ conf.getPackageclass() + "." + conf.getSrcServiceDtoFolder()+"."+Utils.getEntityName(tabella)+"DTO;\r\n" +
-		"import "+ conf.getPackageclass() + "." + conf.getSrcServiceMapperFolder()+"."+Utils.getEntityName(tabella)+"Mapper;\r\n\n" +
+		"import "+ conf.getPackageclass() + "." + conf.getSrcServiceMapperFolder()+"."+Utils.getEntityName(tabella)+"Mapper;\r\n" +
+		"import "+ conf.getPackageclass() + "." + conf.getSrcSecurityFolder()+"."+"AuthoritiesConstants;\r\n" +
+		"import "+ conf.getPackageclass() + "." + conf.getSrcSecurityFolder()+"."+"SecurityUtils;\r\n\n" +
+		
 		"/**\r\n" +
 		" * Service for executing complex queries for "+Utils.getEntityName(tabella)+" entities in the database.\r\n" +
 		" * The main input is a {@link "+Utils.getEntityName(tabella)+"Criteria} which gets converted to {@link Specification},\r\n" +
@@ -59,7 +65,8 @@ public class TemplateQueryService extends AbstractTemplate{
 		"public class "+getClassName()+" extends QueryService<"+Utils.getEntityName(tabella)+"> {\r\n" +
 		"    private final Logger log = LoggerFactory.getLogger("+getClassName()+".class);\r\n" +
 		"    private final "+Utils.getEntityName(tabella)+"Repository repository;\r\n" +
-		"    private final "+Utils.getEntityName(tabella)+"Mapper mapper;\r\n\n" +
+		"    private final "+Utils.getEntityName(tabella)+"Mapper mapper;\r\n" +
+		"    private final boolean securityEnabled = true;\n\n"+
 		"    public "+getClassName()+"("+Utils.getEntityName(tabella)+"Repository repository, "+Utils.getEntityName(tabella)+"Mapper mapper) {\r\n" +
 		"        this.repository = repository;\r\n" +
 		"        this.mapper = mapper;\r\n" +
@@ -133,6 +140,9 @@ public class TemplateQueryService extends AbstractTemplate{
 		//BUILD RELATIONS
 		body += buildRelations(conf);
 		
+		//BUILD SECURITY
+		body += buildSecurity(conf);
+				
 		body+=
 		"        }\r\n" +
 		"        return specification;\r\n" +
@@ -141,6 +151,66 @@ public class TemplateQueryService extends AbstractTemplate{
 		return body;
 	}
 
+	/**
+	 * Build Security Criteria
+	 * @param conf
+	 * @return body
+	 */
+	private String buildSecurity(ConfigCreateProject conf) {
+		String allProfiles = "";
+		String defltUsrPrfl = "";
+		List<String> profileNormalizedLst = getProfilesNormalized(conf);
+		for(String prf: profileNormalizedLst) {
+			allProfiles+="				boolean is"+prf+" = SecurityUtils.isCurrentUserInRole(AuthoritiesConstants."+prf+");\r\n";
+			if(prf!="ADMIN" && prf!="ANONYMOUS") {
+				defltUsrPrfl = prf;
+			}
+		}
+		defltUsrPrfl = defltUsrPrfl!=""?defltUsrPrfl:"USER";
+		
+		
+		String result = "";
+		result ="\n"+ 
+				"			if (securityEnabled) {\r\n" + 
+				"				boolean isAutenticated = SecurityUtils.isAuthenticated();\r\n" + 
+				allProfiles+
+				"\n"+
+				
+				"				Optional<String> loggedUser = SecurityUtils.getCurrentUserLogin();\r\n" + 
+				"				String userName = loggedUser.orElse(null);\r\n\n" + 
+				
+				"				if (isAutenticated && isADMIN) {\r\n" + 
+				"					log.debug(\"User '\"+userName+\"' with profile ADMIN is enabled to see all items.\");\r\n" + 
+				"				} else if (isAutenticated && is"+defltUsrPrfl+") {\r\n" + 
+				"					log.debug(\"User '\"+userName+\"' with profile \"+defltUsrPrfl+\" is enabled to see ONLY your own items.\");\r\n" + 
+				"					StringFilter currentUser = new StringFilter();\r\n" + 
+				"					currentUser.setEquals(userName);\r\n" + 
+				"					specification = specification.and(buildStringSpecification(currentUser, "+Utils.getEntityName(tabella)+"_.createdBy));\r\n" + 
+				"				} else {\r\n" + 
+				"					log.debug(\"User is NOT Autenticated and NOT enabled to see NO items.\");\r\n" + 
+				"					StringFilter currentUser = new StringFilter();\r\n" + 
+				"					currentUser.setEquals(\"-1\");\r\n" + 
+				"					specification = specification.and(buildStringSpecification(currentUser, "+Utils.getEntityName(tabella)+"_.createdBy));\r\n" + 
+				"				}\r\n" + 
+				"			}\n";
+		return result;
+	}
+
+	/**
+	 * Return list of profiles
+	 * @param conf ConfigCreateProject
+	 * @return List of profile Normalized (Ex.  ADMIN | USER | ANONYMOUS)
+	 */
+	private List<String> getProfilesNormalized(ConfigCreateProject conf) {
+		List<String> profilesNormalized = new ArrayList<>();
+		for (int i = 0; i < conf.getProfiles().length; i++) {
+			String profileKey = conf.getProfiles()[i].replace("ROLE_", "");
+			//Ex.  ADMIN | USER | ANONYMOUS
+			profilesNormalized.add(profileKey);
+		}
+		return profilesNormalized;
+	}
+	
 	/**
 	 * Build Relation Criteria
 	 * @param conf

@@ -36,7 +36,8 @@
   	{"name":"Company", "fields": [
   			{"fname":"id", "ftype":"Long", "frequired":true, "fsize":45}, 
   			{"fname":"name", "ftype":"String", "frequired":true, "fsize":500},
-  			{"fname":"username", "ftype":"String", "frequired":true, "fsize":500},
+  			{"fname":"note", "ftype":"String", "frequired":true, "fsize":500},
+  			{"fname":"providerlogo", "ftype":"ImageBlob", "frequired":false, "fsize":1000},
   			{"fname":"providerurl", "ftype":"String", "frequired":false, "fsize":1000},
   			{"fname":"provideruser", "ftype":"String", "frequired":false, "fsize":1000},
             {"fname":"providerpassword", "ftype":"String", "frequired":false, "fsize":1000},
