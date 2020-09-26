@@ -180,14 +180,14 @@ public class TemplateQueryService extends AbstractTemplate{
 				"				String userName = loggedUser.orElse(null);\r\n\n" + 
 				
 				"				if (isAutenticated && isADMIN) {\r\n" + 
-				"					log.debug(\"User '\"+userName+\"' with profile ADMIN is enabled to see all items.\");\r\n" + 
+				"					log.debug(\"User '\"+userName+\"' with profile ADMIN is enabled to see all "+Utils.getEntityName(tabella)+" items.\");\r\n" + 
 				"				} else if (isAutenticated && is"+defltUsrPrfl+") {\r\n" + 
-				"					log.debug(\"User '\"+userName+\"' with profile \"+defltUsrPrfl+\" is enabled to see ONLY your own items.\");\r\n" + 
+				"					log.debug(\"User '\"+userName+\"' with profile \"+defltUsrPrfl+\" is enabled to see ONLY your own "+Utils.getEntityName(tabella)+" items.\");\r\n" + 
 				"					StringFilter currentUser = new StringFilter();\r\n" + 
 				"					currentUser.setEquals(userName);\r\n" + 
 				"					specification = specification.and(buildStringSpecification(currentUser, "+Utils.getEntityName(tabella)+"_.createdBy));\r\n" + 
 				"				} else {\r\n" + 
-				"					log.debug(\"User is NOT Autenticated and NOT enabled to see NO items.\");\r\n" + 
+				"					log.debug(\"User is NOT Autenticated and NOT enabled to see NO "+Utils.getEntityName(tabella)+" items.\");\r\n" + 
 				"					StringFilter currentUser = new StringFilter();\r\n" + 
 				"					currentUser.setEquals(\"-1\");\r\n" + 
 				"					specification = specification.and(buildStringSpecification(currentUser, "+Utils.getEntityName(tabella)+"_.createdBy));\r\n" + 
