@@ -34,6 +34,7 @@
 	- LOW - HA singleton e scalabilità
 	- LOW - JMS e code asincrone
 	- LOW - Big Data , ML / AI	
+	- LOW - Creare generatore di experience utente x GUI / UX
 
 ## Documentation Ideas         
 	- See https://www.jaxio.com/en/celerio.html
@@ -43,9 +44,17 @@
  - ionic cordova build android --prod
  - ionic cordova build android --dev
 
+## BILLING / CEDOLINI
 Done ==> Scraping Java (Billing Idea) : https://www.scrapingbee.com/blog/introduction-to-web-scraping-with-java/
 TODO ==> Spring Scheduler (Billing Idea) : load at startup/fixrate and save into DB
-TODO ==> replaced simple spinner with centered loading spinner
-TODO ==> https://ovpv.me/open-pdf-ionic-4/   Add pdf viewer
+TODO ==> Add pdf viewer: https://ovpv.me/open-pdf-ionic-4/   
 		 https://github.com/matheusabr/ionic-pdf/blob/master/src/pages/home/home.ts
 		 
+
+# Heroku DB credenziali marco.martorana.it	 
+	url: jdbc:mysql://eu-cdbr-west-02.cleardb.net/heroku_119f613d6bdda4d?reconnect=true
+    username: ba0a31b247d2cc
+    password: 513a1562
+    
+    
+    

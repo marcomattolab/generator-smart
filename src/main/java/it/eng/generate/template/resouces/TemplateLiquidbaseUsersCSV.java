@@ -68,4 +68,16 @@ public class TemplateLiquidbaseUsersCSV extends AbstractResourceTemplate{
 		return "src/main/resources/";
 	}
 
+	/**
+	 * BCrypt DEMO Cript Passord 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		System.out.println("Start demo ");
+		String passwordTxt = "1980Marco!";
+		String passwordHash = BCrypt.withDefaults().hashToString(12, passwordTxt.toCharArray());
+		System.out.println(" - passwordTxt: "+passwordTxt+"    Credential(user/pwd): User:admin Password(Cripted): "+passwordHash);
+		
+	}
+	
 }
