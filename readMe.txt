@@ -44,6 +44,9 @@
  - ionic cordova build android --prod
  - ionic cordova build android --dev
 
+See https://ionicframework.com/docs/developing/ios WORKS!
+ - cordova platform add ios --save
+
 ## BILLING / CEDOLINI
 Done ==> Scraping Java (Billing Idea) : https://www.scrapingbee.com/blog/introduction-to-web-scraping-with-java/
 TODO ==> Spring Scheduler (Billing Idea) : load at startup/fixrate and save into DB
