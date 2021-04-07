@@ -38,7 +38,7 @@ public class TemplateAppModule extends AbstractResourceTemplate {
 		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"EntityModule } from './entities/entity.module';\r\n" +
 		"import { "+Utils.getClassNameCamelCase(conf.getProjectName()) +"DashboardModule } from './dashboard/dashboard.module';\r\n" +
 		"import * as moment from 'moment';\r\n" +
-		"import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';\r\n\n" +
+		"import { JhiMainComponent, NavbarComponent, FooterComponent, LeftmenuComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';\r\n\n" +
 		"@NgModule({\r\n" +
 		"    imports: [\r\n" +
 		"        BrowserModule,\r\n" +
@@ -59,7 +59,7 @@ public class TemplateAppModule extends AbstractResourceTemplate {
 		"        // jhipster-needle-angular-add-module JHipster will add new module here\r\n" +
 		"        "+Utils.getClassNameCamelCase(conf.getProjectName()) +"EntityModule\r\n" +
 		"    ],\r\n" +
-		"    declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],\r\n" +
+		"    declarations: [JhiMainComponent, NavbarComponent, LeftmenuComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],\r\n" +
 		"    providers: [\r\n" +
 		"        {\r\n" +
 		"            provide: HTTP_INTERCEPTORS,\r\n" +

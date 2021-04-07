@@ -34,7 +34,7 @@
 	- LOW - HA singleton e scalabilità
 	- LOW - JMS e code asincrone
 	- LOW - Big Data , ML / AI	
-	- LOW - Creare generatore di experience utente x GUI / UX
+	- LOW - Creare generatore di experience utente x GUI / UX (See https://github.com/Not-A-Builder/Design-Tools )
 
 ## Documentation Ideas         
 	- See https://www.jaxio.com/en/celerio.html
@@ -52,7 +52,10 @@ Done ==> Scraping Java (Billing Idea) : https://www.scrapingbee.com/blog/introdu
 TODO ==> Spring Scheduler (Billing Idea) : load at startup/fixrate and save into DB
 TODO ==> Add pdf viewer: https://ovpv.me/open-pdf-ionic-4/   
 		 https://github.com/matheusabr/ionic-pdf/blob/master/src/pages/home/home.ts
-		 
+		
+## IOS deploy on device
+https://7labs.io/mobile/iphone/install-apps-without-app-store.html
+
 
 # Heroku DB credenziali marco.martorana.it	 
 	url: jdbc:mysql://eu-cdbr-west-02.cleardb.net/heroku_119f613d6bdda4d?reconnect=true

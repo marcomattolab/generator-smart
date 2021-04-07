@@ -22,6 +22,15 @@ public class TemplateNavbarComponent extends AbstractResourceTemplate {
 		
 		String body = 
 		"<nav class=\"navbar navbar-dark navbar-expand-md jh-navbar\">\r\n" +
+		"   <!--\r\n" + 
+		"	<button type=\"button\" class=\"navbar-toggler\" (click)=\"sideNavService.toggleSideNav()\">\r\n" + 
+		"	  <span class=\"navbar-toggler-icon\"></span>\r\n" + 
+		"	</button>\r\n" + 
+		"	-->\r\n" + 
+		"	<button type=\"button\" (click)=\"sideNavService.toggleSideNav()\">\r\n" + 
+		"	  <span class=\"navbar-toggler-icon\"></span>\r\n" + 
+		"	</button>"+
+				
 		"    <div class=\"jh-logo-container float-left\">\r\n" +
 		"        <a class=\"jh-navbar-toggler d-lg-none float-right\" href=\"javascript:void(0);\" data-toggle=\"collapse\" data-target=\"#navbarResponsive\" aria-controls=\"navbarResponsive\" aria-expanded=\"false\" aria-label=\"Toggle navigation\" (click)=\"toggleNavbar()\">\r\n" +
 		"            <fa-icon icon=\"bars\"></fa-icon>\r\n" +

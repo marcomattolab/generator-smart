@@ -22,7 +22,8 @@ public class TemplateMainComponent extends AbstractResourceTemplate {
 		"import { JhiLanguageHelper } from 'app/core';\r\n" +
 		"@Component({\r\n" +
 		"    selector: 'jhi-main',\r\n" +
-		"    templateUrl: './main.component.html'\r\n" +
+		"    templateUrl: './main.component.html',\r\n" +
+		"    styleUrls: ['./main.component.scss']\r\n" +
 		"})\r\n" +
 		"export class JhiMainComponent implements OnInit {\r\n" +
 		"    constructor(private jhiLanguageHelper: JhiLanguageHelper, private router: Router) {}\r\n" +
