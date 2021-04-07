@@ -97,6 +97,7 @@ import it.eng.generate.template.fe.home.TemplateHomeModule;
 import it.eng.generate.template.fe.i18n.TemplateEntityI18N;
 import it.eng.generate.template.fe.i18n.TemplateEnumerationsI18N;
 import it.eng.generate.template.fe.i18n.TemplateGlobalI18N;
+import it.eng.generate.template.fe.layouts.TemplateLeftmenuComponent;
 import it.eng.generate.template.fe.layouts.TemplateMainComponent;
 import it.eng.generate.template.fe.layouts.TemplateNavbarComponent;
 import it.eng.generate.template.fe.shared.TemplateAlertErrorComponent;
@@ -587,6 +588,7 @@ public class DataBase {
 			new TemplateHomeModule(this).generateTemplate(); 
 			new TemplateHomeComponentHtml(this).generateTemplate(); 
 			new TemplateNavbarComponent(this).generateTemplate(); 				//Cicle Entities Done
+			new TemplateLeftmenuComponent(this).generateTemplate(); 				//Cicle Entities Done
 			new TemplateMainComponent(this).generateTemplate(); 
 			new TemplateSharedModule(this).generateTemplate(); 
 			new TemplateSharedLibsModule(this).generateTemplate(); 
