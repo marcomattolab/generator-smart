@@ -29,15 +29,11 @@ public class TemplateLeftmenuComponent extends AbstractResourceTemplate {
 		"    <li class=\"nav-item active\">\r\n" + 
 		"      <a class=\"nav-link\" routerLink=\"/\" href=\"#\">Home</a>\r\n" + 
 		"    </li>\r\n" + 
-		"    <li class=\"nav-item\""+ jhiGAuthorities + " \">\r\n" + 
-		"      <a class=\"nav-link\" routerLink=\"company\">Company</a>\r\n" + 
-		"    </li>\r\n\n" + 
-		
 		
 		//ENTITIES
-		"    <li class=\"nav-item\""  + jhiGAuthorities +"  \">\r\n" + 
+		"    <li class=\"nav-item\" "  + jhiGAuthorities +" >\r\n" + 
 		"      <a class=\"nav-link\">\r\n" + 
-		"      	Entities\r\n" + 
+		"      	Tables\r\n" + 
 		"      	<i class=\"fa fa-caret-down\"></i>\r\n" + 
 		"      </a>\r\n\n" + 
 		"	  <div class=\"dropdown-container\">\r\n";
