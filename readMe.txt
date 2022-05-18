@@ -55,12 +55,5 @@ TODO ==> Add pdf viewer: https://ovpv.me/open-pdf-ionic-4/
 		
 ## IOS deploy on device
 https://7labs.io/mobile/iphone/install-apps-without-app-store.html
-
-
-# Heroku DB credenziali marco.martorana.it	 
-	url: jdbc:mysql://eu-cdbr-west-02.cleardb.net/heroku_119f613d6bdda4d?reconnect=true
-    username: ba0a31b247d2cc
-    password: 513a1562
-    
     
     
